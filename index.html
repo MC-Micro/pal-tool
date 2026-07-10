@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pal Passives">
+<title>Palworld Passives PWA v1.2.0</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="top-inner">
+      <div class="title-row">
+        <div>
+          <h1>Palworld Passives</h1>
+          <div class="mini" id="metaLine">v1.2.0-PWA-Test · Palworld v1.0.0 · SteamDB Chg 37178747 · 102 Passives</div>
+        </div>
+        <div class="version">PWA-Test</div>
+      </div>
+      <div class="search-row">
+        <div class="search"><input id="q" type="search" placeholder="Suche: Diamantkörper, Angriff, Base…" autocomplete="off"></div>
+        <button class="btn" id="filterBtn" type="button">Filter ▼</button>
+      </div>
+      <div class="sort-row">
+        <label for="sort">Sortierung</label>
+        <select class="sort" id="sort">
+          <option value="name" selected>Name A–Z</option>
+          <option value="top">Top-Passives</option>
+          <option value="rank">Rang absteigend</option>
+          <option value="context" disabled>Priorität nach Filter</option>
+        </select>
+      </div>
+      <div class="active-filters" id="activeFilters"></div>
+      <section class="filter-panel" id="filterPanel">
+        <div class="group">
+          <div class="group-title">Rollen / Einsatzbereiche</div>
+          <div class="role-groups" id="roleGroups"></div>
+          <div class="subrole-panel" id="subrolePanel"></div>
+        </div>
+        <div class="group">
+          <div class="group-title">Status</div>
+          <div class="chip-wrap" id="statusChips"></div>
+        </div>
+        <div class="group">
+          <div class="group-title">Rang</div>
+          <div class="chip-wrap" id="rankChips"></div>
+        </div>
+        <div class="group">
+          <div class="group-title">Priorität</div>
+          <div class="chip-wrap" id="prioChips"></div>
+          <div class="hint priority-hint" id="priorityHint">Erst eine Rolle auswählen, dann Prioritäten filtern.</div>
+        </div>
+        <div class="filter-actions">
+          <div class="hint">Tipp: Für Kampfbuilds z. B. Kampf / Angriff + Kampf / Defensive/Tank kombinieren.</div>
+          <button class="btn small" id="resetBtn" type="button">Reset</button>
+        </div>
+      </section>
+    </div>
+  </header>
+  <div class="summary"><span><span class="count" id="count">0</span> von <span id="total">0</span> Passives</span><span>Tap auf Karte = Details</span></div>
+  <main class="cards" id="cards"></main>
+</div>
+<button class="to-top" id="toTop" title="Nach oben">↑</button>
+<script src="data-passives.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
