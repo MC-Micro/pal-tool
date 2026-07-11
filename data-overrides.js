@@ -3,6 +3,7 @@
   if (!data || !Array.isArray(data.passives)) return;
 
   data.meta.project_version = 'v1.0.0';
+  data.meta.baseline_version = 'Palworld v1.0.0';
   data.meta.data_date = '2026-07-11';
   data.meta.scope = '102 Pal-Passives · stabile PWA-Basis für Breeding und Buildplanung';
   data.meta.layout = 'v1.0.0: stabile PWA-Basis; Filter startet geschlossen; aktive Filterchips sind scrollbar und direkt entfernbar.';
