@@ -1,4 +1,4 @@
-const CACHE_NAME = 'palworld-passives-pwa-v1.0.0';
+const CACHE_NAME = 'palworld-passives-pwa-v1.0.0-meta1';
 const ASSETS = [
   './',
   './index.html',
