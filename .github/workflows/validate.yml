@@ -1,0 +1,25 @@
+name: Validate Palworld data
+
+on:
+  push:
+    branches: [main, 'release/**', 'feature/**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate data and PWA structure
+        run: node scripts/validate-data.mjs
