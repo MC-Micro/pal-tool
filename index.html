@@ -19,7 +19,7 @@
       <div class="title-row">
         <div>
           <h1>Palworld Passives</h1>
-          <div class="mini" id="metaLine">v1.0.0 · Palworld v1.0.0 · 102 Passives</div>
+          <div class="mini" id="metaLine">Tool v1.0.0 / Palworld v1.0.0 / 102 Passives</div>
         </div>
         <div class="version">v1.0.0</div>
       </div>
@@ -70,5 +70,8 @@
 <script src="data-passives.js"></script>
 <script src="data-overrides.js"></script>
 <script src="app.js"></script>
+<script>
+  document.getElementById('metaLine').textContent = `Tool ${window.PALWORLD_PASSIVES_DATA.meta.project_version} / ${window.PALWORLD_PASSIVES_DATA.meta.baseline_version} / ${window.PALWORLD_PASSIVES_DATA.passives.length} Passives`;
+</script>
 </body>
 </html>
