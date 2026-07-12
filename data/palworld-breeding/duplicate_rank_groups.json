@@ -1,6 +1,7 @@
 [
   {
     "combi_rank": 2950,
+    "winner_order": "higher CombiDuplicatePriority, then non-variant, then lower InternalIndex",
     "pals": [
       {
         "internal_name": "PlantSlime",
@@ -21,8 +22,8 @@
         "paldex_no": 12,
         "is_variant": true,
         "combi_rank": 2950,
-        "rarity": null,
-        "ignore_combi": null,
+        "rarity": 10,
+        "ignore_combi": false,
         "combi_duplicate_priority": 295000,
         "internal_index": 131
       }

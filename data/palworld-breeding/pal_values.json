@@ -67,7 +67,7 @@
     "is_variant": true,
     "combi_rank": 1330,
     "rarity": 4,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 577,
     "internal_index": 6
   },
@@ -103,7 +103,7 @@
     "is_variant": true,
     "combi_rank": 1310,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 131000,
     "internal_index": 9
   },
@@ -127,7 +127,7 @@
     "is_variant": true,
     "combi_rank": 2750,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 275000,
     "internal_index": 11
   },
@@ -187,7 +187,7 @@
     "is_variant": true,
     "combi_rank": 2580,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 258000,
     "internal_index": 16
   },
@@ -271,7 +271,7 @@
     "is_variant": true,
     "combi_rank": 1880,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 188000,
     "internal_index": 23
   },
@@ -295,7 +295,7 @@
     "is_variant": true,
     "combi_rank": 2850,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 285000,
     "internal_index": 25
   },
@@ -319,7 +319,7 @@
     "is_variant": true,
     "combi_rank": 540,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 54000,
     "internal_index": 27
   },
@@ -379,7 +379,7 @@
     "is_variant": true,
     "combi_rank": 2490,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 572,
     "internal_index": 32
   },
@@ -415,7 +415,7 @@
     "is_variant": true,
     "combi_rank": 2430,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 243000,
     "internal_index": 35
   },
@@ -451,7 +451,7 @@
     "is_variant": true,
     "combi_rank": 170,
     "rarity": 9,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 17000,
     "internal_index": 38
   },
@@ -474,8 +474,8 @@
     "paldex_no": 38,
     "is_variant": false,
     "combi_rank": 2780,
-    "rarity": null,
-    "ignore_combi": null,
+    "rarity": 1,
+    "ignore_combi": false,
     "combi_duplicate_priority": 278000,
     "internal_index": 40
   },
@@ -486,8 +486,8 @@
     "paldex_no": 38,
     "is_variant": true,
     "combi_rank": 2510,
-    "rarity": null,
-    "ignore_combi": null,
+    "rarity": 2,
+    "ignore_combi": true,
     "combi_duplicate_priority": 251000,
     "internal_index": 41
   },
@@ -511,7 +511,7 @@
     "is_variant": true,
     "combi_rank": 740,
     "rarity": 9,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 74000,
     "internal_index": 43
   },
@@ -535,7 +535,7 @@
     "is_variant": true,
     "combi_rank": 1870,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 187000,
     "internal_index": 45
   },
@@ -559,7 +559,7 @@
     "is_variant": true,
     "combi_rank": 1640,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 164000,
     "internal_index": 47
   },
@@ -583,7 +583,7 @@
     "is_variant": true,
     "combi_rank": 2030,
     "rarity": 4,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 203000,
     "internal_index": 49
   },
@@ -631,7 +631,7 @@
     "is_variant": true,
     "combi_rank": 1840,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 184000,
     "internal_index": 53
   },
@@ -667,7 +667,7 @@
     "is_variant": true,
     "combi_rank": 1220,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 578,
     "internal_index": 56
   },
@@ -727,7 +727,7 @@
     "is_variant": true,
     "combi_rank": 600,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 60000,
     "internal_index": 61
   },
@@ -763,7 +763,7 @@
     "is_variant": true,
     "combi_rank": 2050,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 205000,
     "internal_index": 64
   },
@@ -787,7 +787,7 @@
     "is_variant": true,
     "combi_rank": 770,
     "rarity": 9,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 77000,
     "internal_index": 66
   },
@@ -823,7 +823,7 @@
     "is_variant": true,
     "combi_rank": 2640,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 264000,
     "internal_index": 69
   },
@@ -834,8 +834,8 @@
     "paldex_no": 5,
     "is_variant": false,
     "combi_rank": 2980,
-    "rarity": null,
-    "ignore_combi": null,
+    "rarity": 1,
+    "ignore_combi": false,
     "combi_duplicate_priority": 298000,
     "internal_index": 70
   },
@@ -847,7 +847,7 @@
     "is_variant": true,
     "combi_rank": 2300,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 575,
     "internal_index": 71
   },
@@ -871,7 +871,7 @@
     "is_variant": true,
     "combi_rank": 1430,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 143000,
     "internal_index": 73
   },
@@ -907,7 +907,7 @@
     "is_variant": true,
     "combi_rank": 1890,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 189000,
     "internal_index": 76
   },
@@ -967,7 +967,7 @@
     "is_variant": true,
     "combi_rank": 1070,
     "rarity": 9,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 107000,
     "internal_index": 81
   },
@@ -1003,7 +1003,7 @@
     "is_variant": true,
     "combi_rank": 1080,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 108000,
     "internal_index": 84
   },
@@ -1099,7 +1099,7 @@
     "is_variant": true,
     "combi_rank": 650,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 65000,
     "internal_index": 92
   },
@@ -1135,7 +1135,7 @@
     "is_variant": true,
     "combi_rank": 1490,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 149000,
     "internal_index": 95
   },
@@ -1207,7 +1207,7 @@
     "is_variant": true,
     "combi_rank": 2540,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 571,
     "internal_index": 101
   },
@@ -1363,7 +1363,7 @@
     "is_variant": true,
     "combi_rank": 1440,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 144000,
     "internal_index": 114
   },
@@ -1399,7 +1399,7 @@
     "is_variant": true,
     "combi_rank": 1600,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 160000,
     "internal_index": 117
   },
@@ -1495,7 +1495,7 @@
     "is_variant": true,
     "combi_rank": 2830,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 283000,
     "internal_index": 125
   },
@@ -1519,7 +1519,7 @@
     "is_variant": true,
     "combi_rank": 1270,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 127000,
     "internal_index": 127
   },
@@ -1543,7 +1543,7 @@
     "is_variant": true,
     "combi_rank": 1530,
     "rarity": 9,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 153000,
     "internal_index": 129
   },
@@ -1566,8 +1566,8 @@
     "paldex_no": 12,
     "is_variant": true,
     "combi_rank": 2950,
-    "rarity": null,
-    "ignore_combi": null,
+    "rarity": 10,
+    "ignore_combi": false,
     "combi_duplicate_priority": 295000,
     "internal_index": 131
   },
@@ -1615,7 +1615,7 @@
     "is_variant": true,
     "combi_rank": 1800,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 180000,
     "internal_index": 135
   },
@@ -1651,7 +1651,7 @@
     "is_variant": true,
     "combi_rank": 580,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 58000,
     "internal_index": 138
   },
@@ -1675,7 +1675,7 @@
     "is_variant": true,
     "combi_rank": 630,
     "rarity": 9,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 63000,
     "internal_index": 140
   },
@@ -1723,7 +1723,7 @@
     "is_variant": true,
     "combi_rank": 1850,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 573,
     "internal_index": 144
   },
@@ -1747,7 +1747,7 @@
     "is_variant": true,
     "combi_rank": 1950,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 195000,
     "internal_index": 146
   },
@@ -1771,7 +1771,7 @@
     "is_variant": true,
     "combi_rank": 1300,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 130000,
     "internal_index": 148
   },
@@ -1795,7 +1795,7 @@
     "is_variant": true,
     "combi_rank": 960,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 96000,
     "internal_index": 150
   },
@@ -1831,7 +1831,7 @@
     "is_variant": true,
     "combi_rank": 840,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 84000,
     "internal_index": 153
   },
@@ -1855,7 +1855,7 @@
     "is_variant": true,
     "combi_rank": 2380,
     "rarity": 4,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 574,
     "internal_index": 155
   },
@@ -1891,7 +1891,7 @@
     "is_variant": true,
     "combi_rank": 820,
     "rarity": 9,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 82000,
     "internal_index": 158
   },
@@ -1939,7 +1939,7 @@
     "is_variant": true,
     "combi_rank": 640,
     "rarity": 10,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 64000,
     "internal_index": 162
   },
@@ -1987,7 +1987,7 @@
     "is_variant": true,
     "combi_rank": 1620,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 576,
     "internal_index": 166
   },
@@ -2071,7 +2071,7 @@
     "is_variant": true,
     "combi_rank": 1860,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 186000,
     "internal_index": 173
   },
@@ -2155,7 +2155,7 @@
     "is_variant": true,
     "combi_rank": 850,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 85000,
     "internal_index": 180
   },
@@ -2179,7 +2179,7 @@
     "is_variant": true,
     "combi_rank": 210,
     "rarity": 10,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 21000,
     "internal_index": 182
   },
@@ -2275,7 +2275,7 @@
     "is_variant": true,
     "combi_rank": 380,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 38000,
     "internal_index": 190
   },
@@ -2311,7 +2311,7 @@
     "is_variant": true,
     "combi_rank": 1320,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 132000,
     "internal_index": 193
   },
@@ -2335,7 +2335,7 @@
     "is_variant": true,
     "combi_rank": 430,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 43000,
     "internal_index": 195
   },
@@ -2371,7 +2371,7 @@
     "is_variant": true,
     "combi_rank": 1610,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 161000,
     "internal_index": 198
   },
@@ -2383,7 +2383,7 @@
     "is_variant": false,
     "combi_rank": 570,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 57000,
     "internal_index": 199
   },
@@ -2395,7 +2395,7 @@
     "is_variant": true,
     "combi_rank": 270,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 27000,
     "internal_index": 200
   },
@@ -2407,7 +2407,7 @@
     "is_variant": false,
     "combi_rank": 20,
     "rarity": 10,
-    "ignore_combi": true,
+    "ignore_combi": false,
     "combi_duplicate_priority": 2000,
     "internal_index": 201
   },
@@ -2515,7 +2515,7 @@
     "is_variant": true,
     "combi_rank": 460,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 46000,
     "internal_index": 210
   },
@@ -2539,7 +2539,7 @@
     "is_variant": true,
     "combi_rank": 1630,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 163000,
     "internal_index": 212
   },
@@ -2563,7 +2563,7 @@
     "is_variant": true,
     "combi_rank": 370,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 37000,
     "internal_index": 214
   },
@@ -2587,7 +2587,7 @@
     "is_variant": true,
     "combi_rank": 2500,
     "rarity": 1,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 250000,
     "internal_index": 219
   },
@@ -2599,7 +2599,7 @@
     "is_variant": true,
     "combi_rank": 1940,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 194000,
     "internal_index": 220
   },
@@ -2611,7 +2611,7 @@
     "is_variant": true,
     "combi_rank": 2460,
     "rarity": 1,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 246000,
     "internal_index": 221
   },
@@ -2623,7 +2623,7 @@
     "is_variant": true,
     "combi_rank": 1290,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 129000,
     "internal_index": 222
   },
@@ -2635,7 +2635,7 @@
     "is_variant": true,
     "combi_rank": 800,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 80000,
     "internal_index": 223
   },
@@ -2647,7 +2647,7 @@
     "is_variant": true,
     "combi_rank": 1910,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 191000,
     "internal_index": 224
   },
@@ -2659,7 +2659,7 @@
     "is_variant": true,
     "combi_rank": 470,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 47000,
     "internal_index": 225
   },
@@ -2671,7 +2671,7 @@
     "is_variant": true,
     "combi_rank": 900,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 90000,
     "internal_index": 226
   },
@@ -2731,7 +2731,7 @@
     "is_variant": true,
     "combi_rank": 720,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 72000,
     "internal_index": 237
   },
@@ -2827,7 +2827,7 @@
     "is_variant": true,
     "combi_rank": 1580,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 158000,
     "internal_index": 245
   },
@@ -2863,7 +2863,7 @@
     "is_variant": true,
     "combi_rank": 2240,
     "rarity": 4,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 581,
     "internal_index": 248
   },
@@ -2899,7 +2899,7 @@
     "is_variant": true,
     "combi_rank": 1100,
     "rarity": 6,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 110000,
     "internal_index": 251
   },
@@ -3007,7 +3007,7 @@
     "is_variant": true,
     "combi_rank": 250,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 25000,
     "internal_index": 260
   },
@@ -3043,7 +3043,7 @@
     "is_variant": true,
     "combi_rank": 200,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 20000,
     "internal_index": 263
   },
@@ -3139,7 +3139,7 @@
     "is_variant": true,
     "combi_rank": 1590,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 159000,
     "internal_index": 271
   },
@@ -3307,7 +3307,7 @@
     "is_variant": true,
     "combi_rank": 1000,
     "rarity": 5,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 100000,
     "internal_index": 285
   },
@@ -3343,7 +3343,7 @@
     "is_variant": true,
     "combi_rank": 1500,
     "rarity": 3,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 150000,
     "internal_index": 288
   },
@@ -3391,7 +3391,7 @@
     "is_variant": false,
     "combi_rank": 2480,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 248000,
     "internal_index": 292
   },
@@ -3415,7 +3415,7 @@
     "is_variant": false,
     "combi_rank": 2520,
     "rarity": 2,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 252000,
     "internal_index": 294
   },
@@ -3511,7 +3511,7 @@
     "is_variant": true,
     "combi_rank": 440,
     "rarity": 7,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 44000,
     "internal_index": 302
   },
@@ -3547,7 +3547,7 @@
     "is_variant": true,
     "combi_rank": 140,
     "rarity": 8,
-    "ignore_combi": false,
+    "ignore_combi": true,
     "combi_duplicate_priority": 14000,
     "internal_index": 305
   },

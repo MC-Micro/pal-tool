@@ -1,247 +1,792 @@
 parent_a_internal,parent_a_de,parent_a_en,parent_b_internal,parent_b_de,parent_b_en,child_internal,child_de,child_en,parent_a_gender,parent_b_gender
-LazyDragon,Relaxaurus,Relaxaurus,ElecCat,Sparkit,Sparkit,LazyDragon_Electric,Relaxaurus Lux,Relaxaurus Lux,ANY,ANY
-Baphomet,Incineram,Incineram,GhostBeast,Maraith,Maraith,Baphomet_Dark,Incineram Noct,Incineram Noct,ANY,ANY
-Bastet,Mau,Mau,Penguin,Pengullet,Pengullet,Bastet_Ice,Mau Cryst,Mau Cryst,ANY,ANY
-BirdDragon,Vanwyrm,Vanwyrm,IceFox,Foxcicle,Foxcicle,BirdDragon_Ice,Vanwyrm Cryst,Vanwyrm Cryst,ANY,ANY
-FairyDragon,Elphidran,Elphidran,Serpent,Surfent,Surfent,FairyDragon_Water,Elphidran Aqua,Elphidran Aqua,ANY,ANY
-FireKirin,Pyrin,Pyrin,CatMage,Katress,Katress,FireKirin_Dark,Pyrin Noct,Pyrin Noct,ANY,ANY
-GrassMammoth,Mammorest,Mammorest,Yeti,Wumpo,Wumpo,GrassMammoth_Ice,Mammorest Cryst,Mammorest Cryst,ANY,ANY
-GrassPanda,Mossanda,Mossanda,ElecPanda,Grizzbolt,Grizzbolt,GrassPanda_Electric,Mossanda Lux,Mossanda Lux,ANY,ANY
-FlowerDinosaur,Dinossom,Dinossom,ThunderDog,Rayhound,Rayhound,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,ANY,ANY
-Hedgehog,Jolthog,Jolthog,Penguin,Pengullet,Pengullet,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,ANY,ANY
-IceHorse,Frostallion,Frostallion,HadesBird,Helzephyr,Helzephyr,IceHorse_Dark,Frostallion Noct,Frostallion Noct,ANY,ANY
-KingAlpaca,Kingpaca,Kingpaca,IceDeer,Reindrix,Reindrix,KingAlpaca_Ice,Kingpaca Cryst,Kingpaca Cryst,ANY,ANY
-LilyQueen,Lyleen,Lyleen,DarkScorpion,Menasting,Menasting,LilyQueen_Dark,Lyleen Noct,Lyleen Noct,ANY,ANY
-LizardMan,Leezpunk,Leezpunk,LavaGirl,Flambelle,Flambelle,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ANY,ANY
-Manticore,Blazehowl,Blazehowl,CatVampire,Felbat,Felbat,Manticore_Dark,Blazehowl Noct,Blazehowl Noct,ANY,ANY
-RobinHood,Robinquill,Robinquill,CuteMole,Fuddler,Fuddler,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ANY,ANY
-Serpent,Surfent,Surfent,LazyCatfish,Dumud,Dumud,Serpent_Ground,Surfent Terra,Surfent Terra,ANY,ANY
-SharkKid,Gobfin,Gobfin,FlameBambi,Rooby,Rooby,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ANY,ANY
-Suzaku,Suzaku,Suzaku,Umihebi,Jormuntide,Jormuntide,Suzaku_Water,Suzaku Aqua,Suzaku Aqua,ANY,ANY
-VolcanicMonster,Reptyro,Reptyro,IceFox,Foxcicle,Foxcicle,VolcanicMonster_Ice,Reptyro Cryst,Reptyro Cryst,ANY,ANY
-IceHorse,Frostallion,Frostallion,IceHorse,Frostallion,Frostallion,IceHorse,Frostallion,Frostallion,ANY,ANY
-JetDragon,Jetragon,Jetragon,JetDragon,Jetragon,Jetragon,JetDragon,Jetragon,Jetragon,ANY,ANY
-SaintCentaur,Paladius,Paladius,SaintCentaur,Paladius,Paladius,SaintCentaur,Paladius,Paladius,ANY,ANY
-BlackCentaur,Necromus,Necromus,BlackCentaur,Necromus,Necromus,BlackCentaur,Necromus,Necromus,ANY,ANY
-LilyQueen,Lyleen,Lyleen,LilyQueen,Lyleen,Lyleen,LilyQueen,Lyleen,Lyleen,ANY,ANY
-Horus,Faleris,Faleris,Horus,Faleris,Faleris,Horus,Faleris,Faleris,ANY,ANY
-ElecPanda,Grizzbolt,Grizzbolt,ElecPanda,Grizzbolt,Grizzbolt,ElecPanda,Grizzbolt,Grizzbolt,ANY,ANY
-ThunderDragonMan,Orserk,Orserk,ThunderDragonMan,Orserk,Orserk,ThunderDragonMan,Orserk,Orserk,ANY,ANY
-BlackGriffon,Shadowbeak,Shadowbeak,BlackGriffon,Shadowbeak,Shadowbeak,BlackGriffon,Shadowbeak,Shadowbeak,ANY,ANY
-Umihebi_Fire,Jormuntide Ignis,Jormuntide Ignis,Umihebi_Fire,Jormuntide Ignis,Jormuntide Ignis,Umihebi_Fire,Jormuntide Ignis,Jormuntide Ignis,ANY,ANY
-LazyDragon_Electric,Relaxaurus Lux,Relaxaurus Lux,LazyDragon_Electric,Relaxaurus Lux,Relaxaurus Lux,LazyDragon_Electric,Relaxaurus Lux,Relaxaurus Lux,ANY,ANY
-Baphomet_Dark,Incineram Noct,Incineram Noct,Baphomet_Dark,Incineram Noct,Incineram Noct,Baphomet_Dark,Incineram Noct,Incineram Noct,ANY,ANY
-Bastet_Ice,Mau Cryst,Mau Cryst,Bastet_Ice,Mau Cryst,Mau Cryst,Bastet_Ice,Mau Cryst,Mau Cryst,ANY,ANY
-BirdDragon_Ice,Vanwyrm Cryst,Vanwyrm Cryst,BirdDragon_Ice,Vanwyrm Cryst,Vanwyrm Cryst,BirdDragon_Ice,Vanwyrm Cryst,Vanwyrm Cryst,ANY,ANY
-Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,ANY,ANY
-FairyDragon_Water,Elphidran Aqua,Elphidran Aqua,FairyDragon_Water,Elphidran Aqua,Elphidran Aqua,FairyDragon_Water,Elphidran Aqua,Elphidran Aqua,ANY,ANY
-FireKirin_Dark,Pyrin Noct,Pyrin Noct,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FireKirin_Dark,Pyrin Noct,Pyrin Noct,ANY,ANY
-GrassMammoth_Ice,Mammorest Cryst,Mammorest Cryst,GrassMammoth_Ice,Mammorest Cryst,Mammorest Cryst,GrassMammoth_Ice,Mammorest Cryst,Mammorest Cryst,ANY,ANY
-GrassPanda_Electric,Mossanda Lux,Mossanda Lux,GrassPanda_Electric,Mossanda Lux,Mossanda Lux,GrassPanda_Electric,Mossanda Lux,Mossanda Lux,ANY,ANY
-FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,ANY,ANY
-Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,ANY,ANY
-IceHorse_Dark,Frostallion Noct,Frostallion Noct,IceHorse_Dark,Frostallion Noct,Frostallion Noct,IceHorse_Dark,Frostallion Noct,Frostallion Noct,ANY,ANY
-KingAlpaca_Ice,Kingpaca Cryst,Kingpaca Cryst,KingAlpaca_Ice,Kingpaca Cryst,Kingpaca Cryst,KingAlpaca_Ice,Kingpaca Cryst,Kingpaca Cryst,ANY,ANY
-LilyQueen_Dark,Lyleen Noct,Lyleen Noct,LilyQueen_Dark,Lyleen Noct,Lyleen Noct,LilyQueen_Dark,Lyleen Noct,Lyleen Noct,ANY,ANY
-LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ANY,ANY
-Manticore_Dark,Blazehowl Noct,Blazehowl Noct,Manticore_Dark,Blazehowl Noct,Blazehowl Noct,Manticore_Dark,Blazehowl Noct,Blazehowl Noct,ANY,ANY
-RobinHood_Ground,Robinquill Terra,Robinquill Terra,RobinHood_Ground,Robinquill Terra,Robinquill Terra,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ANY,ANY
-SakuraSaurus_Water,Broncherry Aqua,Broncherry Aqua,SakuraSaurus_Water,Broncherry Aqua,Broncherry Aqua,SakuraSaurus_Water,Broncherry Aqua,Broncherry Aqua,ANY,ANY
-Serpent_Ground,Surfent Terra,Surfent Terra,Serpent_Ground,Surfent Terra,Surfent Terra,Serpent_Ground,Surfent Terra,Surfent Terra,ANY,ANY
-SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ANY,ANY
-Suzaku_Water,Suzaku Aqua,Suzaku Aqua,Suzaku_Water,Suzaku Aqua,Suzaku Aqua,Suzaku_Water,Suzaku Aqua,Suzaku Aqua,ANY,ANY
-VolcanicMonster_Ice,Reptyro Cryst,Reptyro Cryst,VolcanicMonster_Ice,Reptyro Cryst,Reptyro Cryst,VolcanicMonster_Ice,Reptyro Cryst,Reptyro Cryst,ANY,ANY
-Umihebi,Jormuntide,Jormuntide,Manticore,Blazehowl,Blazehowl,Umihebi_Fire,Jormuntide Ignis,Jormuntide Ignis,ANY,ANY
-NightLady,Bellanoir,Bellanoir,NightLady,Bellanoir,Bellanoir,NightLady,Bellanoir,Bellanoir,ANY,ANY
-NightLady_Dark,Bellanoir Libero,Bellanoir Libero,NightLady_Dark,Bellanoir Libero,Bellanoir Libero,NightLady_Dark,Bellanoir Libero,Bellanoir Libero,ANY,ANY
-NightLady,Bellanoir,Bellanoir,NightLady_Dark,Bellanoir Libero,Bellanoir Libero,NightLady,Bellanoir,Bellanoir,ANY,ANY
-Gorilla_Ground,Gorirat Terra,Gorirat Terra,Gorilla_Ground,Gorirat Terra,Gorirat Terra,Gorilla_Ground,Gorirat Terra,Gorirat Terra,ANY,ANY
-KingBahamut_Dragon,Blazamut Ryu,Blazamut Ryu,KingBahamut_Dragon,Blazamut Ryu,Blazamut Ryu,KingBahamut_Dragon,Blazamut Ryu,Blazamut Ryu,ANY,ANY
-FoxMage_Dark,Vulmag Noct,Wixen Noct,FoxMage_Dark,Vulmag Noct,Wixen Noct,FoxMage_Dark,Vulmag Noct,Wixen Noct,ANY,ANY
-CatMage_Fire,Katress Ignis,Katress Ignis,CatMage_Fire,Katress Ignis,Katress Ignis,CatMage_Fire,Katress Ignis,Katress Ignis,ANY,ANY
-HerculesBeetle_Ground,Warsect Terra,Warsect Terra,HerculesBeetle_Ground,Warsect Terra,Warsect Terra,HerculesBeetle_Ground,Warsect Terra,Warsect Terra,ANY,ANY
-WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,ANY,ANY
-SkyDragon_Grass,Quivern Botan,Quivern Botan,SkyDragon_Grass,Quivern Botan,Quivern Botan,SkyDragon_Grass,Quivern Botan,Quivern Botan,ANY,ANY
-HadesBird_Electric,Helzephyr Lux,Helzephyr Lux,HadesBird_Electric,Helzephyr Lux,Helzephyr Lux,HadesBird_Electric,Helzephyr Lux,Helzephyr Lux,ANY,ANY
-Ronin_Dark,Bushi Noct,Bushi Noct,Ronin_Dark,Bushi Noct,Bushi Noct,Ronin_Dark,Bushi Noct,Bushi Noct,ANY,ANY
-DarkScorpion_Ground,Menasting Terra,Menasting Terra,DarkScorpion_Ground,Menasting Terra,Menasting Terra,DarkScorpion_Ground,Menasting Terra,Menasting Terra,ANY,ANY
-MimicDog,Mimog,Mimog,MimicDog,Mimog,Mimog,MimicDog,Mimog,Mimog,ANY,ANY
-CatMage,Katress,Katress,FoxMage,Vulmag,Wixen,FoxMage_Dark,Vulmag Noct,Wixen Noct,ANY,ANY
-CatMage,Katress,Katress,FoxMage,Vulmag,Wixen,CatMage_Fire,Katress Ignis,Katress Ignis,ANY,ANY
-Gorilla,Gorirat,Gorirat,SmallArmadillo,Kikit,Kikit,Gorilla_Ground,Gorirat Terra,Gorirat Terra,ANY,ANY
-WeaselDragon,Chillet,Chillet,FlameBuffalo,Arsox,Arsox,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,ANY,ANY
-SkyDragon,Quivern,Quivern,LeafPrincess,Lullu,Lullu,SkyDragon_Grass,Quivern Botan,Quivern Botan,ANY,ANY
-HadesBird,Helzephyr,Helzephyr,ThunderBird,Beakon,Beakon,HadesBird_Electric,Helzephyr Lux,Helzephyr Lux,ANY,ANY
-Ronin,Bushi,Bushi,CandleGhost,Sootseer,Sootseer,Ronin_Dark,Bushi Noct,Bushi Noct,ANY,ANY
-DarkScorpion,Menasting,Menasting,WingGolem,Knocklem,Knocklem,DarkScorpion_Ground,Menasting Terra,Menasting Terra,ANY,ANY
-MoonQueen,Selyne,Selyne,MoonQueen,Selyne,Selyne,MoonQueen,Selyne,Selyne,ANY,ANY
-DarkAlien,Xenovader,Xenovader,DarkAlien,Xenovader,Xenovader,DarkAlien,Xenovader,Xenovader,ANY,ANY
-WhiteAlienDragon,Xenogard,Xenogard,WhiteAlienDragon,Xenogard,Xenogard,WhiteAlienDragon,Xenogard,Xenogard,ANY,ANY
-DarkMechaDragon,Xenolord,Xenolord,DarkMechaDragon,Xenolord,Xenolord,DarkMechaDragon,Xenolord,Xenolord,ANY,ANY
-SnowTigerBeastman,Bastigor,Bastigor,SnowTigerBeastman,Bastigor,Bastigor,SnowTigerBeastman,Bastigor,Bastigor,ANY,ANY
-Kitsunebi,Foxparks,Foxparks,IceFox,Foxcicle,Foxcicle,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,ANY,ANY
-RaijinDaughter,Dazzi,Dazzi,MysteryMask,Omascul,Omascul,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ANY,ANY
-WhiteTiger,Cryolinx,Cryolinx,FeatherOstrich,Dazemu,Dazemu,WhiteTiger_Ground,Cryolinx Terra,Cryolinx Terra,ANY,ANY
-FengyunDeeper,Fenglope,Fenglope,BlueThunderHorse,Azurmane,Azurmane,FengyunDeeper_Electric,Fenglope Lux,Fenglope Lux,ANY,ANY
-BerryGoat,Caprity,Caprity,PurpleSpider,Tarantriss,Tarantriss,BerryGoat_Dark,Caprity Noct,Caprity Noct,ANY,ANY
-Werewolf,Loupmoon,Loupmoon,MopKing,Sweepa,Sweepa,Werewolf_Ice,Loupmoon Cryst,Loupmoon Cryst,ANY,ANY
-Horus,Faleris,Faleris,Umihebi,Jormuntide,Jormuntide,Horus_Water,Faleris Aqua,Faleris Aqua,ANY,ANY
-PinkRabbit,Ribbuny,Ribbuny,LittleBriarRose,Bristla,Bristla,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ANY,ANY
-HerculesBeetle,Warsect,Warsect,DrillGame,Digtoise,Digtoise,HerculesBeetle_Ground,Warsect Terra,Warsect Terra,ANY,ANY
-AmaterasuWolf,Kitsun,Kitsun,BadCatgirl,Nyafia,Nyafia,AmaterasuWolf_Dark,Kitsun Noct,Kitsun Noct,ANY,ANY
-Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,ANY,ANY
-RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ANY,ANY
-WhiteTiger_Ground,Cryolinx Terra,Cryolinx Terra,WhiteTiger_Ground,Cryolinx Terra,Cryolinx Terra,WhiteTiger_Ground,Cryolinx Terra,Cryolinx Terra,ANY,ANY
-FengyunDeeper_Electric,Fenglope Lux,Fenglope Lux,FengyunDeeper_Electric,Fenglope Lux,Fenglope Lux,FengyunDeeper_Electric,Fenglope Lux,Fenglope Lux,ANY,ANY
-BerryGoat_Dark,Caprity Noct,Caprity Noct,BerryGoat_Dark,Caprity Noct,Caprity Noct,BerryGoat_Dark,Caprity Noct,Caprity Noct,ANY,ANY
-Werewolf_Ice,Loupmoon Cryst,Loupmoon Cryst,Werewolf_Ice,Loupmoon Cryst,Loupmoon Cryst,Werewolf_Ice,Loupmoon Cryst,Loupmoon Cryst,ANY,ANY
-Horus_Water,Faleris Aqua,Faleris Aqua,Horus_Water,Faleris Aqua,Faleris Aqua,Horus_Water,Faleris Aqua,Faleris Aqua,ANY,ANY
-PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ANY,ANY
-HerculesBeetle_Ground,Warsect Terra,Warsect Terra,HerculesBeetle_Ground,Warsect Terra,Warsect Terra,HerculesBeetle_Ground,Warsect Terra,Warsect Terra,ANY,ANY
-AmaterasuWolf_Dark,Kitsun Noct,Kitsun Noct,AmaterasuWolf_Dark,Kitsun Noct,Kitsun Noct,AmaterasuWolf_Dark,Kitsun Noct,Kitsun Noct,ANY,ANY
-GoldenHorse,Gildane,Gildane,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,WhiteDeer,Celesdir,Celesdir,ANY,ANY
-WhiteDeer,Celesdir,Celesdir,WhiteDeer,Celesdir,Celesdir,WhiteDeer,Celesdir,Celesdir,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001,Grüner Schleim,Green Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Red,Roter Schleim,Red Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+ClioneTwins,Amione,Amione,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+ClioneTwins,Amione,Amione,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+ClioneTwins,Amione,Amione,Penguin_Electric,Pengullet Lux,Pengullet Lux,ClioneTwins,Amione,Amione,ANY,ANY
+FlameBuffalo,Arsox,Arsox,Garm,Direhowl,Direhowl,ClioneTwins,Amione,Amione,ANY,ANY
+FlameBuffalo,Arsox,Arsox,Deer,Eikthyrdeer,Eikthyrdeer,ClioneTwins,Amione,Amione,ANY,ANY
+FlameBuffalo,Arsox,Arsox,LavaGirl,Flambelle,Flambelle,ClioneTwins,Amione,Amione,ANY,ANY
+FlameBuffalo,Arsox,Arsox,Alpaca,Melpaca,Melpaca,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+SoldierBee,Beegarde,Beegarde,LittleBriarRose,Bristla,Bristla,ClioneTwins,Amione,Amione,ANY,ANY
+SoldierBee,Beegarde,Beegarde,Garm,Direhowl,Direhowl,ClioneTwins,Amione,Amione,ANY,ANY
+SoldierBee,Beegarde,Beegarde,JellyfishFairy,Jelliette,Jelliette,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+LittleBriarRose,Bristla,Bristla,FlameBuffalo,Arsox,Arsox,ClioneTwins,Amione,Amione,ANY,ANY
+LittleBriarRose,Bristla,Bristla,CatBat,Tombat,Tombat,ClioneTwins,Amione,Amione,ANY,ANY
+BerryGoat,Caprity,Caprity,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+PinkCat,Cattiva,Cattiva,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+DarkCrow,Cawgnito,Cawgnito,LeafMomonga,Herbil,Herbil,ClioneTwins,Amione,Amione,ANY,ANY
+DarkCrow,Cawgnito,Cawgnito,JellyfishFairy,Jelliette,Jelliette,ClioneTwins,Amione,Amione,ANY,ANY
+DarkCrow,Cawgnito,Cawgnito,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+FlyingManta,Celaray,Celaray,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+FlyingManta_Thunder,Celaray Lux,Celaray Lux,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+ChickenPal,Chikipi,Chikipi,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+ChickenPal,Chikipi,Chikipi,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+WeaselDragon,Chillet,Chillet,LittleBriarRose,Bristla,Bristla,ClioneTwins,Amione,Amione,ANY,ANY
+WeaselDragon,Chillet,Chillet,Garm,Direhowl,Direhowl,ClioneTwins,Amione,Amione,ANY,ANY
+WeaselDragon,Chillet,Chillet,Deer,Eikthyrdeer,Eikthyrdeer,ClioneTwins,Amione,Amione,ANY,ANY
+WeaselDragon,Chillet,Chillet,LavaGirl,Flambelle,Flambelle,ClioneTwins,Amione,Amione,ANY,ANY
+WeaselDragon,Chillet,Chillet,LizardMan,Leezpunk,Leezpunk,ClioneTwins,Amione,Amione,ANY,ANY
+CuteButterfly,Cinnamoth,Cinnamoth,FlyingManta_Thunder,Celaray Lux,Celaray Lux,ClioneTwins,Amione,Amione,ANY,ANY
+CuteButterfly,Cinnamoth,Cinnamoth,TentacleTurtle,Turtacle,Turtacle,ClioneTwins,Amione,Amione,ANY,ANY
+CloverFairy,Clovee,Clovee,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ClioneTwins,Amione,Amione,ANY,ANY
+CloverFairy,Clovee,Clovee,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ClioneTwins,Amione,Amione,ANY,ANY
+KendoFrog,Croajiro,Croajiro,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,CuteMole,Fuddler,Fuddler,ClioneTwins,Amione,Amione,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,Kelpie,Kelpsea,Kelpsea,ClioneTwins,Amione,Amione,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,CowPal,Mozzarina,Mozzarina,ClioneTwins,Amione,Amione,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,SweetsSheep,Woolipop,Woolipop,ClioneTwins,Amione,Amione,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,BerryGoat,Caprity,Caprity,ClioneTwins,Amione,Amione,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,CuteButterfly,Cinnamoth,Cinnamoth,ClioneTwins,Amione,Amione,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,KendoFrog,Croajiro,Croajiro,ClioneTwins,Amione,Amione,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,LeafMomonga,Herbil,Herbil,ClioneTwins,Amione,Amione,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+NegativeKoala,Depresso,Depresso,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,DreamDemon,Daedream,Daedream,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,WizardOwl,Hoocrates,Hoocrates,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,NightFox,Nox,Nox,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,SamuraiDog,Pupperai,Pupperai,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,Monkey,Tanzee,Tanzee,ClioneTwins,Amione,Amione,ANY,ANY
+LazyCatfish,Dumud,Dumud,FlyingManta,Celaray,Celaray,ClioneTwins,Amione,Amione,ANY,ANY
+LazyCatfish,Dumud,Dumud,Deer,Eikthyrdeer,Eikthyrdeer,ClioneTwins,Amione,Amione,ANY,ANY
+LazyCatfish,Dumud,Dumud,Bastet_Ice,Mau Cryst,Mau Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+LazyCatfish,Dumud,Dumud,Alpaca,Melpaca,Melpaca,ClioneTwins,Amione,Amione,ANY,ANY
+LazyCatfish,Dumud,Dumud,ColorfulBird,Tocotoco,Tocotoco,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+Deer,Eikthyrdeer,Eikthyrdeer,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ClioneTwins,Amione,Amione,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,NegativeKoala,Depresso,Depresso,ClioneTwins,Amione,Amione,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,Kitsunebi,Foxparks,Foxparks,ClioneTwins,Amione,Amione,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,BluePlatypus,Fuack,Fuack,ClioneTwins,Amione,Amione,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,Carbunclo,Lifmunk,Lifmunk,ClioneTwins,Amione,Amione,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,ElecCat,Sparkit,Sparkit,ClioneTwins,Amione,Amione,ANY,ANY
+FairyDragon,Elphidran,Elphidran,PinkCat,Cattiva,Cattiva,ClioneTwins,Amione,Amione,ANY,ANY
+FairyDragon,Elphidran,Elphidran,FlyingManta,Celaray,Celaray,ClioneTwins,Amione,Amione,ANY,ANY
+FairyDragon,Elphidran,Elphidran,Bastet_Ice,Mau Cryst,Mau Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+FairyDragon,Elphidran,Elphidran,Alpaca,Melpaca,Melpaca,ClioneTwins,Amione,Amione,ANY,ANY
+FairyDragon,Elphidran,Elphidran,ColorfulBird,Tocotoco,Tocotoco,ClioneTwins,Amione,Amione,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,ChickenPal,Chikipi,Chikipi,ClioneTwins,Amione,Amione,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,CuteFox,Fixy,Vixy,ClioneTwins,Amione,Amione,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,SheepBall,Lamball,Lamball,ClioneTwins,Amione,Amione,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,Bastet,Mau,Mau,ClioneTwins,Amione,Amione,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,Ganesha,Teafant,Teafant,ClioneTwins,Amione,Amione,ANY,ANY
+StuffedShark,Finsider,Finsider,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,ClioneTwins,Amione,Amione,ANY,ANY
+StuffedShark,Finsider,Finsider,Eagle,Galeclaw,Galeclaw,ClioneTwins,Amione,Amione,ANY,ANY
+StuffedShark,Finsider,Finsider,SharkKid,Gobfin,Gobfin,ClioneTwins,Amione,Amione,ANY,ANY
+StuffedShark,Finsider,Finsider,JellyfishGhost,Jellroy,Jellroy,ClioneTwins,Amione,Amione,ANY,ANY
+StuffedShark,Finsider,Finsider,HawkBird,Nitewing,Nitewing,ClioneTwins,Amione,Amione,ANY,ANY
+CuteFox,Fixy,Vixy,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+CuteFox,Fixy,Vixy,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+LavaGirl,Flambelle,Flambelle,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerRabbit,Flopie,Flopie,SoldierBee,Beegarde,Beegarde,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerRabbit,Flopie,Flopie,DarkCrow,Cawgnito,Cawgnito,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerRabbit,Flopie,Flopie,FlyingManta_Thunder,Celaray Lux,Celaray Lux,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerRabbit,Flopie,Flopie,ElecPomeranian,Puffolt,Puffolt,ClioneTwins,Amione,Amione,ANY,ANY
+FlowerRabbit,Flopie,Flopie,CatBat,Tombat,Tombat,ClioneTwins,Amione,Amione,ANY,ANY
+IceFox,Foxcicle,Foxcicle,CuteFox,Fixy,Vixy,ClioneTwins,Amione,Amione,ANY,ANY
+IceFox,Foxcicle,Foxcicle,Hedgehog,Jolthog,Jolthog,ClioneTwins,Amione,Amione,ANY,ANY
+IceFox,Foxcicle,Foxcicle,SheepBall,Lamball,Lamball,ClioneTwins,Amione,Amione,ANY,ANY
+IceFox,Foxcicle,Foxcicle,Bastet,Mau,Mau,ClioneTwins,Amione,Amione,ANY,ANY
+IceFox,Foxcicle,Foxcicle,Ganesha,Teafant,Teafant,ClioneTwins,Amione,Amione,ANY,ANY
+Kitsunebi,Foxparks,Foxparks,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ClioneTwins,Amione,Amione,ANY,ANY
+Kitsunebi,Foxparks,Foxparks,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ClioneTwins,Amione,Amione,ANY,ANY
+Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,ClioneTwins,Amione,Amione,ANY,ANY
+BluePlatypus,Fuack,Fuack,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ClioneTwins,Amione,Amione,ANY,ANY
+BluePlatypus,Fuack,Fuack,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ClioneTwins,Amione,Amione,ANY,ANY
+CuteMole,Fuddler,Fuddler,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+CuteMole,Fuddler,Fuddler,KingAlpaca,Kingpaca,Kingpaca,ClioneTwins,Amione,Amione,ANY,ANY
+Eagle,Galeclaw,Galeclaw,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+Eagle,Galeclaw,Galeclaw,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+Eagle,Galeclaw,Galeclaw,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ClioneTwins,Amione,Amione,ANY,ANY
+OctopusGirl,Gloopie,Gloopie,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+OctopusGirl,Gloopie,Gloopie,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+OctopusGirl,Gloopie,Gloopie,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+OctopusGirl,Gloopie,Gloopie,Penguin_Electric,Pengullet Lux,Pengullet Lux,ClioneTwins,Amione,Amione,ANY,ANY
+SharkKid,Gobfin,Gobfin,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+SharkKid,Gobfin,Gobfin,Penguin_Electric,Pengullet Lux,Pengullet Lux,ClioneTwins,Amione,Amione,ANY,ANY
+SharkKid,Gobfin,Gobfin,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ClioneTwins,Amione,Amione,ANY,ANY
+Gorilla,Gorirat,Gorirat,WoolFox,Cremis,Cremis,ClioneTwins,Amione,Amione,ANY,ANY
+Gorilla,Gorirat,Gorirat,PinkRabbit,Ribbuny,Ribbuny,ClioneTwins,Amione,Amione,ANY,ANY
+Gorilla,Gorirat,Gorirat,FlameBambi,Rooby,Rooby,ClioneTwins,Amione,Amione,ANY,ANY
+Gorilla,Gorirat,Gorirat,Boar,Rushoar,Rushoar,ClioneTwins,Amione,Amione,ANY,ANY
+Gorilla,Gorirat,Gorirat,Monkey,Tanzee,Tanzee,ClioneTwins,Amione,Amione,ANY,ANY
+NaughtyCat,Grintale,Grintale,WoolFox,Cremis,Cremis,ClioneTwins,Amione,Amione,ANY,ANY
+NaughtyCat,Grintale,Grintale,DreamDemon,Daedream,Daedream,ClioneTwins,Amione,Amione,ANY,ANY
+NaughtyCat,Grintale,Grintale,NightFox,Nox,Nox,ClioneTwins,Amione,Amione,ANY,ANY
+NaughtyCat,Grintale,Grintale,Boar,Rushoar,Rushoar,ClioneTwins,Amione,Amione,ANY,ANY
+NaughtyCat,Grintale,Grintale,Monkey,Tanzee,Tanzee,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+PlantSlime,Gumoss,Gumoss,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ClioneTwins,Amione,Amione,ANY,ANY
+PlantSlime_Flower,Gumoss,Gumoss,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ClioneTwins,Amione,Amione,ANY,ANY
+WindChimes,Hangyu,Hangyu,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+WindChimes,Hangyu,Hangyu,KingAlpaca,Kingpaca,Kingpaca,ClioneTwins,Amione,Amione,ANY,ANY
+LeafMomonga,Herbil,Herbil,FlyingManta_Thunder,Celaray Lux,Celaray Lux,ClioneTwins,Amione,Amione,ANY,ANY
+WizardOwl,Hoocrates,Hoocrates,CaptainPenguin,Penking,Penking,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+JellyfishFairy,Jelliette,Jelliette,FlyingManta_Thunder,Celaray Lux,Celaray Lux,ClioneTwins,Amione,Amione,ANY,ANY
+JellyfishGhost,Jellroy,Jellroy,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+JellyfishGhost,Jellroy,Jellroy,TentacleTurtle,Turtacle,Turtacle,ClioneTwins,Amione,Amione,ANY,ANY
+CatMage,Katress,Katress,CloverFairy,Clovee,Clovee,ClioneTwins,Amione,Amione,ANY,ANY
+CatMage,Katress,Katress,NegativeKoala,Depresso,Depresso,ClioneTwins,Amione,Amione,ANY,ANY
+CatMage,Katress,Katress,Kitsunebi,Foxparks,Foxparks,ClioneTwins,Amione,Amione,ANY,ANY
+CatMage,Katress,Katress,BluePlatypus,Fuack,Fuack,ClioneTwins,Amione,Amione,ANY,ANY
+CatMage,Katress,Katress,Penguin,Pengullet,Pengullet,ClioneTwins,Amione,Amione,ANY,ANY
+Kelpie,Kelpsea,Kelpsea,KingAlpaca,Kingpaca,Kingpaca,ClioneTwins,Amione,Amione,ANY,ANY
+SmallArmadillo,Kikit,Kikit,LittleBriarRose,Bristla,Bristla,ClioneTwins,Amione,Amione,ANY,ANY
+SmallArmadillo,Kikit,Kikit,Deer,Eikthyrdeer,Eikthyrdeer,ClioneTwins,Amione,Amione,ANY,ANY
+SmallArmadillo,Kikit,Kikit,LavaGirl,Flambelle,Flambelle,ClioneTwins,Amione,Amione,ANY,ANY
+SmallArmadillo,Kikit,Kikit,Alpaca,Melpaca,Melpaca,ClioneTwins,Amione,Amione,ANY,ANY
+SmallArmadillo,Kikit,Kikit,ColorfulBird,Tocotoco,Tocotoco,ClioneTwins,Amione,Amione,ANY,ANY
+NegativeOctopus,Killamari,Killamari,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ClioneTwins,Amione,Amione,ANY,ANY
+SheepBall,Lamball,Lamball,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,SoldierBee,Beegarde,Beegarde,ClioneTwins,Amione,Amione,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,DarkCrow,Cawgnito,Cawgnito,ClioneTwins,Amione,Amione,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,ElecPomeranian,Puffolt,Puffolt,ClioneTwins,Amione,Amione,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,CatBat,Tombat,Tombat,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,WoolFox,Cremis,Cremis,ClioneTwins,Amione,Amione,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,DreamDemon,Daedream,Daedream,ClioneTwins,Amione,Amione,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,NightFox,Nox,Nox,ClioneTwins,Amione,Amione,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,SamuraiDog,Pupperai,Pupperai,ClioneTwins,Amione,Amione,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,Monkey,Tanzee,Tanzee,ClioneTwins,Amione,Amione,ANY,ANY
+PinkLizard,Lovander,Lovander,DreamDemon,Daedream,Daedream,ClioneTwins,Amione,Amione,ANY,ANY
+PinkLizard,Lovander,Lovander,PlantSlime,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+PinkLizard,Lovander,Lovander,PlantSlime_Flower,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+PinkLizard,Lovander,Lovander,WizardOwl,Hoocrates,Hoocrates,ClioneTwins,Amione,Amione,ANY,ANY
+PinkLizard,Lovander,Lovander,NightFox,Nox,Nox,ClioneTwins,Amione,Amione,ANY,ANY
+PinkLizard,Lovander,Lovander,SamuraiDog,Pupperai,Pupperai,ClioneTwins,Amione,Amione,ANY,ANY
+LeafPrincess,Lullu,Lullu,Hedgehog,Jolthog,Jolthog,ClioneTwins,Amione,Amione,ANY,ANY
+LeafPrincess,Lullu,Lullu,SheepBall,Lamball,Lamball,ClioneTwins,Amione,Amione,ANY,ANY
+LeafPrincess,Lullu,Lullu,Carbunclo,Lifmunk,Lifmunk,ClioneTwins,Amione,Amione,ANY,ANY
+LeafPrincess,Lullu,Lullu,Bastet,Mau,Mau,ClioneTwins,Amione,Amione,ANY,ANY
+LeafPrincess,Lullu,Lullu,ElecCat,Sparkit,Sparkit,ClioneTwins,Amione,Amione,ANY,ANY
+Mutant,Lunaris,Lunaris,NegativeKoala,Depresso,Depresso,ClioneTwins,Amione,Amione,ANY,ANY
+Mutant,Lunaris,Lunaris,Kitsunebi,Foxparks,Foxparks,ClioneTwins,Amione,Amione,ANY,ANY
+Mutant,Lunaris,Lunaris,Hedgehog,Jolthog,Jolthog,ClioneTwins,Amione,Amione,ANY,ANY
+Mutant,Lunaris,Lunaris,Carbunclo,Lifmunk,Lifmunk,ClioneTwins,Amione,Amione,ANY,ANY
+Mutant,Lunaris,Lunaris,ElecCat,Sparkit,Sparkit,ClioneTwins,Amione,Amione,ANY,ANY
+Alpaca,Melpaca,Melpaca,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+GrassPanda,Mossanda,Mossanda,CloverFairy,Clovee,Clovee,ClioneTwins,Amione,Amione,ANY,ANY
+GrassPanda,Mossanda,Mossanda,BluePlatypus,Fuack,Fuack,ClioneTwins,Amione,Amione,ANY,ANY
+GrassPanda,Mossanda,Mossanda,PlantSlime,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+GrassPanda,Mossanda,Mossanda,PlantSlime_Flower,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+GrassPanda,Mossanda,Mossanda,WizardOwl,Hoocrates,Hoocrates,ClioneTwins,Amione,Amione,ANY,ANY
+GrassPanda,Mossanda,Mossanda,Penguin,Pengullet,Pengullet,ClioneTwins,Amione,Amione,ANY,ANY
+CowPal,Mozzarina,Mozzarina,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+CowPal,Mozzarina,Mozzarina,KingAlpaca,Kingpaca,Kingpaca,ClioneTwins,Amione,Amione,ANY,ANY
+FluffyBird,Muffly,Muffly,ClioneTwins,Amione,Amione,ClioneTwins,Amione,Amione,ANY,ANY
+FluffyBird,Muffly,Muffly,OctopusGirl,Gloopie,Gloopie,ClioneTwins,Amione,Amione,ANY,ANY
+FluffyBird,Muffly,Muffly,SharkKid,Gobfin,Gobfin,ClioneTwins,Amione,Amione,ANY,ANY
+FluffyBird,Muffly,Muffly,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,ClioneTwins,Amione,Amione,ANY,ANY
+FluffyBird,Muffly,Muffly,HawkBird,Nitewing,Nitewing,ClioneTwins,Amione,Amione,ANY,ANY
+IceCrocodile,Munchill,Munchill,WoolFox,Cremis,Cremis,ClioneTwins,Amione,Amione,ANY,ANY
+IceCrocodile,Munchill,Munchill,DreamDemon,Daedream,Daedream,ClioneTwins,Amione,Amione,ANY,ANY
+IceCrocodile,Munchill,Munchill,FlameBambi,Rooby,Rooby,ClioneTwins,Amione,Amione,ANY,ANY
+IceCrocodile,Munchill,Munchill,Boar,Rushoar,Rushoar,ClioneTwins,Amione,Amione,ANY,ANY
+IceCrocodile,Munchill,Munchill,Monkey,Tanzee,Tanzee,ClioneTwins,Amione,Amione,ANY,ANY
+CactusDoll,Needoll,Needoll,BerryGoat,Caprity,Caprity,ClioneTwins,Amione,Amione,ANY,ANY
+CactusDoll,Needoll,Needoll,CuteButterfly,Cinnamoth,Cinnamoth,ClioneTwins,Amione,Amione,ANY,ANY
+CactusDoll,Needoll,Needoll,KendoFrog,Croajiro,Croajiro,ClioneTwins,Amione,Amione,ANY,ANY
+CactusDoll,Needoll,Needoll,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,ClioneTwins,Amione,Amione,ANY,ANY
+CactusDoll,Needoll,Needoll,JellyfishGhost,Jellroy,Jellroy,ClioneTwins,Amione,Amione,ANY,ANY
+HawkBird,Nitewing,Nitewing,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+HawkBird,Nitewing,Nitewing,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ClioneTwins,Amione,Amione,ANY,ANY
+Penguin,Pengullet,Pengullet,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ClioneTwins,Amione,Amione,ANY,ANY
+Penguin_Electric,Pengullet Lux,Pengullet Lux,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+Penguin_Electric,Pengullet Lux,Pengullet Lux,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,ClioneTwins,Amione,Amione,ANY,ANY
+CaptainPenguin,Penking,Penking,CloverFairy,Clovee,Clovee,ClioneTwins,Amione,Amione,ANY,ANY
+CaptainPenguin,Penking,Penking,PlantSlime,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+CaptainPenguin,Penking,Penking,PlantSlime_Flower,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+CaptainPenguin,Penking,Penking,Penguin,Pengullet,Pengullet,ClioneTwins,Amione,Amione,ANY,ANY
+CaptainPenguin,Penking,Penking,SamuraiDog,Pupperai,Pupperai,ClioneTwins,Amione,Amione,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,Garm,Direhowl,Direhowl,ClioneTwins,Amione,Amione,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,JellyfishFairy,Jelliette,Jelliette,ClioneTwins,Amione,Amione,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+FireKirin,Pyrin,Pyrin,CuteFox,Fixy,Vixy,ClioneTwins,Amione,Amione,ANY,ANY
+FireKirin,Pyrin,Pyrin,Hedgehog,Jolthog,Jolthog,ClioneTwins,Amione,Amione,ANY,ANY
+FireKirin,Pyrin,Pyrin,SheepBall,Lamball,Lamball,ClioneTwins,Amione,Amione,ANY,ANY
+FireKirin,Pyrin,Pyrin,Carbunclo,Lifmunk,Lifmunk,ClioneTwins,Amione,Amione,ANY,ANY
+FireKirin,Pyrin,Pyrin,Bastet,Mau,Mau,ClioneTwins,Amione,Amione,ANY,ANY
+ThunderDog,Rayhound,Rayhound,ChickenPal,Chikipi,Chikipi,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+IceDeer,Reindrix,Reindrix,ChickenPal,Chikipi,Chikipi,ClioneTwins,Amione,Amione,ANY,ANY
+IceDeer,Reindrix,Reindrix,Ganesha,Teafant,Teafant,ClioneTwins,Amione,Amione,ANY,ANY
+PinkRabbit,Ribbuny,Ribbuny,MopKing,Sweepa,Sweepa,ClioneTwins,Amione,Amione,ANY,ANY
+RobinHood,Robinquill,Robinquill,PinkCat,Cattiva,Cattiva,ClioneTwins,Amione,Amione,ANY,ANY
+RobinHood,Robinquill,Robinquill,FlyingManta,Celaray,Celaray,ClioneTwins,Amione,Amione,ANY,ANY
+RobinHood,Robinquill,Robinquill,WindChimes,Hangyu,Hangyu,ClioneTwins,Amione,Amione,ANY,ANY
+RobinHood,Robinquill,Robinquill,NegativeOctopus,Killamari,Killamari,ClioneTwins,Amione,Amione,ANY,ANY
+RobinHood,Robinquill,Robinquill,Bastet_Ice,Mau Cryst,Mau Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+SmallYeti,Snugloo,Snugloo,BerryGoat,Caprity,Caprity,ClioneTwins,Amione,Amione,ANY,ANY
+SmallYeti,Snugloo,Snugloo,CuteButterfly,Cinnamoth,Cinnamoth,ClioneTwins,Amione,Amione,ANY,ANY
+SmallYeti,Snugloo,Snugloo,LeafMomonga,Herbil,Herbil,ClioneTwins,Amione,Amione,ANY,ANY
+SmallYeti,Snugloo,Snugloo,JellyfishFairy,Jelliette,Jelliette,ClioneTwins,Amione,Amione,ANY,ANY
+SmallYeti,Snugloo,Snugloo,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+DandelionGirl,Souffline,Souffline,NegativeKoala,Depresso,Depresso,ClioneTwins,Amione,Amione,ANY,ANY
+DandelionGirl,Souffline,Souffline,Hedgehog,Jolthog,Jolthog,ClioneTwins,Amione,Amione,ANY,ANY
+DandelionGirl,Souffline,Souffline,Carbunclo,Lifmunk,Lifmunk,ClioneTwins,Amione,Amione,ANY,ANY
+DandelionGirl,Souffline,Souffline,Bastet,Mau,Mau,ClioneTwins,Amione,Amione,ANY,ANY
+DandelionGirl,Souffline,Souffline,ElecCat,Sparkit,Sparkit,ClioneTwins,Amione,Amione,ANY,ANY
+ElecCat,Sparkit,Sparkit,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ClioneTwins,Amione,Amione,ANY,ANY
+Serpent,Surfent,Surfent,KendoFrog,Croajiro,Croajiro,ClioneTwins,Amione,Amione,ANY,ANY
+Serpent,Surfent,Surfent,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,ClioneTwins,Amione,Amione,ANY,ANY
+Serpent,Surfent,Surfent,Eagle,Galeclaw,Galeclaw,ClioneTwins,Amione,Amione,ANY,ANY
+Serpent,Surfent,Surfent,JellyfishGhost,Jellroy,Jellroy,ClioneTwins,Amione,Amione,ANY,ANY
+Serpent,Surfent,Surfent,HawkBird,Nitewing,Nitewing,ClioneTwins,Amione,Amione,ANY,ANY
+MopKing,Sweepa,Sweepa,WoolFox,Cremis,Cremis,ClioneTwins,Amione,Amione,ANY,ANY
+MopKing,Sweepa,Sweepa,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+MopKing,Sweepa,Sweepa,FlameBambi,Rooby,Rooby,ClioneTwins,Amione,Amione,ANY,ANY
+MopKing,Sweepa,Sweepa,Boar,Rushoar,Rushoar,ClioneTwins,Amione,Amione,ANY,ANY
+Ganesha,Teafant,Teafant,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+Ganesha,Teafant,Teafant,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+ColorfulBird,Tocotoco,Tocotoco,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,ClioneTwins,Amione,Amione,ANY,ANY
+CatBat,Tombat,Tombat,Garm,Direhowl,Direhowl,ClioneTwins,Amione,Amione,ANY,ANY
+CatBat,Tombat,Tombat,LavaGirl,Flambelle,Flambelle,ClioneTwins,Amione,Amione,ANY,ANY
+TentacleTurtle,Turtacle,Turtacle,BerryGoat,Caprity,Caprity,ClioneTwins,Amione,Amione,ANY,ANY
+TentacleTurtle,Turtacle,Turtacle,KendoFrog,Croajiro,Croajiro,ClioneTwins,Amione,Amione,ANY,ANY
+TentacleTurtle,Turtacle,Turtacle,LeafMomonga,Herbil,Herbil,ClioneTwins,Amione,Amione,ANY,ANY
+Kirin,Univolt,Univolt,PinkCat,Cattiva,Cattiva,ClioneTwins,Amione,Amione,ANY,ANY
+Kirin,Univolt,Univolt,NegativeOctopus,Killamari,Killamari,ClioneTwins,Amione,Amione,ANY,ANY
+Kirin,Univolt,Univolt,Bastet_Ice,Mau Cryst,Mau Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+Kirin,Univolt,Univolt,ColorfulBird,Tocotoco,Tocotoco,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,BerryGoat_Dark,Caprity Noct,Caprity Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ThunderDog,Rayhound,Rayhound,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,IceDeer,Reindrix,Reindrix,ClioneTwins,Amione,Amione,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,LongCat,Valentail,Valentail,ClioneTwins,Amione,Amione,ANY,ANY
+FoxMage,Vulmag,Wixen,PlantSlime,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+FoxMage,Vulmag,Wixen,PlantSlime_Flower,Gumoss,Gumoss,ClioneTwins,Amione,Amione,ANY,ANY
+FoxMage,Vulmag,Wixen,WizardOwl,Hoocrates,Hoocrates,ClioneTwins,Amione,Amione,ANY,ANY
+FoxMage,Vulmag,Wixen,NightFox,Nox,Nox,ClioneTwins,Amione,Amione,ANY,ANY
+FoxMage,Vulmag,Wixen,Penguin,Pengullet,Pengullet,ClioneTwins,Amione,Amione,ANY,ANY
+FoxMage,Vulmag,Wixen,SamuraiDog,Pupperai,Pupperai,ClioneTwins,Amione,Amione,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,PinkCat,Cattiva,Cattiva,ClioneTwins,Amione,Amione,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,CuteMole,Fuddler,Fuddler,ClioneTwins,Amione,Amione,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,WindChimes,Hangyu,Hangyu,ClioneTwins,Amione,Amione,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,NegativeOctopus,Killamari,Killamari,ClioneTwins,Amione,Amione,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,Bastet_Ice,Mau Cryst,Mau Cryst,ClioneTwins,Amione,Amione,ANY,ANY
+SweetsSheep,Woolipop,Woolipop,KingAlpaca,Kingpaca,Kingpaca,ClioneTwins,Amione,Amione,ANY,ANY
+GuardianDog,Yakumo,Yakumo,CuteMole,Fuddler,Fuddler,ClioneTwins,Amione,Amione,ANY,ANY
+GuardianDog,Yakumo,Yakumo,WindChimes,Hangyu,Hangyu,ClioneTwins,Amione,Amione,ANY,ANY
+GuardianDog,Yakumo,Yakumo,Kelpie,Kelpsea,Kelpsea,ClioneTwins,Amione,Amione,ANY,ANY
+GuardianDog,Yakumo,Yakumo,NegativeOctopus,Killamari,Killamari,ClioneTwins,Amione,Amione,ANY,ANY
+GuardianDog,Yakumo,Yakumo,CowPal,Mozzarina,Mozzarina,ClioneTwins,Amione,Amione,ANY,ANY
 YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Red,Roter Schleim,Red Slime,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
-YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
-YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster003,Höhlenfledermaus,Cave Bat,ANY,ANY
-YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
 YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ANY,ANY
 YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
-YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
-NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,ANY,ANY
-Penguin_Electric,Pengullet Lux,Pengullet Lux,Penguin_Electric,Pengullet Lux,Pengullet Lux,Penguin_Electric,Pengullet Lux,Pengullet Lux,ANY,ANY
-CaptainPenguin_Black,Penking Lux,Penking Lux,CaptainPenguin_Black,Penking Lux,Penking Lux,CaptainPenguin_Black,Penking Lux,Penking Lux,ANY,ANY
-FlyingManta_Thunder,Celaray Lux,Celaray Lux,FlyingManta_Thunder,Celaray Lux,Celaray Lux,FlyingManta_Thunder,Celaray Lux,Celaray Lux,ANY,ANY
-BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,ANY,ANY
-LazyCatfish_Gold,Dumud Gild,Dumud Gild,LazyCatfish_Gold,Dumud Gild,Dumud Gild,LazyCatfish_Gold,Dumud Gild,Dumud Gild,ANY,ANY
-TentacleTurtle_Ground,Turtacle Terra,Turtacle Terra,TentacleTurtle_Ground,Turtacle Terra,Turtacle Terra,TentacleTurtle_Ground,Turtacle Terra,Turtacle Terra,ANY,ANY
-KendoFrog_Dark,Croajiro Noct,Croajiro Noct,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,ANY,ANY
-BlueDragon_Ice,Azurobe Cryst,Azurobe Cryst,BlueDragon_Ice,Azurobe Cryst,Azurobe Cryst,BlueDragon_Ice,Azurobe Cryst,Azurobe Cryst,ANY,ANY
-IceNarwhal_Fire,Whalaska Ignis,Whalaska Ignis,IceNarwhal_Fire,Whalaska Ignis,Whalaska Ignis,IceNarwhal_Fire,Whalaska Ignis,Whalaska Ignis,ANY,ANY
-GhostAnglerfish_Fire,Ghangler Ignis,Ghangler Ignis,GhostAnglerfish_Fire,Ghangler Ignis,Ghangler Ignis,GhostAnglerfish_Fire,Ghangler Ignis,Ghangler Ignis,ANY,ANY
-StuffedShark_Fire,Finsider Ignis,Finsider Ignis,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ANY,ANY
-PoseidonOrca,Neptilius,Neptilius,PoseidonOrca,Neptilius,Neptilius,PoseidonOrca,Neptilius,Neptilius,ANY,ANY
-NegativeOctopus,Killamari,Killamari,PinkRabbit,Ribbuny,Ribbuny,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,ANY,ANY
-Penguin,Pengullet,Pengullet,ElecCat,Sparkit,Sparkit,Penguin_Electric,Pengullet Lux,Pengullet Lux,ANY,ANY
-CaptainPenguin,Penking,Penking,ThunderDog,Rayhound,Rayhound,CaptainPenguin_Black,Penking Lux,Penking Lux,ANY,ANY
-FlyingManta,Celaray,Celaray,Kirin,Univolt,Univolt,FlyingManta_Thunder,Celaray Lux,Celaray Lux,ANY,ANY
-LazyCatfish,Dumud,Dumud,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,LazyCatfish_Gold,Dumud Gild,Dumud Gild,ANY,ANY
-TentacleTurtle,Turtacle,Turtacle,DrillGame,Digtoise,Digtoise,TentacleTurtle_Ground,Turtacle Terra,Turtacle Terra,ANY,ANY
-KendoFrog,Croajiro,Croajiro,Ronin_Dark,Bushi Noct,Bushi Noct,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,ANY,ANY
-BlueDragon,Azurobe,Azurobe,SnowPeafowl,Frostplume,Frostplume,BlueDragon_Ice,Azurobe Cryst,Azurobe Cryst,ANY,ANY
-IceNarwhal,Whalaska,Whalaska,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,IceNarwhal_Fire,Whalaska Ignis,Whalaska Ignis,ANY,ANY
-GhostAnglerfish,Ghangler,Ghangler,CandleGhost,Sootseer,Sootseer,GhostAnglerfish_Fire,Ghangler Ignis,Ghangler Ignis,ANY,ANY
-StuffedShark,Finsider,Finsider,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ANY,ANY
-LegendDeer,Hartalis,Hartalis,LegendDeer,Hartalis,Hartalis,LegendDeer,Hartalis,Hartalis,ANY,ANY
-Monkey_Fire,Tanzee Ignis,Tanzee Ignis,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,ANY,ANY
-Kirin_Ice,Univolt Cryst,Univolt Cryst,Kirin_Ice,Univolt Cryst,Univolt Cryst,Kirin_Ice,Univolt Cryst,Univolt Cryst,ANY,ANY
-ThunderDog_Ice,Rayhound Cryst,Rayhound Cryst,ThunderDog_Ice,Rayhound Cryst,Rayhound Cryst,ThunderDog_Ice,Rayhound Cryst,Rayhound Cryst,ANY,ANY
-ThunderBird_Ice,Beakon Cryst,Beakon Cryst,ThunderBird_Ice,Beakon Cryst,Beakon Cryst,ThunderBird_Ice,Beakon Cryst,Beakon Cryst,ANY,ANY
-SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ANY,ANY
-ScorpionMan_Electric,Prixter Lux,Prixter Lux,ScorpionMan_Electric,Prixter Lux,Prixter Lux,ScorpionMan_Electric,Prixter Lux,Prixter Lux,ANY,ANY
-BlackPuppy_Ice,Smokie Cryst,Smokie Cryst,BlackPuppy_Ice,Smokie Cryst,Smokie Cryst,BlackPuppy_Ice,Smokie Cryst,Smokie Cryst,ANY,ANY
-GhostRabbit_Grass,Nitemary Botan,Nitemary Botan,GhostRabbit_Grass,Nitemary Botan,Nitemary Botan,GhostRabbit_Grass,Nitemary Botan,Nitemary Botan,ANY,ANY
-NightBlueHorse_Neutral,Starryon Primo,Starryon Primo,NightBlueHorse_Neutral,Starryon Primo,Starryon Primo,NightBlueHorse_Neutral,Starryon Primo,Starryon Primo,ANY,ANY
-OctopusGirl_Neutral,Gloopie Primo,Gloopie Primo,OctopusGirl_Neutral,Gloopie Primo,Gloopie Primo,OctopusGirl_Neutral,Gloopie Primo,Gloopie Primo,ANY,ANY
-WhiteMoth_Neutral,Sibelyx Primo,Sibelyx Primo,WhiteMoth_Neutral,Sibelyx Primo,Sibelyx Primo,WhiteMoth_Neutral,Sibelyx Primo,Sibelyx Primo,ANY,ANY
-WingGolem_Fire,Knocklem Ignis,Knocklem Ignis,WingGolem_Fire,Knocklem Ignis,Knocklem Ignis,WingGolem_Fire,Knocklem Ignis,Knocklem Ignis,ANY,ANY
-FlowerDoll_Fire,Petallia Ignis,Petallia Ignis,FlowerDoll_Fire,Petallia Ignis,Petallia Ignis,FlowerDoll_Fire,Petallia Ignis,Petallia Ignis,ANY,ANY
-WhiteDeer_Dark,Celesdir Noct,Celesdir Noct,WhiteDeer_Dark,Celesdir Noct,Celesdir Noct,WhiteDeer_Dark,Celesdir Noct,Celesdir Noct,ANY,ANY
-IceSeal_Ground,Polapup Terra,Polapup Terra,IceSeal_Ground,Polapup Terra,Polapup Terra,IceSeal_Ground,Polapup Terra,Polapup Terra,ANY,ANY
-KingSunfish_Thunder,Solmora Lux,Solmora Lux,KingSunfish_Thunder,Solmora Lux,Solmora Lux,KingSunfish_Thunder,Solmora Lux,Solmora Lux,ANY,ANY
-GrassGolem_Dark,Dualith Noct,Dualith Noct,GrassGolem_Dark,Dualith Noct,Dualith Noct,GrassGolem_Dark,Dualith Noct,Dualith Noct,ANY,ANY
-CubeTurtle_Neutral,Tetroise Primo,Tetroise Primo,CubeTurtle_Neutral,Tetroise Primo,Tetroise Primo,CubeTurtle_Neutral,Tetroise Primo,Tetroise Primo,ANY,ANY
-GhostDragon_Fire,Eidrolon Ignis,Eidrolon Ignis,GhostDragon_Fire,Eidrolon Ignis,Eidrolon Ignis,GhostDragon_Fire,Eidrolon Ignis,Eidrolon Ignis,ANY,ANY
-VolcanoDragon_Ice,Moldron Cryst,Moldron Cryst,VolcanoDragon_Ice,Moldron Cryst,Moldron Cryst,VolcanoDragon_Ice,Moldron Cryst,Moldron Cryst,ANY,ANY
-RockBeast_Ice,Pierdon Cryst,Pierdon Cryst,RockBeast_Ice,Pierdon Cryst,Pierdon Cryst,RockBeast_Ice,Pierdon Cryst,Pierdon Cryst,ANY,ANY
-SwordCutlassfish_Fire,Skutlass Ignis,Skutlass Ignis,SwordCutlassfish_Fire,Skutlass Ignis,Skutlass Ignis,SwordCutlassfish_Fire,Skutlass Ignis,Skutlass Ignis,ANY,ANY
-ElecSnail_Ground,Snock Lux,Snock Lux,ElecSnail_Ground,Snock Lux,Snock Lux,ElecSnail_Ground,Snock Lux,Snock Lux,ANY,ANY
-CactusDoll_Dark,Needoll Noct,Needoll Noct,CactusDoll_Dark,Needoll Noct,Needoll Noct,CactusDoll_Dark,Needoll Noct,Needoll Noct,ANY,ANY
-GrassMinotaur_Ice,Elgrove Cryst,Elgrove Cryst,GrassMinotaur_Ice,Elgrove Cryst,Elgrove Cryst,GrassMinotaur_Ice,Elgrove Cryst,Elgrove Cryst,ANY,ANY
-Monkey,Tanzee,Tanzee,LavaGirl,Flambelle,Flambelle,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,ANY,ANY
-Kirin,Univolt,Univolt,SnowPeafowl,Frostplume,Frostplume,Kirin_Ice,Univolt Cryst,Univolt Cryst,ANY,ANY
-ThunderDog,Rayhound,Rayhound,IceFox,Foxcicle,Foxcicle,ThunderDog_Ice,Rayhound Cryst,Rayhound Cryst,ANY,ANY
-ThunderBird,Beakon,Beakon,SnowPeafowl,Frostplume,Frostplume,ThunderBird_Ice,Beakon Cryst,Beakon Cryst,ANY,ANY
-SweetsSheep,Woolipop,Woolipop,SmallArmadillo,Kikit,Kikit,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ANY,ANY
-ScorpionMan,Prixter,Prixter,HadesBird_Electric,Helzephyr Lux,Helzephyr Lux,ScorpionMan_Electric,Prixter Lux,Prixter Lux,ANY,ANY
-BlackPuppy,Smokie,Smokie,IceCrocodile,Munchill,Munchill,BlackPuppy_Ice,Smokie Cryst,Smokie Cryst,ANY,ANY
-GhostRabbit,Nitemary,Nitemary,FlowerDoll,Petallia,Petallia,GhostRabbit_Grass,Nitemary Botan,Nitemary Botan,ANY,ANY
-NightBlueHorse,Starryon,Starryon,WhiteDeer,Celesdir,Celesdir,NightBlueHorse_Neutral,Starryon Primo,Starryon Primo,ANY,ANY
-OctopusGirl,Gloopie,Gloopie,LongCat,Valentail,Valentail,OctopusGirl_Neutral,Gloopie Primo,Gloopie Primo,ANY,ANY
-WhiteMoth,Sibelyx,Sibelyx,SleeveRabbit,Lapure,Lapure,WhiteMoth_Neutral,Sibelyx Primo,Sibelyx Primo,ANY,ANY
-WingGolem,Knocklem,Knocklem,RedArmorBird,Ragnahawk,Ragnahawk,WingGolem_Fire,Knocklem Ignis,Knocklem Ignis,ANY,ANY
-FlowerDoll,Petallia,Petallia,Ronin,Bushi,Bushi,FlowerDoll_Fire,Petallia Ignis,Petallia Ignis,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,ANY,ANY
+SnowPeafowl,Frostplume,Frostplume,BlueDragon,Azurobe,Azurobe,BlueDragon_Ice,Azurobe Cryst,Azurobe Cryst,ANY,ANY
+SnowPeafowl,Frostplume,Frostplume,ThunderBird,Beakon,Beakon,ThunderBird_Ice,Beakon Cryst,Beakon Cryst,ANY,ANY
+NightLady,Bellanoir,Bellanoir,NightLady_Dark,Bellanoir Libero,Bellanoir Libero,NightLady,Bellanoir,Bellanoir,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,ANY,ANY
+Manticore,Blazehowl,Blazehowl,CatVampire,Felbat,Felbat,Manticore_Dark,Blazehowl Noct,Blazehowl Noct,ANY,ANY
+SakuraSaurus,Broncherry,Broncherry,BluePlatypus,Fuack,Fuack,SakuraSaurus_Water,Broncherry Aqua,Broncherry Aqua,ANY,ANY
+CandleGhost,Sootseer,Sootseer,Ronin,Bushi,Bushi,Ronin_Dark,Bushi Noct,Bushi Noct,ANY,ANY
+PurpleSpider,Tarantriss,Tarantriss,BerryGoat,Caprity,Caprity,BerryGoat_Dark,Caprity Noct,Caprity Noct,ANY,ANY
+Kirin,Univolt,Univolt,FlyingManta,Celaray,Celaray,FlyingManta_Thunder,Celaray Lux,Celaray Lux,ANY,ANY
+GoldenHorse,Gildane,Gildane,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,WhiteDeer,Celesdir,Celesdir,ANY,ANY
 WhiteDeer,Celesdir,Celesdir,AmaterasuWolf_Dark,Kitsun Noct,Kitsun Noct,WhiteDeer_Dark,Celesdir Noct,Celesdir Noct,ANY,ANY
-IceSeal,Polapup,Polapup,Serpent_Ground,Surfent Terra,Surfent Terra,IceSeal_Ground,Polapup Terra,Polapup Terra,ANY,ANY
-KingSunfish,Solmora,Solmora,ElecLizard,Slowatt,Slowatt,KingSunfish_Thunder,Solmora Lux,Solmora Lux,ANY,ANY
+WeaselDragon,Chillet,Chillet,FlameBuffalo,Arsox,Arsox,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,ANY,ANY
+KendoFrog,Croajiro,Croajiro,Ronin_Dark,Bushi Noct,Bushi Noct,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,ANY,ANY
+WhiteTiger,Cryolinx,Cryolinx,FeatherOstrich,Dazemu,Dazemu,WhiteTiger_Ground,Cryolinx Terra,Cryolinx Terra,ANY,ANY
+MysteryMask,Omascul,Omascul,RaijinDaughter,Dazzi,Dazzi,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,ANY,ANY
+ThunderDog,Rayhound,Rayhound,FlowerDinosaur,Dinossom,Dinossom,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,ANY,ANY
 GrassGolem,Dualith,Dualith,CandleGhost,Sootseer,Sootseer,GrassGolem_Dark,Dualith Noct,Dualith Noct,ANY,ANY
-CubeTurtle,Tetroise,Tetroise,WhiteDeer,Celesdir,Celesdir,CubeTurtle_Neutral,Tetroise Primo,Tetroise Primo,ANY,ANY
+LazyCatfish,Dumud,Dumud,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,LazyCatfish_Gold,Dumud Gild,Dumud Gild,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaBoss001_Small,Dämonenauge,Demon Eye,YakushimaBoss001_Small,Dämonenauge,Demon Eye,ANY,ANY
 GhostDragon,Eidrolon,Eidrolon,Suzaku,Suzaku,Suzaku,GhostDragon_Fire,Eidrolon Ignis,Eidrolon Ignis,ANY,ANY
-VolcanoDragon,Moldron,Moldron,VolcanicMonster_Ice,Reptyro Cryst,Reptyro Cryst,VolcanoDragon_Ice,Moldron Cryst,Moldron Cryst,ANY,ANY
-RockBeast,Pierdon,Pierdon,Yeti,Wumpo,Wumpo,RockBeast_Ice,Pierdon Cryst,Pierdon Cryst,ANY,ANY
-SwordCutlassfish,Skutlass,Skutlass,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,SwordCutlassfish_Fire,Skutlass Ignis,Skutlass Ignis,ANY,ANY
-ElecSnail,Snock,Snock,TentacleTurtle_Ground,Turtacle Terra,Turtacle Terra,ElecSnail_Ground,Snock Lux,Snock Lux,ANY,ANY
-CactusDoll,Needoll,Needoll,BlueberryFairy,Prunelia,Prunelia,CactusDoll_Dark,Needoll Noct,Needoll Noct,ANY,ANY
+WindChimes,Hangyu,Hangyu,Deer,Eikthyrdeer,Eikthyrdeer,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,ANY,ANY
 GrassMinotaur,Elgrove,Elgrove,RockBeast_Ice,Pierdon Cryst,Pierdon Cryst,GrassMinotaur_Ice,Elgrove Cryst,Elgrove Cryst,ANY,ANY
-BlueSkyDragon,Shaolong,Shaolong,BlueSkyDragon,Shaolong,Shaolong,BlueSkyDragon,Shaolong,Shaolong,ANY,ANY
-FlowerPrince,Dandilord,Dandilord,FlowerPrince,Dandilord,Dandilord,FlowerPrince,Dandilord,Dandilord,ANY,ANY
-Mothman,Silvance,Silvance,Mothman,Silvance,Silvance,Mothman,Silvance,Silvance,ANY,ANY
+Serpent,Surfent,Surfent,FairyDragon,Elphidran,Elphidran,FairyDragon_Water,Elphidran Aqua,Elphidran Aqua,ANY,ANY
+Horus,Faleris,Faleris,Umihebi,Jormuntide,Jormuntide,Horus_Water,Faleris Aqua,Faleris Aqua,ANY,ANY
+BlueThunderHorse,Azurmane,Azurmane,FengyunDeeper,Fenglope,Fenglope,FengyunDeeper_Electric,Fenglope Lux,Fenglope Lux,ANY,ANY
+StuffedShark,Finsider,Finsider,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,ANY,ANY
+IceFox,Foxcicle,Foxcicle,Kitsunebi,Foxparks,Foxparks,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,ANY,ANY
+IceHorse,Frostallion,Frostallion,HadesBird,Helzephyr,Helzephyr,IceHorse_Dark,Frostallion Noct,Frostallion Noct,ANY,ANY
+LavaGirl,Flambelle,Flambelle,BluePlatypus,Fuack,Fuack,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,ANY,ANY
+CandleGhost,Sootseer,Sootseer,GhostAnglerfish,Ghangler,Ghangler,GhostAnglerfish_Fire,Ghangler Ignis,Ghangler Ignis,ANY,ANY
+LongCat,Valentail,Valentail,OctopusGirl,Gloopie,Gloopie,OctopusGirl_Neutral,Gloopie Primo,Gloopie Primo,ANY,ANY
+SharkKid,Gobfin,Gobfin,FlameBambi,Rooby,Rooby,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,ANY,ANY
+SmallArmadillo,Kikit,Kikit,Gorilla,Gorirat,Gorirat,Gorilla_Ground,Gorirat Terra,Gorirat Terra,ANY,ANY
+WindChimes,Hangyu,Hangyu,MopBaby,Swee,Swee,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,ANY,ANY
+ThunderBird,Beakon,Beakon,HadesBird,Helzephyr,Helzephyr,HadesBird_Electric,Helzephyr Lux,Helzephyr Lux,ANY,ANY
+GhostBeast,Maraith,Maraith,Baphomet,Incineram,Incineram,Baphomet_Dark,Incineram Noct,Incineram Noct,ANY,ANY
+Penguin,Pengullet,Pengullet,Hedgehog,Jolthog,Jolthog,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,ANY,ANY
+Umihebi,Jormuntide,Jormuntide,Manticore,Blazehowl,Blazehowl,Umihebi_Fire,Jormuntide Ignis,Jormuntide Ignis,ANY,ANY
+CatMage,Katress,Katress,FoxMage,Vulmag,Wixen,CatMage_Fire,Katress Ignis,Katress Ignis,ANY,ANY
+CatMage,Katress,Katress,FoxMage,Vulmag,Wixen,CatMage_Fire,Katress Ignis,Katress Ignis,FEMALE,MALE
+PinkRabbit,Ribbuny,Ribbuny,NegativeOctopus,Killamari,Killamari,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,ANY,ANY
+IceDeer,Reindrix,Reindrix,KingAlpaca,Kingpaca,Kingpaca,KingAlpaca_Ice,Kingpaca Cryst,Kingpaca Cryst,ANY,ANY
+BadCatgirl,Nyafia,Nyafia,AmaterasuWolf,Kitsun,Kitsun,AmaterasuWolf_Dark,Kitsun Noct,Kitsun Noct,ANY,ANY
+WingGolem,Knocklem,Knocklem,RedArmorBird,Ragnahawk,Ragnahawk,WingGolem_Fire,Knocklem Ignis,Knocklem Ignis,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,LavaGirl,Flambelle,Flambelle,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,MopKing,Sweepa,Sweepa,Werewolf_Ice,Loupmoon Cryst,Loupmoon Cryst,ANY,ANY
+LilyQueen,Lyleen,Lyleen,DarkScorpion,Menasting,Menasting,LilyQueen_Dark,Lyleen Noct,Lyleen Noct,ANY,ANY
+Yeti,Wumpo,Wumpo,GrassMammoth,Mammorest,Mammorest,GrassMammoth_Ice,Mammorest Cryst,Mammorest Cryst,ANY,ANY
+Bastet,Mau,Mau,Penguin,Pengullet,Pengullet,Bastet_Ice,Mau Cryst,Mau Cryst,ANY,ANY
+WingGolem,Knocklem,Knocklem,DarkScorpion,Menasting,Menasting,DarkScorpion_Ground,Menasting Terra,Menasting Terra,ANY,ANY
+VolcanoDragon,Moldron,Moldron,VolcanicMonster_Ice,Reptyro Cryst,Reptyro Cryst,VolcanoDragon_Ice,Moldron Cryst,Moldron Cryst,ANY,ANY
+ElecPanda,Grizzbolt,Grizzbolt,GrassPanda,Mossanda,Mossanda,GrassPanda_Electric,Mossanda Lux,Mossanda Lux,ANY,ANY
+ClioneTwins,Amione,Amione,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+ClioneTwins,Amione,Amione,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+ClioneTwins,Amione,Amione,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,FluffyBird,Muffly,Muffly,ANY,ANY
+FlameBuffalo,Arsox,Arsox,LeafMomonga,Herbil,Herbil,FluffyBird,Muffly,Muffly,ANY,ANY
+FlameBuffalo,Arsox,Arsox,JellyfishFairy,Jelliette,Jelliette,FluffyBird,Muffly,Muffly,ANY,ANY
+FlameBuffalo,Arsox,Arsox,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+SoldierBee,Beegarde,Beegarde,BerryGoat,Caprity,Caprity,FluffyBird,Muffly,Muffly,ANY,ANY
+SoldierBee,Beegarde,Beegarde,CuteButterfly,Cinnamoth,Cinnamoth,FluffyBird,Muffly,Muffly,ANY,ANY
+SoldierBee,Beegarde,Beegarde,KendoFrog,Croajiro,Croajiro,FluffyBird,Muffly,Muffly,ANY,ANY
+SoldierBee,Beegarde,Beegarde,LeafMomonga,Herbil,Herbil,FluffyBird,Muffly,Muffly,ANY,ANY
+SoldierBee,Beegarde,Beegarde,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+LittleBriarRose,Bristla,Bristla,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+LittleBriarRose,Bristla,Bristla,Kirin,Univolt,Univolt,FluffyBird,Muffly,Muffly,ANY,ANY
+BerryGoat,Caprity,Caprity,FlyingManta_Thunder,Celaray Lux,Celaray Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+DarkCrow,Cawgnito,Cawgnito,BerryGoat,Caprity,Caprity,FluffyBird,Muffly,Muffly,ANY,ANY
+DarkCrow,Cawgnito,Cawgnito,KendoFrog,Croajiro,Croajiro,FluffyBird,Muffly,Muffly,ANY,ANY
+DarkCrow,Cawgnito,Cawgnito,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+DarkCrow,Cawgnito,Cawgnito,JellyfishGhost,Jellroy,Jellroy,FluffyBird,Muffly,Muffly,ANY,ANY
+FlyingManta,Celaray,Celaray,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+FlyingManta_Thunder,Celaray Lux,Celaray Lux,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+ChickenPal,Chikipi,Chikipi,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+ChickenPal,Chikipi,Chikipi,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+ChickenPal,Chikipi,Chikipi,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+ChickenPal,Chikipi,Chikipi,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+WeaselDragon,Chillet,Chillet,CuteButterfly,Cinnamoth,Cinnamoth,FluffyBird,Muffly,Muffly,ANY,ANY
+WeaselDragon,Chillet,Chillet,FlowerRabbit,Flopie,Flopie,FluffyBird,Muffly,Muffly,ANY,ANY
+WeaselDragon,Chillet,Chillet,LeafMomonga,Herbil,Herbil,FluffyBird,Muffly,Muffly,ANY,ANY
+WeaselDragon,Chillet,Chillet,JellyfishFairy,Jelliette,Jelliette,FluffyBird,Muffly,Muffly,ANY,ANY
+WeaselDragon,Chillet,Chillet,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+CuteButterfly,Cinnamoth,Cinnamoth,DarkCrow,Cawgnito,Cawgnito,FluffyBird,Muffly,Muffly,ANY,ANY
+CuteButterfly,Cinnamoth,Cinnamoth,CatBat,Tombat,Tombat,FluffyBird,Muffly,Muffly,ANY,ANY
+KendoFrog,Croajiro,Croajiro,FlyingManta_Thunder,Celaray Lux,Celaray Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+DreamDemon,Daedream,Daedream,CaptainPenguin,Penking,Penking,FluffyBird,Muffly,Muffly,ANY,ANY
+DreamDemon,Daedream,Daedream,RobinHood_Ground,Robinquill Terra,Robinquill Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,PinkCat,Cattiva,Cattiva,FluffyBird,Muffly,Muffly,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,FlyingManta,Celaray,Celaray,FluffyBird,Muffly,Muffly,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,WindChimes,Hangyu,Hangyu,FluffyBird,Muffly,Muffly,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,NegativeOctopus,Killamari,Killamari,FluffyBird,Muffly,Muffly,ANY,ANY
+FeatherOstrich,Dazemu,Dazemu,Bastet_Ice,Mau Cryst,Mau Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,Eagle,Galeclaw,Galeclaw,FluffyBird,Muffly,Muffly,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,SharkKid,Gobfin,Gobfin,FluffyBird,Muffly,Muffly,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,JellyfishGhost,Jellroy,Jellroy,FluffyBird,Muffly,Muffly,ANY,ANY
+RaijinDaughter,Dazzi,Dazzi,HawkBird,Nitewing,Nitewing,FluffyBird,Muffly,Muffly,ANY,ANY
+NegativeKoala,Depresso,Depresso,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,WoolFox,Cremis,Cremis,FluffyBird,Muffly,Muffly,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,PinkRabbit,Ribbuny,Ribbuny,FluffyBird,Muffly,Muffly,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,FlameBambi,Rooby,Rooby,FluffyBird,Muffly,Muffly,ANY,ANY
+FlowerDinosaur,Dinossom,Dinossom,Boar,Rushoar,Rushoar,FluffyBird,Muffly,Muffly,ANY,ANY
+Garm,Direhowl,Direhowl,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+LazyCatfish,Dumud,Dumud,LittleBriarRose,Bristla,Bristla,FluffyBird,Muffly,Muffly,ANY,ANY
+LazyCatfish,Dumud,Dumud,Garm,Direhowl,Direhowl,FluffyBird,Muffly,Muffly,ANY,ANY
+LazyCatfish,Dumud,Dumud,LavaGirl,Flambelle,Flambelle,FluffyBird,Muffly,Muffly,ANY,ANY
+LazyCatfish,Dumud,Dumud,FlowerRabbit,Flopie,Flopie,FluffyBird,Muffly,Muffly,ANY,ANY
+LazyCatfish,Dumud,Dumud,LizardMan,Leezpunk,Leezpunk,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Deer,Eikthyrdeer,Eikthyrdeer,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,CloverFairy,Clovee,Clovee,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,PlantSlime,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,PlantSlime_Flower,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,WizardOwl,Hoocrates,Hoocrates,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,Penguin,Pengullet,Pengullet,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassMinotaur,Elgrove,Elgrove,SamuraiDog,Pupperai,Pupperai,FluffyBird,Muffly,Muffly,ANY,ANY
+FairyDragon,Elphidran,Elphidran,LittleBriarRose,Bristla,Bristla,FluffyBird,Muffly,Muffly,ANY,ANY
+FairyDragon,Elphidran,Elphidran,Garm,Direhowl,Direhowl,FluffyBird,Muffly,Muffly,ANY,ANY
+FairyDragon,Elphidran,Elphidran,Deer,Eikthyrdeer,Eikthyrdeer,FluffyBird,Muffly,Muffly,ANY,ANY
+FairyDragon,Elphidran,Elphidran,LavaGirl,Flambelle,Flambelle,FluffyBird,Muffly,Muffly,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,NegativeKoala,Depresso,Depresso,FluffyBird,Muffly,Muffly,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,Kitsunebi,Foxparks,Foxparks,FluffyBird,Muffly,Muffly,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,Hedgehog,Jolthog,Jolthog,FluffyBird,Muffly,Muffly,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,Carbunclo,Lifmunk,Lifmunk,FluffyBird,Muffly,Muffly,ANY,ANY
+FengyunDeeper,Fenglope,Fenglope,ElecCat,Sparkit,Sparkit,FluffyBird,Muffly,Muffly,ANY,ANY
+StuffedShark,Finsider,Finsider,ClioneTwins,Amione,Amione,FluffyBird,Muffly,Muffly,ANY,ANY
+StuffedShark,Finsider,Finsider,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+StuffedShark,Finsider,Finsider,OctopusGirl,Gloopie,Gloopie,FluffyBird,Muffly,Muffly,ANY,ANY
+StuffedShark,Finsider,Finsider,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+StuffedShark,Finsider,Finsider,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,FluffyBird,Muffly,Muffly,ANY,ANY
+CuteFox,Fixy,Vixy,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+CuteFox,Fixy,Vixy,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+FlowerRabbit,Flopie,Flopie,FlameBuffalo,Arsox,Arsox,FluffyBird,Muffly,Muffly,ANY,ANY
+FlowerRabbit,Flopie,Flopie,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+IceFox,Foxcicle,Foxcicle,NegativeKoala,Depresso,Depresso,FluffyBird,Muffly,Muffly,ANY,ANY
+IceFox,Foxcicle,Foxcicle,BluePlatypus,Fuack,Fuack,FluffyBird,Muffly,Muffly,ANY,ANY
+IceFox,Foxcicle,Foxcicle,Carbunclo,Lifmunk,Lifmunk,FluffyBird,Muffly,Muffly,ANY,ANY
+IceFox,Foxcicle,Foxcicle,ElecCat,Sparkit,Sparkit,FluffyBird,Muffly,Muffly,ANY,ANY
+Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,FluffyBird,Muffly,Muffly,ANY,ANY
+Eagle,Galeclaw,Galeclaw,FlyingManta_Thunder,Celaray Lux,Celaray Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+Eagle,Galeclaw,Galeclaw,TentacleTurtle,Turtacle,Turtacle,FluffyBird,Muffly,Muffly,ANY,ANY
+OctopusGirl,Gloopie,Gloopie,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+OctopusGirl,Gloopie,Gloopie,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,FluffyBird,Muffly,Muffly,ANY,ANY
+SharkKid,Gobfin,Gobfin,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+SharkKid,Gobfin,Gobfin,TentacleTurtle,Turtacle,Turtacle,FluffyBird,Muffly,Muffly,ANY,ANY
+Gorilla,Gorirat,Gorirat,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+Gorilla,Gorirat,Gorirat,Kelpie,Kelpsea,Kelpsea,FluffyBird,Muffly,Muffly,ANY,ANY
+Gorilla,Gorirat,Gorirat,MopBaby,Swee,Swee,FluffyBird,Muffly,Muffly,ANY,ANY
+Gorilla,Gorirat,Gorirat,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+Gorilla,Gorirat,Gorirat,SweetsSheep,Woolipop,Woolipop,FluffyBird,Muffly,Muffly,ANY,ANY
+NaughtyCat,Grintale,Grintale,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+NaughtyCat,Grintale,Grintale,PinkRabbit,Ribbuny,Ribbuny,FluffyBird,Muffly,Muffly,ANY,ANY
+NaughtyCat,Grintale,Grintale,FlameBambi,Rooby,Rooby,FluffyBird,Muffly,Muffly,ANY,ANY
+NaughtyCat,Grintale,Grintale,MopBaby,Swee,Swee,FluffyBird,Muffly,Muffly,ANY,ANY
+NaughtyCat,Grintale,Grintale,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001,Grüner Schleim,Green Slime,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+PlantSlime,Gumoss,Gumoss,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+PlantSlime_Flower,Gumoss,Gumoss,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,FluffyBird,Muffly,Muffly,ANY,ANY
+WizardOwl,Hoocrates,Hoocrates,RobinHood_Ground,Robinquill Terra,Robinquill Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+WizardOwl,Hoocrates,Hoocrates,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+JellyfishFairy,Jelliette,Jelliette,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+JellyfishGhost,Jellroy,Jellroy,FlyingManta_Thunder,Celaray Lux,Celaray Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+Hedgehog,Jolthog,Jolthog,BerryGoat_Dark,Caprity Noct,Caprity Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Hedgehog,Jolthog,Jolthog,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+CatMage,Katress,Katress,DreamDemon,Daedream,Daedream,FluffyBird,Muffly,Muffly,ANY,ANY
+CatMage,Katress,Katress,PlantSlime,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+CatMage,Katress,Katress,PlantSlime_Flower,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+CatMage,Katress,Katress,WizardOwl,Hoocrates,Hoocrates,FluffyBird,Muffly,Muffly,ANY,ANY
+CatMage,Katress,Katress,NightFox,Nox,Nox,FluffyBird,Muffly,Muffly,ANY,ANY
+CatMage,Katress,Katress,SamuraiDog,Pupperai,Pupperai,FluffyBird,Muffly,Muffly,ANY,ANY
+Kelpie,Kelpsea,Kelpsea,MopKing,Sweepa,Sweepa,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallArmadillo,Kikit,Kikit,Garm,Direhowl,Direhowl,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallArmadillo,Kikit,Kikit,FlowerRabbit,Flopie,Flopie,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallArmadillo,Kikit,Kikit,JellyfishFairy,Jelliette,Jelliette,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallArmadillo,Kikit,Kikit,LizardMan,Leezpunk,Leezpunk,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallArmadillo,Kikit,Kikit,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+NegativeOctopus,Killamari,Killamari,KingAlpaca,Kingpaca,Kingpaca,FluffyBird,Muffly,Muffly,ANY,ANY
+NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+KingAlpaca,Kingpaca,Kingpaca,PinkCat,Cattiva,Cattiva,FluffyBird,Muffly,Muffly,ANY,ANY
+KingAlpaca,Kingpaca,Kingpaca,FlyingManta,Celaray,Celaray,FluffyBird,Muffly,Muffly,ANY,ANY
+KingAlpaca,Kingpaca,Kingpaca,Bastet_Ice,Mau Cryst,Mau Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+SheepBall,Lamball,Lamball,BerryGoat_Dark,Caprity Noct,Caprity Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+SheepBall,Lamball,Lamball,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,FlameBuffalo,Arsox,Arsox,FluffyBird,Muffly,Muffly,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,FairyDragon,Elphidran,Elphidran,FluffyBird,Muffly,Muffly,ANY,ANY
+LizardMan,Leezpunk,Leezpunk,BluePlatypus_Fire,Fuack Ignis,Fuack Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Carbunclo,Lifmunk,Lifmunk,BerryGoat_Dark,Caprity Noct,Caprity Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Carbunclo,Lifmunk,Lifmunk,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,PinkRabbit,Ribbuny,Ribbuny,FluffyBird,Muffly,Muffly,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,FlameBambi,Rooby,Rooby,FluffyBird,Muffly,Muffly,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,Boar,Rushoar,Rushoar,FluffyBird,Muffly,Muffly,ANY,ANY
+Werewolf,Loupmoon,Loupmoon,MopBaby,Swee,Swee,FluffyBird,Muffly,Muffly,ANY,ANY
+PinkLizard,Lovander,Lovander,WoolFox,Cremis,Cremis,FluffyBird,Muffly,Muffly,ANY,ANY
+PinkLizard,Lovander,Lovander,PinkRabbit,Ribbuny,Ribbuny,FluffyBird,Muffly,Muffly,ANY,ANY
+PinkLizard,Lovander,Lovander,FlameBambi,Rooby,Rooby,FluffyBird,Muffly,Muffly,ANY,ANY
+PinkLizard,Lovander,Lovander,Boar,Rushoar,Rushoar,FluffyBird,Muffly,Muffly,ANY,ANY
+PinkLizard,Lovander,Lovander,Monkey,Tanzee,Tanzee,FluffyBird,Muffly,Muffly,ANY,ANY
+LeafPrincess,Lullu,Lullu,CloverFairy,Clovee,Clovee,FluffyBird,Muffly,Muffly,ANY,ANY
+LeafPrincess,Lullu,Lullu,NegativeKoala,Depresso,Depresso,FluffyBird,Muffly,Muffly,ANY,ANY
+LeafPrincess,Lullu,Lullu,Kitsunebi,Foxparks,Foxparks,FluffyBird,Muffly,Muffly,ANY,ANY
+LeafPrincess,Lullu,Lullu,BluePlatypus,Fuack,Fuack,FluffyBird,Muffly,Muffly,ANY,ANY
+LeafPrincess,Lullu,Lullu,Penguin,Pengullet,Pengullet,FluffyBird,Muffly,Muffly,ANY,ANY
+Mutant,Lunaris,Lunaris,CloverFairy,Clovee,Clovee,FluffyBird,Muffly,Muffly,ANY,ANY
+Mutant,Lunaris,Lunaris,BluePlatypus,Fuack,Fuack,FluffyBird,Muffly,Muffly,ANY,ANY
+Mutant,Lunaris,Lunaris,PlantSlime,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+Mutant,Lunaris,Lunaris,PlantSlime_Flower,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+Mutant,Lunaris,Lunaris,WizardOwl,Hoocrates,Hoocrates,FluffyBird,Muffly,Muffly,ANY,ANY
+Mutant,Lunaris,Lunaris,Penguin,Pengullet,Pengullet,FluffyBird,Muffly,Muffly,ANY,ANY
+Bastet,Mau,Mau,BerryGoat_Dark,Caprity Noct,Caprity Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Bastet,Mau,Mau,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+Bastet,Mau,Mau,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Bastet_Ice,Mau Cryst,Mau Cryst,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+Alpaca,Melpaca,Melpaca,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassPanda,Mossanda,Mossanda,WoolFox,Cremis,Cremis,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassPanda,Mossanda,Mossanda,DreamDemon,Daedream,Daedream,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassPanda,Mossanda,Mossanda,NightFox,Nox,Nox,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassPanda,Mossanda,Mossanda,SamuraiDog,Pupperai,Pupperai,FluffyBird,Muffly,Muffly,ANY,ANY
+GrassPanda,Mossanda,Mossanda,Monkey,Tanzee,Tanzee,FluffyBird,Muffly,Muffly,ANY,ANY
+CowPal,Mozzarina,Mozzarina,MopKing,Sweepa,Sweepa,FluffyBird,Muffly,Muffly,ANY,ANY
+FluffyBird,Muffly,Muffly,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+FluffyBird,Muffly,Muffly,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+FluffyBird,Muffly,Muffly,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+FluffyBird,Muffly,Muffly,Penguin_Electric,Pengullet Lux,Pengullet Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+IceCrocodile,Munchill,Munchill,Hedgehog_Ice,Jolthog Cryst,Jolthog Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+IceCrocodile,Munchill,Munchill,PinkRabbit,Ribbuny,Ribbuny,FluffyBird,Muffly,Muffly,ANY,ANY
+IceCrocodile,Munchill,Munchill,MopBaby,Swee,Swee,FluffyBird,Muffly,Muffly,ANY,ANY
+IceCrocodile,Munchill,Munchill,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+IceCrocodile,Munchill,Munchill,SweetsSheep,Woolipop,Woolipop,FluffyBird,Muffly,Muffly,ANY,ANY
+CactusDoll,Needoll,Needoll,Eagle,Galeclaw,Galeclaw,FluffyBird,Muffly,Muffly,ANY,ANY
+CactusDoll,Needoll,Needoll,OctopusGirl,Gloopie,Gloopie,FluffyBird,Muffly,Muffly,ANY,ANY
+CactusDoll,Needoll,Needoll,SharkKid,Gobfin,Gobfin,FluffyBird,Muffly,Muffly,ANY,ANY
+CactusDoll,Needoll,Needoll,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,FluffyBird,Muffly,Muffly,ANY,ANY
+CactusDoll,Needoll,Needoll,HawkBird,Nitewing,Nitewing,FluffyBird,Muffly,Muffly,ANY,ANY
+HawkBird,Nitewing,Nitewing,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+HawkBird,Nitewing,Nitewing,TentacleTurtle,Turtacle,Turtacle,FluffyBird,Muffly,Muffly,ANY,ANY
+NightFox,Nox,Nox,CaptainPenguin,Penking,Penking,FluffyBird,Muffly,Muffly,ANY,ANY
+NightFox,Nox,Nox,RobinHood_Ground,Robinquill Terra,Robinquill Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+NightFox,Nox,Nox,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+Penguin,Pengullet,Pengullet,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+Penguin_Electric,Pengullet Lux,Pengullet Lux,Kitsunebi_Ice,Foxparks Cryst,Foxparks Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+Penguin_Electric,Pengullet Lux,Pengullet Lux,Kelpie_Fire,Kelpsea Ignis,Kelpsea Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+Penguin_Electric,Pengullet Lux,Pengullet Lux,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,FluffyBird,Muffly,Muffly,ANY,ANY
+CaptainPenguin,Penking,Penking,WoolFox,Cremis,Cremis,FluffyBird,Muffly,Muffly,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,BerryGoat,Caprity,Caprity,FluffyBird,Muffly,Muffly,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,CuteButterfly,Cinnamoth,Cinnamoth,FluffyBird,Muffly,Muffly,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,KendoFrog,Croajiro,Croajiro,FluffyBird,Muffly,Muffly,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,LeafMomonga,Herbil,Herbil,FluffyBird,Muffly,Muffly,ANY,ANY
+ElecPomeranian,Puffolt,Puffolt,JellyfishGhost,Jellroy,Jellroy,FluffyBird,Muffly,Muffly,ANY,ANY
+SamuraiDog,Pupperai,Pupperai,RobinHood_Ground,Robinquill Terra,Robinquill Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+SamuraiDog,Pupperai,Pupperai,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+FireKirin,Pyrin,Pyrin,CloverFairy,Clovee,Clovee,FluffyBird,Muffly,Muffly,ANY,ANY
+FireKirin,Pyrin,Pyrin,NegativeKoala,Depresso,Depresso,FluffyBird,Muffly,Muffly,ANY,ANY
+FireKirin,Pyrin,Pyrin,Kitsunebi,Foxparks,Foxparks,FluffyBird,Muffly,Muffly,ANY,ANY
+FireKirin,Pyrin,Pyrin,BluePlatypus,Fuack,Fuack,FluffyBird,Muffly,Muffly,ANY,ANY
+FireKirin,Pyrin,Pyrin,ElecCat,Sparkit,Sparkit,FluffyBird,Muffly,Muffly,ANY,ANY
+ThunderDog,Rayhound,Rayhound,CuteFox,Fixy,Vixy,FluffyBird,Muffly,Muffly,ANY,ANY
+ThunderDog,Rayhound,Rayhound,Hedgehog,Jolthog,Jolthog,FluffyBird,Muffly,Muffly,ANY,ANY
+ThunderDog,Rayhound,Rayhound,SheepBall,Lamball,Lamball,FluffyBird,Muffly,Muffly,ANY,ANY
+ThunderDog,Rayhound,Rayhound,Bastet,Mau,Mau,FluffyBird,Muffly,Muffly,ANY,ANY
+ThunderDog,Rayhound,Rayhound,Ganesha,Teafant,Teafant,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+IceDeer,Reindrix,Reindrix,CuteFox,Fixy,Vixy,FluffyBird,Muffly,Muffly,ANY,ANY
+IceDeer,Reindrix,Reindrix,Hedgehog,Jolthog,Jolthog,FluffyBird,Muffly,Muffly,ANY,ANY
+IceDeer,Reindrix,Reindrix,SheepBall,Lamball,Lamball,FluffyBird,Muffly,Muffly,ANY,ANY
+IceDeer,Reindrix,Reindrix,Carbunclo,Lifmunk,Lifmunk,FluffyBird,Muffly,Muffly,ANY,ANY
+IceDeer,Reindrix,Reindrix,Bastet,Mau,Mau,FluffyBird,Muffly,Muffly,ANY,ANY
+RobinHood,Robinquill,Robinquill,LittleBriarRose,Bristla,Bristla,FluffyBird,Muffly,Muffly,ANY,ANY
+RobinHood,Robinquill,Robinquill,Deer,Eikthyrdeer,Eikthyrdeer,FluffyBird,Muffly,Muffly,ANY,ANY
+RobinHood,Robinquill,Robinquill,LavaGirl,Flambelle,Flambelle,FluffyBird,Muffly,Muffly,ANY,ANY
+RobinHood,Robinquill,Robinquill,Alpaca,Melpaca,Melpaca,FluffyBird,Muffly,Muffly,ANY,ANY
+RobinHood,Robinquill,Robinquill,ColorfulBird,Tocotoco,Tocotoco,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Boar,Rushoar,Rushoar,CaptainPenguin,Penking,Penking,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallYeti,Snugloo,Snugloo,KendoFrog,Croajiro,Croajiro,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallYeti,Snugloo,Snugloo,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallYeti,Snugloo,Snugloo,Eagle,Galeclaw,Galeclaw,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallYeti,Snugloo,Snugloo,JellyfishGhost,Jellroy,Jellroy,FluffyBird,Muffly,Muffly,ANY,ANY
+SmallYeti,Snugloo,Snugloo,HawkBird,Nitewing,Nitewing,FluffyBird,Muffly,Muffly,ANY,ANY
+DandelionGirl,Souffline,Souffline,CloverFairy,Clovee,Clovee,FluffyBird,Muffly,Muffly,ANY,ANY
+DandelionGirl,Souffline,Souffline,Kitsunebi,Foxparks,Foxparks,FluffyBird,Muffly,Muffly,ANY,ANY
+DandelionGirl,Souffline,Souffline,BluePlatypus,Fuack,Fuack,FluffyBird,Muffly,Muffly,ANY,ANY
+DandelionGirl,Souffline,Souffline,PlantSlime,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+DandelionGirl,Souffline,Souffline,PlantSlime_Flower,Gumoss,Gumoss,FluffyBird,Muffly,Muffly,ANY,ANY
+DandelionGirl,Souffline,Souffline,Penguin,Pengullet,Pengullet,FluffyBird,Muffly,Muffly,ANY,ANY
+ElecCat,Sparkit,Sparkit,BerryGoat_Dark,Caprity Noct,Caprity Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+ElecCat,Sparkit,Sparkit,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+Serpent,Surfent,Surfent,ClioneTwins,Amione,Amione,FluffyBird,Muffly,Muffly,ANY,ANY
+Serpent,Surfent,Surfent,OctopusGirl,Gloopie,Gloopie,FluffyBird,Muffly,Muffly,ANY,ANY
+Serpent,Surfent,Surfent,SharkKid,Gobfin,Gobfin,FluffyBird,Muffly,Muffly,ANY,ANY
+Serpent,Surfent,Surfent,WindChimes_Ice,Hangyu Cryst,Hangyu Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+Serpent,Surfent,Surfent,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,FluffyBird,Muffly,Muffly,ANY,ANY
+MopKing,Sweepa,Sweepa,MopBaby,Swee,Swee,FluffyBird,Muffly,Muffly,ANY,ANY
+MopKing,Sweepa,Sweepa,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+Monkey,Tanzee,Tanzee,CaptainPenguin,Penking,Penking,FluffyBird,Muffly,Muffly,ANY,ANY
+Monkey,Tanzee,Tanzee,RobinHood_Ground,Robinquill Terra,Robinquill Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+Ganesha,Teafant,Teafant,RaijinDaughter_Water,Dazzi Noct,Dazzi Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+Ganesha,Teafant,Teafant,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+Ganesha,Teafant,Teafant,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+ColorfulBird,Tocotoco,Tocotoco,StuffedShark_Fire,Finsider Ignis,Finsider Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+ColorfulBird,Tocotoco,Tocotoco,KingAlpaca,Kingpaca,Kingpaca,FluffyBird,Muffly,Muffly,ANY,ANY
+ColorfulBird,Tocotoco,Tocotoco,GhostBlackCat,Wispaw,Wispaw,FluffyBird,Muffly,Muffly,ANY,ANY
+CatBat,Tombat,Tombat,BerryGoat,Caprity,Caprity,FluffyBird,Muffly,Muffly,ANY,ANY
+CatBat,Tombat,Tombat,LeafMomonga,Herbil,Herbil,FluffyBird,Muffly,Muffly,ANY,ANY
+CatBat,Tombat,Tombat,JellyfishFairy,Jelliette,Jelliette,FluffyBird,Muffly,Muffly,ANY,ANY
+CatBat,Tombat,Tombat,LizardMan_Fire,Leezpunk Ignis,Leezpunk Ignis,FluffyBird,Muffly,Muffly,ANY,ANY
+TentacleTurtle,Turtacle,Turtacle,Deer_Ground,Eikthyrdeer Terra,Eikthyrdeer Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+TentacleTurtle,Turtacle,Turtacle,NegativeOctopus_Neutral,Killamari Primo,Killamari Primo,FluffyBird,Muffly,Muffly,ANY,ANY
+Kirin,Univolt,Univolt,Garm,Direhowl,Direhowl,FluffyBird,Muffly,Muffly,ANY,ANY
+Kirin,Univolt,Univolt,Deer,Eikthyrdeer,Eikthyrdeer,FluffyBird,Muffly,Muffly,ANY,ANY
+Kirin,Univolt,Univolt,LavaGirl,Flambelle,Flambelle,FluffyBird,Muffly,Muffly,ANY,ANY
+Kirin,Univolt,Univolt,Alpaca,Melpaca,Melpaca,FluffyBird,Muffly,Muffly,ANY,ANY
+LongCat,Valentail,Valentail,ChickenPal,Chikipi,Chikipi,FluffyBird,Muffly,Muffly,ANY,ANY
+LongCat,Valentail,Valentail,CuteFox,Fixy,Vixy,FluffyBird,Muffly,Muffly,ANY,ANY
+LongCat,Valentail,Valentail,SheepBall,Lamball,Lamball,FluffyBird,Muffly,Muffly,ANY,ANY
+LongCat,Valentail,Valentail,Ganesha,Teafant,Teafant,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,KendoFrog_Dark,Croajiro Noct,Croajiro Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,FlowerDinosaur_Electric,Dinossom Lux,Dinossom Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,Gorilla_Ground,Gorirat Terra,Gorirat Terra,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,CaptainPenguin_Black,Penking Lux,Penking Lux,FluffyBird,Muffly,Muffly,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,FireKirin_Dark,Pyrin Noct,Pyrin Noct,FluffyBird,Muffly,Muffly,ANY,ANY
+FoxMage,Vulmag,Wixen,WoolFox,Cremis,Cremis,FluffyBird,Muffly,Muffly,ANY,ANY
+FoxMage,Vulmag,Wixen,DreamDemon,Daedream,Daedream,FluffyBird,Muffly,Muffly,ANY,ANY
+FoxMage,Vulmag,Wixen,FlameBambi,Rooby,Rooby,FluffyBird,Muffly,Muffly,ANY,ANY
+FoxMage,Vulmag,Wixen,Boar,Rushoar,Rushoar,FluffyBird,Muffly,Muffly,ANY,ANY
+FoxMage,Vulmag,Wixen,Monkey,Tanzee,Tanzee,FluffyBird,Muffly,Muffly,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,FlyingManta,Celaray,Celaray,FluffyBird,Muffly,Muffly,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,Deer,Eikthyrdeer,Eikthyrdeer,FluffyBird,Muffly,Muffly,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,LavaGirl,Flambelle,Flambelle,FluffyBird,Muffly,Muffly,ANY,ANY
+GhostBlackCat,Wispaw,Wispaw,Alpaca,Melpaca,Melpaca,FluffyBird,Muffly,Muffly,ANY,ANY
+SweetsSheep,Woolipop,Woolipop,MopKing,Sweepa,Sweepa,FluffyBird,Muffly,Muffly,ANY,ANY
+GuardianDog,Yakumo,Yakumo,PinkCat,Cattiva,Cattiva,FluffyBird,Muffly,Muffly,ANY,ANY
+GuardianDog,Yakumo,Yakumo,FlyingManta,Celaray,Celaray,FluffyBird,Muffly,Muffly,ANY,ANY
+GuardianDog,Yakumo,Yakumo,Bastet_Ice,Mau Cryst,Mau Cryst,FluffyBird,Muffly,Muffly,ANY,ANY
+GuardianDog,Yakumo,Yakumo,Alpaca,Melpaca,Melpaca,FluffyBird,Muffly,Muffly,ANY,ANY
+GuardianDog,Yakumo,Yakumo,ColorfulBird,Tocotoco,Tocotoco,FluffyBird,Muffly,Muffly,ANY,ANY
+BlueberryFairy,Prunelia,Prunelia,CactusDoll,Needoll,Needoll,CactusDoll_Dark,Needoll Noct,Needoll Noct,ANY,ANY
+GhostRabbit,Nitemary,Nitemary,FlowerDoll,Petallia,Petallia,GhostRabbit_Grass,Nitemary Botan,Nitemary Botan,ANY,ANY
+ElecCat,Sparkit,Sparkit,Penguin,Pengullet,Pengullet,Penguin_Electric,Pengullet Lux,Pengullet Lux,ANY,ANY
+ThunderDog,Rayhound,Rayhound,CaptainPenguin,Penking,Penking,CaptainPenguin_Black,Penking Lux,Penking Lux,ANY,ANY
+FlowerDoll,Petallia,Petallia,Ronin,Bushi,Bushi,FlowerDoll_Fire,Petallia Ignis,Petallia Ignis,ANY,ANY
+Yeti,Wumpo,Wumpo,RockBeast,Pierdon,Pierdon,RockBeast_Ice,Pierdon Cryst,Pierdon Cryst,ANY,ANY
+IceSeal,Polapup,Polapup,Serpent_Ground,Surfent Terra,Surfent Terra,IceSeal_Ground,Polapup Terra,Polapup Terra,ANY,ANY
+ScorpionMan,Prixter,Prixter,HadesBird_Electric,Helzephyr Lux,Helzephyr Lux,ScorpionMan_Electric,Prixter Lux,Prixter Lux,ANY,ANY
+FireKirin,Pyrin,Pyrin,CatMage,Katress,Katress,FireKirin_Dark,Pyrin Noct,Pyrin Noct,ANY,ANY
+LeafPrincess,Lullu,Lullu,SkyDragon,Quivern,Quivern,SkyDragon_Grass,Quivern Botan,Quivern Botan,ANY,ANY
+ThunderDog,Rayhound,Rayhound,IceFox,Foxcicle,Foxcicle,ThunderDog_Ice,Rayhound Cryst,Rayhound Cryst,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,ANY,ANY
+LazyDragon,Relaxaurus,Relaxaurus,ElecCat,Sparkit,Sparkit,LazyDragon_Electric,Relaxaurus Lux,Relaxaurus Lux,ANY,ANY
+VolcanicMonster,Reptyro,Reptyro,IceFox,Foxcicle,Foxcicle,VolcanicMonster_Ice,Reptyro Cryst,Reptyro Cryst,ANY,ANY
+LittleBriarRose,Bristla,Bristla,PinkRabbit,Ribbuny,Ribbuny,PinkRabbit_Grass,Ribbuny Botan,Ribbuny Botan,ANY,ANY
+RobinHood,Robinquill,Robinquill,CuteMole,Fuddler,Fuddler,RobinHood_Ground,Robinquill Terra,Robinquill Terra,ANY,ANY
+YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster001_Red,Roter Schleim,Red Slime,ANY,ANY
+SleeveRabbit,Lapure,Lapure,WhiteMoth,Sibelyx,Sibelyx,WhiteMoth_Neutral,Sibelyx Primo,Sibelyx Primo,ANY,ANY
+SwordCutlassfish,Skutlass,Skutlass,SharkKid_Fire,Gobfin Ignis,Gobfin Ignis,SwordCutlassfish_Fire,Skutlass Ignis,Skutlass Ignis,ANY,ANY
+BlackPuppy,Smokie,Smokie,IceCrocodile,Munchill,Munchill,BlackPuppy_Ice,Smokie Cryst,Smokie Cryst,ANY,ANY
+ElecSnail,Snock,Snock,TentacleTurtle_Ground,Turtacle Terra,Turtacle Terra,ElecSnail_Ground,Snock Lux,Snock Lux,ANY,ANY
+KingSunfish,Solmora,Solmora,ElecLizard,Slowatt,Slowatt,KingSunfish_Thunder,Solmora Lux,Solmora Lux,ANY,ANY
+WhiteDeer,Celesdir,Celesdir,NightBlueHorse,Starryon,Starryon,NightBlueHorse_Neutral,Starryon Primo,Starryon Primo,ANY,ANY
+LazyCatfish,Dumud,Dumud,Serpent,Surfent,Surfent,Serpent_Ground,Surfent Terra,Surfent Terra,ANY,ANY
+Suzaku,Suzaku,Suzaku,Umihebi,Jormuntide,Jormuntide,Suzaku_Water,Suzaku Aqua,Suzaku Aqua,ANY,ANY
+LavaGirl,Flambelle,Flambelle,Monkey,Tanzee,Tanzee,Monkey_Fire,Tanzee Ignis,Tanzee Ignis,ANY,ANY
+WhiteDeer,Celesdir,Celesdir,CubeTurtle,Tetroise,Tetroise,CubeTurtle_Neutral,Tetroise Primo,Tetroise Primo,ANY,ANY
+DrillGame,Digtoise,Digtoise,TentacleTurtle,Turtacle,Turtacle,TentacleTurtle_Ground,Turtacle Terra,Turtacle Terra,ANY,ANY
+SnowPeafowl,Frostplume,Frostplume,Kirin,Univolt,Univolt,Kirin_Ice,Univolt Cryst,Univolt Cryst,ANY,ANY
+IceFox,Foxcicle,Foxcicle,BirdDragon,Vanwyrm,Vanwyrm,BirdDragon_Ice,Vanwyrm Cryst,Vanwyrm Cryst,ANY,ANY
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster001,Grüner Schleim,Green Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster001_Purple,Lila Schleim,Purple Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,YakushimaMonster001_Red,Roter Schleim,Red Slime,YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,ANY,ANY
+CatMage,Katress,Katress,FoxMage,Vulmag,Wixen,FoxMage_Dark,Vulmag Noct,Wixen Noct,ANY,ANY
+CatMage,Katress,Katress,FoxMage,Vulmag,Wixen,FoxMage_Dark,Vulmag Noct,Wixen Noct,MALE,FEMALE
+HerculesBeetle,Warsect,Warsect,DrillGame,Digtoise,Digtoise,HerculesBeetle_Ground,Warsect Terra,Warsect Terra,ANY,ANY
+IceNarwhal,Whalaska,Whalaska,WeaselDragon_Fire,Chillet Ignis,Chillet Ignis,IceNarwhal_Fire,Whalaska Ignis,Whalaska Ignis,ANY,ANY
+SmallArmadillo,Kikit,Kikit,SweetsSheep,Woolipop,Woolipop,SweetsSheep_Ground,Woolipop Terra,Woolipop Terra,ANY,ANY

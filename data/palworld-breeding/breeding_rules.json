@@ -1,52 +1,99 @@
 {
-  "schema_version": 1,
-  "generated_at_utc": "2026-07-12T19:48:29.186808+00:00",
+  "schema_version": 2,
+  "generated_at_utc": "2026-07-12T19:55:04.749373+00:00",
   "game_reference": "Palworld 1.0 data snapshot",
   "decision_order": [
     {
       "order": 1,
-      "rule": "unique_combo_override",
-      "description_de": "Steht das Elternpaar in special_combinations.json, gilt dieses Kind unabhängig von der normalen Werteformel."
+      "rule": "same_species_identity_override",
+      "description_de": "Sind beide Eltern dieselbe Pal-Art, ist das Kind wieder genau diese Pal-Art. Diese globale Regel wird vor der Sondertabelle und vor der Werteformel angewendet."
     },
     {
       "order": 2,
-      "rule": "eligible_candidate_pool",
-      "description_de": "Für die normale Formel werden nur Pals mit CombiRank > 0 und IgnoreCombi = false als mögliche Kinder verwendet."
+      "rule": "unique_combo_override",
+      "description_de": "Steht das Elternpaar einschließlich möglicher Geschlechtsvorgabe in special_combinations.json, gilt das dort hinterlegte Kind unabhängig von der normalen Werteformel."
     },
     {
       "order": 3,
-      "rule": "floor_average",
-      "formula": "target = floor((parent_a.combi_rank + parent_b.combi_rank) / 2)",
-      "description_de": "Die beiden Zuchtwerte werden addiert, durch zwei geteilt und bei .5 abgerundet."
+      "rule": "eligible_candidate_pool",
+      "description_de": "Für die normale Formel werden nur Pals mit CombiRank > 0 und IgnoreCombi = false als mögliche Kinder verwendet. Spezialkinder können normale Eltern sein, entstehen aber nicht als normales Formelkind."
     },
     {
       "order": 4,
+      "rule": "rounded_average",
+      "formula": "target = floor((parent_a.combi_rank + parent_b.combi_rank + 1) / 2)",
+      "description_de": "Die aktuelle Implementierung rundet einen halben Ganzzahlwert formal auf. Da sämtliche aktuellen CombiRanks durch 10 teilbar sind, entspricht das derzeit immer exakt dem normalen arithmetischen Mittel."
+    },
+    {
+      "order": 5,
       "rule": "nearest_combi_rank",
       "description_de": "Gewählt wird der zulässige Kind-Rang mit dem kleinsten absoluten Abstand zum Zielwert."
     },
     {
-      "order": 5,
-      "rule": "equidistant_rank_parent_rarity_average",
-      "formula": "parent_rarity_average = (parent_a.rarity + parent_b.rarity) / 2",
-      "description_de": "Sind der niedrigere und der höhere Kind-Rang gleich weit entfernt, gewinnt der Kandidat, dessen Seltenheit näher am Seltenheitsdurchschnitt der Eltern liegt.",
-      "confidence": "verified_by_current_project_in_game_tests"
-    },
-    {
       "order": 6,
-      "rule": "equidistant_rarity_lower_rarity",
-      "description_de": "Ist auch der Seltenheitsabstand gleich, gewinnt die niedrigere Kind-Seltenheit.",
-      "confidence": "verified_by_current_project_in_game_tests"
+      "rule": "equidistant_different_ranks_parent_rarity_average",
+      "formula": "parent_rarity_average = (parent_a.rarity + parent_b.rarity) / 2",
+      "description_de": "Sind ein niedrigerer und ein höherer Kind-Rang gleich weit entfernt, gewinnt der Kandidat, dessen Seltenheit näher am Seltenheitsdurchschnitt der Eltern liegt.",
+      "confidence": "verified_by_current_in_game_tests"
     },
     {
       "order": 7,
+      "rule": "equidistant_rarity_lower_rarity",
+      "description_de": "Ist auch der Seltenheitsabstand gleich, gewinnt die niedrigere Kind-Seltenheit.",
+      "confidence": "verified_by_current_in_game_tests"
+    },
+    {
+      "order": 8,
       "rule": "same_rank_duplicate_resolution",
-      "description_de": "Teilen mehrere zulässige Pals exakt denselben CombiRank, ist CombiDuplicatePriority das dafür vorgesehene Spieldatenfeld; danach bleibt die Tabellen-/InternalIndex-Reihenfolge als letzter stabiler Fallback.",
-      "confidence": "field_semantics_plus_stable_data_order; final fallback not independently in-game-tested"
+      "description_de": "Teilen mehrere zulässige Pals exakt denselben CombiRank, gewinnt die höhere CombiDuplicatePriority. Bei weiterem Gleichstand folgt die Nicht-Variante vor der Variante und danach die niedrigere InternalIndex-Reihenfolge.",
+      "confidence": "current_palcalc_field_semantics_and_order; only one current duplicate-rank group exists"
+    }
+  ],
+  "verified_equidistant_rank_tests": [
+    {
+      "parents": [
+        "Braloha (rarity 8)",
+        "Dynamoff (rarity 6)"
+      ],
+      "target_rank": 1215,
+      "candidates": [
+        "Quivern (1210 / rarity 7)",
+        "Azurobe Cryst (1220 / rarity 8)"
+      ],
+      "winner": "Quivern",
+      "reason": "rarity 7 exactly matches parent rarity average 7"
+    },
+    {
+      "parents": [
+        "Shaolong (rarity 9)",
+        "Helzephyr Lux (rarity 8)"
+      ],
+      "target_rank": 500,
+      "candidates": [
+        "Astegon (490 / rarity 9)",
+        "Dualith (510 / rarity 8)"
+      ],
+      "winner": "Dualith",
+      "reason": "both rarity distances are 0.5; lower child rarity wins"
+    },
+    {
+      "parents": [
+        "Braloha (rarity 8)",
+        "Jetragon (rarity 20)"
+      ],
+      "target_rank": 550,
+      "candidates": [
+        "Univolt Cryst (540 / rarity 6)",
+        "Silvegis (560 / rarity 8)"
+      ],
+      "winner": "Silvegis",
+      "reason": "rarity 8 is closer to parent rarity average 14"
     }
   ],
   "important_notes": [
     "CombiDuplicatePriority ist nicht der allgemeine Gleichstandsentscheid zwischen zwei unterschiedlich hohen, gleich weit entfernten CombiRanks.",
-    "IgnoreCombi-Pals dürfen Eltern sein, sind aber nicht Teil des normalen Kind-Kandidatenpools. Sie entstehen über Spezialkombinationen bzw. ausdrücklich hinterlegte Selbstkombinationen.",
-    "Die Spezialkombinationsquelle exportiert in der verwendeten Pipeline keine Geschlechtsrestriktionen. ANY wird verwendet; das Rohdatenfeld existiert, war in den bekannten Tabellen auf None gesetzt. Bei einem künftigen Datensatz mit Geschlechtsrestriktionen muss die Referenz erweitert werden."
+    "Die Paldeck-Nummer ist kein Zucht-Tie-Breaker.",
+    "Gleichartige Eltern werden durch die globale Identitätsregel behandelt und deshalb nicht als hunderte künstliche Sonderkombinationen in special_combinations.json geführt.",
+    "Bei künftigen Game-Updates müssen die drei gepinnten Quellen neu eingelesen und die Validierungsfelder geprüft werden."
   ]
 }
