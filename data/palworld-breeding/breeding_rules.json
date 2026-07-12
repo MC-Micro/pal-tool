@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-07-12T19:48:29.186808+00:00",
+  "game_reference": "Palworld 1.0 data snapshot",
+  "decision_order": [
+    {
+      "order": 1,
+      "rule": "unique_combo_override",
+      "description_de": "Steht das Elternpaar in special_combinations.json, gilt dieses Kind unabhängig von der normalen Werteformel."
+    },
+    {
+      "order": 2,
+      "rule": "eligible_candidate_pool",
+      "description_de": "Für die normale Formel werden nur Pals mit CombiRank > 0 und IgnoreCombi = false als mögliche Kinder verwendet."
+    },
+    {
+      "order": 3,
+      "rule": "floor_average",
+      "formula": "target = floor((parent_a.combi_rank + parent_b.combi_rank) / 2)",
+      "description_de": "Die beiden Zuchtwerte werden addiert, durch zwei geteilt und bei .5 abgerundet."
+    },
+    {
+      "order": 4,
+      "rule": "nearest_combi_rank",
+      "description_de": "Gewählt wird der zulässige Kind-Rang mit dem kleinsten absoluten Abstand zum Zielwert."
+    },
+    {
+      "order": 5,
+      "rule": "equidistant_rank_parent_rarity_average",
+      "formula": "parent_rarity_average = (parent_a.rarity + parent_b.rarity) / 2",
+      "description_de": "Sind der niedrigere und der höhere Kind-Rang gleich weit entfernt, gewinnt der Kandidat, dessen Seltenheit näher am Seltenheitsdurchschnitt der Eltern liegt.",
+      "confidence": "verified_by_current_project_in_game_tests"
+    },
+    {
+      "order": 6,
+      "rule": "equidistant_rarity_lower_rarity",
+      "description_de": "Ist auch der Seltenheitsabstand gleich, gewinnt die niedrigere Kind-Seltenheit.",
+      "confidence": "verified_by_current_project_in_game_tests"
+    },
+    {
+      "order": 7,
+      "rule": "same_rank_duplicate_resolution",
+      "description_de": "Teilen mehrere zulässige Pals exakt denselben CombiRank, ist CombiDuplicatePriority das dafür vorgesehene Spieldatenfeld; danach bleibt die Tabellen-/InternalIndex-Reihenfolge als letzter stabiler Fallback.",
+      "confidence": "field_semantics_plus_stable_data_order; final fallback not independently in-game-tested"
+    }
+  ],
+  "important_notes": [
+    "CombiDuplicatePriority ist nicht der allgemeine Gleichstandsentscheid zwischen zwei unterschiedlich hohen, gleich weit entfernten CombiRanks.",
+    "IgnoreCombi-Pals dürfen Eltern sein, sind aber nicht Teil des normalen Kind-Kandidatenpools. Sie entstehen über Spezialkombinationen bzw. ausdrücklich hinterlegte Selbstkombinationen.",
+    "Die Spezialkombinationsquelle exportiert in der verwendeten Pipeline keine Geschlechtsrestriktionen. ANY wird verwendet; das Rohdatenfeld existiert, war in den bekannten Tabellen auf None gesetzt. Bei einem künftigen Datensatz mit Geschlechtsrestriktionen muss die Referenz erweitert werden."
+  ]
+}

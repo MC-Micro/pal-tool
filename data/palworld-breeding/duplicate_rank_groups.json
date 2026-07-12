@@ -1,0 +1,31 @@
+[
+  {
+    "combi_rank": 2950,
+    "pals": [
+      {
+        "internal_name": "PlantSlime",
+        "name_de": "Gumoss",
+        "name_en": "Gumoss",
+        "paldex_no": 12,
+        "is_variant": false,
+        "combi_rank": 2950,
+        "rarity": 1,
+        "ignore_combi": false,
+        "combi_duplicate_priority": 295000,
+        "internal_index": 130
+      },
+      {
+        "internal_name": "PlantSlime_Flower",
+        "name_de": "Gumoss",
+        "name_en": "Gumoss",
+        "paldex_no": 12,
+        "is_variant": true,
+        "combi_rank": 2950,
+        "rarity": null,
+        "ignore_combi": null,
+        "combi_duplicate_priority": 295000,
+        "internal_index": 131
+      }
+    ]
+  }
+]

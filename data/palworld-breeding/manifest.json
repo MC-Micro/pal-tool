@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-07-12T19:48:29.186808+00:00",
+  "sources": [
+    {
+      "repository": "deafdudecomputers/PalworldSaveTools",
+      "commit": "f12633787c82d1a652dab3235cabb785ec22134e",
+      "path": "resources/game_data/breedingdata.json",
+      "sha256": "94ed12c4d1d81a92ee83fa2a9581e5894a1fb55fb0b8e52efe7bec1018fde794",
+      "used_for": [
+        "combi_rank",
+        "rarity",
+        "ignore_combi",
+        "unique_combinations",
+        "tested_tie_break_logic"
+      ]
+    },
+    {
+      "repository": "tylercamp/palcalc",
+      "commit": "dcff62b00014869d742762919410d95568023b8b",
+      "path": "PalCalc.Model/db.json",
+      "database_version": "v26",
+      "sha256": "803d891afdb18bd00e24332844a7276bbe5c0855170ef90ef142f2f4d7698ed1",
+      "used_for": [
+        "released_pal_filter",
+        "German_and_English_names",
+        "paldex",
+        "combi_duplicate_priority",
+        "internal_index",
+        "cross_check_rank"
+      ]
+    }
+  ],
+  "counts": {
+    "pal_values": 299,
+    "special_combinations": 246,
+    "duplicate_rank_groups": 1,
+    "rank_mismatches": 0,
+    "missing_in_palworld_save_tools": 4,
+    "filtered_special_combinations": 2
+  },
+  "validation": {
+    "rank_mismatches": [],
+    "missing_in_palworld_save_tools": [
+      "WindChimes",
+      "WindChimes_Ice",
+      "BluePlatypus",
+      "PlantSlime_Flower"
+    ],
+    "filtered_special_combinations": [
+      {
+        "parent_a": "BlackFurDragon",
+        "parent_b": "BlackFurDragon",
+        "child": "BlackFurDragon"
+      },
+      {
+        "parent_a": "ElecLion",
+        "parent_b": "ElecLion",
+        "child": "ElecLion"
+      }
+    ]
+  }
+}
