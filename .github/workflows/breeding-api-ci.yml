@@ -1,0 +1,89 @@
+name: Breeding API CI
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/**"
+      - "release/**"
+    paths:
+      - "AGENTS.md"
+      - "data/palworld-breeding/**"
+      - "services/breeding-api/**"
+      - ".github/workflows/breeding-api-ci.yml"
+      - ".github/workflows/deploy-breeding-api.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "AGENTS.md"
+      - "data/palworld-breeding/**"
+      - "services/breeding-api/**"
+      - ".github/workflows/breeding-api-ci.yml"
+      - ".github/workflows/deploy-breeding-api.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: breeding-api-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Generate, test, and validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: services/breeding-api
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: services/breeding-api/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate API indexes
+        run: pnpm run generate
+
+      - name: Verify committed generated reference
+        run: git diff --exit-code -- generated/reference.json
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Build Worker bundle (dry run)
+        run: pnpm run build:worker
+
+      - name: Validate generated reference
+        run: pnpm run validate
+
+      - name: Verify deterministic generation
+        run: pnpm run check:deterministic
+
+      - name: Scan generated artifacts for secrets
+        run: pnpm run scan:secrets
+
+      - name: Validate release readiness
+        run: pnpm run validate:release
