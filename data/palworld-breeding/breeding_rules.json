@@ -1,7 +1,7 @@
 {
-  "schema_version": 2,
-  "generated_at_utc": "2026-07-12T19:55:04.749373+00:00",
-  "game_reference": "Palworld 1.0 data snapshot",
+  "schema_version": 3,
+  "generated_at_utc": "2026-07-12T19:58:29.888439+00:00",
+  "game_reference": "Palworld 1.0 direct game-table snapshot",
   "decision_order": [
     {
       "order": 1,
@@ -16,7 +16,7 @@
     {
       "order": 3,
       "rule": "eligible_candidate_pool",
-      "description_de": "Für die normale Formel werden nur Pals mit CombiRank > 0 und IgnoreCombi = false als mögliche Kinder verwendet. Spezialkinder können normale Eltern sein, entstehen aber nicht als normales Formelkind."
+      "description_de": "Für die normale Formel werden ausschließlich Pals mit CombiRank > 0 und IgnoreCombi = false aus der direkten Monsterparametertabelle als mögliche Kinder verwendet."
     },
     {
       "order": 4,
@@ -46,7 +46,7 @@
       "order": 8,
       "rule": "same_rank_duplicate_resolution",
       "description_de": "Teilen mehrere zulässige Pals exakt denselben CombiRank, gewinnt die höhere CombiDuplicatePriority. Bei weiterem Gleichstand folgt die Nicht-Variante vor der Variante und danach die niedrigere InternalIndex-Reihenfolge.",
-      "confidence": "current_palcalc_field_semantics_and_order; only one current duplicate-rank group exists"
+      "confidence": "current_field_semantics_and_current_calculator_order"
     }
   ],
   "verified_equidistant_rank_tests": [
@@ -93,7 +93,7 @@
   "important_notes": [
     "CombiDuplicatePriority ist nicht der allgemeine Gleichstandsentscheid zwischen zwei unterschiedlich hohen, gleich weit entfernten CombiRanks.",
     "Die Paldeck-Nummer ist kein Zucht-Tie-Breaker.",
-    "Gleichartige Eltern werden durch die globale Identitätsregel behandelt und deshalb nicht als hunderte künstliche Sonderkombinationen in special_combinations.json geführt.",
-    "Bei künftigen Game-Updates müssen die drei gepinnten Quellen neu eingelesen und die Validierungsfelder geprüft werden."
+    "Gleichartige Eltern werden durch die globale Identitätsregel behandelt und deshalb nicht als hunderte künstliche Sonderkombinationen geführt.",
+    "Die direkte Monsterparametertabelle ist für CombiRank, Rarity, IgnoreCombi und CombiDuplicatePriority maßgeblich; abgeleitete Rechnerdaten dienen nur zur Kontrolle."
   ]
 }

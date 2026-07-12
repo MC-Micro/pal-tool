@@ -13,7 +13,8 @@
         "rarity": 1,
         "ignore_combi": false,
         "combi_duplicate_priority": 295000,
-        "internal_index": 130
+        "internal_index": 130,
+        "game_table_row": "PlantSlime"
       },
       {
         "internal_name": "PlantSlime_Flower",
@@ -25,7 +26,8 @@
         "rarity": 10,
         "ignore_combi": false,
         "combi_duplicate_priority": 295000,
-        "internal_index": 131
+        "internal_index": 131,
+        "game_table_row": "PlantSlime_Flower"
       }
     ]
   }

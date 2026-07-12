@@ -1,469 +1,159 @@
 {
-  "schema_version": 2,
-  "generated_at_utc": "2026-07-12T19:55:04.749373+00:00",
+  "schema_version": 3,
+  "generated_at_utc": "2026-07-12T19:58:29.888439+00:00",
   "sources": [
+    {
+      "repository": "PalModding/UtililityFiles",
+      "commit": "455de2110d8414f703699204f33cb6ac052a3f98",
+      "paths": [
+        "Json's/DataTable/Character/DT_PalMonsterParameter.json",
+        "Json's/DataTable/Character/DT_PalMonsterParameter_Common.json",
+        "Json's/DataTable/Character/DT_PalCombiUnique.json"
+      ],
+      "sha256": {
+        "monster_main": "46a7288da9b186b3b3c24b6198a23d4221f61bfd7c7f3358a7e8542a75ee0775",
+        "monster_common": "d75aebed1c6833f5fd6f47b6fdf4e7e4dc0d5bd6b12f53cc3c8cfd37f0261405",
+        "unique": "b080c5b80587634d225b251e9e852043a6c91c4478df79988c0f9fb162c8da6f"
+      },
+      "used_for": [
+        "authoritative_combi_rank",
+        "authoritative_rarity",
+        "authoritative_ignore_combi",
+        "authoritative_combi_duplicate_priority",
+        "authoritative_unique_combinations_and_gender_constraints"
+      ]
+    },
+    {
+      "repository": "tylercamp/palcalc",
+      "commit": "dcff62b00014869d742762919410d95568023b8b",
+      "paths": [
+        "PalCalc.Model/db.json",
+        "PalCalc.Model/breeding.json"
+      ],
+      "database_version": "v26",
+      "sha256": {
+        "db": "803d891afdb18bd00e24332844a7276bbe5c0855170ef90ef142f2f4d7698ed1",
+        "breeding": "1af1e4d6b461599ec3b80a2195002337ff484ed3c28ce57e27def96138262ec2"
+      },
+      "used_for": [
+        "released_pal_filter",
+        "German_and_English_names",
+        "paldex",
+        "internal_index",
+        "independent_value_cross_check",
+        "resolved_special_combo_cross_check"
+      ]
+    },
     {
       "repository": "deafdudecomputers/PalworldSaveTools",
       "commit": "f12633787c82d1a652dab3235cabb785ec22134e",
       "path": "resources/game_data/breedingdata.json",
       "sha256": "94ed12c4d1d81a92ee83fa2a9581e5894a1fb55fb0b8e52efe7bec1018fde794",
       "used_for": [
-        "independent_rank_and_rarity_cross_check",
-        "ignore_combi_cross_check",
-        "direct_unique_combo_cross_check",
-        "in_game_tested_tie_break_logic"
-      ]
-    },
-    {
-      "repository": "tylercamp/palcalc",
-      "commit": "dcff62b00014869d742762919410d95568023b8b",
-      "path": "PalCalc.Model/db.json",
-      "database_version": "v26",
-      "sha256": "803d891afdb18bd00e24332844a7276bbe5c0855170ef90ef142f2f4d7698ed1",
-      "used_for": [
-        "released_pal_filter",
-        "all_values",
-        "German_and_English_names",
-        "paldex",
-        "rarity",
-        "combi_duplicate_priority",
-        "internal_index"
-      ]
-    },
-    {
-      "repository": "tylercamp/palcalc",
-      "commit": "dcff62b00014869d742762919410d95568023b8b",
-      "path": "PalCalc.Model/breeding.json",
-      "sha256": "1af1e4d6b461599ec3b80a2195002337ff484ed3c28ce57e27def96138262ec2",
-      "used_for": [
-        "complete_resolved_parent_pair_table",
-        "recovery_of_unique_combos_omitted_by_secondary_source",
-        "gender_constraints"
+        "second_independent_value_cross_check",
+        "second_unique_combo_cross_check",
+        "in_game_tested_equidistant_rank_tie_break"
       ]
     }
   ],
   "counts": {
     "pal_values": 299,
-    "cross_species_special_combinations": 791,
-    "special_only_children": 116,
+    "cross_species_special_combinations": 136,
     "duplicate_rank_groups": 1,
-    "rank_mismatches": 0,
-    "rarity_mismatches": 0,
-    "ignore_combi_mismatches": 79,
-    "missing_in_palworld_save_tools": 4,
-    "filtered_secondary_special_combinations": 0,
-    "special_combinations_recovered_beyond_secondary_source": 659,
-    "secondary_special_combinations_missing_from_final": 0,
+    "missing_game_table_rows": 0,
+    "fallback_game_table_rows": 0,
+    "palcalc_rank_mismatches": 0,
+    "palcalc_rarity_mismatches": 0,
+    "palcalc_priority_mismatches": 0,
+    "pst_rank_mismatches": 0,
+    "pst_rarity_mismatches": 0,
+    "pst_ignore_mismatches": 0,
+    "missing_in_pst": 4,
+    "filtered_game_special_combinations": 0,
+    "filtered_pst_special_combinations": 0,
+    "direct_specials_missing_from_pst": 6,
+    "pst_specials_missing_from_direct_table": 2,
+    "special_resolution_mismatches": 0,
     "ranks_not_divisible_by_10": 0
   },
   "validation": {
-    "rank_mismatches": [],
-    "rarity_mismatches": [],
-    "ignore_combi_mismatches": [
-      {
-        "internal_name": "TentacleTurtle_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Baphomet_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Bastet_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Deer_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Gorilla_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Hedgehog_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Kirin_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Penguin_Electric",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "SharkKid_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Umihebi_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Suzaku_Water",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FireKirin_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FairyDragon_Water",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "SweetsSheep_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Serpent_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "BlueDragon_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "VolcanicMonster_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "RobinHood_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "LazyDragon_Electric",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "LizardMan_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "BluePlatypus_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "BirdDragon_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FlowerDinosaur_Electric",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "GrassMammoth_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "SakuraSaurus_Water",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "WhiteMoth_Neutral",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FoxMage_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "NegativeOctopus_Neutral",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "GrassPanda_Electric",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "ThunderDog_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Monkey_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Manticore_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "KingAlpaca_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "CatMage_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "ThunderBird_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "HerculesBeetle_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "CaptainPenguin_Black",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "WeaselDragon_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "SkyDragon_Grass",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "HadesBird_Electric",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Ronin_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FlyingManta_Thunder",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FlowerDoll_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "DarkScorpion_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "LazyCatfish_Gold",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "KendoFrog_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "ScorpionMan_Electric",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "WingGolem_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "VolcanoDragon_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "GhostRabbit_Grass",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "NightBlueHorse_Neutral",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "BlackPuppy_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "WhiteDeer",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "WhiteDeer_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "KingWhale",
-        "derived_from_palcalc": false,
-        "palworld_save_tools": true
-      },
-      {
-        "internal_name": "RockBeast_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "OctopusGirl_Neutral",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "IceNarwhal_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Kitsunebi_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "BerryGoat_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "PinkRabbit_Grass",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "Werewolf_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "AmaterasuWolf_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "RaijinDaughter_Water",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "WhiteTiger_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FengyunDeeper_Electric",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "GhostAnglerfish_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "CactusDoll_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "StuffedShark_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "IceSeal_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "GrassGolem_Dark",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "CubeTurtle_Neutral",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "SwordCutlassfish_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "KingSunfish_Thunder",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "ElecSnail_Ground",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "FluffyBird",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "ClioneTwins",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "GrassMinotaur_Ice",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      },
-      {
-        "internal_name": "GhostDragon_Fire",
-        "derived_from_palcalc": true,
-        "palworld_save_tools": false
-      }
-    ],
-    "missing_in_palworld_save_tools": [
+    "missing_game_table_rows": [],
+    "fallback_game_table_rows": [],
+    "palcalc_rank_mismatches": [],
+    "palcalc_rarity_mismatches": [],
+    "palcalc_priority_mismatches": [],
+    "pst_rank_mismatches": [],
+    "pst_rarity_mismatches": [],
+    "pst_ignore_mismatches": [],
+    "missing_in_pst": [
       "WindChimes",
       "WindChimes_Ice",
       "BluePlatypus",
       "PlantSlime_Flower"
     ],
-    "filtered_secondary_special_combinations": [],
-    "secondary_special_combinations_missing_from_final": [],
+    "filtered_game_special_combinations": [],
+    "filtered_pst_special_combinations": [],
+    "direct_specials_missing_from_pst": [
+      [
+        "blueplatypus",
+        "ANY",
+        "lavagirl",
+        "ANY",
+        "blueplatypus_fire"
+      ],
+      [
+        "blueplatypus",
+        "ANY",
+        "sakurasaurus",
+        "ANY",
+        "sakurasaurus_water"
+      ],
+      [
+        "catmage",
+        "FEMALE",
+        "foxmage",
+        "MALE",
+        "catmage_fire"
+      ],
+      [
+        "catmage",
+        "MALE",
+        "foxmage",
+        "FEMALE",
+        "foxmage_dark"
+      ],
+      [
+        "deer",
+        "ANY",
+        "windchimes",
+        "ANY",
+        "deer_ground"
+      ],
+      [
+        "mopbaby",
+        "ANY",
+        "windchimes",
+        "ANY",
+        "windchimes_ice"
+      ]
+    ],
+    "pst_specials_missing_from_direct_table": [
+      [
+        "catmage",
+        "ANY",
+        "foxmage",
+        "ANY",
+        "catmage_fire"
+      ],
+      [
+        "catmage",
+        "ANY",
+        "foxmage",
+        "ANY",
+        "foxmage_dark"
+      ]
+    ],
+    "special_resolution_mismatches": [],
     "ranks_not_divisible_by_10": []
   }
 }

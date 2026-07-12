@@ -1,6 +1,6 @@
 # Kanonische Palworld-Zuchtreferenz
 
-Stand: automatisch erzeugter und quellenübergreifend validierter Palworld-1.0-Datensnapshot.
+Stand: direkter, quellenübergreifend geprüfter Palworld-1.0-Spieldatensnapshot.
 
 ## Verbindlicher Einsatz
 
@@ -9,7 +9,7 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 ## Dateien
 
 - `pal_values.json` / `.csv`: alle aktuellen Pals mit CombiRank, Seltenheit, IgnoreCombi, CombiDuplicatePriority und interner Reihenfolge.
-- `special_combinations.json` / `.csv`: sämtliche quellenübergreifend rekonstruierten artverschiedenen Spezialpaarungen, die die normale Werteformel überschreiben.
+- `special_combinations.json` / `.csv`: sämtliche artverschiedenen Einträge aus der direkten v1.0-Sonderzuchttabelle, einschließlich möglicher Geschlechtsvorgaben.
 - `duplicate_rank_groups.json`: alle normalen Kind-Kandidaten, die exakt denselben CombiRank teilen.
 - `breeding_rules.json`: vollständige verbindliche Entscheidungsreihenfolge, globale Gleichart-Regel und verifizierte Tie-Break-Fälle.
 - `manifest.json`: Quellen, Commit-Pins, Hashes, Zähler und sämtliche Validierungsabweichungen.
@@ -17,7 +17,7 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 ## Verbindliche Kurzregel
 
 1. Gleiche Pal-Art + gleiche Pal-Art ergibt dieselbe Pal-Art.
-2. Danach Spezialkombination einschließlich möglicher Geschlechtsvorgabe prüfen.
+2. Danach direkte Spezialkombination einschließlich Geschlechtsvorgabe prüfen.
 3. Andernfalls nur normale Kind-Kandidaten (`IgnoreCombi = false`) verwenden.
 4. Zielwert `floor((A + B + 1) / 2)` bilden; bei den aktuellen durch zehn teilbaren Werten ist das exakt der Mittelwert.
 5. Kleinsten CombiRank-Abstand wählen.
@@ -27,11 +27,12 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 ## Validierung
 
 - Pals: **299**
-- Artverschiedene Spezialkombinationen: **791**
-- Spezialkinder außerhalb des normalen Kandidatenpools: **116**
+- Artverschiedene direkte Spezialkombinationen: **136**
 - Gruppen mit identischem Rang: **1**
-- Abweichende CombiRanks zwischen den unabhängigen Quellen: **0**
-- Abweichende Seltenheiten zwischen den unabhängigen Quellen: **0**
+- Fehlende direkte Spieldatenzeilen: **0**
+- Abweichende Zuchtwerte gegenüber PalCalc: **0**
+- Abweichende Seltenheiten gegenüber PalCalc: **0**
+- Nicht aufgelöste direkte Spezialkombinationen: **0**
 - Nicht durch zehn teilbare aktuelle CombiRanks: **0**
 
 Details und jede Restunsicherheit stehen ausdrücklich in `breeding_rules.json` und `manifest.json`.
