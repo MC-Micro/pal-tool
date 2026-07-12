@@ -9,8 +9,8 @@ Diese Datei ist eine selbstständige Übergabe für einen neuen ChatGPT-Chat. Si
 | Projekt | Palworld Breeding API |
 | Repository | MC-Micro/pal-tool |
 | Branch | feature/palworld-breeding-api |
-| Pull Request | NOT_AVAILABLE |
-| Head-Commit | NOT_VERIFIABLE |
+| Pull Request | https://github.com/MC-Micro/pal-tool/pull/3 |
+| Head-Commit | Dynamisch vom PR-Head auflösen; Implementierungscommit: 8f5ef9d4cb656f3254a54fcabccd41f97ad532d6 |
 | Workername | palworld-breeding-api |
 | Deploymentstatus | BLOCKED |
 | workers.dev-Basisadresse | NOT_AVAILABLE |
@@ -22,8 +22,9 @@ Diese Datei ist eine selbstständige Übergabe für einen neuen ChatGPT-Chat. Si
 | Datenhash | febbf5f9fb594040d027724d20c9a475aea466f8d5b7ab1d6faa304a1257e26f |
 | Generiertes Artefakt SHA-256 | 497eeb6e190e87fb51a2533e3a449387920888b3e95810d0388a42ab4d446af5 |
 | Teststatus | Lint PASS; Typecheck PASS; 41/41 Tests PASS; Worker-Dry-Run PASS (1.419,88 KiB / gzip 347,29 KiB); strukturelle Validierung PASS; Determinismus PASS; Secret-Scan PASS; Release-Validierung erwartungsgemäß BLOCKED |
+| GitHub CI | Technische Schritte 1–14 PASS; nur finales Release-Gate erwartungsgemäß FAIL — https://github.com/MC-Micro/pal-tool/actions/runs/29211419514 |
 
-Head-Commit ist absichtlich nicht in der Datei festgeschrieben: Solange die Arbeit uncommitted ist, ist er nicht verifizierbar, und eine Datei kann nicht stabil den SHA des Commits enthalten, der ihren eigenen Inhalt erst festlegt. Der tatsächliche finale SHA muss nach dem letzten Commit mit git rev-parse HEAD ermittelt und im externen Abschlussbericht genannt werden.
+Der exakte aktuelle Head-Commit wird absichtlich nicht als selbstreferenzieller Wert festgeschrieben: Eine Datei kann nicht stabil den SHA des Commits enthalten, der ihren eigenen Inhalt erst festlegt. Der tatsächliche finale SHA muss aus dem PR-Head beziehungsweise mit `git rev-parse HEAD` ermittelt und im externen Abschlussbericht genannt werden.
 
 ## Ziel und Architektur
 
