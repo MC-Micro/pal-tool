@@ -17,14 +17,13 @@ import {
   type GenderOverride,
   type GeneratedReference,
   type PalValue,
-  type PreparedSpecialCombination,
   type ResolvedPair,
   type SourceFileHash,
   type SpecialCombination,
 } from "../src/types.ts";
 
-const API_SCHEMA_VERSION = 1;
-const REFERENCE_SCHEMA_VERSION = 1;
+const API_SCHEMA_VERSION = 2;
+const REFERENCE_SCHEMA_VERSION = 2;
 const SOURCE_PATHS = [
   "data/palworld-breeding/breeding_rules.json",
   "data/palworld-breeding/special_combinations.json",
@@ -39,17 +38,25 @@ const REQUIRED_DECISION_ORDER = [
   "nearest_combi_rank",
   "equidistant_different_ranks_parent_rarity_average",
   "equidistant_rarity_lower_rarity",
+  "equidistant_equal_rarity_higher_combi_rank",
   "same_rank_duplicate_resolution",
 ] as const;
 const GENDER_CODE: Record<Gender, number> = { ANY: 0, MALE: 1, FEMALE: 2 };
 const IMPLEMENTATION_NOTES = [
-  "breeding_rules.json does not explicitly name the final fallback for equidistant different ranks whose child rarities are identical. The pinned PalworldSaveTools closest_pal implementation examines the upper rank first and retains it, so this generator deterministically selects the higher CombiRank and records the tie-break in the pair trace.",
+  "Direct Palworld 1.0 egg tests on 2026-07-13 resolved both former release blockers: special children are excluded from normal-formula candidates, and fully equal cross-rank ties select the higher CombiRank.",
+  "Same-species identity remains the first rule, including for species that are otherwise direct-special children.",
+  "Palworld.gg is documented only as a non-authoritative manual cross-check and is never queried by the build or Worker.",
 ] as const;
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 export const apiDirectory = resolve(scriptDirectory, "..");
 export const repositoryRoot = resolve(apiDirectory, "..", "..");
 export const generatedReferencePath = resolve(apiDirectory, "generated", "reference.json");
+export const specialChildImpactPath = resolve(
+  apiDirectory,
+  "generated",
+  "special-child-impact.json",
+);
 
 export interface CanonicalInputs {
   rules: BreedingRulesFile;
@@ -57,7 +64,7 @@ export interface CanonicalInputs {
   pals: PalValue[];
   manifest: CanonicalManifest;
   sourceFiles: SourceFileHash[];
-  dataHash: string;
+  sourceDataHash: string;
 }
 
 interface PairOutcome {
@@ -71,8 +78,47 @@ interface CarrierWitness extends PairOutcome {
   mateId: number;
 }
 
+export interface SpecialChildImpactChange {
+  pairOrdinal: number;
+  parentAInternal: string;
+  parentBInternal: string;
+  previousChildInternal: string;
+  currentChildInternal: string;
+  affectedSpecialChildSpecies: string[];
+  pairItselfSpecial: boolean;
+  knownRouteLabels: string[];
+}
+
+export interface SpecialChildImpactReport {
+  schemaVersion: 1;
+  sourceDataHash: string;
+  contentHash: string;
+  pairCount: number;
+  changedPairCount: number;
+  legacyEligibleChildCount: number;
+  currentEligibleChildCount: number;
+  specialChildSpeciesCount: number;
+  excludedEligibleSpecialChildCount: number;
+  affectedSpecialChildSpecies: string[];
+  knownPairChecks: Array<{
+    label: string;
+    parentAInternal: string;
+    parentBInternal: string;
+    previousChildInternal: string;
+    currentChildInternal: string;
+    changed: boolean;
+  }>;
+  changes: SpecialChildImpactChange[];
+}
+
 function sha256(value: string | Uint8Array): string {
   return createHash("sha256").update(value).digest("hex");
+}
+
+export function computeSourceDataHash(sourceFiles: readonly SourceFileHash[]): string {
+  return sha256(
+    JSON.stringify(sourceFiles.map(({ path, sha256: hash, bytes }) => [path, hash, bytes])),
+  );
 }
 
 function normalizeSourceText(value: string): string {
@@ -122,10 +168,8 @@ async function readCanonicalInputs(): Promise<CanonicalInputs> {
   const pals = requireArray<PalValue>(parsed[2], SOURCE_PATHS[2]);
   const manifest = requireObject<CanonicalManifest>(parsed[3], SOURCE_PATHS[3]);
   const sourceFiles = rawFiles.map(({ path, sha256: hash, bytes }) => ({ path, sha256: hash, bytes }));
-  const dataHash = sha256(
-    JSON.stringify(sourceFiles.map(({ path, sha256: hash, bytes }) => [path, hash, bytes])),
-  );
-  return { rules, specials, pals, manifest, sourceFiles, dataHash };
+  const sourceDataHash = computeSourceDataHash(sourceFiles);
+  return { rules, specials, pals, manifest, sourceFiles, sourceDataHash };
 }
 
 export function validateCanonicalInputs(inputs: CanonicalInputs): void {
@@ -264,16 +308,60 @@ export function validateCanonicalInputs(inputs: CanonicalInputs): void {
     }
     rowIds.add(row.row_id);
   }
+
+  const specialChildren = new Set(specials.map(({ child_internal }) => child_internal));
+  const normalFormulaEligible = pals.filter(
+    (pal) =>
+      pal.combi_rank > 0 &&
+      !pal.ignore_combi &&
+      !specialChildren.has(pal.internal_name),
+  );
+  const excludedEligibleSpecialChildren = pals.filter(
+    (pal) =>
+      pal.combi_rank > 0 &&
+      !pal.ignore_combi &&
+      specialChildren.has(pal.internal_name),
+  );
+  const expectedCounts: Record<string, number> = {
+    unique_special_child_species: specialChildren.size,
+    normal_formula_eligible_children: normalFormulaEligible.length,
+    eligible_special_child_species_excluded_from_normal_formula:
+      excludedEligibleSpecialChildren.length,
+    unordered_species_pairs_including_same_species: triangularPairCount(pals.length),
+  };
+  for (const [key, expected] of Object.entries(expectedCounts)) {
+    if (manifest.counts[key] !== expected) {
+      throw new Error(`Manifest count ${key}=${String(manifest.counts[key])}; expected ${expected}`);
+    }
+  }
+
+  const patchCheck = manifest.patch_check;
+  if (patchCheck === undefined) throw new Error("manifest.patch_check is required");
+  if (patchCheck.status !== "current" && patchCheck.status !== "needs_review" && patchCheck.status !== "unknown") {
+    throw new TypeError(`manifest.patch_check.status is invalid: ${String(patchCheck.status)}`);
+  }
+  requireString(patchCheck.checked_game_version, "manifest.patch_check.checked_game_version");
+  requireString(patchCheck.checked_on, "manifest.patch_check.checked_on");
+  if (patchCheck.checked_game_build !== null && typeof patchCheck.checked_game_build !== "string") {
+    throw new TypeError("manifest.patch_check.checked_game_build must be a string or null");
+  }
+  if (typeof patchCheck.build_verified !== "boolean") {
+    throw new TypeError("manifest.patch_check.build_verified must be a boolean");
+  }
+  if (typeof patchCheck.requires_recheck_after_newer_patch !== "boolean") {
+    throw new TypeError(
+      "manifest.patch_check.requires_recheck_after_newer_patch must be a boolean",
+    );
+  }
+  if (!Array.isArray(patchCheck.evidence) || patchCheck.evidence.length < 2) {
+    throw new TypeError("manifest.patch_check.evidence must contain the direct in-game tests");
+  }
 }
 
 function findUniquePalId(pals: readonly PalValue[], internalName: string): number {
   const id = pals.findIndex((pal) => pal.internal_name === internalName);
   if (id < 0) throw new Error(`Required fixture pal is missing: ${internalName}`);
   return id;
-}
-
-function canonicalResolved(resolution: ResolvedPair): ResolvedPair {
-  return resolution;
 }
 
 function buildAssignmentConflicts(
@@ -285,92 +373,47 @@ function buildAssignmentConflicts(
   const sibelyxId = findUniquePalId(pals, "WhiteMoth");
   const lamballId = findUniquePalId(pals, "SheepBall");
   const surfentId = findUniquePalId(pals, "Serpent");
-  const gobfinIgnisId = findUniquePalId(pals, "SharkKid_Fire");
-  const actual = canonicalResolved(resolveBasePair(sibelyxId, lamballId));
-  const gobfinIgnis = pals[gobfinIgnisId];
-  const actualPal = pals[actual.childId];
-  if (gobfinIgnis === undefined || actualPal === undefined) throw new Error("Fixture pal lookup failed");
-  if (actual.childId !== surfentId || !gobfinIgnis.ignore_combi) {
-    const specialChildNames = new Set(specials.map(({ child_internal }) => child_internal));
-    const eligibleSpecialChildren = pals.filter(
-      (pal) => specialChildNames.has(pal.internal_name) && !pal.ignore_combi && pal.combi_rank > 0,
-    );
-    const specialOnlyPals = pals.map((pal) =>
-      specialChildNames.has(pal.internal_name) ? { ...pal, ignore_combi: true } : pal,
-    );
-    const specialOnlyEngine = createBreedingEngine(specialOnlyPals, specials);
-    let affectedPairCount = 0;
-    for (let parentAId = 0; parentAId < pals.length; parentAId += 1) {
-      for (let parentBId = parentAId; parentBId < pals.length; parentBId += 1) {
-        if (
-          resolveBasePair(parentAId, parentBId).childId !==
-          specialOnlyEngine.resolveBasePair(parentAId, parentBId).childId
-        ) {
-          affectedPairCount += 1;
-        }
-      }
-    }
+  const sibelyxActual = resolveBasePair(sibelyxId, lamballId);
+  const specialChildNames = new Set(specials.map(({ child_internal }) => child_internal));
+  if (sibelyxActual.childId !== surfentId || !specialChildNames.has("SharkKid_Fire")) {
+    const actualPal = pals[sibelyxActual.childId];
     conflicts.push({
       code: "SIBELYX_LAMBALL_ASSIGNMENT_CONFLICT",
       description:
-        "The assignment expects Sibelyx + Lamball to yield Surfent and Gobfin Ignis to be excluded from normal formula children, but the canonical files say otherwise.",
+        "The direct Palworld 1.0 egg test requires Sibelyx + Lamball to yield Surfent under the global special-child exclusion rule.",
       parents: ["Sibelyx", "Lamball"],
       expected: "Surfent; Gobfin Ignis excluded from normal formula candidates",
-      canonicalActual: actualPal.name_en,
-      canonicalReason: `target=${actual.targetRank}; ${gobfinIgnis.internal_name}.combi_rank=${gobfinIgnis.combi_rank}; ignore_combi=${String(gobfinIgnis.ignore_combi)}`,
-      scope: {
-        policy_tested: "exclude every direct special-combination child from the normal candidate pool",
-        eligible_special_child_species: eligibleSpecialChildren.length,
-        potentially_affected_unordered_pairs: affectedPairCount,
-      },
+      canonicalActual: actualPal?.name_en ?? `unknown child id ${sibelyxActual.childId}`,
+      canonicalReason: `target=${sibelyxActual.targetRank}; special_child_set_contains_gobfin_ignis=${String(specialChildNames.has("SharkKid_Fire"))}`,
       blocking: true,
     });
   }
 
   const equalTieParentAId = findUniquePalId(pals, "Mutant");
   const equalTieParentBId = findUniquePalId(pals, "NaughtyCat");
+  const penkingId = findUniquePalId(pals, "CaptainPenguin");
   const equalTieActual = resolveBasePair(equalTieParentAId, equalTieParentBId);
   const equalTieChild = pals[equalTieActual.childId];
   if (equalTieChild === undefined) throw new Error("Equal-rarity fixture child lookup failed");
-  conflicts.push({
-    code: "UNDOCUMENTED_EQUAL_RARITY_SOURCE_ORDER_FALLBACK",
-    description:
-      "The canonical breeding_rules.json stops after lower child rarity and does not explicitly define the remaining equal-rarity, equidistant-rank case. The pinned PalworldSaveTools source retains the upper bisect neighbor, so generation uses the higher CombiRank but blocks release pending explicit canonical confirmation.",
-    parents: [pals[equalTieParentAId]?.name_en ?? "Mutant", pals[equalTieParentBId]?.name_en ?? "NaughtyCat"],
-    expected: "An explicit final fallback in breeding_rules.json",
-    canonicalActual: `${equalTieChild.name_en} via higher-CombiRank source-order fallback`,
-    canonicalReason: `target=${equalTieActual.targetRank}; applied=${equalTieActual.appliedTieBreaks?.join(",") ?? "none"}`,
-    blocking: true,
-  });
-  return conflicts;
-}
-
-function orientGenderRow(
-  row: PreparedSpecialCombination,
-  lowerParentId: number,
-  upperParentId: number,
-  pairOrdinal: number,
-): GenderOverride {
-  if (row.parentAId === lowerParentId && row.parentBId === upperParentId) {
-    return {
-      pairOrdinal,
-      rowId: row.row_id,
-      parentAId: lowerParentId,
-      parentAGender: row.parent_a_gender,
-      parentBId: upperParentId,
-      parentBGender: row.parent_b_gender,
-      childId: row.childId,
-    };
+  if (
+    equalTieActual.childId !== penkingId ||
+    !equalTieActual.appliedTieBreaks?.includes(
+      "equidistant_equal_rarity_higher_combi_rank",
+    )
+  ) {
+    conflicts.push({
+      code: "UNDOCUMENTED_EQUAL_RARITY_SOURCE_ORDER_FALLBACK",
+      description:
+        "The direct Palworld 1.0 egg test requires the canonical higher-CombiRank rule for the fully equal cross-rank tie.",
+      parents: ["Lunaris", "Grintale"],
+      expected: "Penking via equidistant_equal_rarity_higher_combi_rank",
+      canonicalActual: equalTieChild.name_en,
+      canonicalReason: `target=${equalTieActual.targetRank}; applied=${equalTieActual.appliedTieBreaks?.join(",") ?? "none"}`,
+      blocking: true,
+    });
   }
-  return {
-    pairOrdinal,
-    rowId: row.row_id,
-    parentAId: lowerParentId,
-    parentAGender: row.parent_b_gender,
-    parentBId: upperParentId,
-    parentBGender: row.parent_a_gender,
-    childId: row.childId,
-  };
+
+  return conflicts;
 }
 
 function compareGenderOverrides(left: GenderOverride, right: GenderOverride): number {
@@ -378,8 +421,9 @@ function compareGenderOverrides(left: GenderOverride, right: GenderOverride): nu
     left.pairOrdinal - right.pairOrdinal ||
     GENDER_CODE[left.parentAGender] - GENDER_CODE[right.parentAGender] ||
     GENDER_CODE[left.parentBGender] - GENDER_CODE[right.parentBGender] ||
+    left.ruleCode - right.ruleCode ||
     left.childId - right.childId ||
-    left.rowId.localeCompare(right.rowId, "en")
+    (left.rowId ?? "").localeCompare(right.rowId ?? "", "en")
   );
 }
 
@@ -392,7 +436,7 @@ function compareWitness(left: CarrierWitness, right: CarrierWitness): number {
   );
 }
 
-function buildPackedData(
+export function buildPackedData(
   pals: readonly PalValue[],
   engine: ReturnType<typeof createBreedingEngine>,
 ): Pick<GeneratedReference, "pairMatrix" | "genderOverrides" | "parentsByChild" | "carrierAdjacency"> {
@@ -419,9 +463,27 @@ function buildPackedData(
         (row) => row.parent_a_gender !== "ANY" || row.parent_b_gender !== "ANY",
       );
       if (!hasUniversal && genderRows.length > 0) {
-        genderPairOrdinals.add(ordinal);
-        for (const row of genderRows) {
-          genderOverrides.push(orientGenderRow(row, parentAId, parentBId, ordinal));
+        const oriented = engine.resolvePair(parentAId, parentBId, "ANY", "ANY");
+        if (oriented.kind === "resolved") {
+          childIds[ordinal] = oriented.childId;
+          ruleCodes[ordinal] = oriented.ruleCode;
+          const reverse = reverseLists[oriented.childId];
+          if (reverse === undefined) throw new Error(`Invalid reverse child id ${oriented.childId}`);
+          reverse.push(ordinal);
+        } else {
+          genderPairOrdinals.add(ordinal);
+          for (const alternative of oriented.alternatives) {
+            genderOverrides.push({
+              pairOrdinal: ordinal,
+              parentAId,
+              parentAGender: alternative.parentAGender,
+              parentBId,
+              parentBGender: alternative.parentBGender,
+              childId: alternative.childId,
+              ruleCode: alternative.ruleCode,
+              ...(alternative.rowId === undefined ? {} : { rowId: alternative.rowId }),
+            });
+          }
         }
       } else {
         const reverse = reverseLists[result.childId];
@@ -461,7 +523,7 @@ function buildPackedData(
           const carrierIsLower = carrierId === lower;
           outcomes.push({
             childId: override.childId,
-            ruleCode: RULE_CODE.special_combination,
+            ruleCode: override.ruleCode,
             carrierGender: carrierIsLower ? override.parentAGender : override.parentBGender,
             mateGender: carrierIsLower ? override.parentBGender : override.parentAGender,
           });
@@ -530,6 +592,128 @@ function buildPackedData(
   };
 }
 
+const KNOWN_IMPACT_PAIRS = [
+  ["Sibelyx + Lamball", "WhiteMoth", "SheepBall"],
+  ["Lunaris + Grintale", "Mutant", "NaughtyCat"],
+  ["Anubis + Eikthyrdeer Terra", "Anubis", "Deer_Ground"],
+  ["Anubis + Panthalus", "Anubis", "KingWhale"],
+  ["Kingpaca Cryst + Jolthog", "KingAlpaca_Ice", "Hedgehog"],
+  ["Dualith Noct + Jolthog", "GrassGolem_Dark", "Hedgehog"],
+  ["Elphidran + Surfent", "FairyDragon", "Serpent"],
+] as const;
+
+export function computeSpecialChildImpactContentHash(
+  report: Omit<SpecialChildImpactReport, "contentHash">,
+): string {
+  return sha256(JSON.stringify(report));
+}
+
+export function buildSpecialChildImpact(
+  inputs: CanonicalInputs,
+): SpecialChildImpactReport {
+  const legacy = createBreedingEngine(inputs.pals, inputs.specials, {
+    excludeSpecialChildrenFromFormula: false,
+  });
+  const current = createBreedingEngine(inputs.pals, inputs.specials);
+  const specialChildren = new Set(
+    inputs.specials.map(({ child_internal }) => child_internal),
+  );
+  const pairLabels = new Map<string, string[]>();
+  const keyFor = (left: string, right: string): string =>
+    left.localeCompare(right, "en") <= 0 ? `${left}|${right}` : `${right}|${left}`;
+  for (const [label, left, right] of KNOWN_IMPACT_PAIRS) {
+    const labels = pairLabels.get(keyFor(left, right)) ?? [];
+    labels.push(label);
+    pairLabels.set(keyFor(left, right), labels);
+  }
+
+  const changes: SpecialChildImpactChange[] = [];
+  const affectedSpecialChildren = new Set<string>();
+  for (let parentAId = 0; parentAId < inputs.pals.length; parentAId += 1) {
+    for (let parentBId = parentAId; parentBId < inputs.pals.length; parentBId += 1) {
+      const before = legacy.resolveBasePair(parentAId, parentBId);
+      const after = current.resolveBasePair(parentAId, parentBId);
+      if (before.childId === after.childId) continue;
+      const parentA = inputs.pals[parentAId];
+      const parentB = inputs.pals[parentBId];
+      const previousChild = inputs.pals[before.childId];
+      const currentChild = inputs.pals[after.childId];
+      if (
+        parentA === undefined ||
+        parentB === undefined ||
+        previousChild === undefined ||
+        currentChild === undefined
+      ) {
+        throw new Error("Impact analysis resolved an unknown Pal id");
+      }
+      const affected = [previousChild, currentChild]
+        .filter(({ internal_name }) => specialChildren.has(internal_name))
+        .map(({ internal_name }) => internal_name)
+        .sort((left, right) => left.localeCompare(right, "en"));
+      for (const internalName of affected) affectedSpecialChildren.add(internalName);
+      changes.push({
+        pairOrdinal: triangularPairOrdinal(parentAId, parentBId, inputs.pals.length),
+        parentAInternal: parentA.internal_name,
+        parentBInternal: parentB.internal_name,
+        previousChildInternal: previousChild.internal_name,
+        currentChildInternal: currentChild.internal_name,
+        affectedSpecialChildSpecies: affected,
+        pairItselfSpecial:
+          before.rule === "special_combination" || after.rule === "special_combination",
+        knownRouteLabels: pairLabels.get(keyFor(parentA.internal_name, parentB.internal_name)) ?? [],
+      });
+    }
+  }
+
+  const palId = (internalName: string): number => findUniquePalId(inputs.pals, internalName);
+  const knownPairChecks = KNOWN_IMPACT_PAIRS.map(([label, left, right]) => {
+    const before = legacy.resolveBasePair(palId(left), palId(right));
+    const after = current.resolveBasePair(palId(left), palId(right));
+    const previousChild = inputs.pals[before.childId];
+    const currentChild = inputs.pals[after.childId];
+    if (previousChild === undefined || currentChild === undefined) {
+      throw new Error(`Known impact pair ${label} resolved an unknown child`);
+    }
+    return {
+      label,
+      parentAInternal: left,
+      parentBInternal: right,
+      previousChildInternal: previousChild.internal_name,
+      currentChildInternal: currentChild.internal_name,
+      changed: before.childId !== after.childId,
+    };
+  });
+  const legacyEligibleChildCount = inputs.pals.filter(
+    (pal) => pal.combi_rank > 0 && !pal.ignore_combi,
+  ).length;
+  const currentEligibleChildCount = inputs.pals.filter(
+    (pal) =>
+      pal.combi_rank > 0 &&
+      !pal.ignore_combi &&
+      !specialChildren.has(pal.internal_name),
+  ).length;
+  const excludedEligibleSpecialChildCount = legacyEligibleChildCount - currentEligibleChildCount;
+  const withoutHash: Omit<SpecialChildImpactReport, "contentHash"> = {
+    schemaVersion: 1,
+    sourceDataHash: inputs.sourceDataHash,
+    pairCount: triangularPairCount(inputs.pals.length),
+    changedPairCount: changes.length,
+    legacyEligibleChildCount,
+    currentEligibleChildCount,
+    specialChildSpeciesCount: specialChildren.size,
+    excludedEligibleSpecialChildCount,
+    affectedSpecialChildSpecies: [...affectedSpecialChildren].sort((left, right) =>
+      left.localeCompare(right, "en"),
+    ),
+    knownPairChecks,
+    changes,
+  };
+  return {
+    ...withoutHash,
+    contentHash: computeSpecialChildImpactContentHash(withoutHash),
+  };
+}
+
 function canonicalDataIsValid(manifest: CanonicalManifest): boolean {
   const blockingKeys = [
     "missing_game_table_rows",
@@ -553,19 +737,30 @@ export async function buildReference(): Promise<GeneratedReference> {
   validateCanonicalInputs(inputs);
   const engine = createBreedingEngine(inputs.pals, inputs.specials);
   const packed = buildPackedData(inputs.pals, engine);
+  const impact = buildSpecialChildImpact(inputs);
+  if (inputs.manifest.counts.pair_results_changed_by_special_child_rule !== impact.changedPairCount) {
+    throw new Error(
+      `Manifest pair impact count ${String(inputs.manifest.counts.pair_results_changed_by_special_child_rule)} != ${impact.changedPairCount}`,
+    );
+  }
   const conflicts = buildAssignmentConflicts(inputs.pals, inputs.specials, (parentAId, parentBId) =>
     engine.resolveBasePair(parentAId, parentBId),
   );
   const canonicalValid = canonicalDataIsValid(inputs.manifest);
   const valid = canonicalValid && conflicts.length === 0;
+  const specialChildren = new Set(inputs.specials.map(({ child_internal }) => child_internal));
   const eligiblePalCount = inputs.pals.filter(
-    (pal) => pal.combi_rank > 0 && !pal.ignore_combi,
+    (pal) =>
+      pal.combi_rank > 0 &&
+      !pal.ignore_combi &&
+      !specialChildren.has(pal.internal_name),
   ).length;
 
-  return {
+  const reference: GeneratedReference = {
     schemaVersion: REFERENCE_SCHEMA_VERSION,
     generatedAtUtc: inputs.manifest.generated_at_utc,
-    dataHash: inputs.dataHash,
+    sourceDataHash: inputs.sourceDataHash,
+    generatedArtifactHash: "",
     sourceFiles: inputs.sourceFiles,
     canonical: {
       rules: inputs.rules,
@@ -577,22 +772,33 @@ export async function buildReference(): Promise<GeneratedReference> {
       Object.entries(engine.aliases).map(([alias, ids]) => [alias, [...ids]]),
     ),
     ...packed,
+    specialChildImpact: {
+      path: "generated/special-child-impact.json",
+      sha256: impact.contentHash,
+      pairCount: impact.pairCount,
+      changedPairCount: impact.changedPairCount,
+      legacyEligibleChildCount: impact.legacyEligibleChildCount,
+      currentEligibleChildCount: impact.currentEligibleChildCount,
+      specialChildSpeciesCount: impact.specialChildSpeciesCount,
+    },
     status: {
       ok: valid,
       apiSchemaVersion: API_SCHEMA_VERSION,
       breedingReferenceSchemaVersion: inputs.rules.schema_version,
       gameReference: inputs.rules.game_reference,
       generatedAtUtc: inputs.manifest.generated_at_utc,
-      dataHash: inputs.dataHash,
+      sourceDataHash: inputs.sourceDataHash,
+      generatedArtifactHash: "",
       palCount: inputs.pals.length,
       eligiblePalCount,
       specialCombinationCount: inputs.specials.length,
+      specialChildSpeciesCount: specialChildren.size,
       pairCount: packed.pairMatrix.count,
       genderOverrideCount: packed.genderOverrides.length,
       parentsIndexEntryCount: packed.parentsByChild.entryCount,
       carrierAdjacencyEdgeCount: packed.carrierAdjacency.edgeCount,
       validationStatus: valid ? "valid" : "needs_review",
-      knownPatchCheckStatus: "unknown",
+      patchCheck: inputs.manifest.patch_check,
     },
     validation: {
       ok: valid,
@@ -604,12 +810,30 @@ export async function buildReference(): Promise<GeneratedReference> {
       sourceValidation: inputs.manifest.validation,
     },
   };
+  const generatedArtifactHash = computeGeneratedArtifactHash(reference);
+  reference.generatedArtifactHash = generatedArtifactHash;
+  reference.status.generatedArtifactHash = generatedArtifactHash;
+  return reference;
+}
+
+export function computeGeneratedArtifactHash(reference: GeneratedReference): string {
+  const payload = structuredClone(reference);
+  Reflect.deleteProperty(payload, "generatedArtifactHash");
+  Reflect.deleteProperty(payload.status, "generatedArtifactHash");
+  return sha256(JSON.stringify(payload));
 }
 
 export async function writeGeneratedReference(): Promise<GeneratedReference> {
   const reference = await buildReference();
+  const inputs = await readCanonicalInputs();
+  validateCanonicalInputs(inputs);
+  const impact = buildSpecialChildImpact(inputs);
+  if (impact.contentHash !== reference.specialChildImpact.sha256) {
+    throw new Error("Special-child impact hash changed between deterministic builds");
+  }
   await mkdir(dirname(generatedReferencePath), { recursive: true });
   await writeFile(generatedReferencePath, `${JSON.stringify(reference)}\n`, "utf8");
+  await writeFile(specialChildImpactPath, `${JSON.stringify(impact)}\n`, "utf8");
   return reference;
 }
 
@@ -618,8 +842,10 @@ async function main(): Promise<void> {
   process.stdout.write(
     `${JSON.stringify({
       output: generatedReferencePath,
+      impactOutput: specialChildImpactPath,
       schemaVersion: reference.schemaVersion,
-      dataHash: reference.dataHash,
+      sourceDataHash: reference.sourceDataHash,
+      generatedArtifactHash: reference.generatedArtifactHash,
       palCount: reference.status.palCount,
       pairCount: reference.status.pairCount,
       validationStatus: reference.status.validationStatus,

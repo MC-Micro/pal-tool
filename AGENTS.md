@@ -22,11 +22,18 @@ Apply the exact decision order documented in `breeding_rules.json`. In particula
 
 - Same-species identity is evaluated before every other rule.
 - Special combinations, including gender constraints, are evaluated before the normal breeding formula.
+- Species listed as `child_internal` in `special_combinations.json` are excluded from the normal-formula candidate pool. Derive this set dynamically; never patch individual `ignore_combi` values.
+- Same-species identity remains valid for species that are otherwise direct-special children.
 - Only eligible normal child candidates may participate in the formula calculation.
+- A fully equal cross-rank tie after the rarity rules selects the higher `CombiRank`.
+- Same-rank duplicates are a separate case: use `CombiDuplicatePriority`, then non-variant preference, then internal order.
 - Never use a Paldeck number as a breeding value or tie-breaker.
+- Never hardcode one-off parent pairs to mimic a global rule.
 - Do not invent missing values, aliases, combinations, translations, or patch status.
+- Document direct in-game tests with their tested version and date. Treat Palworld.gg only as a non-authoritative manual cross-check.
 - Do not silently repair or rewrite canonical data. Stop release validation and document any conflict.
 - Before changing canonical breeding data, verify the current Palworld patch and the pinned direct-game-data sources.
+- Recheck patch status after every newer Palworld version before continuing to label the reference current.
 
 ## Breeding API requirements
 
@@ -35,6 +42,7 @@ Apply the exact decision order documented in `breeding_rules.json`. In particula
 - Use stable internal Pal IDs as primary keys. Localized names are aliases only.
 - Name ambiguity must return structured candidates instead of a guessed match.
 - Builds and generated indexes must be deterministic for identical canonical inputs.
+- Keep `source_data_hash` and `generated_artifact_hash` semantically distinct and non-self-referential.
 - Forward and reverse breeding indexes must remain consistent.
 - Release validation must fail when canonical data, generated data, or unresolved conflicts disagree.
 
@@ -57,10 +65,11 @@ pnpm run generate
 pnpm run lint
 pnpm run typecheck
 pnpm run test
+pnpm run build:worker
 pnpm run validate
 pnpm run validate:release
 pnpm run check:deterministic
 pnpm run scan:secrets
 ```
 
-Do not deploy unless every release check passes. Preserve the existing workflows under `.github/workflows/`; add Breeding API automation separately.
+Pin direct package dependencies and third-party GitHub Actions to reviewed immutable versions. Do not deploy unless every release check passes, and never bypass the release gate. Preserve the existing workflows under `.github/workflows/`; add Breeding API automation separately.

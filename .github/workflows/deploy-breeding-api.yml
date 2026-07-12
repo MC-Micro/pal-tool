@@ -24,16 +24,16 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
         with:
           version: 11.7.0
           run_install: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"
           cache: pnpm
@@ -41,6 +41,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Validate existing PWA
+        working-directory: ${{ github.workspace }}
+        run: node scripts/validate-data.mjs
 
       - name: Verify Cloudflare deployment credentials
         shell: bash
@@ -56,8 +60,15 @@ jobs:
       - name: Generate API indexes
         run: pnpm run generate
 
-      - name: Verify committed generated reference
-        run: git diff --exit-code -- generated/reference.json
+      - name: Verify committed generated artifacts
+        shell: bash
+        run: |
+          changes="$(git status --porcelain --untracked-files=all -- generated/)"
+          if [[ -n "$changes" ]]; then
+            printf '%s\n' "$changes" >&2
+            echo "Generated artifacts are not fully committed." >&2
+            exit 1
+          fi
 
       - name: Lint
         run: pnpm run lint

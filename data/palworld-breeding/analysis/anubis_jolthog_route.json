@@ -1,644 +1,312 @@
 {
-  "purpose": "Clean Blitzschnell from dirty male Anubis and connect clean female child to male Jolthog with Endloser Antrieb",
-  "direct_two_step_to_elphidran_count": 1,
-  "direct_two_step_to_surfent_count": 0,
-  "direct_two_step_to_elphidran_aqua_count": 1,
-  "direct_two_step_to_elphidran": [
+  "schema_version": 2,
+  "canonical_rules_schema_version": 4,
+  "canonical_manifest_schema_version": 4,
+  "derived_from_manifest_generated_at_utc": "2026-07-12T23:24:25.6053747Z",
+  "source_files": [
+    "data/palworld-breeding/breeding_rules.json",
+    "data/palworld-breeding/special_combinations.json",
+    "data/palworld-breeding/pal_values.json",
+    "data/palworld-breeding/manifest.json"
+  ],
+  "purpose": "Audit the species-only route that cleans Blitzschnell from a male Anubis through any blank female species and then pairs the resulting clean female child with the known male Jolthog carrying Endloser Antrieb.",
+  "method": {
+    "pair_precedence": [
+      "same_species_identity_override",
+      "unique_combo_override",
+      "normal_formula"
+    ],
+    "normal_formula_candidate_pool": "combi_rank > 0 AND ignore_combi = false AND internal_name is not present as child_internal in special_combinations.json",
+    "normal_formula_tie_break_order": [
+      "nearest_combi_rank",
+      "equidistant_different_ranks_parent_rarity_average",
+      "equidistant_rarity_lower_rarity",
+      "equidistant_equal_rarity_higher_combi_rank",
+      "same_rank_duplicate_resolution"
+    ],
+    "first_stage_search": "Resolve Anubis plus each of the 299 published Pal species once as an unordered base species pair.",
+    "second_stage_search": "Resolve every first-stage child plus Jolthog and retain only Elphidran, Surfent, or Elphidran Aqua.",
+    "gender_scope": "The audited Anubis and Jolthog pairs do not intersect the two gender-specific Katress/Wixen special rows. The requested practical orientation remains dirty Anubis MALE + blank mate FEMALE, then clean intermediate FEMALE + Jolthog MALE."
+  },
+  "canonical_counts": {
+    "pal_species": 299,
+    "special_combination_rows": 136,
+    "universal_special_parent_pairs": 134,
+    "gender_specific_special_rows": 2,
+    "unique_special_child_species": 90,
+    "eligible_special_child_species_excluded_from_normal_formula": 77,
+    "normal_formula_candidate_pool_before_special_child_exclusion": 261,
+    "normal_formula_candidate_pool_after_special_child_exclusion": 184,
+    "unordered_species_pairs_including_same_species": 44850,
+    "same_species_base_pairs": 299,
+    "universal_special_base_pairs": 134,
+    "effective_normal_formula_base_pairs": 44417,
+    "effective_pair_results_changed_by_special_child_exclusion": 13785,
+    "raw_formula_results_changed_before_precedence_overrides": 13893,
+    "raw_changes_hidden_by_same_species_or_universal_special_precedence": 108,
+    "effective_formula_pairs_using_final_higher_combi_rank_tie_break": 3458
+  },
+  "direct_two_stage_search": {
+    "carrier": {
+      "internal_name": "Anubis",
+      "name_de": "Anubis",
+      "gender": "MALE",
+      "relevant_passive": "Blitzschnell"
+    },
+    "fixed_second_parent": {
+      "internal_name": "Hedgehog",
+      "name_de": "Jolthog",
+      "gender": "MALE",
+      "relevant_passive": "Endloser Antrieb"
+    },
+    "blank_first_mate_species_checked": 299,
+    "targets": [
+      "FairyDragon",
+      "Serpent",
+      "FairyDragon_Water"
+    ],
+    "direct_two_step_to_elphidran_count": 0,
+    "direct_two_step_to_surfent_count": 0,
+    "direct_two_step_to_elphidran_aqua_count": 0,
+    "direct_two_step_to_elphidran": [],
+    "direct_two_step_to_surfent": [],
+    "direct_two_step_to_elphidran_aqua": [],
+    "conclusion": "No published blank mate species currently produces an intermediate from Anubis that yields Elphidran, Surfent, or Elphidran Aqua when paired directly with Jolthog under schema-4 rules. This does not rule out longer species routes."
+  },
+  "invalidated_previous_routes": [
     {
-      "blank_female_parent_internal": "Deer_Ground",
-      "blank_female_parent_de": "Eikthyrdeer Terra",
-      "blank_female_parent_rank": 2580,
-      "blank_female_parent_rarity": 6,
-      "already_known_species": false,
-      "stage1_child_internal": "KingAlpaca_Ice",
-      "stage1_child_de": "Kingpaca Cryst",
-      "stage1_rule": "formula:1530",
-      "stage1_child_rank": 1530,
-      "stage2_child_internal": "FairyDragon",
-      "stage2_child_de": "Elphidran",
-      "stage2_rule": "formula:2280",
-      "stage2_child_rank": 2280
+      "previous_route": [
+        {
+          "parents": [
+            "Anubis",
+            "Deer_Ground"
+          ],
+          "child": "KingAlpaca_Ice"
+        },
+        {
+          "parents": [
+            "KingAlpaca_Ice",
+            "Hedgehog"
+          ],
+          "child": "FairyDragon"
+        }
+      ],
+      "schema_4_route_from_same_start": [
+        {
+          "parents": [
+            "Anubis",
+            "Deer_Ground"
+          ],
+          "child": "OniGhostGirl",
+          "child_de": "Bakemi"
+        },
+        {
+          "parents": [
+            "OniGhostGirl",
+            "Hedgehog"
+          ],
+          "child": "LazyCatfish",
+          "child_de": "Dumud"
+        }
+      ],
+      "reason": "Kingpaca Cryst is a direct special-combination child and is therefore no longer a normal-formula candidate. An already existing Kingpaca Cryst may still be used as a parent; Kingpaca Cryst + Jolthog continues to yield Elphidran."
+    },
+    {
+      "previous_route": [
+        {
+          "parents": [
+            "Anubis",
+            "KingWhale"
+          ],
+          "child": "GrassGolem_Dark"
+        },
+        {
+          "parents": [
+            "GrassGolem_Dark",
+            "Hedgehog"
+          ],
+          "child": "FairyDragon_Water"
+        }
+      ],
+      "schema_4_route_from_same_start": [
+        {
+          "parents": [
+            "Anubis",
+            "KingWhale"
+          ],
+          "child": "WingGolem",
+          "child_de": "Knocklem"
+        },
+        {
+          "parents": [
+            "WingGolem",
+            "Hedgehog"
+          ],
+          "child": "BirdDragon",
+          "child_de": "Vanwyrm"
+        }
+      ],
+      "reason": "Dualith Noct and Elphidran Aqua are direct special-combination children and are excluded from the normal-formula candidate pool. Existing special-child species remain valid parents and remain valid through same-species or direct special-combination rules."
     }
   ],
-  "direct_two_step_to_surfent": [],
-  "direct_two_step_to_elphidran_aqua": [
+  "known_pair_checks": [
     {
-      "blank_female_parent_internal": "KingWhale",
-      "blank_female_parent_de": "Panthalus",
-      "blank_female_parent_rank": 20,
-      "blank_female_parent_rarity": 10,
-      "already_known_species": false,
-      "stage1_child_internal": "GrassGolem_Dark",
-      "stage1_child_de": "Dualith Noct",
-      "stage1_rule": "formula:250",
-      "stage1_child_rank": 250,
-      "stage2_child_internal": "FairyDragon_Water",
-      "stage2_child_de": "Elphidran Aqua",
-      "stage2_rule": "formula:1640",
-      "stage2_child_rank": 1640
+      "parents": [
+        "WhiteMoth",
+        "SheepBall"
+      ],
+      "parent_names_de": [
+        "Sibelyx",
+        "Lamball"
+      ],
+      "child": "Serpent",
+      "child_de": "Surfent",
+      "rule": "normal_formula",
+      "target_rank": 2430,
+      "child_rank": 2440,
+      "rank_distance": 10,
+      "applied_tie_breaks": [
+        "equidistant_different_ranks_parent_rarity_average"
+      ]
+    },
+    {
+      "parents": [
+        "Anubis",
+        "Deer_Ground"
+      ],
+      "parent_names_de": [
+        "Anubis",
+        "Eikthyrdeer Terra"
+      ],
+      "child": "OniGhostGirl",
+      "child_de": "Bakemi",
+      "rule": "normal_formula",
+      "target_rank": 1530,
+      "child_rank": 1540,
+      "rank_distance": 10,
+      "applied_tie_breaks": [
+        "equidistant_different_ranks_parent_rarity_average",
+        "equidistant_rarity_lower_rarity",
+        "equidistant_equal_rarity_higher_combi_rank"
+      ]
+    },
+    {
+      "parents": [
+        "OniGhostGirl",
+        "Hedgehog"
+      ],
+      "parent_names_de": [
+        "Bakemi",
+        "Jolthog"
+      ],
+      "child": "LazyCatfish",
+      "child_de": "Dumud",
+      "rule": "normal_formula",
+      "target_rank": 2285,
+      "child_rank": 2290,
+      "rank_distance": 5,
+      "applied_tie_breaks": [
+        "equidistant_different_ranks_parent_rarity_average"
+      ]
+    },
+    {
+      "parents": [
+        "KingAlpaca_Ice",
+        "Hedgehog"
+      ],
+      "parent_names_de": [
+        "Kingpaca Cryst",
+        "Jolthog"
+      ],
+      "child": "FairyDragon",
+      "child_de": "Elphidran",
+      "rule": "normal_formula",
+      "target_rank": 2280,
+      "child_rank": 2280,
+      "rank_distance": 0,
+      "applied_tie_breaks": []
+    },
+    {
+      "parents": [
+        "Anubis",
+        "KingWhale"
+      ],
+      "parent_names_de": [
+        "Anubis",
+        "Panthalus"
+      ],
+      "child": "WingGolem",
+      "child_de": "Knocklem",
+      "rule": "normal_formula",
+      "target_rank": 250,
+      "child_rank": 260,
+      "rank_distance": 10,
+      "applied_tie_breaks": []
+    },
+    {
+      "parents": [
+        "WingGolem",
+        "Hedgehog"
+      ],
+      "parent_names_de": [
+        "Knocklem",
+        "Jolthog"
+      ],
+      "child": "BirdDragon",
+      "child_de": "Vanwyrm",
+      "rule": "normal_formula",
+      "target_rank": 1645,
+      "child_rank": 1650,
+      "rank_distance": 5,
+      "applied_tie_breaks": []
+    },
+    {
+      "parents": [
+        "GrassGolem_Dark",
+        "Hedgehog"
+      ],
+      "parent_names_de": [
+        "Dualith Noct",
+        "Jolthog"
+      ],
+      "child": "BirdDragon",
+      "child_de": "Vanwyrm",
+      "rule": "normal_formula",
+      "target_rank": 1640,
+      "child_rank": 1650,
+      "rank_distance": 10,
+      "applied_tie_breaks": []
+    },
+    {
+      "parents": [
+        "FairyDragon",
+        "Serpent"
+      ],
+      "parent_names_de": [
+        "Elphidran",
+        "Surfent"
+      ],
+      "child": "FairyDragon_Water",
+      "child_de": "Elphidran Aqua",
+      "rule": "special_combination",
+      "target_rank": null,
+      "child_rank": 1640,
+      "rank_distance": null,
+      "applied_tie_breaks": []
     }
   ],
-  "direct_parent_pairs_to_anubis_count": 50,
-  "direct_parent_pairs_to_anubis": [
-    {
-      "parent_a_internal": "FengyunDeeper_Electric",
-      "parent_a_de": "Fenglope Lux",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "FlowerPrince",
-      "parent_b_de": "Dandilord",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 11
-    },
-    {
-      "parent_a_internal": "WhiteDeer",
-      "parent_a_de": "Celesdir",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "FoxExorcist",
-      "parent_b_de": "Flaracle",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 13
-    },
-    {
-      "parent_a_internal": "GhostAnglerfish",
-      "parent_a_de": "Ghangler",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "Mothman",
-      "parent_b_de": "Silvance",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 13
-    },
-    {
-      "parent_a_internal": "NightBlueHorse_Neutral",
-      "parent_a_de": "Starryon Primo",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "ThiefBird",
-      "parent_b_de": "Roujay",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 13
-    },
-    {
-      "parent_a_internal": "Kirin_Ice",
-      "parent_a_de": "Univolt Cryst",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "BlueThunderHorse",
-      "parent_b_de": "Azurmane",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 13
-    },
-    {
-      "parent_a_internal": "KingBahamut_Dragon",
-      "parent_a_de": "Blazamut Ryu",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "SnowPeafowl",
-      "parent_b_de": "Frostplume",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 14
-    },
-    {
-      "parent_a_internal": "ClownRabbit",
-      "parent_a_de": "Dupin",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GrassMinotaur_Ice",
-      "parent_b_de": "Elgrove Cryst",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 14
-    },
-    {
-      "parent_a_internal": "MushroomLady",
-      "parent_a_de": "Mycora",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "CubeTurtle_Neutral",
-      "parent_b_de": "Tetroise Primo",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 14
-    },
-    {
-      "parent_a_internal": "ThunderBird_Ice",
-      "parent_a_de": "Beakon Cryst",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "VolcanoDragon_Ice",
-      "parent_b_de": "Moldron Cryst",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 15
-    },
-    {
-      "parent_a_internal": "LilyQueen",
-      "parent_a_de": "Lyleen",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GhostAnglerfish_Fire",
-      "parent_b_de": "Ghangler Ignis",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 15
-    },
-    {
-      "parent_a_internal": "Sekhmet",
-      "parent_a_de": "Sekhmet",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "LegendDeer",
-      "parent_b_de": "Hartalis",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 15
-    },
-    {
-      "parent_a_internal": "BlackMetalDragon",
-      "parent_a_de": "Astegon",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "WhiteTiger_Ground",
-      "parent_b_de": "Cryolinx Terra",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 16
-    },
-    {
-      "parent_a_internal": "Ronin_Dark",
-      "parent_a_de": "Bushi Noct",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "ThunderDragonMan",
-      "parent_b_de": "Orserk",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 16
-    },
-    {
-      "parent_a_internal": "Horus",
-      "parent_a_de": "Faleris",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "RockBeast_Ice",
-      "parent_b_de": "Pierdon Cryst",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 16
-    },
-    {
-      "parent_a_internal": "Umihebi",
-      "parent_a_de": "Jormuntide",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "IceNarwhal_Fire",
-      "parent_b_de": "Whalaska Ignis",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 16
-    },
-    {
-      "parent_a_internal": "VolcanicMonster_Ice",
-      "parent_a_de": "Reptyro Cryst",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "MoonQueen",
-      "parent_b_de": "Selyne",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 16
-    },
-    {
-      "parent_a_internal": "IceNarwhal",
-      "parent_a_de": "Whalaska",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GrassGolem_Dark",
-      "parent_b_de": "Dualith Noct",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 16
-    },
-    {
-      "parent_a_internal": "DarkMechaDragon",
-      "parent_a_de": "Xenolord",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "WhiteShieldDragon",
-      "parent_b_de": "Silvegis",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 16
-    },
-    {
-      "parent_a_internal": "Horus_Water",
-      "parent_a_de": "Faleris Aqua",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GrassGolem",
-      "parent_b_de": "Dualith",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 17
-    },
-    {
-      "parent_a_internal": "GoldenHorse",
-      "parent_a_de": "Gildane",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "LotusDragon",
-      "parent_b_de": "Ophydia",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 17
-    },
-    {
-      "parent_a_internal": "Umihebi_Fire",
-      "parent_a_de": "Jormuntide Ignis",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "CubeTurtle",
-      "parent_b_de": "Tetroise",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 17
-    },
-    {
-      "parent_a_internal": "WingGolem_Fire",
-      "parent_a_de": "Knocklem Ignis",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "VolcanoDragon",
-      "parent_b_de": "Moldron",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 17
-    },
-    {
-      "parent_a_internal": "FlowerDoll_Fire",
-      "parent_a_de": "Petallia Ignis",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GhostDragon_Fire",
-      "parent_b_de": "Eidrolon Ignis",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 17
-    },
-    {
-      "parent_a_internal": "Horus",
-      "parent_a_de": "Faleris",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "Horus_Water",
-      "parent_b_de": "Faleris Aqua",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 18
-    },
-    {
-      "parent_a_internal": "GoldenHorse",
-      "parent_a_de": "Gildane",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "LilyQueen_Dark",
-      "parent_b_de": "Lyleen Noct",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 18
-    },
-    {
-      "parent_a_internal": "BlackGriffon",
-      "parent_a_de": "Shadowbeak",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "DarkMechaDragon",
-      "parent_b_de": "Xenolord",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 18
-    },
-    {
-      "parent_a_internal": "KingBahamut",
-      "parent_a_de": "Blazamut",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "BlackGriffon",
-      "parent_b_de": "Shadowbeak",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 19
-    },
-    {
-      "parent_a_internal": "Suzaku_Water",
-      "parent_a_de": "Suzaku Aqua",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "WingGolem_Fire",
-      "parent_b_de": "Knocklem Ignis",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 19
-    },
-    {
-      "parent_a_internal": "Suzaku_Water",
-      "parent_a_de": "Suzaku Aqua",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "LilyQueen_Dark",
-      "parent_b_de": "Lyleen Noct",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 19
-    },
-    {
-      "parent_a_internal": "JetDragon",
-      "parent_a_de": "Jetragon",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "FengyunDeeper_Electric",
-      "parent_b_de": "Fenglope Lux",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:485",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 23
-    },
-    {
-      "parent_a_internal": "IceHorse",
-      "parent_a_de": "Frostallion",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "SleeveRabbit",
-      "parent_b_de": "Lapure",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 24
-    },
-    {
-      "parent_a_internal": "IceHorse_Dark",
-      "parent_a_de": "Frostallion Noct",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "SnowPeafowl",
-      "parent_b_de": "Frostplume",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:485",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 24
-    },
-    {
-      "parent_a_internal": "BlackCentaur",
-      "parent_a_de": "Necromus",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GrimGirl",
-      "parent_b_de": "Splatterina",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:485",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 24
-    },
-    {
-      "parent_a_internal": "PoseidonOrca",
-      "parent_a_de": "Neptilius",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "SleeveRabbit",
-      "parent_b_de": "Lapure",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:485",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 24
-    },
-    {
-      "parent_a_internal": "SaintCentaur",
-      "parent_a_de": "Paladius",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GrimGirl",
-      "parent_b_de": "Splatterina",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 24
-    },
-    {
-      "parent_a_internal": "JetDragon",
-      "parent_a_de": "Jetragon",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "GhostAnglerfish",
-      "parent_b_de": "Ghangler",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 25
-    },
-    {
-      "parent_a_internal": "JetDragon",
-      "parent_a_de": "Jetragon",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "LanternButler",
-      "parent_b_de": "Loomen",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 25
-    },
-    {
-      "parent_a_internal": "IceHorse",
-      "parent_a_de": "Frostallion",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "AmaterasuWolf_Dark",
-      "parent_b_de": "Kitsun Noct",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 26
-    },
-    {
-      "parent_a_internal": "IceHorse_Dark",
-      "parent_a_de": "Frostallion Noct",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "ScorpionMan_Electric",
-      "parent_b_de": "Prixter Lux",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 26
-    },
-    {
-      "parent_a_internal": "AmaterasuWolf_Dark",
-      "parent_a_de": "Kitsun Noct",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "PoseidonOrca",
-      "parent_b_de": "Neptilius",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 26
-    },
-    {
-      "parent_a_internal": "BlackCentaur",
-      "parent_a_de": "Necromus",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "MushroomLady",
-      "parent_b_de": "Mycora",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 26
-    },
-    {
-      "parent_a_internal": "Ronin_Dark",
-      "parent_a_de": "Bushi Noct",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "NightLady_Dark",
-      "parent_b_de": "Bellanoir Libero",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:485",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 27
-    },
-    {
-      "parent_a_internal": "IceHorse_Dark",
-      "parent_a_de": "Frostallion Noct",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "Ronin_Dark",
-      "parent_b_de": "Bushi Noct",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 27
-    },
-    {
-      "parent_a_internal": "Yeti",
-      "parent_a_de": "Wumpo",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "NightLady_Dark",
-      "parent_b_de": "Bellanoir Libero",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 27
-    },
-    {
-      "parent_a_internal": "SaintCentaur",
-      "parent_a_de": "Paladius",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "CubeTurtle",
-      "parent_b_de": "Tetroise",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:485",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 28
-    },
-    {
-      "parent_a_internal": "CubeTurtle",
-      "parent_a_de": "Tetroise",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "PoseidonOrca",
-      "parent_b_de": "Neptilius",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 28
-    },
-    {
-      "parent_a_internal": "IceHorse",
-      "parent_a_de": "Frostallion",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "FlowerDoll_Fire",
-      "parent_b_de": "Petallia Ignis",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:485",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 29
-    },
-    {
-      "parent_a_internal": "FlowerDoll_Fire",
-      "parent_a_de": "Petallia Ignis",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "NightLady_Dark",
-      "parent_b_de": "Bellanoir Libero",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 29
-    },
-    {
-      "parent_a_internal": "LazyDragon_Electric",
-      "parent_a_de": "Relaxaurus Lux",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "BlackCentaur",
-      "parent_b_de": "Necromus",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:480",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 29
-    },
-    {
-      "parent_a_internal": "LazyDragon_Electric",
-      "parent_a_de": "Relaxaurus Lux",
-      "parent_a_gender": "MALE",
-      "parent_b_internal": "SaintCentaur",
-      "parent_b_de": "Paladius",
-      "parent_b_gender": "FEMALE",
-      "rule": "formula:475",
-      "both_known_species": false,
-      "one_known_species": false,
-      "rarity_sum": 29
-    }
+  "direct_parent_pairs_to_anubis_summary": {
+    "unordered_pairs_including_same_species": 218,
+    "normal_formula_pairs": 217,
+    "same_species_pairs": 1,
+    "special_combination_pairs": 0,
+    "enumerated_in_this_file": false,
+    "note": "This count is retained for audit continuity, but the 217 formula pairs are not embedded because this file is scoped to the fixed-Jolthog transfer route rather than a general parent index."
+  },
+  "limitations": [
+    "This is a species-route audit. It does not model passive inheritance probabilities, mutations, egg counts, cake cost, IVs, or the user's actual inventory.",
+    "Blank refers only to the desired absence of inherited passives on the first mate; blankness does not alter the resulting Pal species.",
+    "Zero direct two-stage routes does not imply that no longer route exists.",
+    "A future Palworld patch or a canonical data change requires this derived analysis to be regenerated."
   ]
 }

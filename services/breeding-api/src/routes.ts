@@ -99,7 +99,8 @@ function detailsParameter(url: URL): "compact" | "full" {
 
 function sourceReference(): Record<string, unknown> {
   return {
-    data_hash: reference.dataHash,
+    source_data_hash: reference.sourceDataHash,
+    generated_artifact_hash: reference.generatedArtifactHash,
     generated_at_utc: reference.generatedAtUtc,
     game_reference: reference.status.gameReference,
     schema_version: reference.schemaVersion,
@@ -195,14 +196,17 @@ async function statusRoute(context: RouteContext): Promise<Response> {
       source_commits: sourceCommits,
       generated_at_utc: reference.status.generatedAtUtc,
       reference_age_days: referenceAgeDays,
-      data_hash: reference.status.dataHash,
+      source_data_hash: reference.status.sourceDataHash,
+      generated_artifact_hash: reference.status.generatedArtifactHash,
       pal_count: reference.status.palCount,
       eligible_pal_count: reference.status.eligiblePalCount,
       special_combination_count: reference.status.specialCombinationCount,
+      special_child_species_count: reference.status.specialChildSpeciesCount,
       pair_count: reference.status.pairCount,
       gender_override_count: reference.status.genderOverrideCount,
       validation_status: reference.status.validationStatus,
-      known_patch_check_status: reference.status.knownPatchCheckStatus,
+      known_patch_check_status: reference.status.patchCheck.status,
+      patch_check: reference.status.patchCheck,
       endpoints: [
         "status",
         "pal",
@@ -217,7 +221,7 @@ async function statusRoute(context: RouteContext): Promise<Response> {
     {
       request: context.request,
       head: context.head,
-      dataHash: reference.dataHash,
+      dataHash: reference.generatedArtifactHash,
       cacheControl: "private, max-age=60, must-revalidate",
     },
   );
@@ -231,7 +235,7 @@ async function palRoute(context: RouteContext): Promise<Response> {
     {
       request: context.request,
       head: context.head,
-      dataHash: reference.dataHash,
+      dataHash: reference.generatedArtifactHash,
     },
   );
 }
@@ -259,8 +263,9 @@ async function pairRoute(context: RouteContext): Promise<Response> {
     normalized_parent_a: palIdentity(parentAId),
     normalized_parent_b: palIdentity(parentBId),
     supplied_genders: { parent_a: parentAGender, parent_b: parentBGender },
-    reference_id: reference.dataHash,
-    data_hash: reference.dataHash,
+    reference_id: reference.generatedArtifactHash,
+    source_data_hash: reference.sourceDataHash,
+    generated_artifact_hash: reference.generatedArtifactHash,
   };
 
   const body =
@@ -272,12 +277,18 @@ async function pairRoute(context: RouteContext): Promise<Response> {
           applied_rule: "unresolved_gender",
           result_child: null,
           alternatives: result.alternatives.map((alternative) => ({
-            row_id: alternative.rowId,
+            row_id: alternative.rowId ?? null,
+            applied_rule: alternative.rule,
             parent_a: palIdentity(alternative.parentAId),
             parent_a_gender: alternative.parentAGender,
             parent_b: palIdentity(alternative.parentBId),
             parent_b_gender: alternative.parentBGender,
             child: palIdentity(alternative.childId),
+            special_combination: specialBody(
+              alternative.rowId,
+              alternative.parentAId,
+              alternative.parentBId,
+            ),
           })),
           fallback_if_no_gender_rule_matches: resolvedPairBody(result.fallback),
         };
@@ -285,7 +296,7 @@ async function pairRoute(context: RouteContext): Promise<Response> {
   return jsonResponse(body, {
     request: context.request,
     head: context.head,
-    dataHash: reference.dataHash,
+    dataHash: reference.generatedArtifactHash,
   });
 }
 
@@ -355,9 +366,9 @@ async function parentsRoute(context: RouteContext): Promise<Response> {
       limit,
       next_offset: nextOffset < filteredEntries.length ? nextOffset : null,
       results: selectedEntries,
-      reference_id: reference.dataHash,
+      reference_id: reference.generatedArtifactHash,
     },
-    { request: context.request, head: context.head, dataHash: reference.dataHash },
+    { request: context.request, head: context.head, dataHash: reference.generatedArtifactHash },
   );
 }
 
@@ -409,9 +420,9 @@ async function childrenRoute(context: RouteContext): Promise<Response> {
       ok: true,
       parent: palIdentity(parentId),
       ...page(entries, offset, limit),
-      reference_id: reference.dataHash,
+      reference_id: reference.generatedArtifactHash,
     },
-    { request: context.request, head: context.head, dataHash: reference.dataHash },
+    { request: context.request, head: context.head, dataHash: reference.generatedArtifactHash },
   );
 }
 
@@ -514,6 +525,14 @@ async function routeRoute(context: RouteContext): Promise<Response> {
       ok: true,
       found: result.paths.length > 0,
       species_route_only: true,
+      inventory_aware: false,
+      passive_aware: false,
+      iv_aware: false,
+      unwanted_passives_aware: false,
+      egg_cost_aware: false,
+      cake_cost_aware: false,
+      time_cost_aware: false,
+      offspring_gender_feasibility_checked: false,
       carrier: palIdentity(carrierId),
       target: palIdentity(targetId),
       generation_count: result.minimumGenerations,
@@ -524,10 +543,10 @@ async function routeRoute(context: RouteContext): Promise<Response> {
         steps: steps.map(routeStep),
       })),
       limitation:
-        "Species-only routes do not model inventory, passive inheritance odds, unwanted passives, IVs, egg cost, or offspring gender availability.",
-      reference_id: reference.dataHash,
+        "Species-only routes do not model inventory, passive inheritance odds, unwanted passives, IVs, egg or cake cost, time cost, or offspring-gender feasibility.",
+      reference_id: reference.generatedArtifactHash,
     },
-    { request: context.request, head: context.head, dataHash: reference.dataHash },
+    { request: context.request, head: context.head, dataHash: reference.generatedArtifactHash },
   );
 }
 
@@ -537,7 +556,8 @@ async function referenceRoute(context: RouteContext): Promise<Response> {
       ok: reference.validation.ok,
       schema_version: reference.schemaVersion,
       generated_at_utc: reference.generatedAtUtc,
-      data_hash: reference.dataHash,
+      source_data_hash: reference.sourceDataHash,
+      generated_artifact_hash: reference.generatedArtifactHash,
       source_files: reference.sourceFiles,
       status: reference.status,
       rules: reference.canonical.rules,
@@ -549,7 +569,7 @@ async function referenceRoute(context: RouteContext): Promise<Response> {
     {
       request: context.request,
       head: context.head,
-      dataHash: reference.dataHash,
+      dataHash: reference.generatedArtifactHash,
       cacheControl: "private, max-age=3600, must-revalidate",
     },
   );
@@ -572,7 +592,10 @@ async function validateRoute(context: RouteContext): Promise<Response> {
       error_count: reference.validation.conflicts.length,
       warning_count: sourceWarningCount(),
       source_hashes: reference.sourceFiles,
-      generated_hash: reference.dataHash,
+      source_data_hash: reference.sourceDataHash,
+      generated_artifact_hash: reference.generatedArtifactHash,
+      patch_check: reference.status.patchCheck,
+      special_child_impact: reference.specialChildImpact,
       test_fixture_status: reference.validation.assignmentExpectationsValid ? "passed" : "failed",
       canonical_data_valid: reference.validation.canonicalDataValid,
       implementation_notes: reference.validation.implementationNotes,
@@ -581,7 +604,7 @@ async function validateRoute(context: RouteContext): Promise<Response> {
     {
       request: context.request,
       head: context.head,
-      dataHash: reference.dataHash,
+      dataHash: reference.generatedArtifactHash,
       cacheControl: "private, max-age=60, must-revalidate",
     },
   );

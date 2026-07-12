@@ -42,7 +42,7 @@ export async function handleRequest(request: Request, env: Env): Promise<Respons
         error: {
           code: "INTERNAL_ERROR",
           message: "The request could not be completed.",
-          reference_id: getReference().dataHash,
+          reference_id: getReference().generatedArtifactHash,
         },
       },
       { status: 500, cacheControl: "no-store", request, head },

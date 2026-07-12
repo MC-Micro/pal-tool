@@ -64,11 +64,44 @@ export interface ManifestSource {
   used_for: string[];
 }
 
+export interface PatchCheckEvidence {
+  kind: string;
+  date: string;
+  parents: string[];
+  child: string;
+  confirms: string;
+}
+
+export interface PatchCheck {
+  checked_at_utc: string | null;
+  checked_on: string;
+  checked_timezone: string;
+  time_precision: "date_only" | "timestamp";
+  checked_game_version: string;
+  checked_game_build: string | null;
+  build_verified: boolean;
+  status: "current" | "needs_review" | "unknown";
+  breeding_relevant_changes_found: boolean;
+  evidence: PatchCheckEvidence[];
+  source_notes: string[];
+  requires_recheck_after_newer_patch: boolean;
+}
+
+export interface ExternalCrossCheck {
+  source: string;
+  authoritative: false;
+  checked_on: string;
+  purpose: string;
+  verified_cases: string[];
+}
+
 export interface CanonicalManifest {
   schema_version: number;
   generated_at_utc: string;
   sources: ManifestSource[];
   counts: Record<string, number>;
+  patch_check: PatchCheck;
+  external_cross_checks?: ExternalCrossCheck[];
   validation: Record<string, unknown[]>;
 }
 
@@ -97,12 +130,14 @@ export interface ResolvedPair {
 }
 
 export interface GenderAlternative {
-  rowId: string;
   parentAId: number;
   parentAGender: Gender;
   parentBId: number;
   parentBGender: Gender;
   childId: number;
+  rule: RuleName;
+  ruleCode: RuleCode;
+  rowId?: string;
 }
 
 export interface UnresolvedGenderPair {
@@ -114,6 +149,10 @@ export interface UnresolvedGenderPair {
 }
 
 export type PairResolution = ResolvedPair | UnresolvedGenderPair;
+
+export interface BreedingEngineOptions {
+  excludeSpecialChildrenFromFormula?: boolean;
+}
 
 export interface PreparedSpecialCombination extends SpecialCombination {
   parentAId: number;
@@ -162,7 +201,8 @@ export interface PackedParentsIndex {
 
 export interface GenderOverride {
   pairOrdinal: number;
-  rowId: string;
+  rowId?: string;
+  ruleCode: RuleCode;
   parentAId: number;
   parentAGender: Gender;
   parentBId: number;
@@ -213,22 +253,35 @@ export interface ReferenceStatus {
   breedingReferenceSchemaVersion: number;
   gameReference: string;
   generatedAtUtc: string;
-  dataHash: string;
+  sourceDataHash: string;
+  generatedArtifactHash: string;
   palCount: number;
   eligiblePalCount: number;
   specialCombinationCount: number;
+  specialChildSpeciesCount: number;
   pairCount: number;
   genderOverrideCount: number;
   parentsIndexEntryCount: number;
   carrierAdjacencyEdgeCount: number;
   validationStatus: "valid" | "needs_review";
-  knownPatchCheckStatus: "current" | "needs_review" | "unknown";
+  patchCheck: PatchCheck;
+}
+
+export interface SpecialChildImpactSummary {
+  path: "generated/special-child-impact.json";
+  sha256: string;
+  pairCount: number;
+  changedPairCount: number;
+  legacyEligibleChildCount: number;
+  currentEligibleChildCount: number;
+  specialChildSpeciesCount: number;
 }
 
 export interface GeneratedReference {
   schemaVersion: number;
   generatedAtUtc: string;
-  dataHash: string;
+  sourceDataHash: string;
+  generatedArtifactHash: string;
   sourceFiles: SourceFileHash[];
   canonical: {
     rules: BreedingRulesFile;
@@ -241,6 +294,7 @@ export interface GeneratedReference {
   genderOverrides: GenderOverride[];
   parentsByChild: PackedParentsIndex;
   carrierAdjacency: PackedCarrierAdjacency;
+  specialChildImpact: SpecialChildImpactSummary;
   status: ReferenceStatus;
   validation: ReferenceValidation;
 }

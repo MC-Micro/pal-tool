@@ -179,7 +179,11 @@ export function getBasePair(parentAId: number, parentBId: number): ResolvedPair 
   const ruleCode = pairRules[ordinal];
   if (childId === undefined || ruleCode === undefined) throw new Error(`Packed pair ${ordinal} is missing`);
 
-  const detailed = engine.resolveBasePair(parentAId, parentBId);
+  const orientationAware = engine.resolvePair(parentAId, parentBId, "ANY", "ANY");
+  const detailed =
+    orientationAware.kind === "resolved"
+      ? orientationAware
+      : engine.resolveBasePair(parentAId, parentBId);
   if (detailed.childId !== childId || detailed.ruleCode !== ruleCode) {
     throw new Error(`Packed pair ${ordinal} disagrees with the canonical resolver`);
   }
@@ -252,8 +256,8 @@ export function getParentEntries(childId: number): ParentIndexEntry[] {
       parentAGender: override.parentAGender,
       parentBGender: override.parentBGender,
       childId,
-      rule: "special_combination",
-      rowId: override.rowId,
+      rule: ruleNameFromCode(override.ruleCode),
+      ...(override.rowId === undefined ? {} : { rowId: override.rowId }),
     });
   }
 
@@ -343,10 +347,10 @@ export function getChildrenForPair(parentAId: number, parentBId: number): Carrie
     carrierId: parentAId,
     mateId: parentBId,
     childId: override.childId,
-    rule: "special_combination",
+    rule: ruleNameFromCode(override.ruleCode),
     carrierGender: parentAIsLower ? override.parentAGender : override.parentBGender,
     mateGender: parentAIsLower ? override.parentBGender : override.parentAGender,
-    rowId: override.rowId,
+    ...(override.rowId === undefined ? {} : { rowId: override.rowId }),
   }));
 }
 

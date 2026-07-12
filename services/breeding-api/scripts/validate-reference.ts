@@ -1,13 +1,42 @@
 import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 import { createBreedingEngine, triangularPairCount } from "../src/breeding.ts";
 import type { GeneratedReference, PalValue } from "../src/types.ts";
-import { buildReference, generatedReferencePath } from "./build-reference.ts";
+import {
+  buildReference,
+  computeGeneratedArtifactHash,
+  computeSpecialChildImpactContentHash,
+  generatedReferencePath,
+  repositoryRoot,
+  specialChildImpactPath,
+  type SpecialChildImpactReport,
+} from "./build-reference.ts";
 
 interface ValidationCheck {
   name: string;
   ok: boolean;
   detail?: string;
+}
+
+interface AnubisRouteAnalysis {
+  schema_version: number;
+  canonical_rules_schema_version: number;
+  canonical_manifest_schema_version: number;
+  canonical_counts: {
+    normal_formula_candidate_pool_after_special_child_exclusion: number;
+    effective_pair_results_changed_by_special_child_exclusion: number;
+  };
+  direct_two_stage_search: {
+    blank_first_mate_species_checked: number;
+    direct_two_step_to_elphidran_count: number;
+    direct_two_step_to_surfent_count: number;
+    direct_two_step_to_elphidran_aqua_count: number;
+  };
+  known_pair_checks: Array<{
+    parents: string[];
+    child: string;
+  }>;
 }
 
 function byteLength(base64: string): number {
@@ -98,7 +127,16 @@ async function main(): Promise<void> {
   const releaseMode = process.argv.includes("--release");
   const rebuilt = await buildReference();
   const rawGenerated = await readFile(generatedReferencePath, "utf8");
+  const rawImpact = await readFile(specialChildImpactPath, "utf8");
+  const rawAnubisAnalysis = await readFile(
+    resolve(repositoryRoot, "data/palworld-breeding/analysis/anubis_jolthog_route.json"),
+    "utf8",
+  );
   const generated = JSON.parse(rawGenerated) as GeneratedReference;
+  const impact = JSON.parse(rawImpact) as SpecialChildImpactReport;
+  const anubisAnalysis = JSON.parse(rawAnubisAnalysis) as AnubisRouteAnalysis;
+  const impactContent = structuredClone(impact);
+  Reflect.deleteProperty(impactContent, "contentHash");
   const deterministic = JSON.stringify(generated) === JSON.stringify(rebuilt);
 
   const checks: ValidationCheck[] = [
@@ -117,14 +155,82 @@ async function main(): Promise<void> {
         generated.status.specialCombinationCount === 136,
     },
     {
+      name: "normal formula eligible child count",
+      ok: generated.status.eligiblePalCount === 184,
+      detail: String(generated.status.eligiblePalCount),
+    },
+    {
+      name: "special child species count",
+      ok: generated.status.specialChildSpeciesCount === 90,
+      detail: String(generated.status.specialChildSpeciesCount),
+    },
+    {
       name: "gender-specific override count",
       ok: generated.genderOverrides.length === 2 && generated.status.genderOverrideCount === 2,
     },
     checkPair(generated, "FairyDragon", "Serpent", "FairyDragon_Water", "special_combination"),
-    checkPair(generated, "Anubis", "Deer_Ground", "KingAlpaca_Ice", "normal_formula"),
+    checkPair(generated, "Anubis", "Deer_Ground", "OniGhostGirl", "normal_formula"),
     checkPair(generated, "KingAlpaca_Ice", "Hedgehog", "FairyDragon", "normal_formula"),
     checkPair(generated, "Anubis", "Anubis", "Anubis", "same_species"),
-    checkPair(generated, "WhiteMoth", "SheepBall", "SharkKid_Fire", "normal_formula"),
+    checkPair(generated, "WhiteMoth", "SheepBall", "Serpent", "normal_formula"),
+    checkPair(generated, "Mutant", "NaughtyCat", "CaptainPenguin", "normal_formula"),
+    {
+      name: "generated artifact hash is reproducible without self-reference",
+      ok: computeGeneratedArtifactHash(generated) === generated.generatedArtifactHash,
+    },
+    {
+      name: "source and generated hashes are separately named",
+      ok:
+        generated.sourceDataHash.length === 64 &&
+        generated.generatedArtifactHash.length === 64 &&
+        generated.sourceDataHash !== generated.generatedArtifactHash,
+    },
+    {
+      name: "special-child impact report",
+      ok:
+        impact.pairCount === 44_850 &&
+        impact.changedPairCount === 13_785 &&
+        impact.contentHash === generated.specialChildImpact.sha256 &&
+        impact.contentHash ===
+          computeSpecialChildImpactContentHash(impactContent),
+      detail: `${impact.changedPairCount}/${impact.pairCount}`,
+    },
+    {
+      name: "patch check is version-scoped and current",
+      ok:
+        generated.status.patchCheck.status === "current" &&
+        generated.status.patchCheck.checked_game_version === "1.0" &&
+        generated.status.patchCheck.checked_on === "2026-07-13" &&
+        generated.status.patchCheck.build_verified === false &&
+        generated.status.patchCheck.requires_recheck_after_newer_patch,
+    },
+    {
+      name: "Anubis/Jolthog analysis matches schema-4 policy",
+      ok:
+        anubisAnalysis.schema_version === 2 &&
+        anubisAnalysis.canonical_rules_schema_version === 4 &&
+        anubisAnalysis.canonical_manifest_schema_version === 4 &&
+        anubisAnalysis.canonical_counts
+          .normal_formula_candidate_pool_after_special_child_exclusion === 184 &&
+        anubisAnalysis.canonical_counts
+          .effective_pair_results_changed_by_special_child_exclusion === 13_785 &&
+        anubisAnalysis.direct_two_stage_search.blank_first_mate_species_checked === 299 &&
+        anubisAnalysis.direct_two_stage_search.direct_two_step_to_elphidran_count === 0 &&
+        anubisAnalysis.direct_two_stage_search.direct_two_step_to_surfent_count === 0 &&
+        anubisAnalysis.direct_two_stage_search.direct_two_step_to_elphidran_aqua_count === 0,
+    },
+    {
+      name: "Anubis/Jolthog analysis records corrected known pairs",
+      ok:
+        anubisAnalysis.known_pair_checks.some(
+          ({ parents, child }) =>
+            parents.join("+") === "Anubis+Deer_Ground" && child === "OniGhostGirl",
+        ) &&
+        anubisAnalysis.known_pair_checks.some(
+          ({ parents, child }) =>
+            parents.join("+") === "WhiteMoth+SheepBall" && child === "Serpent",
+        ),
+    },
     ...validatePackedLengths(generated),
   ];
 
@@ -137,7 +243,8 @@ async function main(): Promise<void> {
     structuralOk,
     releaseOk,
     validationStatus: generated.status.validationStatus,
-    dataHash: generated.dataHash,
+    sourceDataHash: generated.sourceDataHash,
+    generatedArtifactHash: generated.generatedArtifactHash,
     checks,
     unresolvedConflicts: generated.validation.conflicts,
     releaseBlocked: generated.validation.conflicts.some(({ blocking }) => blocking),

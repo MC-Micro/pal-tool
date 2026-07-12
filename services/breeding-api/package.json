@@ -18,16 +18,16 @@
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "latest",
-    "@eslint/js": "latest",
-    "@types/node": "latest",
-    "@vitest/coverage-v8": "latest",
-    "eslint": "latest",
-    "tsx": "latest",
+    "@cloudflare/workers-types": "5.20260711.1",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.1.1",
+    "@vitest/coverage-v8": "4.1.10",
+    "eslint": "10.7.0",
+    "tsx": "4.23.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "latest",
-    "vitest": "latest",
-    "wrangler": "latest"
+    "typescript-eslint": "8.63.0",
+    "vitest": "4.1.10",
+    "wrangler": "4.110.0"
   },
   "engines": {
     "node": ">=22"

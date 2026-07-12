@@ -9,34 +9,34 @@ importers:
   .:
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: latest
+        specifier: 5.20260711.1
         version: 5.20260711.1
       '@eslint/js':
-        specifier: latest
+        specifier: 10.0.1
         version: 10.0.1(eslint@10.7.0)
       '@types/node':
-        specifier: latest
+        specifier: 26.1.1
         version: 26.1.1
       '@vitest/coverage-v8':
-        specifier: latest
+        specifier: 4.1.10
         version: 4.1.10(vitest@4.1.10)
       eslint:
-        specifier: latest
+        specifier: 10.7.0
         version: 10.7.0
       tsx:
-        specifier: latest
+        specifier: 4.23.0
         version: 4.23.0
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       typescript-eslint:
-        specifier: latest
+        specifier: 8.63.0
         version: 8.63.0(eslint@10.7.0)(typescript@5.9.3)
       vitest:
-        specifier: latest
+        specifier: 4.1.10
         version: 4.1.10(@types/node@26.1.1)(@vitest/coverage-v8@4.1.10)(vite@8.1.4(@types/node@26.1.1)(esbuild@0.28.1)(tsx@4.23.0))
       wrangler:
-        specifier: latest
+        specifier: 4.110.0
         version: 4.110.0(@cloudflare/workers-types@5.20260711.1)
 
 packages:

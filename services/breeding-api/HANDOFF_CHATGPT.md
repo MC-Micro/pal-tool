@@ -1,163 +1,140 @@
 # Übergabe an ChatGPT: Palworld Breeding API
 
-Diese Datei ist eine selbstständige Übergabe für einen neuen ChatGPT-Chat. Sie enthält keine Secretwerte.
+Diese Datei informiert einen neuen Chat ohne Kenntnis der Codex-Sitzung. Sie enthält keine Secretwerte.
 
 ## Projektstatus
 
 | Feld | Wert |
 |---|---|
-| Projekt | Palworld Breeding API |
-| Repository | MC-Micro/pal-tool |
-| Branch | feature/palworld-breeding-api |
+| Repository | `MC-Micro/pal-tool` |
+| Branch | `feature/palworld-breeding-api` |
 | Pull Request | https://github.com/MC-Micro/pal-tool/pull/3 |
-| Head-Commit | Dynamisch vom PR-Head auflösen; Implementierungscommit: 8f5ef9d4cb656f3254a54fcabccd41f97ad532d6 |
-| Workername | palworld-breeding-api |
-| Deploymentstatus | BLOCKED |
-| workers.dev-Basisadresse | NOT_AVAILABLE |
-| BREEDING_READ_TOKEN | NOT_VERIFIABLE; kein Wert in dieser Datei |
-| Kanonisches Schema | 3 |
-| API-Referenzschema | 1 |
-| Kanonische Pals | 299 |
+| Head-Commit | Dynamisch vom PR-Head auflösen; letzter vollständiger Implementierungscommit: `PENDING_LOCAL_COMMIT` |
+| Deployment | `NOT_DEPLOYED` |
+| Worker | `palworld-breeding-api` |
+| Worker-Basisadresse | `NOT_AVAILABLE` |
+| BREEDING_READ_TOKEN | `NOT_SET`; niemals hier eintragen |
+| Kanonisches Schema | 4 |
+| API-/Artefaktschema | 2 |
+| source_data_hash | `77901fb00c984e360f563049f2e7f3dc64a6b2d764e77f3c32a737ef4bc82121` |
+| generated_artifact_hash | `882987ec7c8a1eae7855e9bb3d995b79cb0aa498da2042c00fa6faec326ad9b8` |
+| Pals | 299 |
+| normale Formel-Kinder | 184 |
 | Spezialkombinationen | 136 |
-| Datenhash | febbf5f9fb594040d027724d20c9a475aea466f8d5b7ab1d6faa304a1257e26f |
-| Generiertes Artefakt SHA-256 | 497eeb6e190e87fb51a2533e3a449387920888b3e95810d0388a42ab4d446af5 |
-| Teststatus | Lint PASS; Typecheck PASS; 41/41 Tests PASS; Worker-Dry-Run PASS (1.419,88 KiB / gzip 347,29 KiB); strukturelle Validierung PASS; Determinismus PASS; Secret-Scan PASS; Release-Validierung erwartungsgemäß BLOCKED |
-| GitHub CI | Technische Schritte 1–14 PASS; nur finales Release-Gate erwartungsgemäß FAIL — https://github.com/MC-Micro/pal-tool/actions/runs/29211419514 |
+| eindeutige Spezialkind-Arten | 90 |
+| ungeordnete Paare | 44.850 |
+| Policy-geänderte Paarergebnisse | 13.785 |
+| Release-Gate | PASS, null ungelöste Konflikte |
+| CI | Vor Push dieses Fortsetzungsstands noch nicht verifizierbar; aktuellen PR-Head prüfen |
 
-Der exakte aktuelle Head-Commit wird absichtlich nicht als selbstreferenzieller Wert festgeschrieben: Eine Datei kann nicht stabil den SHA des Commits enthalten, der ihren eigenen Inhalt erst festlegt. Der tatsächliche finale SHA muss aus dem PR-Head beziehungsweise mit `git rev-parse HEAD` ermittelt und im externen Abschlussbericht genannt werden.
+Ein Commit kann seinen eigenen SHA nicht stabil im eigenen Dateiinhalt speichern. Deshalb ist der tatsächliche finale SHA im PR-Head beziehungsweise externen Abschlussblock maßgeblich; der Implementierungscommit wird vor der letzten Handoff-Aktualisierung eingetragen.
 
 ## Ziel und Architektur
 
-Das isolierte Modul services/breeding-api erzeugt aus der bestehenden kanonischen Palworld-Zuchtreferenz eine kompakte Read-only-API für Cloudflare Workers.
+Das isolierte Modul `services/breeding-api/` erzeugt eine deterministische Read-only-API für Cloudflare Workers. Kanonische Lesereihenfolge:
 
-Kanonische Lesereihenfolge:
+1. `data/palworld-breeding/breeding_rules.json`
+2. `data/palworld-breeding/special_combinations.json`
+3. `data/palworld-breeding/pal_values.json`
+4. `data/palworld-breeding/manifest.json`
 
-1. data/palworld-breeding/breeding_rules.json
-2. data/palworld-breeding/special_combinations.json
-3. data/palworld-breeding/pal_values.json
-4. data/palworld-breeding/manifest.json
+Der Build erzeugt `generated/reference.json` und `generated/special-child-impact.json`, eine direkte Paarmatrix, beide reale Gegen-Geschlechtsorientierungen, Reverse-Elternindex und Carrier-Graph. Runtime-Aufrufe an GitHub oder Palworld.gg existieren nicht.
 
-Der Build erzeugt eine deterministische Referenz mit:
+## Bestätigte Spielregeln
 
-- Pal- und Aliasindex
-- aufgelöster direkter Paarmatrix
-- geschlechtsabhängigen Spezial-Overrides
-- Elternpaaren nach Zielkind
-- Carrier-Adjazenz für theoretische Artenrouten
-- Quellenhashes, Status und Validierungskonflikten
+Direkte Palworld-1.0-Eiertests vom 13.07.2026:
 
-Der Worker ist read-only, ruft zur Laufzeit weder GitHub noch Drittanbieter-Zuchtrechner auf und schützt alle v1-Endpunkte durch BREEDING_READ_TOKEN im ersten Pfadsegment.
+- `Lunaris MALE + Grintale FEMALE → Penking`
+- `Sibelyx + Lamball → Surfent`
 
-## Blockierende fachliche Konflikte
+Damit bestätigt:
 
-Deployment ist BLOCKED, weil die Release-Validierung zwei Widersprüche korrekt meldet.
+- Same-Species-Identität zuerst.
+- direkte Spezialkombination vor Formel.
+- Geschlechtsvorgaben sind bindend.
+- jede Art aus `special_combinations.child_internal` ist aus dem normalen Formelpool ausgeschlossen.
+- Same-Species bleibt auch für solche Spezialkind-Arten gültig.
+- vollständig gleiche Cross-Rank-Ties wählen den höheren `CombiRank`.
+- Same-Rank-Duplikate verwenden separat Priority, Nicht-Variante und interne Reihenfolge.
+- Paldeck-Nummern werden nie verwendet.
 
-### 1. Sibelyx/Lamball
+Palworld.gg war nur ein manueller, nicht-kanonischer Crosscheck und ist kein Release-Gate.
 
-SIBELYX_LAMBALL_ASSIGNMENT_CONFLICT
+## Patchstatus
 
-Aufgabenanforderung:
+- Status: `current`
+- geprüfte Version: `Palworld 1.0`
+- Prüftag: `2026-07-13`, Europe/Berlin, nur Datumspräzision
+- geprüfter Build: `NOT_VERIFIED`
+- Build verifiziert: `false`
+- zuchtrelevante Änderungen gefunden: `true`
+- erneute Prüfung nach neuerer Version: `true`
 
-> Sibelyx + Lamball → Surfent; Gobfin Ignis soll als normales Formelkind ausgeschlossen sein.
+`current` gilt ausschließlich für Version 1.0 und diesen Prüftag.
 
-Kanonische Referenz:
+## Auswirkungen und bekannte Routen
 
-- Sibelyx / WhiteMoth: CombiRank 1810
-- Lamball / SheepBall: CombiRank 3050
-- Formelziel: floor((1810 + 3050 + 1) / 2) = 2430
-- Gobfin Ignis / SharkKid_Fire: CombiRank 2430 und IgnoreCombi = false
-- Surfent / Serpent: CombiRank 2440
-- Ergebnis der kanonischen normalen Formel: Gobfin Ignis
+Der normale Pool schrumpft von 261 auf 184. Der vollständige Report listet 13.785 Änderungen in `services/breeding-api/generated/special-child-impact.json`.
 
-Damit widerspricht der erwartete Surfent-Test den vorhandenen kanonischen Dateien. validate:release muss fehlschlagen, solange dieser Konflikt existiert. Weder Test noch Release-Gate dürfen entfernt, übersprungen oder künstlich grün gemacht werden.
+Wichtige Ergebnisse:
 
-Die hypothetische Regel „alle Spezialkinder aus dem normalen Kandidatenpool entfernen“ betrifft 77 derzeit zugelassene Spezialkind-Arten und würde 13.785 von 44.850 ungeordneten Paarergebnissen ändern. Eine Auflösung darf daher nicht nur Gobfin Ignis punktuell umschalten, sondern muss die globale Spielregel anhand direkter Spieldaten entscheiden.
+- `Sibelyx + Lamball → Surfent`
+- `Lunaris + Grintale → Penking`
+- `Anubis + Eikthyrdeer Terra → Bakemi` — früher fälschlich Kingpaca Cryst
+- `Anubis + Panthalus → Knocklem` — früher fälschlich Dualith Noct
+- `Dualith Noct + Jolthog → Vanwyrm` — früher fälschlich Elphidran Aqua
+- `Kingpaca Cryst + Jolthog → Elphidran` bleibt gültig
+- `Elphidran + Surfent → Elphidran Aqua` bleibt gültige Spezialkombination
 
-Erforderliche fachliche Entscheidung:
+Die aktualisierte exhaustive Bestandsanalyse unter `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet für den festen Jolthog keine direkte zweistufige Route vom Anubis über einen beliebigen blanken Mate zu Elphidran, Surfent oder Elphidran Aqua. Das schließt längere Routen nicht aus.
 
-1. Aktuelle direkte Palworld-Spieldaten oder gleichwertige Primärquellen prüfen.
-2. Falls die kanonischen Dateien veraltet oder falsch sind, diese samt Manifest und Quellen-Pins nachvollziehbar aktualisieren.
-3. Falls die Aufgabenannahme Surfent falsch ist, die erwartete Fixture nach ausdrücklicher fachlicher Entscheidung auf Gobfin Ignis korrigieren.
-4. Danach die gesamte Prüf- und Release-Kette erneut ausführen.
+## Geschlechtsindex
 
-### 2. Nicht dokumentierter letzter Gleichstands-Fallback
+Für jedes verschiedene Artenpaar werden `A MALE + B FEMALE` und `A FEMALE + B MALE` kanonisch ausgewertet. Bei einem einseitigen Gender-Special fällt die Gegenrichtung korrekt auf die Formel zurück. `ANY` wird nur bei identischem vollständigem Ergebnis beider Richtungen verwendet. Synthetische Tests prüfen Special, Formel-Fallback, umgekehrte Elternreihenfolge, Reverse-Index und Carrier-Graph.
 
-`UNDOCUMENTED_EQUAL_RARITY_SOURCE_ORDER_FALLBACK`
+## Hashbedeutung
 
-Bei Zielrang 2065 können nach den dokumentierten Seltenheitsregeln beispielsweise Mossanda (2060, Seltenheit 6) und Penking (2070, Seltenheit 6) gleichberechtigt übrig bleiben. `breeding_rules.json` definiert dafür keinen letzten Schritt. Der gepinnte PalworldSaveTools-Quellalgorithmus prüft den höheren Rang zuerst und behält ihn, weshalb die generierte Referenz vorläufig Penking verwendet. Diese Implementierung ist ausdrücklich markiert und blockiert die Freigabe, bis direkte Spieldaten den letzten Fallback bestätigen und `breeding_rules.json` ihn verbindlich dokumentiert.
+- `source_data_hash`: deterministischer Hash der vier kanonischen Eingabedateien.
+- `generated_artifact_hash`: deterministischer Hash der generierten Referenz ohne seine eigenen Hashfelder.
 
-## Relevante Dateien
+ETag und `reference_id` verwenden den Artefakt-Hash. `/status`, `/reference` und `/validate` benennen beide Hasharten ausdrücklich; ein Feld `generated_hash`, das nur den Source-Hash wiederholt, existiert nicht.
 
-Kanonische Quellen:
+## API
 
-- data/palworld-breeding/breeding_rules.json
-- data/palworld-breeding/special_combinations.json
-- data/palworld-breeding/pal_values.json
-- data/palworld-breeding/manifest.json
+Basis nach Deployment:
 
-API-Modul:
-
-- services/breeding-api/package.json
-- services/breeding-api/pnpm-lock.yaml
-- services/breeding-api/pnpm-workspace.yaml
-- services/breeding-api/tsconfig.json
-- services/breeding-api/eslint.config.js
-- services/breeding-api/vitest.config.ts
-- services/breeding-api/wrangler.jsonc
-- services/breeding-api/src/types.ts
-- services/breeding-api/src/breeding.ts
-- services/breeding-api/src/auth.ts
-- services/breeding-api/src/http.ts
-- services/breeding-api/src/reference.ts
-- services/breeding-api/src/routes.ts
-- services/breeding-api/src/index.ts
-- services/breeding-api/scripts/build-reference.ts
-- services/breeding-api/scripts/validate-reference.ts
-- services/breeding-api/scripts/check-deterministic.ts
-- services/breeding-api/scripts/scan-secrets.ts
-- services/breeding-api/README.md
-- services/breeding-api/HANDOFF_CHATGPT.md
-- services/breeding-api/test/api.test.ts
-- services/breeding-api/test/breeding.test.ts
-- services/breeding-api/test/generated-data.test.ts
-
-Repository-Automation:
-
-- .gitattributes
-- .gitignore
-- AGENTS.md
-- .github/workflows/breeding-api-ci.yml
-- .github/workflows/deploy-breeding-api.yml
-
-Die endgültige Dateiliste muss vor dem Abschluss erneut mit git status und git diff --name-status ermittelt werden.
-
-## API-Endpunkte
-
-Geschützte Basisadresse:
-
-~~~text
+```text
 https://palworld-breeding-api.<CLOUDFLARE_SUBDOMAIN>.workers.dev/<BREEDING_READ_TOKEN>/v1
-~~~
+```
 
-Endpunkte:
+- `/status`
+- `/pal?name=<NAME>`
+- `/pair?parent_a=<NAME>&parent_b=<NAME>&gender_a=<MALE|FEMALE|ANY>&gender_b=<MALE|FEMALE|ANY>`
+- `/parents?child=<NAME>`
+- `/children?parent=<NAME>`
+- `/route?carrier=<NAME>&target=<NAME>`
+- `/reference`
+- `/validate`
 
-- GET /status — kompakter Versions-, Hash- und Validierungsstatus
-- GET /pal?name=<NAME> — deutsche, englische oder interne Namensauflösung
-- GET /pair?parent_a=<NAME>&parent_b=<NAME>&gender_a=<MALE|FEMALE|ANY>&gender_b=<MALE|FEMALE|ANY> — direkte Paarung mit Rechenweg
-- GET /parents?child=<NAME> — alle Eltern eines Ziel-Pals
-- GET /children?parent=<NAME> — mögliche zweite Eltern und Kinder eines Trägers
-- GET /route?carrier=<NAME>&target=<NAME>&max_generations=<N> — theoretisch kürzeste Artenroute
-- GET /reference — kompakte Gesamtreferenz
-- GET /validate — strukturelle Prüfung und ungelöste Konflikte
+Falsches oder fehlendes Token: neutrale HTTP 404. Schreibmethoden: nach gültiger Authentifizierung HTTP 405.
 
-Falsches oder fehlendes Token muss neutral HTTP 404 liefern. Schreibende Methoden müssen HTTP 405 liefern.
+`/route` kennzeichnet maschinenlesbar:
 
-## Lokale Befehle
+- `species_route_only: true`
+- `inventory_aware: false`
+- `passive_aware: false`
+- `iv_aware: false`
+- `unwanted_passives_aware: false`
+- `egg_cost_aware: false`
+- `cake_cost_aware: false`
+- `time_cost_aware: false`
+- `offspring_gender_feasibility_checked: false`
 
-Aus dem Repository:
+## Tests und CI
 
-~~~powershell
-cd services/breeding-api
+Aus `services/breeding-api/`:
+
+```powershell
 pnpm install --frozen-lockfile
 pnpm run generate
 pnpm run lint
@@ -168,187 +145,59 @@ pnpm run validate
 pnpm run validate:release
 pnpm run check:deterministic
 pnpm run scan:secrets
-~~~
+```
 
-Aktuell verifiziert:
+Zuletzt lokal verifiziert:
 
-- Lint: PASS
-- Typecheck: PASS
-- Tests: 41/41 PASS in 3 Testdateien
-- Worker-Dry-Run: PASS; Upload 1.419,88 KiB, gzip 347,29 KiB
-- strukturelle Validierung: PASS
-- deterministischer Build: PASS
-- Secret-Scan: PASS
-- bestehende PWA-Validierung: PASS (102 Passives und Cache-Verweise konsistent)
-- `validate:release`: erwartungsgemäß FAIL/BLOCKED wegen der beiden dokumentierten Fachkonflikte
-- Ein Deployment darf deshalb nicht stattfinden.
+- `pnpm install --frozen-lockfile` PASS; 263 Lockfile-Einträge bestanden die Supply-Chain-Prüfung
+- Lint PASS
+- Typecheck PASS
+- 58/58 Tests in 3 Dateien PASS
+- Worker-Dry-Run PASS; 1.426,51 KiB / gzip 334,54 KiB; kein Deployment
+- strukturelle Validierung PASS
+- Release-Validierung PASS
+- deterministische Doppelgenerierung PASS; kombinierter Artefaktdatei-Hash `790d6891c7bdeef24c691c5650f2229f98e5119f79de13c5a03f0d68f144f81d`
+- Secret-Scan PASS
+- bestehende PWA-Validierung PASS; 102 Passives, Datenstruktur, PWA-Dateien und Cache-Verweise konsistent
+- null ungelöste Konflikte
 
-## CI und Deployment
+Alle direkten Dependencies sind exakt gemäß Lockfile gepinnt. Alle 14 Drittanbieter-Action-Verwendungen nutzen verifizierte v4-Full-SHAs. `Breeding API CI` prüft zusätzlich die bestehende Root-PWA und verweigert uncommittete Generated-Abweichungen. Das Deployment bleibt manuell, `main`-only und im Environment `production`.
 
-CI-Workflow:
+Die beiden alten schreibenden Referenz-/Analyse-Workflows wurden auf read-only Schema-4-Validierung umgestellt; sie können kanonische Daten und die Anubis-Analyse nicht mehr automatisch mit Altlogik überschreiben. Dadurch werden nun insgesamt 14 Action-Verwendungen per verifiziertem Full-SHA gepinnt.
 
-~~~text
-.github/workflows/breeding-api-ci.yml
-~~~
+## Manuelle Restschritte
 
-Er läuft bei relevanten Pull Requests nach main und Pushes auf main, feature/** und release/**.
+1. PR-CI vollständig grün prüfen und PR reviewen/mergen.
+2. GitHub Environment `production`, Main-Policy und Cloudflare-Credentials prüfen.
+3. `Deploy Breeding API` auf `main` manuell starten.
+4. Nach dem ersten Deployment `BREEDING_READ_TOKEN` als Worker-Secret setzen.
+5. `/status`, `/validate`, bekannte Paarungen und falschen Token prüfen.
+6. Worker-Basisadresse und Token nur in private ChatGPT-Projekthinweise übernehmen.
 
-Manueller Deployment-Workflow:
+In diesem Codex-Lauf: kein Merge, kein Deployment, keine Secretänderung.
 
-~~~text
-.github/workflows/deploy-breeding-api.yml
-~~~
+## Live-Prüfschritte
 
-GitHub-Pfad:
-
-~~~text
-Repository → Actions → Deploy Breeding API → Run workflow
-~~~
-
-Der Workflow verwendet ausschließlich:
-
-- CLOUDFLARE_API_TOKEN
-- CLOUDFLARE_ACCOUNT_ID
-
-BREEDING_READ_TOKEN wird nicht an GitHub Actions übergeben. wrangler deploy wird mit --keep-vars ausgeführt, damit das bestehende Worker-Secret erhalten bleibt.
-
-Der Job besitzt zusätzlich einen harten `refs/heads/main`-Guard und verwendet das GitHub-Environment `production`. Die Environment-Branch-Policy und ein Required Reviewer müssen in den Repository-Einstellungen manuell aktiviert werden.
-
-Empfohlen: Beide Cloudflare-Credentials in `production` als Environment-Secrets anlegen, den Workflow einmal erfolgreich prüfen und erst danach die gleichnamigen Repository-Secrets entfernen.
-
-## Exakte manuelle Restschritte
-
-1. Den Sibelyx/Lamball-Widerspruch anhand aktueller direkter Spieldaten fachlich auflösen.
-2. Den letzten Gleichstands-Fallback anhand direkter Spieldaten bestätigen und in `breeding_rules.json` festschreiben.
-3. Belegte Korrekturen an kanonischen Daten, Regeln oder erwarteter Fixture umsetzen; Release-Gates nicht abschwächen.
-4. pnpm install --frozen-lockfile aus services/breeding-api ausführen.
-5. pnpm run generate ausführen.
-6. pnpm run lint ausführen.
-7. pnpm run typecheck ausführen.
-8. pnpm run test ausführen.
-9. pnpm run build:worker ausführen.
-10. pnpm run validate ausführen.
-11. pnpm run validate:release ausführen und einen erfolgreichen Exitcode verlangen.
-12. pnpm run check:deterministic ausführen.
-13. pnpm run scan:secrets ausführen.
-14. git diff --check und git status --short ausführen.
-15. Änderungen committen und den tatsächlichen Head-SHA erfassen.
-16. Branch feature/palworld-breeding-api pushen.
-17. Pull Request nach main erstellen; URL in die externe Übergabe übernehmen.
-18. CI vollständig abwarten und keinen fehlgeschlagenen Check ignorieren.
-19. PR nach Prüfung mergen.
-20. Kontrollieren, dass CLOUDFLARE_API_TOKEN und CLOUDFLARE_ACCOUNT_ID derzeit als GitHub Repository Secrets existieren.
-21. Settings → Environments → production öffnen, Deployment-Branches auf `main` beschränken, nach Möglichkeit einen Required Reviewer setzen und beide Cloudflare-Credentials als Environment-Secrets anlegen.
-22. Actions → Deploy Breeding API → Run workflow auf `main` manuell starten.
-23. Die vom Workflow beziehungsweise Cloudflare gemeldete workers.dev-Adresse erfassen.
-24. Im Cloudflare-Dashboard den Worker palworld-breeding-api öffnen.
-25. Settings → Variables and Secrets → Add auswählen.
-26. BREEDING_READ_TOKEN als Secret mit einem zufälligen Wert von mindestens 32 Bytes setzen.
-27. Secret speichern und die entsprechende Worker-Version deployen.
-28. Die URL /<TOKEN>/v1/status mit korrektem Token testen.
-29. /<TOKEN>/v1/validate prüfen.
-30. Bekannte Paarungen über /pair prüfen.
-31. Einen falschen Token testen; erwartet wird HTTP 404.
-32. Worker-Basisadresse und echten Lesecode ausschließlich in private ChatGPT-Projekthinweise oder eine private Projektquelle kopieren.
-33. Nach erfolgreichem Environment-Secret-Test die gleichnamigen Repository-Secrets entfernen.
-34. Diese HANDOFF-Datei niemals mit dem echten Token ergänzen.
-
-Alternativer Secret-Befehl nach vorhandenem Worker:
-
-~~~powershell
-cd services/breeding-api
-pnpm exec wrangler secret put BREEDING_READ_TOKEN
-~~~
-
-Der Wert wird interaktiv eingegeben und darf nicht als Befehlsargument erscheinen.
-
-## Rollback
-
-Cloudflare:
-
-1. Worker → Deployments beziehungsweise Versions öffnen.
-2. Letzte bekannte gute Version auswählen und erneut deployen.
-3. BREEDING_READ_TOKEN-Bindung prüfen.
-4. status, validate, bekannte pair-Abfragen und falsches Token testen.
-
-Repository:
-
-1. Fehlerhaften Commit mit git revert rückgängig machen.
-2. Gesamte Prüfkette einschließlich validate:release ausführen.
-3. Manuellen Deployment-Workflow erneut starten.
-
-Kanonische Daten, Manifest und Quellen-Pins immer gemeinsam konsistent halten.
+1. `/status`: Schema 4/2, beide Hashes, Zähler und Patchcheck prüfen.
+2. `/validate`: `ok=true`, null Konflikte und Impact 13.785/44.850 verlangen.
+3. `/pair`: Elphidran+Surfent, Sibelyx+Lamball, Lunaris+Grintale, Anubis+Eik Terra und Kingpaca Cryst+Jolthog prüfen.
+4. Katress/Wixen in beiden Geschlechtsrichtungen und beiden Elternreihenfolgen prüfen.
+5. falscher Token muss neutral 404 liefern.
+6. Patchstand mit einer gegebenenfalls neueren Palworld-Version vergleichen.
 
 ## Fertiger Text für private ChatGPT-Projekthinweise
 
-Den Platzhalter <BREEDING_READ_TOKEN> ausschließlich in den privaten Projekthinweisen oder einer privaten Projektquelle ersetzen, niemals im Repository:
-
-~~~text
+```text
 Für gewöhnliche Palworld-Zuchtabfragen zuerst die geschützte Read-only Breeding-API verwenden.
 
 Basisadresse:
 https://palworld-breeding-api.<CLOUDFLARE_SUBDOMAIN>.workers.dev/<BREEDING_READ_TOKEN>/v1
 
-Beim ersten Zuchtauftrag eines neuen Chats zuerst /status und anschließend /validate prüfen.
+Beim ersten Zuchtauftrag eines neuen Chats zuerst /status und /validate prüfen. Die API nur als primäre Artenquelle verwenden, wenn validation_status gültig ist, /validate keine Konflikte meldet und der dokumentierte Palworld-Stand nicht durch eine neuere zuchtrelevante Version überholt wurde.
 
-Die API darf nur als primäre Quelle verwendet werden, wenn:
-- /status erreichbar und ok ist
-- validation_status gültig ist
-- /validate keine blockierenden Konflikte meldet
-- der Datenstand nicht älter als ein neuer zuchtrelevanter Palworld-Patch ist
+/pal für Namen und Werte, /pair für direkte Paarungen, /parents und /children für Indizes, /route nur für theoretische Artenrouten und /reference nur bei umfassendem Datenbedarf verwenden.
 
-Endpunkte:
-- /pal für Pal-Werte und Namensauflösung
-- /pair für direkte Elternkombinationen
-- /parents für mögliche Eltern eines Ziel-Pals
-- /children für Weiterzuchten eines vorhandenen Arten-Trägers
-- /route für theoretisch kürzeste Artenrouten
-- /reference nur bei umfassendem Datenbedarf
+Die praktische Planung muss zusätzlich tatsächlichen Bestand, Geschlechter, Passiven, Trash-Passiven, IVs, Eier-, Kuchen- und Zeitaufwand berücksichtigen. /route ist ausdrücklich nicht bestands-, passiv-, geschlechts- oder kostenoptimiert.
 
-Die API liefert Arten- und Zuchtdaten. Die praktische Passivplanung muss zusätzlich meinen tatsächlichen Bestand, Geschlechter, Passiven, unerwünschte Passiven, IVs und Zwischenprodukte berücksichtigen.
-
-Den GitHub-Connector nur verwenden, wenn:
-- /status oder /validate nicht erreichbar ist
-- der Status ungültig, needs_review oder unbekannt ist
-- ein neuer zuchtrelevanter Patch erschienen ist
-- ein Ergebnis widersprüchlich ist
-- die Referenz aktualisiert werden muss
-- oder Dateien geändert werden sollen
-
-Bei jeder Zuchtplanung:
-1. bereits genannten Bestand verwenden
-2. gleiche Art und Spezialkombinationen vor der Formel prüfen
-3. Geschlechtsvorgaben beachten
-4. möglichst wenige praktische Generationen priorisieren
-5. Vererbungswahrscheinlichkeit und Trash-Passiven berücksichtigen
-6. Eier-, Kuchen- und Zeitaufwand minimieren
-7. keine Paldeck-Nummer als Zuchtwert verwenden
-8. keine fehlenden Werte erfinden
-9. Artenroute der API nicht mit einer vollständigen Passive-Route verwechseln
-~~~
-
-## ChatGPT-Verifikationsschritte nach Übergabe
-
-Erst nach Auflösung des Blockers und erfolgreichem Deployment:
-
-1. /status mit korrektem Token abrufen.
-2. Prüfen, dass api_schema_version, breeding_reference_schema_version, Pal-Zähler und Spezialkombinationszähler plausibel sind.
-3. Prüfen, dass known_patch_check_status nicht unbelegt current behauptet.
-4. /validate abrufen und null blockierende Konflikte verlangen.
-5. Elphidran + Surfent → Elphidran Aqua über /pair prüfen.
-6. Anubis + Eikthyrdeer Terra → Kingpaca Cryst über /pair prüfen.
-7. Kingpaca Cryst + Jolthog → Elphidran über /pair prüfen.
-8. Anubis + Anubis → Anubis und Regel same_species prüfen.
-9. Beide Elternreihenfolgen einer geschlechtsabhängigen Spezialkombination prüfen.
-10. Den fachlich aufgelösten Sibelyx/Lamball-Ausgang explizit prüfen und mit der dokumentierten Entscheidung vergleichen.
-11. Einen falschen Token testen und ausschließlich HTTP 404 akzeptieren.
-12. generated_at_utc, game_reference und Datenstand gegen manifest.json sowie den aktuellen Palworld-Patch prüfen.
-13. Erst danach die API als primäre Arten-Zuchtreferenz verwenden.
-
-## Zusammenfassung für den nächsten Agenten
-
-- Nicht deployen.
-- Die oben aufgeführten bestandenen lokalen Prüfungen dürfen als bestanden gemeldet werden; `validate:release` bleibt rot.
-- Release-Validierung nicht umgehen.
-- Zuerst beide dokumentierten Fachkonflikte lösen.
-- Danach vollständige Checks, Commit, PR, CI, manueller Deploy, Worker-Secret und Live-Verifikation durchführen.
+Den GitHub-Connector nur verwenden, wenn API/Status ungültig, veraltet, widersprüchlich oder nicht erreichbar ist oder Dateien aktualisiert werden sollen. Same-Species und Spezialkombinationen vor Formel prüfen, Spezialkinder aus dem normalen Formelpool ausschließen, Geschlechtsvorgaben beachten, keine Paldeck-Nummer verwenden und keine Werte erfinden.
+```

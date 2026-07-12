@@ -1,6 +1,6 @@
 {
-  "schema_version": 3,
-  "generated_at_utc": "2026-07-12T19:58:29.888439+00:00",
+  "schema_version": 4,
+  "generated_at_utc": "2026-07-12T23:24:25.6053747Z",
   "sources": [
     {
       "repository": "PalModding/UtililityFiles",
@@ -41,7 +41,8 @@
         "paldex",
         "internal_index",
         "independent_value_cross_check",
-        "resolved_special_combo_cross_check"
+        "resolved_special_combo_cross_check",
+        "normal_formula_special_child_exclusion_algorithm_cross_check"
       ]
     },
     {
@@ -59,6 +60,11 @@
   "counts": {
     "pal_values": 299,
     "cross_species_special_combinations": 136,
+    "unique_special_child_species": 90,
+    "normal_formula_eligible_children": 184,
+    "eligible_special_child_species_excluded_from_normal_formula": 77,
+    "unordered_species_pairs_including_same_species": 44850,
+    "pair_results_changed_by_special_child_rule": 13785,
     "duplicate_rank_groups": 1,
     "missing_game_table_rows": 0,
     "fallback_game_table_rows": 0,
@@ -76,6 +82,57 @@
     "special_resolution_mismatches": 0,
     "ranks_not_divisible_by_10": 0
   },
+  "patch_check": {
+    "checked_at_utc": null,
+    "checked_on": "2026-07-13",
+    "checked_timezone": "Europe/Berlin",
+    "time_precision": "date_only",
+    "checked_game_version": "1.0",
+    "checked_game_build": null,
+    "build_verified": false,
+    "status": "current",
+    "breeding_relevant_changes_found": true,
+    "evidence": [
+      {
+        "kind": "direct_in_game_egg_test",
+        "date": "2026-07-13",
+        "parents": [
+          "Lunaris MALE",
+          "Grintale FEMALE"
+        ],
+        "child": "Penking",
+        "confirms": "equidistant_equal_rarity_higher_combi_rank"
+      },
+      {
+        "kind": "direct_in_game_egg_test",
+        "date": "2026-07-13",
+        "parents": [
+          "Sibelyx",
+          "Lamball"
+        ],
+        "child": "Surfent",
+        "confirms": "special_children_are_excluded_from_normal_formula_candidates"
+      }
+    ],
+    "source_notes": [
+      "Current means checked against Palworld 1.0 on the recorded date only.",
+      "No exact game build number was independently verified.",
+      "A newer Palworld version requires a new breeding-relevance check before this status may remain current."
+    ],
+    "requires_recheck_after_newer_patch": true
+  },
+  "external_cross_checks": [
+    {
+      "source": "palworld.gg",
+      "authoritative": false,
+      "checked_on": "2026-07-13",
+      "purpose": "manual independent cross-check only; never a runtime dependency or release gate",
+      "verified_cases": [
+        "Lunaris + Grintale -> Penking",
+        "Sibelyx + Lamball -> Surfent"
+      ]
+    }
+  ],
   "validation": {
     "missing_game_table_rows": [],
     "fallback_game_table_rows": [],

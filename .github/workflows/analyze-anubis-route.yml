@@ -1,152 +1,54 @@
-name: Analyze Anubis Breeding Route
+name: Validate Anubis Breeding Analysis
 
 on:
   push:
     paths:
+      - "data/palworld-breeding/analysis/anubis_jolthog_route.json"
+      - "data/palworld-breeding/breeding_rules.json"
+      - "data/palworld-breeding/special_combinations.json"
+      - "data/palworld-breeding/pal_values.json"
+      - "data/palworld-breeding/manifest.json"
+      - "services/breeding-api/**"
       - ".github/workflows/analyze-anubis-route.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  analyze:
+  validate-analysis:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: services/breeding-api
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
-      - name: Compute route candidates
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json, math
-          from pathlib import Path
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 11.7.0
+          run_install: false
 
-          base = Path('data/palworld-breeding')
-          values = json.loads((base/'pal_values.json').read_text(encoding='utf-8'))
-          specials = json.loads((base/'special_combinations.json').read_text(encoding='utf-8'))
-          by_internal = {p['internal_name']: p for p in values}
-          eligible = [p for p in values if p['combi_rank'] > 0 and p['ignore_combi'] is False]
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: services/breeding-api/pnpm-lock.yaml
 
-          def gender_match(required, actual):
-              return required in ('ANY', 'WILDCARD', None) or required == actual
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-          def special_child(a, ga, b, gb):
-              for s in specials:
-                  if (s['parent_a_internal'] == a and s['parent_b_internal'] == b and
-                      gender_match(s['parent_a_gender'], ga) and gender_match(s['parent_b_gender'], gb)):
-                      return s['child_internal'], s
-                  if (s['parent_a_internal'] == b and s['parent_b_internal'] == a and
-                      gender_match(s['parent_a_gender'], gb) and gender_match(s['parent_b_gender'], ga)):
-                      return s['child_internal'], s
-              return None, None
+      - name: Generate current derived reference
+        run: pnpm run generate
 
-          def child(a, ga, b, gb):
-              if a == b:
-                  return a, 'same_species'
-              sc, row = special_child(a, ga, b, gb)
-              if sc:
-                  return sc, f"special:{row['row_id']}"
-              pa, pb = by_internal[a], by_internal[b]
-              target = math.floor((pa['combi_rank'] + pb['combi_rank'] + 1) / 2)
-              min_dist = min(abs(p['combi_rank'] - target) for p in eligible)
-              rank_candidates = [p for p in eligible if abs(p['combi_rank'] - target) == min_dist]
-              parent_rarity_avg = (pa['rarity'] + pb['rarity']) / 2
-              best_rarity_dist = min(abs(p['rarity'] - parent_rarity_avg) for p in rank_candidates)
-              rank_candidates = [p for p in rank_candidates if abs(p['rarity'] - parent_rarity_avg) == best_rarity_dist]
-              min_rarity = min(p['rarity'] for p in rank_candidates)
-              rank_candidates = [p for p in rank_candidates if p['rarity'] == min_rarity]
-              max_priority = max(p['combi_duplicate_priority'] for p in rank_candidates)
-              rank_candidates = [p for p in rank_candidates if p['combi_duplicate_priority'] == max_priority]
-              rank_candidates.sort(key=lambda p: (p['is_variant'], p['internal_index']))
-              return rank_candidates[0]['internal_name'], f'formula:{target}'
+      - name: Validate analysis against schema-4 canonical rules
+        run: pnpm run validate:release
 
-          known = {
-              'SheepBall', 'WhiteMoth', 'Serpent', 'KendoFrog', 'HawkBird',
-              'FairyDragon', 'FairyDragon_Water', 'CaptainPenguin', 'LazyCatfish',
-              'Carbunclo', 'TentacleTurtle', 'CatVampire', 'DarkAlien', 'Anubis', 'Hedgehog'
-          }
+      - name: Verify deterministic generation
+        run: pnpm run check:deterministic
 
-          two_step = []
-          for p in values:
-              if p['internal_name'] in ('Anubis', 'Hedgehog'):
-                  continue
-              c, r1 = child('Anubis', 'MALE', p['internal_name'], 'FEMALE')
-              d, r2 = child(c, 'FEMALE', 'Hedgehog', 'MALE')
-              two_step.append({
-                  'blank_female_parent_internal': p['internal_name'],
-                  'blank_female_parent_de': p['name_de'],
-                  'blank_female_parent_rank': p['combi_rank'],
-                  'blank_female_parent_rarity': p['rarity'],
-                  'already_known_species': p['internal_name'] in known,
-                  'stage1_child_internal': c,
-                  'stage1_child_de': by_internal[c]['name_de'],
-                  'stage1_rule': r1,
-                  'stage1_child_rank': by_internal[c]['combi_rank'],
-                  'stage2_child_internal': d,
-                  'stage2_child_de': by_internal[d]['name_de'],
-                  'stage2_rule': r2,
-                  'stage2_child_rank': by_internal[d]['combi_rank'],
-              })
-
-          direct_elphidran = [x for x in two_step if x['stage2_child_internal'] == 'FairyDragon']
-          direct_surfent = [x for x in two_step if x['stage2_child_internal'] == 'Serpent']
-          direct_aqua = [x for x in two_step if x['stage2_child_internal'] == 'FairyDragon_Water']
-
-          def sort_key(x):
-              return (not x['already_known_species'], x['blank_female_parent_rarity'], x['blank_female_parent_rank'], x['blank_female_parent_de'])
-          direct_elphidran.sort(key=sort_key)
-          direct_surfent.sort(key=sort_key)
-          direct_aqua.sort(key=sort_key)
-
-          direct_anubis = []
-          names = [p['internal_name'] for p in values]
-          for i, a in enumerate(names):
-              for b in names[i+1:]:
-                  for ga, gb in [('MALE','FEMALE'), ('FEMALE','MALE')]:
-                      ch, rule = child(a, ga, b, gb)
-                      if ch == 'Anubis':
-                          direct_anubis.append({
-                              'parent_a_internal': a, 'parent_a_de': by_internal[a]['name_de'], 'parent_a_gender': ga,
-                              'parent_b_internal': b, 'parent_b_de': by_internal[b]['name_de'], 'parent_b_gender': gb,
-                              'rule': rule,
-                              'both_known_species': a in known and b in known,
-                              'one_known_species': a in known or b in known,
-                              'rarity_sum': by_internal[a]['rarity'] + by_internal[b]['rarity'],
-                          })
-          seen = set(); dedup = []
-          for x in direct_anubis:
-              key = tuple(sorted((x['parent_a_internal'], x['parent_b_internal']))) + (x['rule'],)
-              if key in seen and x['rule'].startswith('formula:'):
-                  continue
-              seen.add(key); dedup.append(x)
-          direct_anubis = sorted(dedup, key=lambda x: (not x['both_known_species'], not x['one_known_species'], x['rarity_sum'], x['parent_a_de'], x['parent_b_de']))
-
-          report = {
-              'purpose': 'Clean Blitzschnell from dirty male Anubis and connect clean female child to male Jolthog with Endloser Antrieb',
-              'direct_two_step_to_elphidran_count': len(direct_elphidran),
-              'direct_two_step_to_surfent_count': len(direct_surfent),
-              'direct_two_step_to_elphidran_aqua_count': len(direct_aqua),
-              'direct_two_step_to_elphidran': direct_elphidran,
-              'direct_two_step_to_surfent': direct_surfent,
-              'direct_two_step_to_elphidran_aqua': direct_aqua,
-              'direct_parent_pairs_to_anubis_count': len(direct_anubis),
-              'direct_parent_pairs_to_anubis': direct_anubis,
-          }
-          out = base/'analysis'
-          out.mkdir(exist_ok=True)
-          (out/'anubis_jolthog_route.json').write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
-          PY
-
-      - name: Commit report
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/palworld-breeding/analysis/anubis_jolthog_route.json
-          if git diff --cached --quiet; then
-            echo "No changes"
-          else
-            git commit -m "data: analyze Anubis to Jolthog breeding routes"
-            git push
-          fi
+# The analysis is reviewed data. This workflow validates it and never rewrites or commits it.

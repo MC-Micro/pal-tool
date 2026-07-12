@@ -20,9 +20,22 @@ interface ApiResponseBody {
   pal_count?: number;
   special_combination_count?: number;
   known_patch_check_status?: string;
+  patch_check?: {
+    status: string;
+    checked_on: string;
+    checked_game_version: string;
+    checked_game_build: string | null;
+    build_verified: boolean;
+    breeding_relevant_changes_found: boolean;
+    requires_recheck_after_newer_patch: boolean;
+  };
+  source_data_hash?: string;
+  generated_artifact_hash?: string;
   validation_status?: string;
   reference_age_days?: number | null;
   applied_rule?: string;
+  applied_tie_breaks?: string[];
+  nearest_candidates?: PalIdentityBody[];
   resolution?: string;
   result_child?: PalIdentityBody;
   alternatives?: unknown[];
@@ -30,9 +43,19 @@ interface ApiResponseBody {
   results?: Array<{
     parent_a?: PalIdentityBody;
     parent_b?: PalIdentityBody;
+    parent_a_gender?: string;
+    parent_b_gender?: string;
     child?: PalIdentityBody;
   }>;
   species_route_only?: boolean;
+  inventory_aware?: boolean;
+  passive_aware?: boolean;
+  iv_aware?: boolean;
+  unwanted_passives_aware?: boolean;
+  egg_cost_aware?: boolean;
+  cake_cost_aware?: boolean;
+  time_cost_aware?: boolean;
+  offspring_gender_feasibility_checked?: boolean;
   found?: boolean;
   generation_count?: number | null;
   routes?: Array<{ steps: unknown[] }>;
@@ -75,14 +98,26 @@ describe("path authentication", () => {
 });
 
 describe("worker HTTP surface", () => {
-  it("returns status without claiming the patch is current", async () => {
+  it("returns the version-scoped current patch check and distinct hashes", async () => {
     const response = await request("/status");
     const json = await body(response);
     expect(response.status).toBe(200);
     expect(json.pal_count).toBe(299);
     expect(json.special_combination_count).toBe(136);
-    expect(json.known_patch_check_status).toBe("unknown");
-    expect(json.validation_status).toBe("needs_review");
+    expect(json.known_patch_check_status).toBe("current");
+    expect(json.validation_status).toBe("valid");
+    expect(json.source_data_hash).toMatch(/^[a-f0-9]{64}$/);
+    expect(json.generated_artifact_hash).toMatch(/^[a-f0-9]{64}$/);
+    expect(json.source_data_hash).not.toBe(json.generated_artifact_hash);
+    expect(json.patch_check).toMatchObject({
+      status: "current",
+      checked_on: "2026-07-13",
+      checked_game_version: "1.0",
+      checked_game_build: null,
+      build_verified: false,
+      breeding_relevant_changes_found: true,
+      requires_recheck_after_newer_patch: true,
+    });
     expect(json.reference_age_days).toBeGreaterThanOrEqual(0);
   });
 
@@ -122,10 +157,13 @@ describe("worker HTTP surface", () => {
 
   it.each([
     ["Elphidran", "Surfent", "Elphidran Aqua", "special_combination"],
-    ["Anubis", "Eikthyrdeer Terra", "Kingpaca Cryst", "normal_formula"],
+    ["Anubis", "Eikthyrdeer Terra", "Bakemi", "normal_formula"],
     ["Kingpaca Cryst", "Jolthog", "Elphidran", "normal_formula"],
     ["Anubis", "Anubis", "Anubis", "same_species"],
-    ["Sibelyx", "Lamball", "Gobfin Ignis", "normal_formula"],
+    ["Sibelyx", "Lamball", "Surfent", "normal_formula"],
+    ["Lamball", "Sibelyx", "Surfent", "normal_formula"],
+    ["Lunaris", "Grintale", "Penking", "normal_formula"],
+    ["Grintale", "Lunaris", "Penking", "normal_formula"],
   ])("resolves %s + %s through /pair", async (parentA, parentB, child, rule) => {
     const response = await request(
       `/pair?parent_a=${encodeURIComponent(parentA)}&parent_b=${encodeURIComponent(parentB)}`,
@@ -134,6 +172,19 @@ describe("worker HTTP surface", () => {
     expect(response.status).toBe(200);
     expect(json.result_child?.name_en).toBe(child);
     expect(json.applied_rule).toBe(rule);
+  });
+
+  it("explains the global higher-CombiRank tie for Lunaris and Grintale", async () => {
+    const response = await request("/pair?parent_a=Lunaris&parent_b=Grintale");
+    const json = await body(response);
+    expect(json.result_child?.name_en).toBe("Penking");
+    expect(json.nearest_candidates?.map(({ name_en }) => name_en)).toEqual([
+      "Mossanda",
+      "Penking",
+    ]);
+    expect(json.applied_tie_breaks).toContain(
+      "equidistant_equal_rarity_higher_combi_rank",
+    );
   });
 
   it("requires gender disambiguation for Katress and Wixen", async () => {
@@ -166,6 +217,38 @@ describe("worker HTTP surface", () => {
     expect((await body(response)).error?.code).toBe("INCOMPATIBLE_GENDERS");
   });
 
+  it("keeps gender outcomes consistent across children, parents, and routes", async () => {
+    const children = await request(
+      "/children?parent=Katress&second_parent=Wixen&max_results=10",
+    );
+    const childrenJson = await body(children);
+    expect(childrenJson.results?.map(({ child }) => child?.name_en).sort()).toEqual([
+      "Katress Ignis",
+      "Wixen Noct",
+    ]);
+
+    const parents = await request(
+      "/parents?child=Katress%20Ignis&parent=Katress&max_results=10",
+    );
+    const parentsJson = await body(parents);
+    expect(
+      parentsJson.results?.some(
+        (entry) =>
+          entry.parent_a?.name_en === "Wixen" &&
+          entry.parent_a_gender === "MALE" &&
+          entry.parent_b?.name_en === "Katress" &&
+          entry.parent_b_gender === "FEMALE",
+      ),
+    ).toBe(true);
+
+    const route = await request(
+      "/route?carrier=Katress&target=Katress%20Ignis&max_generations=1",
+    );
+    const routeJson = await body(route);
+    expect(routeJson.found).toBe(true);
+    expect(routeJson.generation_count).toBe(1);
+  });
+
   it("serves stable parent and child indexes with pagination", async () => {
     const parents = await request(
       "/parents?child=Elphidran%20Aqua&parent=Elphidran&special_only=true&max_results=10",
@@ -184,7 +267,7 @@ describe("worker HTTP surface", () => {
     );
     const childJson = await body(children);
     expect(childJson.results).toHaveLength(1);
-    expect(childJson.results?.[0]?.child?.name_en).toBe("Kingpaca Cryst");
+    expect(childJson.results?.[0]?.child?.name_en).toBe("Bakemi");
   });
 
   it("returns species-only shortest routes", async () => {
@@ -192,6 +275,14 @@ describe("worker HTTP surface", () => {
     const json = await body(response);
     expect(response.status).toBe(200);
     expect(json.species_route_only).toBe(true);
+    expect(json.inventory_aware).toBe(false);
+    expect(json.passive_aware).toBe(false);
+    expect(json.iv_aware).toBe(false);
+    expect(json.unwanted_passives_aware).toBe(false);
+    expect(json.egg_cost_aware).toBe(false);
+    expect(json.cake_cost_aware).toBe(false);
+    expect(json.time_cost_aware).toBe(false);
+    expect(json.offspring_gender_feasibility_checked).toBe(false);
     expect(json.found).toBe(true);
     expect(json.generation_count).toBeGreaterThan(0);
     expect(json.routes?.[0]?.steps).toHaveLength(json.generation_count ?? 0);
@@ -210,8 +301,8 @@ describe("worker HTTP surface", () => {
   it("exposes the precomputed validation block without secrets", async () => {
     const response = await request("/validate");
     const json = await body(response);
-    expect(json.ok).toBe(false);
-    expect(json.unresolved_conflicts).toHaveLength(2);
+    expect(json.ok).toBe(true);
+    expect(json.unresolved_conflicts).toHaveLength(0);
     expect(JSON.stringify(json)).not.toContain(token);
   });
 

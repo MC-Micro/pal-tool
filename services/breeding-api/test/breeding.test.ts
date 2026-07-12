@@ -7,7 +7,12 @@ import {
   triangularPairFromOrdinal,
   triangularPairOrdinal,
 } from "../src/breeding.ts";
-import type { GeneratedReference, Gender } from "../src/types.ts";
+import type {
+  GeneratedReference,
+  Gender,
+  PalValue,
+  SpecialCombination,
+} from "../src/types.ts";
 
 const reference = referenceJson as GeneratedReference;
 const engine = createBreedingEngine(reference.pals, reference.canonical.specialCombinations);
@@ -36,13 +41,60 @@ function decodeUint16(base64: string): Uint16Array {
   return new Uint16Array(copy.buffer);
 }
 
+function syntheticPal(internalName: string, combiRank: number, internalIndex: number): PalValue {
+  return {
+    internal_name: internalName,
+    name_de: internalName,
+    name_en: internalName,
+    paldex_no: internalIndex,
+    is_variant: false,
+    combi_rank: combiRank,
+    rarity: 1,
+    ignore_combi: false,
+    combi_duplicate_priority: combiRank * 100,
+    internal_index: internalIndex,
+    game_table_row: internalName,
+  };
+}
+
+function oneSidedSpecialFixture(specialRank = 250): {
+  pals: PalValue[];
+  specials: SpecialCombination[];
+} {
+  const pals = [
+    syntheticPal("ParentA", 100, 1),
+    syntheticPal("ParentB", 300, 2),
+    syntheticPal("FormulaChild", 210, 3),
+    syntheticPal("SpecialChild", specialRank, 4),
+  ];
+  const specials: SpecialCombination[] = [
+    {
+      row_id: "synthetic-one-sided",
+      parent_a_internal: "ParentA",
+      parent_a_de: "ParentA",
+      parent_a_en: "ParentA",
+      parent_b_internal: "ParentB",
+      parent_b_de: "ParentB",
+      parent_b_en: "ParentB",
+      child_internal: "SpecialChild",
+      child_de: "SpecialChild",
+      child_en: "SpecialChild",
+      parent_a_gender: "FEMALE",
+      parent_b_gender: "MALE",
+    },
+  ];
+  return { pals, specials };
+}
+
 describe("canonical breeding engine", () => {
   it.each([
     ["FairyDragon", "Serpent", "FairyDragon_Water", "special_combination"],
-    ["Anubis", "Deer_Ground", "KingAlpaca_Ice", "normal_formula"],
+    ["Anubis", "Deer_Ground", "OniGhostGirl", "normal_formula"],
     ["KingAlpaca_Ice", "Hedgehog", "FairyDragon", "normal_formula"],
     ["Anubis", "Anubis", "Anubis", "same_species"],
-    ["WhiteMoth", "SheepBall", "SharkKid_Fire", "normal_formula"],
+    ["SharkKid_Fire", "SharkKid_Fire", "SharkKid_Fire", "same_species"],
+    ["SharkKid", "FlameBambi", "SharkKid_Fire", "special_combination"],
+    ["WhiteMoth", "SheepBall", "Serpent", "normal_formula"],
   ])("resolves %s + %s canonically", (left, right, child, rule) => {
     const result = engine.resolveBasePair(id(left), id(right));
     expect(internalName(result.childId)).toBe(child);
@@ -61,6 +113,32 @@ describe("canonical breeding engine", () => {
   ])("matches the independent rarity tie-break fixture %s + %s", (left, right, expected) => {
     const result = engine.resolveBasePair(aliasId(left), aliasId(right));
     expect(reference.pals[result.childId]?.name_en).toBe(expected);
+  });
+
+  it("selects the higher CombiRank for the fully equal Lunaris/Grintale cross-rank tie", () => {
+    const result = engine.resolveBasePair(id("Mutant"), id("NaughtyCat"));
+    expect(internalName(result.childId)).toBe("CaptainPenguin");
+    expect(result.targetRank).toBe(2065);
+    expect(result.nearestCandidateIds?.map(internalName)).toEqual([
+      "GrassPanda",
+      "CaptainPenguin",
+    ]);
+    expect(result.appliedTieBreaks).toContain(
+      "equidistant_equal_rarity_higher_combi_rank",
+    );
+  });
+
+  it("never uses paldex numbers as breeding values or tie-breakers", () => {
+    const changedPaldex = reference.pals.map((pal, index) => ({
+      ...pal,
+      paldex_no: 100_000 - index,
+    }));
+    const independent = createBreedingEngine(
+      changedPaldex,
+      reference.canonical.specialCombinations,
+    );
+    const result = independent.resolveBasePair(id("Mutant"), id("NaughtyCat"));
+    expect(changedPaldex[result.childId]?.internal_name).toBe("CaptainPenguin");
   });
 
   it("resolves the duplicate rank 2950 to non-variant Gumoss", () => {
@@ -105,6 +183,110 @@ describe("canonical breeding engine", () => {
     }
     expect(engine.resolvePair(katress, wixen).kind).toBe("unresolved_gender");
     expect(() => engine.resolvePair(katress, wixen, "MALE", "MALE")).toThrow(RangeError);
+  });
+
+  it("resolves both real orientations and falls back to the formula for a one-sided special", () => {
+    const { pals, specials } = oneSidedSpecialFixture();
+    const synthetic = createBreedingEngine(pals, specials);
+
+    const special = synthetic.resolvePair(0, 1, "FEMALE", "MALE");
+    expect(special).toMatchObject({
+      kind: "resolved",
+      rule: "special_combination",
+      childId: 3,
+      rowId: "synthetic-one-sided",
+    });
+
+    const formula = synthetic.resolvePair(0, 1, "MALE", "FEMALE");
+    expect(formula).toMatchObject({ kind: "resolved", rule: "normal_formula", childId: 2 });
+
+    const reversedSpecial = synthetic.resolvePair(1, 0, "MALE", "FEMALE");
+    expect(reversedSpecial).toMatchObject({
+      kind: "resolved",
+      rule: "special_combination",
+      childId: 3,
+    });
+    const reversedFormula = synthetic.resolvePair(1, 0, "FEMALE", "MALE");
+    expect(reversedFormula).toMatchObject({
+      kind: "resolved",
+      rule: "normal_formula",
+      childId: 2,
+    });
+  });
+
+  it("returns two structured outcomes for ANY when the real orientations differ", () => {
+    const { pals, specials } = oneSidedSpecialFixture();
+    const synthetic = createBreedingEngine(pals, specials);
+    const result = synthetic.resolvePair(0, 1);
+
+    expect(result.kind).toBe("unresolved_gender");
+    if (result.kind !== "unresolved_gender") return;
+    expect(result.alternatives).toEqual([
+      expect.objectContaining({
+        parentAGender: "MALE",
+        parentBGender: "FEMALE",
+        childId: 2,
+        rule: "normal_formula",
+        ruleCode: 3,
+      }),
+      expect.objectContaining({
+        parentAGender: "FEMALE",
+        parentBGender: "MALE",
+        childId: 3,
+        rule: "special_combination",
+        ruleCode: 2,
+        rowId: "synthetic-one-sided",
+      }),
+    ]);
+    expect(result.alternatives[0]).not.toHaveProperty("rowId");
+
+    expect(synthetic.resolvePair(0, 1, "ANY", "MALE")).toMatchObject({
+      kind: "resolved",
+      rule: "special_combination",
+      childId: 3,
+    });
+    expect(synthetic.resolvePair(0, 1, "ANY", "FEMALE")).toMatchObject({
+      kind: "resolved",
+      rule: "normal_formula",
+      childId: 2,
+    });
+  });
+
+  it("collapses ANY only when both real orientations have the same complete outcome", () => {
+    const { pals } = oneSidedSpecialFixture();
+    const synthetic = createBreedingEngine(pals, []);
+    expect(synthetic.resolvePair(0, 1)).toMatchObject({
+      kind: "resolved",
+      rule: "normal_formula",
+      childId: 2,
+    });
+  });
+
+  it("applies same-species identity before explicit gender compatibility", () => {
+    const { pals } = oneSidedSpecialFixture();
+    const synthetic = createBreedingEngine(pals, []);
+    expect(synthetic.resolvePair(0, 0, "MALE", "MALE")).toMatchObject({
+      kind: "resolved",
+      rule: "same_species",
+      childId: 0,
+    });
+  });
+
+  it("excludes special-only children from the formula by default but supports legacy impact reports", () => {
+    const { pals, specials } = oneSidedSpecialFixture(200);
+    const current = createBreedingEngine(pals, specials);
+    const legacy = createBreedingEngine(pals, specials, {
+      excludeSpecialChildrenFromFormula: false,
+    });
+
+    expect(current.resolveBasePair(0, 1)).toMatchObject({
+      rule: "normal_formula",
+      childId: 2,
+    });
+    expect(legacy.resolveBasePair(0, 1)).toMatchObject({
+      rule: "normal_formula",
+      childId: 3,
+    });
   });
 
   it("round-trips every triangular pair ordinal", () => {

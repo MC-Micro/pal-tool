@@ -1,9 +1,11 @@
 import {
   RULE_CODE,
   type BreedingEngine,
+  type BreedingEngineOptions,
   type Gender,
   type GenderAlternative,
   type PalValue,
+  type PairResolution,
   type PreparedSpecialCombination,
   type ResolvedPair,
   type SpecialCombination,
@@ -160,13 +162,12 @@ function resolveFormula(
 
     const remainingRanks = new Set(candidates.map((candidate) => candidate.combi_rank));
     if (remainingRanks.size > 1) {
-      // breeding_rules.json does not name this final equal-rarity case. The pinned
-      // PalworldSaveTools generator listed in manifest.json examines the upper
-      // bisect neighbor first and retains it when rank distance and rarity are
-      // both identical, which is equivalent to selecting the higher rank.
+      // Direct Palworld 1.0 egg testing on 2026-07-13 confirmed that the higher
+      // CombiRank wins this fully equal cross-rank tie. This is a global rule,
+      // independent of source order, array order, or the tested parent pair.
       const higherRank = Math.max(...candidates.map((candidate) => candidate.combi_rank));
       candidates = candidates.filter((candidate) => candidate.combi_rank === higherRank);
-      appliedTieBreaks.push("equidistant_equal_rarity_higher_combi_rank_source_order");
+      appliedTieBreaks.push("equidistant_equal_rarity_higher_combi_rank");
     }
   }
 
@@ -203,6 +204,8 @@ function orientAlternative(
       parentBId: requestedParentBId,
       parentBGender: row.parent_b_gender,
       childId: row.childId,
+      rule: "special_combination",
+      ruleCode: RULE_CODE.special_combination,
     };
   }
   return {
@@ -212,6 +215,8 @@ function orientAlternative(
     parentBId: requestedParentBId,
     parentBGender: row.parent_a_gender,
     childId: row.childId,
+    rule: "special_combination",
+    ruleCode: RULE_CODE.special_combination,
   };
 }
 
@@ -222,6 +227,7 @@ function genderCompatible(supplied: Gender, required: Gender): boolean {
 export function createBreedingEngine(
   pals: readonly PalValue[],
   specialCombinations: readonly SpecialCombination[],
+  options: BreedingEngineOptions = {},
 ): BreedingEngine {
   if (pals.length === 0) throw new Error("At least one pal is required");
 
@@ -235,7 +241,16 @@ export function createBreedingEngine(
     palIds.set(pal, id);
   });
 
-  const eligible = pals.filter((pal) => pal.combi_rank > 0 && !pal.ignore_combi);
+  const excludeSpecialChildrenFromFormula = options.excludeSpecialChildrenFromFormula ?? true;
+  const specialChildInternalNames = new Set(
+    specialCombinations.map((combination) => combination.child_internal),
+  );
+  const eligible = pals.filter(
+    (pal) =>
+      pal.combi_rank > 0 &&
+      !pal.ignore_combi &&
+      (!excludeSpecialChildrenFromFormula || !specialChildInternalNames.has(pal.internal_name)),
+  );
   if (eligible.length === 0) throw new Error("Normal breeding has no eligible child candidates");
   const aliases = buildAliasMap(pals);
   const specialsByPair = new Map<string, PreparedSpecialCombination[]>();
@@ -299,6 +314,123 @@ export function createBreedingEngine(
     return resolveFormula(pals, eligible, palIds, parentAId, parentBId);
   };
 
+  const resolveConcretePair = (
+    parentAId: number,
+    parentBId: number,
+    parentAGender: Exclude<Gender, "ANY">,
+    parentBGender: Exclude<Gender, "ANY">,
+  ): ResolvedPair => {
+    if (parentAId === parentBId) return resolveBasePair(parentAId, parentBId);
+
+    const matches = getSpecials(parentAId, parentBId)
+      .map((row) => orientAlternative(row, parentAId, parentBId))
+      .filter(
+        (alternative) =>
+          genderCompatible(parentAGender, alternative.parentAGender) &&
+          genderCompatible(parentBGender, alternative.parentBGender),
+      );
+
+    if (matches.length > 1) {
+      const outcomes = new Set(
+        matches.map(
+          ({ childId, ruleCode, rowId }) => `${childId}:${ruleCode}:${rowId ?? ""}`,
+        ),
+      );
+      if (outcomes.size > 1) {
+        throw new Error(`Gender-specific special rows disagree for ${pairKey(parentAId, parentBId)}`);
+      }
+    }
+
+    const match = matches[0];
+    if (match !== undefined) {
+      return {
+        kind: "resolved",
+        rule: match.rule,
+        ruleCode: match.ruleCode,
+        parentAId,
+        parentBId,
+        childId: match.childId,
+        ...(match.rowId === undefined ? {} : { rowId: match.rowId }),
+      };
+    }
+    return resolveFormula(pals, eligible, palIds, parentAId, parentBId);
+  };
+
+  const asGenderAlternative = (
+    result: ResolvedPair,
+    parentAGender: Exclude<Gender, "ANY">,
+    parentBGender: Exclude<Gender, "ANY">,
+  ): GenderAlternative => ({
+    parentAId: result.parentAId,
+    parentAGender,
+    parentBId: result.parentBId,
+    parentBGender,
+    childId: result.childId,
+    rule: result.rule,
+    ruleCode: result.ruleCode,
+    ...(result.rowId === undefined ? {} : { rowId: result.rowId }),
+  });
+
+  const sameOutcome = (left: ResolvedPair, right: ResolvedPair): boolean =>
+    left.childId === right.childId &&
+    left.ruleCode === right.ruleCode &&
+    left.rowId === right.rowId;
+
+  const resolvePair = (
+    parentAId: number,
+    parentBId: number,
+    parentAGender: Gender = "ANY",
+    parentBGender: Gender = "ANY",
+  ): PairResolution => {
+    // The canonical identity override is deliberately evaluated before gender
+    // compatibility, matching breeding_rules.json's decision order.
+    if (parentAId === parentBId) return resolveBasePair(parentAId, parentBId);
+
+    if (
+      parentAGender !== "ANY" &&
+      parentBGender !== "ANY" &&
+      parentAGender === parentBGender
+    ) {
+      throw new RangeError("Palworld breeding requires opposite parent genders");
+    }
+
+    if (parentAGender !== "ANY" && parentBGender !== "ANY") {
+      return resolveConcretePair(parentAId, parentBId, parentAGender, parentBGender);
+    }
+
+    const orientations: Array<
+      [Exclude<Gender, "ANY">, Exclude<Gender, "ANY">]
+    > = [];
+    if (parentAGender === "ANY" && parentBGender === "ANY") {
+      orientations.push(["MALE", "FEMALE"], ["FEMALE", "MALE"]);
+    } else if (parentAGender === "ANY" && parentBGender !== "ANY") {
+      orientations.push([parentBGender === "MALE" ? "FEMALE" : "MALE", parentBGender]);
+    } else if (parentAGender !== "ANY") {
+      orientations.push([parentAGender, parentAGender === "MALE" ? "FEMALE" : "MALE"]);
+    }
+
+    const concrete = orientations.map(([genderA, genderB]) => {
+      const result = resolvePair(parentAId, parentBId, genderA, genderB);
+      if (result.kind !== "resolved") {
+        throw new Error("A concrete opposite-gender orientation did not resolve");
+      }
+      return { genderA, genderB, result };
+    });
+    const first = concrete[0];
+    if (first === undefined) throw new Error("No compatible gender orientation was produced");
+    if (concrete.every(({ result }) => sameOutcome(first.result, result))) return first.result;
+
+    return {
+      kind: "unresolved_gender",
+      parentAId,
+      parentBId,
+      alternatives: concrete.map(({ genderA, genderB, result }) =>
+        asGenderAlternative(result, genderA, genderB),
+      ),
+      fallback: resolveBasePair(parentAId, parentBId),
+    };
+  };
+
   return {
     pals,
     aliases,
@@ -306,61 +438,7 @@ export function createBreedingEngine(
       return aliases[normalizePalName(name)] ?? [];
     },
     resolveBasePair,
-    resolvePair(
-      parentAId: number,
-      parentBId: number,
-      parentAGender: Gender = "ANY",
-      parentBGender: Gender = "ANY",
-    ) {
-      if (
-        parentAGender !== "ANY" &&
-        parentBGender !== "ANY" &&
-        parentAGender === parentBGender
-      ) {
-        throw new RangeError("Palworld breeding requires opposite parent genders");
-      }
-      const fallback = resolveBasePair(parentAId, parentBId);
-      if (fallback.rule === "same_species" || fallback.rule === "special_combination") return fallback;
-
-      const genderRows = getSpecials(parentAId, parentBId).filter(
-        (row) => row.parent_a_gender !== "ANY" || row.parent_b_gender !== "ANY",
-      );
-      if (genderRows.length === 0) return fallback;
-
-      const alternatives = genderRows
-        .map((row) => orientAlternative(row, parentAId, parentBId))
-        .filter(
-          (alternative) =>
-            genderCompatible(parentAGender, alternative.parentAGender) &&
-            genderCompatible(parentBGender, alternative.parentBGender),
-        );
-
-      if (parentAGender === "ANY" || parentBGender === "ANY") {
-        if (alternatives.length === 0) return fallback;
-        return { kind: "unresolved_gender", parentAId, parentBId, alternatives, fallback };
-      }
-
-      const matched = alternatives.filter(
-        (alternative) =>
-          alternative.parentAGender === parentAGender && alternative.parentBGender === parentBGender,
-      );
-      if (matched.length === 0) return fallback;
-      const childIds = new Set(matched.map((alternative) => alternative.childId));
-      if (childIds.size !== 1) {
-        throw new Error(`Gender-specific special rows disagree for ${pairKey(parentAId, parentBId)}`);
-      }
-      const match = matched[0];
-      if (match === undefined) return fallback;
-      return {
-        kind: "resolved",
-        rule: "special_combination",
-        ruleCode: RULE_CODE.special_combination,
-        parentAId,
-        parentBId,
-        childId: match.childId,
-        rowId: match.rowId,
-      };
-    },
+    resolvePair,
     getSpecials,
   };
 }
