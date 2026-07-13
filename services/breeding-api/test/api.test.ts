@@ -75,6 +75,102 @@ async function body(response: Response): Promise<ApiResponseBody> {
   return value as ApiResponseBody;
 }
 
+interface McpResponseBody {
+  result?: {
+    serverInfo?: { name?: string };
+    tools?: Array<{
+      name: string;
+      securitySchemes?: Array<{ type: string }>;
+      annotations?: {
+        readOnlyHint?: boolean;
+        destructiveHint?: boolean;
+        openWorldHint?: boolean;
+      };
+    }>;
+    structuredContent?: Record<string, unknown>;
+  };
+}
+
+async function mcp(method: string, params: Record<string, unknown>, id = 1): Promise<Response> {
+  return handleRequest(
+    new Request("https://breeding.example/mcp", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/event-stream",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ jsonrpc: "2.0", id, method, params }),
+    }),
+    {},
+  );
+}
+
+async function mcpBody(response: Response): Promise<McpResponseBody> {
+  return (await response.json()) as McpResponseBody;
+}
+
+describe("public MCP endpoint", () => {
+  it("initializes without a read token", async () => {
+    const response = await mcp("initialize", {
+      protocolVersion: "2025-11-25",
+      capabilities: {},
+      clientInfo: { name: "vitest", version: "1.0.0" },
+    });
+    const json = await mcpBody(response);
+    expect(response.status).toBe(200);
+    expect(json.result?.serverInfo?.name).toBe("palworld-breeding-api");
+  });
+
+  it("lists exactly five anonymous read-only tools", async () => {
+    const response = await mcp("tools/list", {});
+    const listedTools = (await mcpBody(response)).result?.tools ?? [];
+    expect(listedTools.map(({ name }) => name)).toEqual([
+      "breeding_status",
+      "breeding_pair",
+      "breeding_parents",
+      "breeding_children",
+      "breeding_route",
+    ]);
+    expect(
+      listedTools.every(
+        ({ securitySchemes, annotations }) =>
+          securitySchemes?.[0]?.type === "noauth" &&
+          annotations?.readOnlyHint === true &&
+          annotations.destructiveHint === false &&
+          annotations.openWorldHint === false,
+      ),
+    ).toBe(true);
+  });
+
+  it.each([
+    ["Sibelyx", "Lamball", "Surfent"],
+    ["Elphidran", "Surfent", "Elphidran Aqua"],
+  ])("resolves %s + %s through breeding_pair", async (parentA, parentB, child) => {
+    const response = await mcp("tools/call", {
+      name: "breeding_pair",
+      arguments: { parent_a: parentA, parent_b: parentB },
+    });
+    const structured = (await mcpBody(response)).result?.structuredContent;
+    expect(response.status).toBe(200);
+    expect(identityName(structured?.result_child)).toBe(child);
+  });
+
+  it("does not make REST public", async () => {
+    const response = await handleRequest(
+      new Request("https://breeding.example/v1/status"),
+      {},
+    );
+    expect(response.status).toBe(404);
+    expect(await response.text()).toBe('{"ok":false}');
+  });
+});
+
+function identityName(value: unknown): string | undefined {
+  if (typeof value !== "object" || value === null) return undefined;
+  const identity = value as Record<string, unknown>;
+  return typeof identity.name_en === "string" ? identity.name_en : undefined;
+}
+
 describe("path authentication", () => {
   it("accepts only the exact first path token", async () => {
     await expect(authorizePath(`/${token}/v1/status`, token)).resolves.toMatchObject({

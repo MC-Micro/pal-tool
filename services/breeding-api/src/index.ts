@@ -7,6 +7,7 @@ import {
   optionsResponse,
 } from "./http.ts";
 import { getReference } from "./reference.ts";
+import { handleMcpRequest } from "./mcp.ts";
 import { routeApiRequest } from "./routes.ts";
 
 export interface Env {
@@ -14,6 +15,8 @@ export interface Env {
 }
 
 export async function handleRequest(request: Request, env: Env): Promise<Response> {
+  if (new URL(request.url).pathname === "/mcp") return handleMcpRequest(request);
+
   const head = request.method === "HEAD";
   const authorized = await authorizePath(new URL(request.url).pathname, env.BREEDING_READ_TOKEN);
   if (authorized === null) return neutralNotFound(head);
