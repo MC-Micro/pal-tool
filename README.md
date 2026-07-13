@@ -1,3 +1,41 @@
+# Pal Tool
+
+Dieses Repository enthält drei bewusst getrennte Palworld-Bausteine:
+
+1. die installierbare **Palworld Passives PWA v1.0.0** im Repository-Root,
+2. die kanonische **Palworld-1.0-Zuchtreferenz** unter `data/palworld-breeding/`,
+3. die daraus erzeugte read-only **Breeding API mit Cloudflare Worker, geschütztem REST-Zugang und öffentlichem MCP-Endpunkt** unter `services/breeding-api/`.
+
+Die PWA und die Breeding API teilen keine Laufzeitlogik. Die API verwendet beim Request ausschließlich vorab erzeugte Repository-Artefakte und ruft weder GitHub noch externe Zuchtrechner auf.
+
+## Einstieg für neue Chats und Maintainer
+
+- Repositoryweite Arbeitsregeln: [`AGENTS.md`](AGENTS.md)
+- Kanonische Zuchtregeln und Datenstand: [`data/palworld-breeding/README.md`](data/palworld-breeding/README.md)
+- API-/Worker-Dokumentation: [`services/breeding-api/README.md`](services/breeding-api/README.md)
+- Aktuelle Übergabe für neue ChatGPT-/Codex-Sitzungen: [`services/breeding-api/HANDOFF_CHATGPT.md`](services/breeding-api/HANDOFF_CHATGPT.md)
+
+Chatverläufe sind kein dauerhafter Projektspeicher. Materielle Entscheidungen, Architekturänderungen, Validierungsergebnisse, Deploymentfolgen und offene Restschritte müssen in den passenden getrackten Dateien aktualisiert werden. Persönliche Gesprächsinhalte, Tokens, Zugangsdaten und authentifizierte URLs gehören nicht ins Repository.
+
+## Repository-Struktur
+
+```text
+.
+├── index.html, app.js, app.css
+├── data-passives.js, data-overrides.js
+├── manifest.webmanifest, sw.js
+├── docs/
+│   └── ROADMAP.md
+├── data/
+│   └── palworld-breeding/
+├── services/
+│   └── breeding-api/
+├── scripts/
+│   └── validate-data.mjs
+├── .github/workflows/
+└── AGENTS.md
+```
+
 # Palworld Passives PWA v1.0.0
 
 Eine leichte, installierbare und offlinefähige Palworld-Passives-Datenbank für Breeding und Buildplanung.
@@ -36,7 +74,7 @@ Nach dem ersten vollständigen Laden funktioniert die App auch offline. Bei eine
 
 ## Entwicklung
 
-Das Projekt verwendet bewusst keine Frameworks, Paketmanager oder externen Laufzeitabhängigkeiten. Es besteht aus HTML, CSS und Vanilla JavaScript.
+Die PWA verwendet bewusst keine Frameworks, Paketmanager oder externen Laufzeitabhängigkeiten. Sie besteht aus HTML, CSS und Vanilla JavaScript.
 
 Lokale Prüfung:
 
@@ -59,4 +97,28 @@ Die gleiche Prüfung läuft automatisch bei Pushes und Pull Requests über GitHu
 
 ## Nächste Ausbaustufe
 
-Das Projekt soll später um Pal-Daten, Partnerfähigkeiten mit Stufenwerten, Favoriten und einen Build-Planer erweitert werden. Die geplante Architektur steht in [`docs/ROADMAP.md`](docs/ROADMAP.md).
+Die PWA soll später um Pal-Daten, Partnerfähigkeiten mit Stufenwerten, Favoriten und einen Build-Planer erweitert werden. Die geplante Architektur steht in [`docs/ROADMAP.md`](docs/ROADMAP.md).
+
+# Kanonische Zuchtreferenz
+
+Die verbindlichen Zuchtdaten liegen unter `data/palworld-breeding/`. Für konkrete Berechnungen gilt diese Lesereihenfolge:
+
+1. `breeding_rules.json`
+2. `special_combinations.json`
+3. `pal_values.json`
+4. `manifest.json`
+
+Der aktuelle Schema-4-Stand umfasst 299 Pals, 136 direkte Spezialkombinationen und 184 zulässige normale Formel-Kinder. Patchstatus, Quellen-Pins, Hashes, Zähler und bekannte Restunsicherheiten stehen im Manifest. Generierte API-Dateien sind abgeleitete Artefakte und niemals die kanonische Datenquelle.
+
+# Breeding API und MCP
+
+Das Modul `services/breeding-api/` baut aus der kanonischen Referenz einen deterministischen Cloudflare Worker.
+
+Es gibt zwei getrennte Zugriffswege auf dieselbe read-only Resolverlogik:
+
+- **Öffentliches MCP:** anonymer Streamable-HTTP-Endpunkt `/mcp` mit genau fünf Tools: `breeding_status`, `breeding_pair`, `breeding_parents`, `breeding_children` und `breeding_route`.
+- **Geschützte REST-API:** `/<BREEDING_READ_TOKEN>/v1/...`; der Token ist ausschließlich ein Cloudflare-Worker-Secret und wird nicht committed oder in dieser Dokumentation ausgeschrieben.
+
+Der MCP-Zugang führt intern die bestehenden REST-Route-Handler aus. Es existiert keine zweite oder abweichende Zuchtimplementierung. Alle MCP-Tools sind read-only, nicht destruktiv und greifen nur auf die gebauten Referenzartefakte zu.
+
+Details zu Endpunkten, Toolgrenzen, Tests, CI, Deployment und Rollback stehen in [`services/breeding-api/README.md`](services/breeding-api/README.md).
