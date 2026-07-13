@@ -23,7 +23,7 @@ Diese Datei soll einen neuen Chat oder eine neue Codex-Sitzung ohne Zugriff auf 
 | Letzter funktionaler Main-Commit | `888e3f82eb3c04f82768ff1476926c4401c025c4` – öffentlicher read-only MCP-Endpunkt, gemergt über PR #4 |
 | Breeding-API-Grundlage | PR #3 gemergt |
 | Öffentlicher MCP-Ausbau | PR #4 gemergt |
-| Dokumentationsaktualisierung | Branch `docs/durable-project-memory-20260713`; zugehörigen PR aus GitHub auflösen |
+| Dokumentationsaktualisierung | PR #5, Branch `docs/durable-project-memory-20260713` |
 | Worker | `palworld-breeding-api` |
 | Deployment | live; Zugriff am 13.07.2026 aus ChatGPT erfolgreich geprüft |
 | Verbundener ChatGPT-App-/Pluginname | `Breeder` |
