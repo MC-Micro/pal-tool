@@ -9,7 +9,7 @@ Diese Datei informiert einen neuen Chat ohne Kenntnis der Codex-Sitzung. Sie ent
 | Repository | `MC-Micro/pal-tool` |
 | Branch | `feature/palworld-breeding-api` |
 | Pull Request | https://github.com/MC-Micro/pal-tool/pull/3 |
-| Head-Commit | Dynamisch vom PR-Head auflösen; letzter vollständiger Implementierungscommit: `PENDING_LOCAL_COMMIT` |
+| Head-Commit | Dynamisch vom PR-Head auflösen; letzter vollständiger Implementierungscommit: `c3e229742955cb9d622337b8d72719c52fd6ee29` |
 | Deployment | `NOT_DEPLOYED` |
 | Worker | `palworld-breeding-api` |
 | Worker-Basisadresse | `NOT_AVAILABLE` |
@@ -25,7 +25,7 @@ Diese Datei informiert einen neuen Chat ohne Kenntnis der Codex-Sitzung. Sie ent
 | ungeordnete Paare | 44.850 |
 | Policy-geänderte Paarergebnisse | 13.785 |
 | Release-Gate | PASS, null ungelöste Konflikte |
-| CI | Vor Push dieses Fortsetzungsstands noch nicht verifizierbar; aktuellen PR-Head prüfen |
+| CI | Implementierungscommit vollständig grün: https://github.com/MC-Micro/pal-tool/actions/runs/29214410102; den aktuellen Handoff-only PR-Head zusätzlich prüfen |
 
 Ein Commit kann seinen eigenen SHA nicht stabil im eigenen Dateiinhalt speichern. Deshalb ist der tatsächliche finale SHA im PR-Head beziehungsweise externen Abschlussblock maßgeblich; der Implementierungscommit wird vor der letzten Handoff-Aktualisierung eingetragen.
 
