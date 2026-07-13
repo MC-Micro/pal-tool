@@ -1,0 +1,101 @@
+name: Deploy Breeding API
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: breeding-api-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Validate and deploy Cloudflare Worker
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: production
+    defaults:
+      run:
+        working-directory: services/breeding-api
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 11.7.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: services/breeding-api/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate existing PWA
+        working-directory: ${{ github.workspace }}
+        run: node scripts/validate-data.mjs
+
+      - name: Verify Cloudflare deployment credentials
+        shell: bash
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [[ -z "$CLOUDFLARE_API_TOKEN" || -z "$CLOUDFLARE_ACCOUNT_ID" ]]; then
+            echo "Required Cloudflare deployment credentials are not configured." >&2
+            exit 1
+          fi
+
+      - name: Generate API indexes
+        run: pnpm run generate
+
+      - name: Verify committed generated artifacts
+        shell: bash
+        run: |
+          changes="$(git status --porcelain --untracked-files=all -- generated/)"
+          if [[ -n "$changes" ]]; then
+            printf '%s\n' "$changes" >&2
+            echo "Generated artifacts are not fully committed." >&2
+            exit 1
+          fi
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Run tests
+        run: pnpm run test
+
+      - name: Build Worker bundle (dry run)
+        run: pnpm run build:worker
+
+      - name: Validate generated reference
+        run: pnpm run validate
+
+      - name: Verify deterministic generation
+        run: pnpm run check:deterministic
+
+      - name: Scan generated artifacts for secrets
+        run: pnpm run scan:secrets
+
+      - name: Validate release readiness
+        run: pnpm run validate:release
+
+      - name: Deploy Cloudflare Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm exec wrangler deploy --keep-vars

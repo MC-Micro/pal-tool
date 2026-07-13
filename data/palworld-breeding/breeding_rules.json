@@ -1,6 +1,6 @@
 {
-  "schema_version": 3,
-  "generated_at_utc": "2026-07-12T19:58:29.888439+00:00",
+  "schema_version": 4,
+  "generated_at_utc": "2026-07-12T23:24:25.6053747Z",
   "game_reference": "Palworld 1.0 direct game-table snapshot",
   "decision_order": [
     {
@@ -16,7 +16,7 @@
     {
       "order": 3,
       "rule": "eligible_candidate_pool",
-      "description_de": "Für die normale Formel werden ausschließlich Pals mit CombiRank > 0 und IgnoreCombi = false aus der direkten Monsterparametertabelle als mögliche Kinder verwendet."
+      "description_de": "Für die normale Formel werden ausschließlich Pals mit CombiRank > 0 und IgnoreCombi = false verwendet, deren internal_name nicht als child_internal in special_combinations.json vorkommt. Die Spezialkindmenge wird dynamisch aus der Sondertabelle abgeleitet. Der Ausschluss gilt nur für die normale Formel; die Same-Species-Regel bleibt vorrangig gültig."
     },
     {
       "order": 4,
@@ -44,6 +44,12 @@
     },
     {
       "order": 8,
+      "rule": "equidistant_equal_rarity_higher_combi_rank",
+      "description_de": "Sind zwei unterschiedliche zulässige Kind-Ränge gleich weit vom Zielwert entfernt und bleiben sie nach Seltenheitsabstand sowie niedrigerer Kind-Seltenheit vollständig gleichberechtigt, gewinnt der höhere CombiRank.",
+      "confidence": "verified_by_direct_in_game_test_2026_07_13"
+    },
+    {
+      "order": 9,
       "rule": "same_rank_duplicate_resolution",
       "description_de": "Teilen mehrere zulässige Pals exakt denselben CombiRank, gewinnt die höhere CombiDuplicatePriority. Bei weiterem Gleichstand folgt die Nicht-Variante vor der Variante und danach die niedrigere InternalIndex-Reihenfolge.",
       "confidence": "current_field_semantics_and_current_calculator_order"
@@ -88,12 +94,28 @@
       ],
       "winner": "Silvegis",
       "reason": "rarity 8 is closer to parent rarity average 14"
+    },
+    {
+      "parents": [
+        "Lunaris MALE (rarity 6)",
+        "Grintale FEMALE (rarity 6)"
+      ],
+      "target_rank": 2065,
+      "candidates": [
+        "Mossanda (2060 / rarity 6)",
+        "Penking (2070 / rarity 6)"
+      ],
+      "winner": "Penking",
+      "reason": "direct Palworld 1.0 in-game egg test on 2026-07-13 confirms the higher CombiRank after rank-distance and rarity tie-breaks remain equal"
     }
   ],
   "important_notes": [
     "CombiDuplicatePriority ist nicht der allgemeine Gleichstandsentscheid zwischen zwei unterschiedlich hohen, gleich weit entfernten CombiRanks.",
     "Die Paldeck-Nummer ist kein Zucht-Tie-Breaker.",
     "Gleichartige Eltern werden durch die globale Identitätsregel behandelt und deshalb nicht als hunderte künstliche Sonderkombinationen geführt.",
-    "Die direkte Monsterparametertabelle ist für CombiRank, Rarity, IgnoreCombi und CombiDuplicatePriority maßgeblich; abgeleitete Rechnerdaten dienen nur zur Kontrolle."
+    "Die direkte Monsterparametertabelle ist für CombiRank, Rarity, IgnoreCombi und CombiDuplicatePriority maßgeblich; abgeleitete Rechnerdaten dienen nur zur Kontrolle.",
+    "Jede Pal-Art, die als child_internal in special_combinations.json vorkommt, ist aus dem normalen Formel-Kandidatenpool ausgeschlossen; ihre Same-Species-Zucht und ihre direkten Spezialkombinationen bleiben gültig.",
+    "Lunaris MALE + Grintale FEMALE ergab am 2026-07-13 in Palworld 1.0 direkt Penking und bestätigt den globalen Higher-CombiRank-Tie-Break; die Elternreihenfolge ist für normale Formelpaarungen irrelevant.",
+    "Sibelyx + Lamball ergab am 2026-07-13 in Palworld 1.0 direkt Surfent und bestätigt den Ausschluss von Spezialkindern aus dem normalen Formel-Kandidatenpool."
   ]
 }

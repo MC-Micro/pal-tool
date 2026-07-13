@@ -1,496 +1,64 @@
-name: Build Palworld Breeding Reference
+name: Validate Palworld Breeding Reference
 
 on:
   push:
     paths:
+      - "data/palworld-breeding/**"
+      - "services/breeding-api/**"
       - ".github/workflows/build-palworld-breeding-reference.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  build-reference:
+  validate-reference:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: services/breeding-api
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
-      - name: Build canonical breeding reference
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 11.7.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: services/breeding-api/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate derived reference
+        run: pnpm run generate
+
+      - name: Validate canonical and generated reference
+        run: pnpm run validate:release
+
+      - name: Verify deterministic generation
+        run: pnpm run check:deterministic
+
+      - name: Refuse stale or uncommitted generated artifacts
         shell: bash
         run: |
-          python - <<'PY'
-          import csv
-          import hashlib
-          import json
-          import pathlib
-          import urllib.parse
-          import urllib.request
-          from datetime import datetime, timezone
-
-          GAME_TABLE_COMMIT = "455de2110d8414f703699204f33cb6ac052a3f98"
-          PST_COMMIT = "f12633787c82d1a652dab3235cabb785ec22134e"
-          PALCALC_COMMIT = "dcff62b00014869d742762919410d95568023b8b"
-
-          def raw_url(repo: str, commit: str, path: str) -> str:
-              return f"https://raw.githubusercontent.com/{repo}/{commit}/{urllib.parse.quote(path, safe='/')}"
-
-          URLS = {
-              "monster_main": raw_url("PalModding/UtililityFiles", GAME_TABLE_COMMIT, "Json's/DataTable/Character/DT_PalMonsterParameter.json"),
-              "monster_common": raw_url("PalModding/UtililityFiles", GAME_TABLE_COMMIT, "Json's/DataTable/Character/DT_PalMonsterParameter_Common.json"),
-              "unique": raw_url("PalModding/UtililityFiles", GAME_TABLE_COMMIT, "Json's/DataTable/Character/DT_PalCombiUnique.json"),
-              "pst": raw_url("deafdudecomputers/PalworldSaveTools", PST_COMMIT, "resources/game_data/breedingdata.json"),
-              "palcalc_db": raw_url("tylercamp/palcalc", PALCALC_COMMIT, "PalCalc.Model/db.json"),
-              "palcalc_breeding": raw_url("tylercamp/palcalc", PALCALC_COMMIT, "PalCalc.Model/breeding.json"),
-          }
-
-          def fetch(url: str) -> bytes:
-              request = urllib.request.Request(url, headers={"User-Agent": "pal-tool-breeding-reference"})
-              with urllib.request.urlopen(request, timeout=240) as response:
-                  return response.read()
-
-          raw_bytes = {name: fetch(url) for name, url in URLS.items()}
-          data = {name: json.loads(blob) for name, blob in raw_bytes.items()}
-
-          def rows_from_export(export):
-              rows = {}
-              tables = export if isinstance(export, list) else [export]
-              for table in tables:
-                  if isinstance(table, dict):
-                      rows.update(table.get("Rows", {}) or {})
-              return rows
-
-          monster_rows = rows_from_export(data["monster_common"])
-          monster_rows.update(rows_from_export(data["monster_main"]))
-          unique_rows = rows_from_export(data["unique"])
-
-          pst = data["pst"]
-          palcalc = data["palcalc_db"]
-          palcalc_breeding = data["palcalc_breeding"]
-          pst_by_internal = {name.lower(): info for name, info in pst.get("pal_info", {}).items()}
-
-          out = pathlib.Path("data/palworld-breeding")
-          out.mkdir(parents=True, exist_ok=True)
-
-          pc_pals = sorted(palcalc["Pals"], key=lambda p: p.get("InternalIndex", 10**9))
-
-          def strip_enum(value, prefix):
-              if isinstance(value, str) and value.startswith(prefix):
-                  return value[len(prefix):]
-              return value
-
-          def find_raw_row(pc):
-              exact = monster_rows.get(pc["InternalName"])
-              if isinstance(exact, dict):
-                  return exact, pc["InternalName"], "exact_internal_name"
-
-              pal_id = pc.get("Id") or {}
-              target_tribe = pc["InternalName"].lower()
-              candidates = []
-              for row_name, row in monster_rows.items():
-                  if not isinstance(row, dict) or not row.get("IsPal", False):
-                      continue
-                  tribe = strip_enum(row.get("Tribe", ""), "EPalTribeID::")
-                  if str(tribe).lower() != target_tribe:
-                      continue
-                  score = (
-                      1 if row.get("IsBoss") or row.get("IsRaidBoss") or row.get("IsTowerBoss") else 0,
-                      0 if row.get("ZukanIndex") == pal_id.get("PalDexNo") else 1,
-                      0 if row_name.lower() == target_tribe else 1,
-                      row_name,
-                  )
-                  candidates.append((score, row_name, row))
-              if not candidates:
-                  return None, None, "missing"
-              _, row_name, row = min(candidates, key=lambda item: item[0])
-              return row, row_name, "tribe_fallback"
-
-          values = []
-          missing_raw_rows = []
-          fallback_raw_rows = []
-          palcalc_rank_mismatches = []
-          palcalc_rarity_mismatches = []
-          palcalc_priority_mismatches = []
-          pst_rank_mismatches = []
-          pst_rarity_mismatches = []
-          pst_ignore_mismatches = []
-          missing_in_pst = []
-
-          for pc in pc_pals:
-              row, row_name, match_kind = find_raw_row(pc)
-              if row is None:
-                  missing_raw_rows.append(pc["InternalName"])
-                  row = {}
-              elif match_kind != "exact_internal_name":
-                  fallback_raw_rows.append({"internal_name": pc["InternalName"], "row_name": row_name})
-
-              pc_rank = int(pc.get("BreedingPower", 0) or 0)
-              pc_rarity = int(pc.get("Rarity", 0) or 0)
-              pc_priority = int(pc.get("BreedingPowerPriority", 0) or 0)
-              rank = int(row.get("CombiRank", pc_rank) or pc_rank)
-              rarity = int(row.get("Rarity", pc_rarity) or pc_rarity)
-              priority = int(row.get("CombiDuplicatePriority", pc_priority) or pc_priority)
-              ignore_combi = bool(row.get("IgnoreCombi", False))
-
-              if rank != pc_rank:
-                  palcalc_rank_mismatches.append({"internal_name": pc["InternalName"], "game_table": rank, "palcalc": pc_rank})
-              if rarity != pc_rarity:
-                  palcalc_rarity_mismatches.append({"internal_name": pc["InternalName"], "game_table": rarity, "palcalc": pc_rarity})
-              if priority != pc_priority:
-                  palcalc_priority_mismatches.append({"internal_name": pc["InternalName"], "game_table": priority, "palcalc": pc_priority})
-
-              pst_info = pst_by_internal.get(pc["InternalName"].lower())
-              if pst_info is None:
-                  missing_in_pst.append(pc["InternalName"])
-              else:
-                  if pst_info.get("combi_rank") is not None and int(pst_info["combi_rank"]) != rank:
-                      pst_rank_mismatches.append({"internal_name": pc["InternalName"], "game_table": rank, "palworld_save_tools": int(pst_info["combi_rank"])})
-                  if pst_info.get("rarity") is not None and int(pst_info["rarity"]) != rarity:
-                      pst_rarity_mismatches.append({"internal_name": pc["InternalName"], "game_table": rarity, "palworld_save_tools": int(pst_info["rarity"])})
-                  if pst_info.get("ignore_combi") is not None and bool(pst_info["ignore_combi"]) != ignore_combi:
-                      pst_ignore_mismatches.append({"internal_name": pc["InternalName"], "game_table": ignore_combi, "palworld_save_tools": bool(pst_info["ignore_combi"])})
-
-              localized = pc.get("LocalizedNames") or {}
-              pal_id = pc.get("Id") or {}
-              values.append({
-                  "internal_name": pc["InternalName"],
-                  "name_de": localized.get("de") or pc.get("Name") or pc["InternalName"],
-                  "name_en": localized.get("en") or pc.get("Name") or pc["InternalName"],
-                  "paldex_no": pal_id.get("PalDexNo"),
-                  "is_variant": bool(pal_id.get("IsVariant", False)),
-                  "combi_rank": rank,
-                  "rarity": rarity,
-                  "ignore_combi": ignore_combi,
-                  "combi_duplicate_priority": priority,
-                  "internal_index": int(pc.get("InternalIndex", 10**9)),
-                  "game_table_row": row_name,
-              })
-
-          values_by_internal = {value["internal_name"].lower(): value for value in values}
-
-          def normalize_gender(value):
-              gender = strip_enum(value, "EPalGenderType::")
-              return "ANY" if gender in (None, "", "None", "WILDCARD") else str(gender).upper()
-
-          def combo_key(pa, ga, pb, gb, child):
-              left = (pa.lower(), normalize_gender(ga))
-              right = (pb.lower(), normalize_gender(gb))
-              if right < left:
-                  left, right = right, left
-              return left + right + (child.lower(),)
-
-          # Direct v1.0 game table: authoritative hard overrides. Same-species rows are represented
-          # by the universal identity rule instead of bloating the special-combination list.
-          specials = []
-          filtered_game_specials = []
-          game_special_keys = set()
-          for row_id, row in unique_rows.items():
-              if not isinstance(row, dict):
-                  continue
-              pa = strip_enum(row.get("ParentTribeA", ""), "EPalTribeID::")
-              pb = strip_enum(row.get("ParentTribeB", ""), "EPalTribeID::")
-              child = row.get("ChildCharacterID", "")
-              ga = normalize_gender(row.get("ParentGenderA"))
-              gb = normalize_gender(row.get("ParentGenderB"))
-              if not pa or not pb or not child:
-                  continue
-              if str(pa).lower() == str(pb).lower():
-                  continue
-              a = values_by_internal.get(str(pa).lower())
-              b = values_by_internal.get(str(pb).lower())
-              c = values_by_internal.get(str(child).lower())
-              if not (a and b and c):
-                  filtered_game_specials.append({
-                      "row_id": row_id,
-                      "parent_a": pa,
-                      "parent_b": pb,
-                      "child": child,
-                      "parent_a_gender": ga,
-                      "parent_b_gender": gb,
-                  })
-                  continue
-              key = combo_key(a["internal_name"], ga, b["internal_name"], gb, c["internal_name"])
-              if key in game_special_keys:
-                  continue
-              game_special_keys.add(key)
-              specials.append({
-                  "row_id": row_id,
-                  "parent_a_internal": a["internal_name"],
-                  "parent_a_de": a["name_de"],
-                  "parent_a_en": a["name_en"],
-                  "parent_b_internal": b["internal_name"],
-                  "parent_b_de": b["name_de"],
-                  "parent_b_en": b["name_en"],
-                  "child_internal": c["internal_name"],
-                  "child_de": c["name_de"],
-                  "child_en": c["name_en"],
-                  "parent_a_gender": ga,
-                  "parent_b_gender": gb,
-              })
-          specials.sort(key=lambda combo: (
-              combo["child_de"].casefold(),
-              combo["parent_a_de"].casefold(),
-              combo["parent_b_de"].casefold(),
-              combo["parent_a_gender"],
-              combo["parent_b_gender"],
-          ))
-
-          # Independent direct-special cross-check from PalworldSaveTools.
-          pst_special_keys = set()
-          filtered_pst_specials = []
-          for combo in pst.get("unique_combos", []):
-              pa, pb, child = combo.get("parent_a", ""), combo.get("parent_b", ""), combo.get("child", "")
-              if not pa or not pb or not child or pa.lower() == pb.lower():
-                  continue
-              if pa.lower() not in values_by_internal or pb.lower() not in values_by_internal or child.lower() not in values_by_internal:
-                  filtered_pst_specials.append(combo)
-                  continue
-              pst_special_keys.add(combo_key(pa, "ANY", pb, "ANY", child))
-
-          # Full resolved pair table validates that every direct game-table combo resolves to its child.
-          resolved_keys = set()
-          for entry in palcalc_breeding.get("Breeding", []):
-              pa = entry.get("Parent1InternalName", "")
-              pb = entry.get("Parent2InternalName", "")
-              child = entry.get("ChildInternalName", "")
-              if pa and pb and child:
-                  resolved_keys.add(combo_key(
-                      pa, entry.get("Parent1Gender"),
-                      pb, entry.get("Parent2Gender"),
-                      child,
-                  ))
-          special_resolution_mismatches = [
-              {
-                  "parent_a": combo["parent_a_internal"],
-                  "parent_a_gender": combo["parent_a_gender"],
-                  "parent_b": combo["parent_b_internal"],
-                  "parent_b_gender": combo["parent_b_gender"],
-                  "child": combo["child_internal"],
-              }
-              for combo in specials
-              if combo_key(
-                  combo["parent_a_internal"], combo["parent_a_gender"],
-                  combo["parent_b_internal"], combo["parent_b_gender"],
-                  combo["child_internal"],
-              ) not in resolved_keys
-          ]
-
-          # Exact duplicate ranks form a separate tie layer from two different equidistant ranks.
-          by_rank = {}
-          for value in values:
-              if value["combi_rank"] > 0 and not value["ignore_combi"]:
-                  by_rank.setdefault(value["combi_rank"], []).append(value)
-          duplicate_rank_groups = []
-          for rank, group in sorted(by_rank.items()):
-              if len(group) > 1:
-                  duplicate_rank_groups.append({
-                      "combi_rank": rank,
-                      "winner_order": "higher CombiDuplicatePriority, then non-variant, then lower InternalIndex",
-                      "pals": sorted(group, key=lambda value: (
-                          -value["combi_duplicate_priority"],
-                          1 if value["is_variant"] else 0,
-                          value["internal_index"],
-                      )),
-                  })
-
-          verified_tie_tests = [
-              {
-                  "parents": ["Braloha (rarity 8)", "Dynamoff (rarity 6)"],
-                  "target_rank": 1215,
-                  "candidates": ["Quivern (1210 / rarity 7)", "Azurobe Cryst (1220 / rarity 8)"],
-                  "winner": "Quivern",
-                  "reason": "rarity 7 exactly matches parent rarity average 7",
-              },
-              {
-                  "parents": ["Shaolong (rarity 9)", "Helzephyr Lux (rarity 8)"],
-                  "target_rank": 500,
-                  "candidates": ["Astegon (490 / rarity 9)", "Dualith (510 / rarity 8)"],
-                  "winner": "Dualith",
-                  "reason": "both rarity distances are 0.5; lower child rarity wins",
-              },
-              {
-                  "parents": ["Braloha (rarity 8)", "Jetragon (rarity 20)"],
-                  "target_rank": 550,
-                  "candidates": ["Univolt Cryst (540 / rarity 6)", "Silvegis (560 / rarity 8)"],
-                  "winner": "Silvegis",
-                  "reason": "rarity 8 is closer to parent rarity average 14",
-              },
-          ]
-
-          ranks_not_divisible_by_10 = [value["internal_name"] for value in values if value["combi_rank"] % 10 != 0]
-          generated_at = datetime.now(timezone.utc).isoformat()
-
-          rules = {
-              "schema_version": 3,
-              "generated_at_utc": generated_at,
-              "game_reference": "Palworld 1.0 direct game-table snapshot",
-              "decision_order": [
-                  {
-                      "order": 1,
-                      "rule": "same_species_identity_override",
-                      "description_de": "Sind beide Eltern dieselbe Pal-Art, ist das Kind wieder genau diese Pal-Art. Diese globale Regel wird vor der Sondertabelle und vor der Werteformel angewendet.",
-                  },
-                  {
-                      "order": 2,
-                      "rule": "unique_combo_override",
-                      "description_de": "Steht das Elternpaar einschließlich möglicher Geschlechtsvorgabe in special_combinations.json, gilt das dort hinterlegte Kind unabhängig von der normalen Werteformel.",
-                  },
-                  {
-                      "order": 3,
-                      "rule": "eligible_candidate_pool",
-                      "description_de": "Für die normale Formel werden ausschließlich Pals mit CombiRank > 0 und IgnoreCombi = false aus der direkten Monsterparametertabelle als mögliche Kinder verwendet.",
-                  },
-                  {
-                      "order": 4,
-                      "rule": "rounded_average",
-                      "formula": "target = floor((parent_a.combi_rank + parent_b.combi_rank + 1) / 2)",
-                      "description_de": "Die aktuelle Implementierung rundet einen halben Ganzzahlwert formal auf. Da sämtliche aktuellen CombiRanks durch 10 teilbar sind, entspricht das derzeit immer exakt dem normalen arithmetischen Mittel.",
-                  },
-                  {
-                      "order": 5,
-                      "rule": "nearest_combi_rank",
-                      "description_de": "Gewählt wird der zulässige Kind-Rang mit dem kleinsten absoluten Abstand zum Zielwert.",
-                  },
-                  {
-                      "order": 6,
-                      "rule": "equidistant_different_ranks_parent_rarity_average",
-                      "formula": "parent_rarity_average = (parent_a.rarity + parent_b.rarity) / 2",
-                      "description_de": "Sind ein niedrigerer und ein höherer Kind-Rang gleich weit entfernt, gewinnt der Kandidat, dessen Seltenheit näher am Seltenheitsdurchschnitt der Eltern liegt.",
-                      "confidence": "verified_by_current_in_game_tests",
-                  },
-                  {
-                      "order": 7,
-                      "rule": "equidistant_rarity_lower_rarity",
-                      "description_de": "Ist auch der Seltenheitsabstand gleich, gewinnt die niedrigere Kind-Seltenheit.",
-                      "confidence": "verified_by_current_in_game_tests",
-                  },
-                  {
-                      "order": 8,
-                      "rule": "same_rank_duplicate_resolution",
-                      "description_de": "Teilen mehrere zulässige Pals exakt denselben CombiRank, gewinnt die höhere CombiDuplicatePriority. Bei weiterem Gleichstand folgt die Nicht-Variante vor der Variante und danach die niedrigere InternalIndex-Reihenfolge.",
-                      "confidence": "current_field_semantics_and_current_calculator_order",
-                  },
-              ],
-              "verified_equidistant_rank_tests": verified_tie_tests,
-              "important_notes": [
-                  "CombiDuplicatePriority ist nicht der allgemeine Gleichstandsentscheid zwischen zwei unterschiedlich hohen, gleich weit entfernten CombiRanks.",
-                  "Die Paldeck-Nummer ist kein Zucht-Tie-Breaker.",
-                  "Gleichartige Eltern werden durch die globale Identitätsregel behandelt und deshalb nicht als hunderte künstliche Sonderkombinationen geführt.",
-                  "Die direkte Monsterparametertabelle ist für CombiRank, Rarity, IgnoreCombi und CombiDuplicatePriority maßgeblich; abgeleitete Rechnerdaten dienen nur zur Kontrolle.",
-              ],
-          }
-
-          manifest = {
-              "schema_version": 3,
-              "generated_at_utc": generated_at,
-              "sources": [
-                  {
-                      "repository": "PalModding/UtililityFiles",
-                      "commit": GAME_TABLE_COMMIT,
-                      "paths": [
-                          "Json's/DataTable/Character/DT_PalMonsterParameter.json",
-                          "Json's/DataTable/Character/DT_PalMonsterParameter_Common.json",
-                          "Json's/DataTable/Character/DT_PalCombiUnique.json",
-                      ],
-                      "sha256": {name: hashlib.sha256(raw_bytes[name]).hexdigest() for name in ("monster_main", "monster_common", "unique")},
-                      "used_for": ["authoritative_combi_rank", "authoritative_rarity", "authoritative_ignore_combi", "authoritative_combi_duplicate_priority", "authoritative_unique_combinations_and_gender_constraints"],
-                  },
-                  {
-                      "repository": "tylercamp/palcalc",
-                      "commit": PALCALC_COMMIT,
-                      "paths": ["PalCalc.Model/db.json", "PalCalc.Model/breeding.json"],
-                      "database_version": palcalc.get("Version"),
-                      "sha256": {
-                          "db": hashlib.sha256(raw_bytes["palcalc_db"]).hexdigest(),
-                          "breeding": hashlib.sha256(raw_bytes["palcalc_breeding"]).hexdigest(),
-                      },
-                      "used_for": ["released_pal_filter", "German_and_English_names", "paldex", "internal_index", "independent_value_cross_check", "resolved_special_combo_cross_check"],
-                  },
-                  {
-                      "repository": "deafdudecomputers/PalworldSaveTools",
-                      "commit": PST_COMMIT,
-                      "path": "resources/game_data/breedingdata.json",
-                      "sha256": hashlib.sha256(raw_bytes["pst"]).hexdigest(),
-                      "used_for": ["second_independent_value_cross_check", "second_unique_combo_cross_check", "in_game_tested_equidistant_rank_tie_break"],
-                  },
-              ],
-              "counts": {
-                  "pal_values": len(values),
-                  "cross_species_special_combinations": len(specials),
-                  "duplicate_rank_groups": len(duplicate_rank_groups),
-                  "missing_game_table_rows": len(missing_raw_rows),
-                  "fallback_game_table_rows": len(fallback_raw_rows),
-                  "palcalc_rank_mismatches": len(palcalc_rank_mismatches),
-                  "palcalc_rarity_mismatches": len(palcalc_rarity_mismatches),
-                  "palcalc_priority_mismatches": len(palcalc_priority_mismatches),
-                  "pst_rank_mismatches": len(pst_rank_mismatches),
-                  "pst_rarity_mismatches": len(pst_rarity_mismatches),
-                  "pst_ignore_mismatches": len(pst_ignore_mismatches),
-                  "missing_in_pst": len(missing_in_pst),
-                  "filtered_game_special_combinations": len(filtered_game_specials),
-                  "filtered_pst_special_combinations": len(filtered_pst_specials),
-                  "direct_specials_missing_from_pst": len(game_special_keys - pst_special_keys),
-                  "pst_specials_missing_from_direct_table": len(pst_special_keys - game_special_keys),
-                  "special_resolution_mismatches": len(special_resolution_mismatches),
-                  "ranks_not_divisible_by_10": len(ranks_not_divisible_by_10),
-              },
-              "validation": {
-                  "missing_game_table_rows": missing_raw_rows,
-                  "fallback_game_table_rows": fallback_raw_rows,
-                  "palcalc_rank_mismatches": palcalc_rank_mismatches,
-                  "palcalc_rarity_mismatches": palcalc_rarity_mismatches,
-                  "palcalc_priority_mismatches": palcalc_priority_mismatches,
-                  "pst_rank_mismatches": pst_rank_mismatches,
-                  "pst_rarity_mismatches": pst_rarity_mismatches,
-                  "pst_ignore_mismatches": pst_ignore_mismatches,
-                  "missing_in_pst": missing_in_pst,
-                  "filtered_game_special_combinations": filtered_game_specials,
-                  "filtered_pst_special_combinations": filtered_pst_specials,
-                  "direct_specials_missing_from_pst": [list(key) for key in sorted(game_special_keys - pst_special_keys)],
-                  "pst_specials_missing_from_direct_table": [list(key) for key in sorted(pst_special_keys - game_special_keys)],
-                  "special_resolution_mismatches": special_resolution_mismatches,
-                  "ranks_not_divisible_by_10": ranks_not_divisible_by_10,
-              },
-          }
-
-          def write_json(name, value):
-              (out / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-          write_json("pal_values.json", values)
-          write_json("special_combinations.json", specials)
-          write_json("duplicate_rank_groups.json", duplicate_rank_groups)
-          write_json("breeding_rules.json", rules)
-          write_json("manifest.json", manifest)
-
-          with (out / "pal_values.csv").open("w", newline="", encoding="utf-8") as file:
-              writer = csv.DictWriter(file, fieldnames=list(values[0].keys()))
-              writer.writeheader()
-              writer.writerows(values)
-
-          with (out / "special_combinations.csv").open("w", newline="", encoding="utf-8") as file:
-              fields = list(specials[0].keys()) if specials else [
-                  "row_id", "parent_a_internal", "parent_a_de", "parent_a_en",
-                  "parent_b_internal", "parent_b_de", "parent_b_en",
-                  "child_internal", "child_de", "child_en",
-                  "parent_a_gender", "parent_b_gender",
-              ]
-              writer = csv.DictWriter(file, fieldnames=fields)
-              writer.writeheader()
-              writer.writerows(specials)
-
-          readme = f"""# Kanonische Palworld-Zuchtreferenz\n\nStand: direkter, quellenübergreifend geprüfter Palworld-1.0-Spieldatensnapshot.\n\n## Verbindlicher Einsatz\n\nVor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_combinations.json` und anschließend `pal_values.json` verwendet. Eine Rechnung allein anhand von Paldeck-Nummern oder alten Internettabellen ist nicht zulässig.\n\n## Dateien\n\n- `pal_values.json` / `.csv`: alle aktuellen Pals mit CombiRank, Seltenheit, IgnoreCombi, CombiDuplicatePriority und interner Reihenfolge.\n- `special_combinations.json` / `.csv`: sämtliche artverschiedenen Einträge aus der direkten v1.0-Sonderzuchttabelle, einschließlich möglicher Geschlechtsvorgaben.\n- `duplicate_rank_groups.json`: alle normalen Kind-Kandidaten, die exakt denselben CombiRank teilen.\n- `breeding_rules.json`: vollständige verbindliche Entscheidungsreihenfolge, globale Gleichart-Regel und verifizierte Tie-Break-Fälle.\n- `manifest.json`: Quellen, Commit-Pins, Hashes, Zähler und sämtliche Validierungsabweichungen.\n\n## Verbindliche Kurzregel\n\n1. Gleiche Pal-Art + gleiche Pal-Art ergibt dieselbe Pal-Art.\n2. Danach direkte Spezialkombination einschließlich Geschlechtsvorgabe prüfen.\n3. Andernfalls nur normale Kind-Kandidaten (`IgnoreCombi = false`) verwenden.\n4. Zielwert `floor((A + B + 1) / 2)` bilden; bei den aktuellen durch zehn teilbaren Werten ist das exakt der Mittelwert.\n5. Kleinsten CombiRank-Abstand wählen.\n6. Bei gleich weit entfernten unterschiedlichen Rängen: Kind-Seltenheit möglichst nah am Seltenheitsdurchschnitt der Eltern; danach niedrigere Seltenheit.\n7. Bei exakt identischem Kind-Rang: höhere `CombiDuplicatePriority`, dann Nicht-Variante, dann niedrigere interne Reihenfolge.\n\n## Validierung\n\n- Pals: **{len(values)}**\n- Artverschiedene direkte Spezialkombinationen: **{len(specials)}**\n- Gruppen mit identischem Rang: **{len(duplicate_rank_groups)}**\n- Fehlende direkte Spieldatenzeilen: **{len(missing_raw_rows)}**\n- Abweichende Zuchtwerte gegenüber PalCalc: **{len(palcalc_rank_mismatches)}**\n- Abweichende Seltenheiten gegenüber PalCalc: **{len(palcalc_rarity_mismatches)}**\n- Nicht aufgelöste direkte Spezialkombinationen: **{len(special_resolution_mismatches)}**\n- Nicht durch zehn teilbare aktuelle CombiRanks: **{len(ranks_not_divisible_by_10)}**\n\nDetails und jede Restunsicherheit stehen ausdrücklich in `breeding_rules.json` und `manifest.json`.\n"""
-          (out / "README.md").write_text(readme, encoding="utf-8")
-          PY
-
-      - name: Commit generated reference
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/palworld-breeding
-          if git diff --cached --quiet; then
-            echo "No generated changes."
-          else
-            git commit -m "data: rebuild breeding reference from direct v1.0 tables"
-            git push
+          changes="$(git status --porcelain --untracked-files=all -- generated/)"
+          if [[ -n "$changes" ]]; then
+            printf '%s\n' "$changes" >&2
+            echo "Generated artifacts are not fully committed." >&2
+            exit 1
           fi
+
+      - name: Scan artifacts for secrets
+        run: pnpm run scan:secrets
+
+# Canonical data is intentionally never regenerated or committed automatically.
+# A newer Palworld patch requires reviewed source updates and an explicit patch check.

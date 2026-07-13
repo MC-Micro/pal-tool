@@ -18,16 +18,19 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 
 1. Gleiche Pal-Art + gleiche Pal-Art ergibt dieselbe Pal-Art.
 2. Danach direkte Spezialkombination einschließlich Geschlechtsvorgabe prüfen.
-3. Andernfalls nur normale Kind-Kandidaten (`IgnoreCombi = false`) verwenden.
+3. Andernfalls nur normale Kind-Kandidaten verwenden: `CombiRank > 0`, `IgnoreCombi = false` und die Art kommt nicht als `child_internal` in `special_combinations.json` vor. Der Spezialkind-Ausschluss gilt nicht für die vorrangige Same-Species-Regel.
 4. Zielwert `floor((A + B + 1) / 2)` bilden; bei den aktuellen durch zehn teilbaren Werten ist das exakt der Mittelwert.
 5. Kleinsten CombiRank-Abstand wählen.
-6. Bei gleich weit entfernten unterschiedlichen Rängen: Kind-Seltenheit möglichst nah am Seltenheitsdurchschnitt der Eltern; danach niedrigere Seltenheit.
-7. Bei exakt identischem Kind-Rang: höhere `CombiDuplicatePriority`, dann Nicht-Variante, dann niedrigere interne Reihenfolge.
+6. Bei gleich weit entfernten unterschiedlichen Rängen: Kind-Seltenheit möglichst nah am Seltenheitsdurchschnitt der Eltern; danach niedrigere Seltenheit; bleibt der Cross-Rank-Gleichstand vollständig bestehen, gewinnt der höhere `CombiRank`.
+7. Bei exakt identischem Kind-Rang separat: höhere `CombiDuplicatePriority`, dann Nicht-Variante, dann niedrigere interne Reihenfolge.
 
 ## Validierung
 
 - Pals: **299**
 - Artverschiedene direkte Spezialkombinationen: **136**
+- Eindeutige Spezialkind-Arten: **90**
+- Zulässige normale Formel-Kinder: **184**
+- Durch die Spezialkindregel geänderte ungeordnete Paarergebnisse: **13.785 von 44.850**
 - Gruppen mit identischem Rang: **1**
 - Fehlende direkte Spieldatenzeilen: **0**
 - Abweichende Zuchtwerte gegenüber PalCalc: **0**
@@ -36,3 +39,9 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 - Nicht durch zehn teilbare aktuelle CombiRanks: **0**
 
 Details und jede Restunsicherheit stehen ausdrücklich in `breeding_rules.json` und `manifest.json`.
+
+## Direkte Ingame-Bestätigung und Auswirkungen
+
+Am 13.07.2026 bestätigten ausgebrütete Eier in Palworld 1.0 `Lunaris MALE + Grintale FEMALE → Penking` sowie `Sibelyx + Lamball → Surfent`. Der erste Test bestätigt den globalen Higher-CombiRank-Tie-Break, der zweite den globalen Spezialkind-Ausschluss. Palworld.gg wurde nur manuell und nicht-kanonisch gegengeprüft; weder Build noch Worker hängen davon ab.
+
+Die globale Regel korrigiert auch ältere Beispielrouten: `Anubis + Eikthyrdeer Terra` ergibt jetzt `Bakemi`, nicht `Kingpaca Cryst`. `Kingpaca Cryst + Jolthog → Elphidran` sowie die direkte Spezialkombination `Elphidran + Surfent → Elphidran Aqua` bleiben gültig. Der vollständige maschinenlesbare Vergleich wird mit der API-Referenz als `generated/special-child-impact.json` erzeugt.

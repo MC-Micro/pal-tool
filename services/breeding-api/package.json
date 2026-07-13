@@ -1,0 +1,36 @@
+{
+  "name": "@pal-tool/breeding-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "tsx scripts/build-reference.ts",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "build:worker": "wrangler deploy --dry-run --outdir dist",
+    "validate": "tsx scripts/validate-reference.ts",
+    "validate:release": "tsx scripts/validate-reference.ts --release",
+    "check:deterministic": "tsx scripts/check-deterministic.ts",
+    "scan:secrets": "tsx scripts/scan-secrets.ts",
+    "ci": "pnpm generate && pnpm lint && pnpm typecheck && pnpm test && pnpm build:worker && pnpm validate && pnpm check:deterministic && pnpm scan:secrets",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260711.1",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.1.1",
+    "@vitest/coverage-v8": "4.1.10",
+    "eslint": "10.7.0",
+    "tsx": "4.23.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.63.0",
+    "vitest": "4.1.10",
+    "wrangler": "4.110.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.7.0"
+}
