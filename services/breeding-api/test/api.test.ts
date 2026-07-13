@@ -75,6 +75,171 @@ async function body(response: Response): Promise<ApiResponseBody> {
   return value as ApiResponseBody;
 }
 
+interface McpResponseBody {
+  result?: {
+    serverInfo?: { name?: string };
+    tools?: Array<{
+      name: string;
+      securitySchemes?: Array<{ type: string }>;
+      outputSchema?: Record<string, unknown>;
+      annotations?: {
+        readOnlyHint?: boolean;
+        destructiveHint?: boolean;
+        idempotentHint?: boolean;
+        openWorldHint?: boolean;
+      };
+    }>;
+    isError?: boolean;
+    content?: Array<{ type?: string; text?: string }>;
+    structuredContent?: Record<string, unknown>;
+  };
+}
+
+async function mcp(method: string, params: Record<string, unknown>, id = 1): Promise<Response> {
+  return handleRequest(
+    new Request("https://breeding.example/mcp", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/event-stream",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ jsonrpc: "2.0", id, method, params }),
+    }),
+    {},
+  );
+}
+
+async function mcpBody(response: Response): Promise<McpResponseBody> {
+  return response.json();
+}
+
+describe("public MCP endpoint", () => {
+  it("initializes without a read token", async () => {
+    const response = await mcp("initialize", {
+      protocolVersion: "2025-11-25",
+      capabilities: {},
+      clientInfo: { name: "vitest", version: "1.0.0" },
+    });
+    const json = await mcpBody(response);
+    expect(response.status).toBe(200);
+    expect(json.result?.serverInfo?.name).toBe("palworld-breeding-api");
+  });
+
+  it("lists exactly five anonymous read-only tools with output schemas", async () => {
+    const response = await mcp("tools/list", {});
+    const listedTools = (await mcpBody(response)).result?.tools ?? [];
+    expect(listedTools.map(({ name }) => name)).toEqual([
+      "breeding_status",
+      "breeding_pair",
+      "breeding_parents",
+      "breeding_children",
+      "breeding_route",
+    ]);
+    expect(
+      listedTools.every(
+        ({ securitySchemes, outputSchema, annotations }) =>
+          securitySchemes?.[0]?.type === "noauth" &&
+          outputSchema?.type === "object" &&
+          annotations?.readOnlyHint === true &&
+          annotations.destructiveHint === false &&
+          annotations.idempotentHint === true &&
+          annotations.openWorldHint === false,
+      ),
+    ).toBe(true);
+  });
+
+  it("returns breeding_status", async () => {
+    const response = await mcp("tools/call", {
+      name: "breeding_status",
+      arguments: {},
+    });
+    const structured = (await mcpBody(response)).result?.structuredContent;
+    expect(response.status).toBe(200);
+    expect(structured?.validation_status).toBe("valid");
+    expect(structured?.pal_count).toBe(299);
+  });
+
+  it("returns a valid breeding_parents result", async () => {
+    const response = await mcp("tools/call", {
+      name: "breeding_parents",
+      arguments: {
+        child: "Elphidran Aqua",
+        parent: "Elphidran",
+        special_only: true,
+        max_results: 10,
+      },
+    });
+    const structured = (await mcpBody(response)).result?.structuredContent;
+    expect(response.status).toBe(200);
+    expect(structured?.total).toBeGreaterThan(0);
+    expect(identityName(structured?.child)).toBe("Elphidran Aqua");
+  });
+
+  it("returns a valid breeding_children result", async () => {
+    const response = await mcp("tools/call", {
+      name: "breeding_children",
+      arguments: { parent: "Anubis", second_parent: "Eikthyrdeer Terra" },
+    });
+    const structured = (await mcpBody(response)).result?.structuredContent;
+    const results = Array.isArray(structured?.results) ? structured.results : [];
+    expect(response.status).toBe(200);
+    expect(identityName((results[0] as Record<string, unknown> | undefined)?.child)).toBe("Bakemi");
+  });
+
+  it("returns a valid species-only breeding_route", async () => {
+    const response = await mcp("tools/call", {
+      name: "breeding_route",
+      arguments: { carrier: "Anubis", target: "Elphidran", max_generations: 4 },
+    });
+    const structured = (await mcpBody(response)).result?.structuredContent;
+    expect(response.status).toBe(200);
+    expect(structured?.found).toBe(true);
+    expect(structured?.species_route_only).toBe(true);
+    expect(structured?.generation_count).toBeGreaterThan(0);
+  });
+
+  it("returns an understandable tool error for an invalid Pal name", async () => {
+    const response = await mcp("tools/call", {
+      name: "breeding_pair",
+      arguments: { parent_a: "Definitely Not A Pal", parent_b: "Lamball" },
+    });
+    const result = (await mcpBody(response)).result;
+    const error = result?.structuredContent?.error as Record<string, unknown> | undefined;
+    expect(response.status).toBe(200);
+    expect(result?.isError).toBe(true);
+    expect(error?.code).toBe("PAL_NOT_FOUND");
+    expect(result?.content?.[0]?.text).toContain("PAL_NOT_FOUND");
+  });
+
+  it.each([
+    ["Sibelyx", "Lamball", "Surfent"],
+    ["Elphidran", "Surfent", "Elphidran Aqua"],
+  ])("resolves %s + %s through breeding_pair", async (parentA, parentB, child) => {
+    const response = await mcp("tools/call", {
+      name: "breeding_pair",
+      arguments: { parent_a: parentA, parent_b: parentB },
+    });
+    const structured = (await mcpBody(response)).result?.structuredContent;
+    expect(response.status).toBe(200);
+    expect(identityName(structured?.result_child)).toBe(child);
+  });
+
+  it("does not make REST public", async () => {
+    const response = await handleRequest(
+      new Request("https://breeding.example/v1/status"),
+      {},
+    );
+    expect(response.status).toBe(404);
+    expect(await response.text()).toBe('{"ok":false}');
+  });
+});
+
+function identityName(value: unknown): string | undefined {
+  if (typeof value !== "object" || value === null) return undefined;
+  const identity = value as Record<string, unknown>;
+  return typeof identity.name_en === "string" ? identity.name_en : undefined;
+}
+
 describe("path authentication", () => {
   it("accepts only the exact first path token", async () => {
     await expect(authorizePath(`/${token}/v1/status`, token)).resolves.toMatchObject({
