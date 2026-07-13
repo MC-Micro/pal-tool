@@ -1,23 +1,38 @@
-# Übergabe an ChatGPT: Palworld Breeding API
+# Übergabe an ChatGPT und Codex: Pal Tool / Breeding
 
-Diese Datei informiert einen neuen Chat ohne Kenntnis der Codex-Sitzung. Sie enthält keine Secretwerte.
+Diese Datei soll einen neuen Chat oder eine neue Codex-Sitzung ohne Zugriff auf frühere Unterhaltungen arbeitsfähig machen. Sie enthält ausschließlich dauerhafte technische Projektinformationen und niemals Secretwerte, persönliche Nachrichten oder Chatprotokolle.
 
-## Projektstatus
+## Vor dem Arbeiten lesen
 
-| Feld | Wert |
+1. Repositoryweite Regeln: `AGENTS.md`
+2. Gesamtüberblick: `README.md`
+3. Kanonische Zuchtreferenz: `data/palworld-breeding/README.md`
+4. Kanonische Dateien in dieser Reihenfolge:
+   - `data/palworld-breeding/breeding_rules.json`
+   - `data/palworld-breeding/special_combinations.json`
+   - `data/palworld-breeding/pal_values.json`
+   - `data/palworld-breeding/manifest.json`
+5. Worker-/API-/MCP-Details: `services/breeding-api/README.md`
+
+## Aktueller Projektstatus
+
+| Feld | Aktueller Stand |
 |---|---|
 | Repository | `MC-Micro/pal-tool` |
-| Branch | `feature/palworld-breeding-api` |
-| Pull Request | https://github.com/MC-Micro/pal-tool/pull/3 |
-| Head-Commit | Dynamisch vom PR-Head auflösen; letzter vollständiger Implementierungscommit: `c3e229742955cb9d622337b8d72719c52fd6ee29` |
-| Deployment | `NOT_DEPLOYED` |
+| Standardbranch | `main` |
+| Letzter funktionaler Main-Commit | `888e3f82eb3c04f82768ff1476926c4401c025c4` – öffentlicher read-only MCP-Endpunkt, gemergt über PR #4 |
+| Breeding-API-Grundlage | PR #3 gemergt |
+| Öffentlicher MCP-Ausbau | PR #4 gemergt |
+| Dokumentationsaktualisierung | PR #5, Branch `docs/durable-project-memory-20260713` |
 | Worker | `palworld-breeding-api` |
-| Worker-Basisadresse | `NOT_AVAILABLE` |
-| BREEDING_READ_TOKEN | `NOT_SET`; niemals hier eintragen |
+| Deployment | live; Zugriff am 13.07.2026 aus ChatGPT erfolgreich geprüft |
+| Verbundener ChatGPT-App-/Pluginname | `Breeder` |
+| Öffentlicher MCP | anonymer Streamable-HTTP-Endpunkt `/mcp` |
+| Geschützte REST-API | weiterhin kompatibel unter `/<BREEDING_READ_TOKEN>/v1/...` |
+| Worker-Basisadresse | absichtlich nicht in diesem öffentlichen Repository gespeichert |
+| `BREEDING_READ_TOKEN` | Cloudflare-Worker-Secret; niemals hier eintragen |
 | Kanonisches Schema | 4 |
 | API-/Artefaktschema | 2 |
-| source_data_hash | `77901fb00c984e360f563049f2e7f3dc64a6b2d764e77f3c32a737ef4bc82121` |
-| generated_artifact_hash | `882987ec7c8a1eae7855e9bb3d995b79cb0aa498da2042c00fa6faec326ad9b8` |
 | Pals | 299 |
 | normale Formel-Kinder | 184 |
 | Spezialkombinationen | 136 |
@@ -25,112 +40,113 @@ Diese Datei informiert einen neuen Chat ohne Kenntnis der Codex-Sitzung. Sie ent
 | ungeordnete Paare | 44.850 |
 | Policy-geänderte Paarergebnisse | 13.785 |
 | Release-Gate | PASS, null ungelöste Konflikte |
-| CI | Implementierungscommit vollständig grün: https://github.com/MC-Micro/pal-tool/actions/runs/29214410102; den aktuellen Handoff-only PR-Head zusätzlich prüfen |
+| Patchstand | Palworld 1.0, geprüft am 13.07.2026; exakte Buildnummer nicht verifiziert |
 
-Ein Commit kann seinen eigenen SHA nicht stabil im eigenen Dateiinhalt speichern. Deshalb ist der tatsächliche finale SHA im PR-Head beziehungsweise externen Abschlussblock maßgeblich; der Implementierungscommit wird vor der letzten Handoff-Aktualisierung eingetragen.
+## Was das Repository enthält
 
-## Ziel und Architektur
+### 1. Palworld Passives PWA
 
-Das isolierte Modul `services/breeding-api/` erzeugt eine deterministische Read-only-API für Cloudflare Workers. Kanonische Lesereihenfolge:
+Die PWA liegt im Repository-Root und bleibt unabhängig vom Worker:
 
-1. `data/palworld-breeding/breeding_rules.json`
-2. `data/palworld-breeding/special_combinations.json`
-3. `data/palworld-breeding/pal_values.json`
-4. `data/palworld-breeding/manifest.json`
+- Vanilla HTML, CSS und JavaScript
+- installierbar und offlinefähig
+- 102 Passives
+- deutsche und englische Namen und Effekte
+- eigener Root-Validator unter `scripts/validate-data.mjs`
 
-Der Build erzeugt `generated/reference.json` und `generated/special-child-impact.json`, eine direkte Paarmatrix, beide reale Gegen-Geschlechtsorientierungen, Reverse-Elternindex und Carrier-Graph. Runtime-Aufrufe an GitHub oder Palworld.gg existieren nicht.
+Die PWA darf nicht nur zur Unterstützung der Breeding API auf ein Framework oder gemeinsame Runtime-Abhängigkeiten umgebaut werden.
 
-## Bestätigte Spielregeln
+### 2. Kanonische Zuchtreferenz
+
+`data/palworld-breeding/` ist die verbindliche Quelle für Artenberechnungen. Generierte Dateien unter `services/breeding-api/generated/` sind nur Buildartefakte.
+
+Bestätigte globale Reihenfolge:
+
+1. Same-Species-Identität zuerst.
+2. Direkte Spezialkombinationen samt Geschlechtsvorgaben danach.
+3. Erst dann normale Formel mit ausschließlich zulässigen normalen Kindern.
+4. Alle Arten aus `special_combinations.child_internal` sind aus dem normalen Kandidatenpool ausgeschlossen; Same-Species und direkte Specials bleiben gültig.
+5. Cross-Rank-Ties, Seltenheit, Duplicate-Priority, Variantenstatus und interne Reihenfolge exakt nach `breeding_rules.json` lösen.
+6. Paldeck-Nummern niemals als Rang oder Tie-Break verwenden.
 
 Direkte Palworld-1.0-Eiertests vom 13.07.2026:
 
 - `Lunaris MALE + Grintale FEMALE → Penking`
 - `Sibelyx + Lamball → Surfent`
 
-Damit bestätigt:
+### 3. Cloudflare Worker, REST und MCP
 
-- Same-Species-Identität zuerst.
-- direkte Spezialkombination vor Formel.
-- Geschlechtsvorgaben sind bindend.
-- jede Art aus `special_combinations.child_internal` ist aus dem normalen Formelpool ausgeschlossen.
-- Same-Species bleibt auch für solche Spezialkind-Arten gültig.
-- vollständig gleiche Cross-Rank-Ties wählen den höheren `CombiRank`.
-- Same-Rank-Duplikate verwenden separat Priority, Nicht-Variante und interne Reihenfolge.
-- Paldeck-Nummern werden nie verwendet.
+`services/breeding-api/` erzeugt eine deterministische read-only API aus den kanonischen Daten. Runtime-Aufrufe an GitHub oder Drittanbieterrechner existieren nicht.
 
-Palworld.gg war nur ein manueller, nicht-kanonischer Crosscheck und ist kein Release-Gate.
+Es gibt zwei Zugriffsmodi auf dieselbe Resolverlogik:
 
-## Patchstatus
+- öffentlicher, anonymer MCP-Endpunkt `/mcp`
+- tokenisierte REST-API `/<BREEDING_READ_TOKEN>/v1/...`
 
-- Status: `current`
-- geprüfte Version: `Palworld 1.0`
-- Prüftag: `2026-07-13`, Europe/Berlin, nur Datumspräzision
-- geprüfter Build: `NOT_VERIFIED`
-- Build verifiziert: `false`
-- zuchtrelevante Änderungen gefunden: `true`
-- erneute Prüfung nach neuerer Version: `true`
+Das MCP ruft intern die bestehenden REST-Route-Handler auf. Es enthält keine doppelte Zuchtlogik.
 
-`current` gilt ausschließlich für Version 1.0 und diesen Prüftag.
+## Öffentliche MCP-Tools
 
-## Auswirkungen und bekannte Routen
+Das MCP exponiert exakt fünf Tools:
 
-Der normale Pool schrumpft von 261 auf 184. Der vollständige Report listet 13.785 Änderungen in `services/breeding-api/generated/special-child-impact.json`.
+| Tool | Zweck |
+|---|---|
+| `breeding_status` | Validierungs-, Schema-, Zähler- und Patchstatus |
+| `breeding_pair` | Kind zweier Eltern einschließlich Specials und Geschlecht |
+| `breeding_parents` | Elternkombinationen für ein Ziel-Pal |
+| `breeding_children` | mögliche Kinder eines Trägers mit Filtern |
+| `breeding_route` | theoretische Artenroute |
 
-Wichtige Ergebnisse:
+Alle Tools sind read-only, nicht destruktiv und idempotent. `breeding_route` ist ausdrücklich nicht bestands-, passiv-, IV-, Trash-Passiv-, kosten-, zeit- oder vollständige geschlechtsoptimiert.
 
-- `Sibelyx + Lamball → Surfent`
-- `Lunaris + Grintale → Penking`
-- `Anubis + Eikthyrdeer Terra → Bakemi` — früher fälschlich Kingpaca Cryst
-- `Anubis + Panthalus → Knocklem` — früher fälschlich Dualith Noct
-- `Dualith Noct + Jolthog → Vanwyrm` — früher fälschlich Elphidran Aqua
-- `Kingpaca Cryst + Jolthog → Elphidran` bleibt gültig
-- `Elphidran + Surfent → Elphidran Aqua` bleibt gültige Spezialkombination
+Für normale ChatGPT-Zuchtabfragen soll die verbundene App **Breeder** zuerst verwendet werden. Beim ersten Zuchtauftrag eines neuen Chats `breeding_status` prüfen. GitHub und kanonische Dateien werden herangezogen, wenn der Status ungültig, veraltet, widersprüchlich oder unzureichend ist oder wenn Dateien geändert werden müssen.
 
-Die aktualisierte exhaustive Bestandsanalyse unter `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet für den festen Jolthog keine direkte zweistufige Route vom Anubis über einen beliebigen blanken Mate zu Elphidran, Surfent oder Elphidran Aqua. Das schließt längere Routen nicht aus.
+## Geschützte REST-API
 
-## Geschlechtsindex
-
-Für jedes verschiedene Artenpaar werden `A MALE + B FEMALE` und `A FEMALE + B MALE` kanonisch ausgewertet. Bei einem einseitigen Gender-Special fällt die Gegenrichtung korrekt auf die Formel zurück. `ANY` wird nur bei identischem vollständigem Ergebnis beider Richtungen verwendet. Synthetische Tests prüfen Special, Formel-Fallback, umgekehrte Elternreihenfolge, Reverse-Index und Carrier-Graph.
-
-## Hashbedeutung
-
-- `source_data_hash`: deterministischer Hash der vier kanonischen Eingabedateien.
-- `generated_artifact_hash`: deterministischer Hash der generierten Referenz ohne seine eigenen Hashfelder.
-
-ETag und `reference_id` verwenden den Artefakt-Hash. `/status`, `/reference` und `/validate` benennen beide Hasharten ausdrücklich; ein Feld `generated_hash`, das nur den Source-Hash wiederholt, existiert nicht.
-
-## API
-
-Basis nach Deployment:
+Die private Basis folgt diesem Muster, ohne reale Werte im Repository zu speichern:
 
 ```text
 https://palworld-breeding-api.<CLOUDFLARE_SUBDOMAIN>.workers.dev/<BREEDING_READ_TOKEN>/v1
 ```
 
+REST-Endpunkte:
+
 - `/status`
 - `/pal?name=<NAME>`
-- `/pair?parent_a=<NAME>&parent_b=<NAME>&gender_a=<MALE|FEMALE|ANY>&gender_b=<MALE|FEMALE|ANY>`
+- `/pair?...`
 - `/parents?child=<NAME>`
 - `/children?parent=<NAME>`
 - `/route?carrier=<NAME>&target=<NAME>`
 - `/reference`
 - `/validate`
 
-Falsches oder fehlendes Token: neutrale HTTP 404. Schreibmethoden: nach gültiger Authentifizierung HTTP 405.
+Falsches oder fehlendes Token liefert neutral HTTP 404. Schreibmethoden liefern nach erfolgreicher Authentifizierung HTTP 405. Der Token darf weder in GitHub-Dateien noch in Chatprotokolle, Screenshots, Committexte oder öffentliche URLs übernommen werden.
 
-`/route` kennzeichnet maschinenlesbar:
+## Wichtige Routenfolgen von Schema 4
 
-- `species_route_only: true`
-- `inventory_aware: false`
-- `passive_aware: false`
-- `iv_aware: false`
-- `unwanted_passives_aware: false`
-- `egg_cost_aware: false`
-- `cake_cost_aware: false`
-- `time_cost_aware: false`
-- `offspring_gender_feasibility_checked: false`
+- `Sibelyx + Lamball → Surfent`
+- `Lunaris + Grintale → Penking`
+- `Anubis + Eikthyrdeer Terra → Bakemi` – nicht Kingpaca Cryst
+- `Anubis + Panthalus → Knocklem` – nicht Dualith Noct
+- `Dualith Noct + Jolthog → Vanwyrm` – nicht Elphidran Aqua
+- `Kingpaca Cryst + Jolthog → Elphidran` bleibt gültig
+- `Elphidran + Surfent → Elphidran Aqua` bleibt eine gültige Spezialkombination
 
-## Tests und CI
+Die Analyse `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet für den festen Jolthog keine direkte zweistufige Route vom Anubis über einen beliebigen blanken Mate zu Elphidran, Surfent oder Elphidran Aqua. Längere Routen sind dadurch nicht ausgeschlossen.
+
+## Hashes und generierte Daten
+
+- `source_data_hash`: deterministischer Hash der vier kanonischen Eingabedateien.
+- `generated_artifact_hash`: deterministischer Hash der generierten Referenz ohne ihre eigenen Hashfelder.
+
+Aktueller Stand:
+
+- `source_data_hash`: `77901fb00c984e360f563049f2e7f3dc64a6b2d764e77f3c32a737ef4bc82121`
+- `generated_artifact_hash`: `882987ec7c8a1eae7855e9bb3d995b79cb0aa498da2042c00fa6faec326ad9b8`
+
+Der vollständige Ergebnisvergleich liegt unter `services/breeding-api/generated/special-child-impact.json`.
+
+## Validierung und CI
 
 Aus `services/breeding-api/`:
 
@@ -147,57 +163,46 @@ pnpm run check:deterministic
 pnpm run scan:secrets
 ```
 
-Zuletzt lokal verifiziert:
+Der PR-Head des öffentlichen MCP-Ausbaus bestand am 13.07.2026 sowohl `Breeding API CI` als auch `Validate Palworld data`. Die CI prüft zusätzlich die Root-PWA, committed Generated-Artefakte, Lint, TypeScript, Tests, Worker-Dry-Run, strukturelle und Release-Validierung, Determinismus und Secretscan.
 
-- `pnpm install --frozen-lockfile` PASS; 263 Lockfile-Einträge bestanden die Supply-Chain-Prüfung
-- Lint PASS
-- Typecheck PASS
-- 58/58 Tests in 3 Dateien PASS
-- Worker-Dry-Run PASS; 1.426,51 KiB / gzip 334,54 KiB; kein Deployment
-- strukturelle Validierung PASS
-- Release-Validierung PASS
-- deterministische Doppelgenerierung PASS; kombinierter Artefaktdatei-Hash `790d6891c7bdeef24c691c5650f2229f98e5119f79de13c5a03f0d68f144f81d`
-- Secret-Scan PASS
-- bestehende PWA-Validierung PASS; 102 Passives, Datenstruktur, PWA-Dateien und Cache-Verweise konsistent
-- null ungelöste Konflikte
+Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production` geschützt und verwendet `wrangler deploy --keep-vars`, damit das bestehende Worker-Secret erhalten bleibt.
 
-Alle direkten Dependencies sind exakt gemäß Lockfile gepinnt. Alle 14 Drittanbieter-Action-Verwendungen nutzen verifizierte v4-Full-SHAs. `Breeding API CI` prüft zusätzlich die bestehende Root-PWA und verweigert uncommittete Generated-Abweichungen. Das Deployment bleibt manuell, `main`-only und im Environment `production`.
+## Patchregel
 
-Die beiden alten schreibenden Referenz-/Analyse-Workflows wurden auf read-only Schema-4-Validierung umgestellt; sie können kanonische Daten und die Anubis-Analyse nicht mehr automatisch mit Altlogik überschreiben. Dadurch werden nun insgesamt 14 Action-Verwendungen per verifiziertem Full-SHA gepinnt.
+Der Status `current` gilt nur für Palworld 1.0 und den Prüftag 13.07.2026. Die genaue Buildnummer wurde nicht unabhängig verifiziert. Nach jeder neueren Palworld-Version muss geprüft werden, ob Zuchtwerte, Formel, Spezialkombinationen, Geschlechtsbedingungen, Varianten-, Gleichstands-, Passiv- oder IV-Regeln betroffen sind, bevor die Referenz weiter als aktuell bezeichnet wird.
 
-## Manuelle Restschritte
+## Dauerhafte Projektübergabe – verbindlich
 
-1. PR-CI vollständig grün prüfen und PR reviewen/mergen.
-2. GitHub Environment `production`, Main-Policy und Cloudflare-Credentials prüfen.
-3. `Deploy Breeding API` auf `main` manuell starten.
-4. Nach dem ersten Deployment `BREEDING_READ_TOKEN` als Worker-Secret setzen.
-5. `/status`, `/validate`, bekannte Paarungen und falschen Token prüfen.
-6. Worker-Basisadresse und Token nur in private ChatGPT-Projekthinweise übernehmen.
+ChatGPT- oder Codex-Chatverläufe sind kein verlässlicher Langzeitspeicher. Wichtige Informationen dürfen nicht nur im Chat verbleiben.
 
-In diesem Codex-Lauf: kein Merge, kein Deployment, keine Secretänderung.
+Bei jeder materiellen Weiterarbeit müssen im selben Pull Request oder Commit die passenden getrackten Dokumente aktualisiert werden. Dazu gehören insbesondere:
 
-## Live-Prüfschritte
+- Architektur- und Datenentscheidungen
+- neue oder geänderte Endpunkte und MCP-Tools
+- geänderte kanonische Regeln, Quellen, Hashes oder Patchannahmen
+- Deployment- und Secret-Handhabung ohne Secretwerte
+- ausgeführte Validierungen und deren Ergebnis
+- bekannte Fehler, Risiken, offene Fragen und konkrete nächste Schritte
+- Branch, Pull Request und maßgebliche Commits
 
-1. `/status`: Schema 4/2, beide Hashes, Zähler und Patchcheck prüfen.
-2. `/validate`: `ok=true`, null Konflikte und Impact 13.785/44.850 verlangen.
-3. `/pair`: Elphidran+Surfent, Sibelyx+Lamball, Lunaris+Grintale, Anubis+Eik Terra und Kingpaca Cryst+Jolthog prüfen.
-4. Katress/Wixen in beiden Geschlechtsrichtungen und beiden Elternreihenfolgen prüfen.
-5. falscher Token muss neutral 404 liefern.
-6. Patchstand mit einer gegebenenfalls neueren Palworld-Version vergleichen.
+Vor dem Ende einer größeren Sitzung ist diese Datei zu aktualisieren, wenn Breeding-, API-, MCP-, CI- oder Deploymentarbeit betroffen war. Ein neuer Chat muss anhand des Repositorys weiterarbeiten können, ohne eine frühere Unterhaltung lesen zu müssen.
 
-## Fertiger Text für private ChatGPT-Projekthinweise
+Nicht speichern:
 
-```text
-Für gewöhnliche Palworld-Zuchtabfragen zuerst die geschützte Read-only Breeding-API verwenden.
+- persönliche Nachrichten oder vollständige Gesprächsverläufe
+- beiläufiges Brainstorming ohne dauerhafte Projektentscheidung
+- Tokens, Passwörter, API-Schlüssel oder Secretwerte
+- authentifizierte URLs
+- Account- oder personenbezogene Daten
+- private ChatGPT-Projekthinweise
 
-Basisadresse:
-https://palworld-breeding-api.<CLOUDFLARE_SUBDOMAIN>.workers.dev/<BREEDING_READ_TOKEN>/v1
+Bei Widersprüchen gelten Code, kanonische Daten, Manifest, gemergte Pull Requests und erfolgreiche Validierung als technische Wahrheit. Die Dokumentation ist dann vor Abschluss der Arbeit zu korrigieren.
 
-Beim ersten Zuchtauftrag eines neuen Chats zuerst /status und /validate prüfen. Die API nur als primäre Artenquelle verwenden, wenn validation_status gültig ist, /validate keine Konflikte meldet und der dokumentierte Palworld-Stand nicht durch eine neuere zuchtrelevante Version überholt wurde.
+## Nächste Schritte bei einer neuen Sitzung
 
-/pal für Namen und Werte, /pair für direkte Paarungen, /parents und /children für Indizes, /route nur für theoretische Artenrouten und /reference nur bei umfassendem Datenbedarf verwenden.
-
-Die praktische Planung muss zusätzlich tatsächlichen Bestand, Geschlechter, Passiven, Trash-Passiven, IVs, Eier-, Kuchen- und Zeitaufwand berücksichtigen. /route ist ausdrücklich nicht bestands-, passiv-, geschlechts- oder kostenoptimiert.
-
-Den GitHub-Connector nur verwenden, wenn API/Status ungültig, veraltet, widersprüchlich oder nicht erreichbar ist oder Dateien aktualisiert werden sollen. Same-Species und Spezialkombinationen vor Formel prüfen, Spezialkinder aus dem normalen Formelpool ausschließen, Geschlechtsvorgaben beachten, keine Paldeck-Nummer verwenden und keine Werte erfinden.
-```
+1. Prüfen, ob seit dem 13.07.2026 eine neuere Palworld-Version erschienen ist.
+2. `breeding_status` über **Breeder** aufrufen und Validierungs-/Patchstatus prüfen.
+3. Aktuellen Main-Stand und offene Pull Requests lesen.
+4. Bei Änderungen zuerst die kanonischen Dateien und vorhandenen Tests verstehen.
+5. Nach materieller Arbeit README und diese Übergabe im selben Change aktualisieren.
+6. Keine Secrets oder privaten URLs in Repository, Antworten, Screenshots oder Commits ausgeben.
