@@ -21,7 +21,7 @@ Das öffentliche MCP bietet genau diese fünf read-only Tools:
 
 Alle fünf Tools sind als read-only, nicht destruktiv und idempotent beschrieben. Das öffentliche MCP enthält keine Token-, Verwaltungs-, Schreib- oder Deploymentfunktionen.
 
-Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene App **Breeder** erfolgreich geprüft. Das ist ein historischer Integrationstest und keine dauerhafte Aussage über die aktuelle Erreichbarkeit. Die konkrete Worker-Basisadresse und der geschützte REST-Zugangsschlüssel werden absichtlich nicht in diesem öffentlichen Repository gespeichert.
+Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene App **Breeder** erfolgreich geprüft. Das ist ein historischer Integrationstest und keine dauerhafte Aussage über die aktuelle Erreichbarkeit. Die konkrete Worker-Basisadresse und der geschützte REST-Token werden absichtlich nicht in diesem öffentlichen Repository gespeichert.
 
 `breeding_status` bleibt als leichtgewichtiger technischer Statusaufruf erhalten. Er liest nur die bereits deployten Referenzmetadaten und führt keine externe Patch-, Web- oder GitHub-Recherche aus. Er ist für Wartung, Diagnostik, Deploymentkontrolle und geplante Integritätsprüfungen gedacht, aber nicht als verpflichtende Routineabfrage vor jeder normalen Zuchtanfrage.
 
@@ -180,7 +180,7 @@ Eine Artenroute ist daher weder eine bestands-, passiv-, geschlechts- noch koste
 
 ## CI und Deployment
 
-`Breeding API CI` installiert mit `--frozen-lockfile`, validiert die bestehende Root-PWA, generiert beide Artefakte, prüft auf nicht committete Generated-Abweichungen, lintet, typprüft, testet, baut den Worker trocken, validiert strukturell und für Release, prüft Determinismus und scannt Secrets. Feature-Branches deployen nicht.
+`Breeding API CI` installiert mit `--frozen-lockfile`, validiert die bestehende Root-PWA, generiert beide Artefakte, prüft auf nicht committete Generated-Abweichungen, lintet, typprüft, testet, baut den Worker trocken, validiert strukturell und für Release, prüft Determinismus und scannt Secrets. Der Secretscan erfasst neben den unterstützten Textformaten ausdrücklich auch lokale Umgebungsdateien nach den Mustern `.env`, `.env.*`, `.dev.vars` und `.dev.vars.*`; passende Ignore-Regeln schützen diese Dateien zusätzlich vor versehentlichem Committen. Feature-Branches deployen nicht.
 
 Der PR-Head des öffentlichen MCP-Ausbaus wurde am 13.07.2026 erfolgreich durch `Breeding API CI` und die Root-PWA-Validierung geprüft.
 
@@ -198,4 +198,4 @@ Cloudflare-Rollback erfolgt über die letzte gute Worker-Version. Repository-Rol
 
 ## Dauerhafte technische Übergabe
 
-Nach materiellen Änderungen an Daten, API, MCP, CI oder Deployment muss `HANDOFF_CHATGPT.md` im selben Arbeitsgang aktualisiert werden. Der Handoff speichert technische Entscheidungen, aktuellen dokumentierten Stand, Validierung und offene technische Schritte, aber niemals persönliche Chatverläufe, Spielerbestände, private Backups, Zugangsschlüssel, geheime Werte oder authentifizierte URLs.
+Nach materiellen Änderungen an Daten, API, MCP, CI oder Deployment muss `HANDOFF_CHATGPT.md` im selben Arbeitsgang aktualisiert werden. Der Handoff speichert technische Entscheidungen, aktuellen dokumentierten Stand, Validierung und offene technische Schritte, aber niemals persönliche Chatverläufe, Spielerbestände, private Backups, Tokens, geheime Werte oder authentifizierte URLs.
