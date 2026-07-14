@@ -7,7 +7,7 @@ Read-only Cloudflare-Worker-API für schnelle, reproduzierbare Palworld-Zuchtber
 Der Worker stellt dieselbe kanonische Resolverlogik auf zwei Wegen bereit:
 
 1. **Öffentliches MCP:** anonymer Streamable-HTTP-Endpunkt `/mcp`.
-2. **Geschützte REST-API:** `/<BREEDING_READ_TOKEN>/v1/...`.
+2. **Geschützte REST-API:** bestehender kompatibler Read-only-Zugang; konkreter Pfad wird absichtlich nicht dokumentiert.
 
 Der MCP-Endpunkt delegiert intern an die vorhandenen REST-Route-Handler. Es gibt keine zweite Zuchtimplementierung und keine abweichende Datenquelle.
 
@@ -21,7 +21,9 @@ Das öffentliche MCP bietet genau diese fünf read-only Tools:
 
 Alle fünf Tools sind als read-only, nicht destruktiv und idempotent beschrieben. Das öffentliche MCP enthält keine Token-, Verwaltungs-, Schreib- oder Deploymentfunktionen.
 
-Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene App **Breeder** erfolgreich geprüft. Die konkrete Worker-Basisadresse und der geschützte REST-Token werden absichtlich nicht in diesem öffentlichen Repository gespeichert.
+Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene App **Breeder** erfolgreich geprüft. Das ist ein historischer Integrationstest und keine dauerhafte Aussage über die aktuelle Erreichbarkeit. Die konkrete Worker-Basisadresse und der geschützte REST-Zugangsschlüssel werden absichtlich nicht in diesem öffentlichen Repository gespeichert.
+
+`breeding_status` bleibt als leichtgewichtiger technischer Statusaufruf erhalten. Er liest nur die bereits deployten Referenzmetadaten und führt keine externe Patch-, Web- oder GitHub-Recherche aus. Er ist für Wartung, Diagnostik, Deploymentkontrolle und geplante Integritätsprüfungen gedacht, aber nicht als verpflichtende Routineabfrage vor jeder normalen Zuchtanfrage.
 
 ## Fachlicher Stand
 
@@ -53,7 +55,7 @@ Verbindliche Lesereihenfolge:
 3. `../../data/palworld-breeding/pal_values.json`
 4. `../../data/palworld-breeding/manifest.json`
 
-Aktueller Stand:
+Aktueller dokumentierter Stand:
 
 - kanonisches Schema: 4
 - API-/Artefaktschema: 2
@@ -119,26 +121,22 @@ Alle direkten Dependencies sind exakt auf die im Lockfile aufgelösten Versionen
 
 ## Geschützte REST-API
 
-Geschützte Basis:
+Der geschützte REST-Zugang bleibt für bestehende technische Integrationen kompatibel. Basisadresse, konkreter geschützter Pfad und geheime Werte werden absichtlich nicht in diesem öffentlichen Repository ausgeschrieben.
 
-```text
-https://palworld-breeding-api.<CLOUDFLARE_SUBDOMAIN>.workers.dev/<BREEDING_READ_TOKEN>/v1
-```
-
-`BREEDING_READ_TOKEN` ist ein Cloudflare-Worker-Secret. Es wird niemals committed, ausgegeben oder an GitHub Actions übergeben. Fehlender oder falscher Token liefert eine neutrale HTTP-404-Antwort. Unterstützt werden `GET`, `HEAD` und notwendige `OPTIONS`; schreibende Methoden liefern nach erfolgreicher Authentifizierung HTTP 405.
+Fehlende oder ungültige Authentifizierung liefert eine neutrale HTTP-404-Antwort. Unterstützt werden `GET`, `HEAD` und notwendige `OPTIONS`; schreibende Methoden sind nicht vorgesehen.
 
 Antworten verwenden JSON, ETag, Cache-Control, `nosniff`, `noindex` und CORS für die nicht vertraulichen Read-only-Daten.
 
-REST-Endpunkte:
+Unterstützte Read-only-Funktionen:
 
-- `GET /status`: kompakter Schema-, Hash-, Zähler-, Patch- und Validierungsstatus
-- `GET /pal?name=<NAME>`: deutsche, englische und interne Namensauflösung
-- `GET /pair?...`: direkte Paarung samt Regel, Kandidaten und Tie-Break
-- `GET /parents?child=<NAME>`: alle Elternorientierungen eines Ziel-Pals
-- `GET /children?parent=<NAME>`: zweite Eltern und Kinder eines Trägers
-- `GET /route?carrier=<NAME>&target=<NAME>`: theoretisch kürzeste Artenrouten
-- `GET /reference`: vollständige maschinenlesbare Referenz
-- `GET /validate`: Validierung, beide Hasharten, Patchcheck und Impact-Zusammenfassung
+- kompakter Schema-, Hash-, Zähler-, Patch- und Validierungsstatus
+- deutsche, englische und interne Namensauflösung
+- direkte Paarung samt Regel, Kandidaten und Tie-Break
+- Elternorientierungen eines Ziel-Pals
+- zweite Eltern und Kinder eines Trägers
+- theoretisch kürzeste Artenrouten
+- vollständige maschinenlesbare Referenz
+- Validierung, beide Hasharten, Patchcheck und Impact-Zusammenfassung
 
 ## Öffentliches MCP
 
@@ -154,7 +152,7 @@ Zuordnung der Tools zu den bestehenden Route-Handlern:
 | `breeding_children` | `/v1/children` |
 | `breeding_route` | `/v1/route` |
 
-`/pal`, `/reference` und `/validate` sind bewusst nicht als öffentliche MCP-Tools exponiert. Status- und Validierungsinformationen, die für den normalen Pluginbetrieb nötig sind, werden über `breeding_status` geliefert.
+`/pal`, `/reference` und `/validate` sind bewusst nicht als öffentliche MCP-Tools exponiert. Status- und Validierungsinformationen, die für Wartung und Diagnose nötig sind, werden über `breeding_status` geliefert.
 
 ## Grenzen von Routen
 
@@ -190,12 +188,14 @@ Die früher schreibenden Workflows `Build Palworld Breeding Reference` und `Anal
 
 `Deploy Breeding API` ist manuell, nur auf `main`, verwendet das GitHub-Environment `production`, wiederholt die gesamte Freigabekette und deployt erst danach mit `pnpm exec wrangler deploy --keep-vars`. Dadurch bleibt das vorhandene Worker-Secret erhalten.
 
-## Grenzen und Rollback
+## Grenzen, private Projektdaten und Rollback
 
 Die API verwaltet keinen Nutzerbestand und modelliert keine Passive-Chancen, IVs, Mutationen, Eier-, Kuchen- oder Zeitkosten. Ein theoretisch kürzester Artenweg kann praktisch schlechter sein als eine längere saubere Linie.
 
+Persönliche Pal-Bestände, individuelle Ziel-Pals, laufende private Zuchtprojekte, ChatGPT-Projektanweisungen und Backup-Pakete gehören bewusst nicht in den öffentlichen Breeder oder dieses öffentliche Repository. Sie dürfen nur auf ausdrücklichen Wunsch in einer getrennten privaten Quelle oder einem privaten Repository gespeichert werden.
+
 Cloudflare-Rollback erfolgt über die letzte gute Worker-Version. Repository-Rollback erfolgt mit einem normalen `git revert`, danach vollständiger CI- und Release-Prüfung; kein Hard Reset und keine isolierte Rücksetzung kanonischer Daten ohne Manifest-/Patchabgleich.
 
-## Dauerhafte Übergabe
+## Dauerhafte technische Übergabe
 
-Nach materiellen Änderungen an Daten, API, MCP, CI oder Deployment muss `HANDOFF_CHATGPT.md` im selben Arbeitsgang aktualisiert werden. Der Handoff speichert technische Entscheidungen, aktuellen Stand, Validierung und offene Schritte, aber niemals persönliche Chatverläufe, Tokens, Secretwerte oder authentifizierte URLs.
+Nach materiellen Änderungen an Daten, API, MCP, CI oder Deployment muss `HANDOFF_CHATGPT.md` im selben Arbeitsgang aktualisiert werden. Der Handoff speichert technische Entscheidungen, aktuellen dokumentierten Stand, Validierung und offene technische Schritte, aber niemals persönliche Chatverläufe, Spielerbestände, private Backups, Zugangsschlüssel, geheime Werte oder authentifizierte URLs.
