@@ -1,6 +1,6 @@
 # Übergabe an ChatGPT und Codex: Pal Tool / Breeding
 
-Diese Datei soll einen neuen Chat oder eine neue Codex-Sitzung ohne Zugriff auf frühere Unterhaltungen arbeitsfähig machen. Sie enthält ausschließlich dauerhafte technische Projektinformationen und niemals Secretwerte, persönliche Nachrichten oder Chatprotokolle.
+Diese Datei soll eine neue technische Chat- oder Codex-Sitzung ohne Zugriff auf frühere Unterhaltungen arbeitsfähig machen. Sie enthält ausschließlich dauerhafte technische Projektinformationen und niemals geheime Werte, persönliche Nachrichten, Spielerbestände, private Backups oder Chatprotokolle.
 
 ## Vor dem Arbeiten lesen
 
@@ -14,23 +14,21 @@ Diese Datei soll einen neuen Chat oder eine neue Codex-Sitzung ohne Zugriff auf 
    - `data/palworld-breeding/manifest.json`
 5. Worker-/API-/MCP-Details: `services/breeding-api/README.md`
 
-## Aktueller Projektstatus
+## Dokumentierter technischer Baseline-Stand
 
-| Feld | Aktueller Stand |
+| Feld | Dokumentierter Stand |
 |---|---|
 | Repository | `MC-Micro/pal-tool` |
 | Standardbranch | `main` |
-| Letzter funktionaler Main-Commit | `888e3f82eb3c04f82768ff1476926c4401c025c4` – öffentlicher read-only MCP-Endpunkt, gemergt über PR #4 |
-| Breeding-API-Grundlage | PR #3 gemergt |
-| Öffentlicher MCP-Ausbau | PR #4 gemergt |
-| Dauerhafte Dokumentations- und Übergaberegeln | PR #5 gemergt |
+| Gemergte Grundlage | PR #3 Breeding API, PR #4 öffentlicher read-only MCP, PR #5 technische Dokumentations- und Übergaberegeln |
+| Baseline-Commit dieses Dokumentationsstands | `6bb3b0222560e201b0bc192442d5fa9eac00ed83` |
+| Hinweis zu Branch und Commit | Vor technischer Weiterarbeit den aktuellen `main`-Commit, den aktiven Branch und offene Pull Requests dynamisch über GitHub bestimmen |
 | Worker | `palworld-breeding-api` |
-| Deployment | live; Zugriff am 13.07.2026 aus ChatGPT erfolgreich geprüft |
+| Zuletzt dokumentierter erfolgreicher ChatGPT-Zugriff | 13.07.2026 über die verbundene App `Breeder`; historischer Integrationstest, keine dauerhafte Erreichbarkeitsgarantie |
 | Verbundener ChatGPT-App-/Pluginname | `Breeder` |
 | Öffentlicher MCP | anonymer Streamable-HTTP-Endpunkt `/mcp` |
-| Geschützte REST-API | weiterhin kompatibel unter `/<BREEDING_READ_TOKEN>/v1/...` |
+| Geschützte REST-API | weiterhin kompatibel; konkreter Pfad und Basisadresse werden absichtlich nicht dokumentiert |
 | Worker-Basisadresse | absichtlich nicht in diesem öffentlichen Repository gespeichert |
-| `BREEDING_READ_TOKEN` | Cloudflare-Worker-Secret; niemals hier eintragen |
 | Kanonisches Schema | 4 |
 | API-/Artefaktschema | 2 |
 | Pals | 299 |
@@ -41,6 +39,8 @@ Diese Datei soll einen neuen Chat oder eine neue Codex-Sitzung ohne Zugriff auf 
 | Policy-geänderte Paarergebnisse | 13.785 |
 | Release-Gate | PASS, null ungelöste Konflikte |
 | Patchstand | Palworld 1.0, geprüft am 13.07.2026; exakte Buildnummer nicht verifiziert |
+
+Historische Statuswerte dokumentieren nur den zuletzt geprüften technischen Stand. Live-Erreichbarkeit, aktuelle Branches, aktuelle Commits, offene Pull Requests und ein möglicher neuerer Palworld-Patch müssen bei technischer Wartung oder Entwicklung erneut geprüft werden.
 
 ## Was das Repository enthält
 
@@ -81,7 +81,7 @@ Direkte Palworld-1.0-Eiertests vom 13.07.2026:
 Es gibt zwei Zugriffsmodi auf dieselbe Resolverlogik:
 
 - öffentlicher, anonymer MCP-Endpunkt `/mcp`
-- tokenisierte REST-API `/<BREEDING_READ_TOKEN>/v1/...`
+- geschützter REST-Zugang auf dieselbe Resolverlogik; konkreter Pfad wird absichtlich nicht dokumentiert
 
 Das MCP ruft intern die bestehenden REST-Route-Handler auf. Es enthält keine doppelte Zuchtlogik.
 
@@ -91,36 +91,44 @@ Das MCP exponiert exakt fünf Tools:
 
 | Tool | Zweck |
 |---|---|
-| `breeding_status` | Validierungs-, Schema-, Zähler- und Patchstatus |
+| `breeding_status` | Leichtgewichtiger Validierungs-, Schema-, Zähler- und Patchstatus für Wartung, Diagnostik, Deploymentkontrolle und geplante Integritätsprüfungen |
 | `breeding_pair` | Kind zweier Eltern einschließlich Specials und Geschlecht |
 | `breeding_parents` | Elternkombinationen für ein Ziel-Pal |
 | `breeding_children` | mögliche Kinder eines Trägers mit Filtern |
 | `breeding_route` | theoretische Artenroute |
 
-Alle Tools sind read-only, nicht destruktiv und idempotent. `breeding_route` ist ausdrücklich nicht bestands-, passiv-, IV-, Trash-Passiv-, kosten-, zeit- oder vollständige geschlechtsoptimiert.
+Alle Tools sind read-only, nicht destruktiv und idempotent. `breeding_route` ist ausdrücklich nicht bestands-, passiv-, IV-, Trash-Passiv-, kosten-, zeit- oder vollständig geschlechtsoptimiert.
 
-Für normale ChatGPT-Zuchtabfragen soll die verbundene App **Breeder** zuerst verwendet werden. Beim ersten Zuchtauftrag eines neuen Chats `breeding_status` prüfen. GitHub und kanonische Dateien werden herangezogen, wenn der Status ungültig, veraltet, widersprüchlich oder unzureichend ist oder wenn Dateien geändert werden müssen.
+Für normale ChatGPT-Zuchtanfragen soll die verbundene App **Breeder** direkt mit den fachlich benötigten Tools verwendet werden. `breeding_status` ist keine verpflichtende Routineabfrage vor dem ersten Zuchtauftrag jedes neuen Chats.
+
+`breeding_status` wird gezielt verwendet bei:
+
+- Wartungs- und Integritätsprüfungen
+- ausdrücklich genanntem neuem Patch
+- Warnungen einer Wartungsaufgabe
+- Toolfehlern oder Nichterreichbarkeit
+- überraschenden oder widersprüchlichen Ergebnissen
+- Deployment-, Repository- oder Datenänderungen
+- ausdrücklicher Aktualitätsprüfung
+
+GitHub und kanonische Dateien werden herangezogen, wenn der Status ungültig, veraltet, widersprüchlich oder unzureichend ist, wenn Breeder fehlschlägt oder wenn Dateien geändert werden müssen.
 
 ## Geschützte REST-API
 
-Die private Basis folgt diesem Muster, ohne reale Werte im Repository zu speichern:
+Der geschützte REST-Zugang bleibt für bestehende technische Integrationen kompatibel. Basisadresse, konkreter geschützter Pfad und geheime Werte werden absichtlich nicht in diesem öffentlichen Repository ausgeschrieben.
 
-```text
-https://palworld-breeding-api.<CLOUDFLARE_SUBDOMAIN>.workers.dev/<BREEDING_READ_TOKEN>/v1
-```
+Unterstützte Read-only-Funktionen:
 
-REST-Endpunkte:
+- Status
+- Pal-Namensauflösung
+- Paarberechnung
+- Elternsuche
+- Kindersuche
+- Artenroute
+- vollständige Referenz
+- Validierung
 
-- `/status`
-- `/pal?name=<NAME>`
-- `/pair?...`
-- `/parents?child=<NAME>`
-- `/children?parent=<NAME>`
-- `/route?carrier=<NAME>&target=<NAME>`
-- `/reference`
-- `/validate`
-
-Falsches oder fehlendes Token liefert neutral HTTP 404. Schreibmethoden liefern nach erfolgreicher Authentifizierung HTTP 405. Der Token darf weder in GitHub-Dateien noch in Chatprotokolle, Screenshots, Committexte oder öffentliche URLs übernommen werden.
+Fehlende oder ungültige Authentifizierung liefert neutral HTTP 404. Schreibmethoden sind nicht unterstützt. Geheime Werte dürfen weder in GitHub-Dateien noch in Chatprotokolle, Screenshots, Committexte oder öffentliche URLs übernommen werden.
 
 ## Wichtige Routenfolgen von Schema 4
 
@@ -139,7 +147,7 @@ Die Analyse `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet f
 - `source_data_hash`: deterministischer Hash der vier kanonischen Eingabedateien.
 - `generated_artifact_hash`: deterministischer Hash der generierten Referenz ohne ihre eigenen Hashfelder.
 
-Aktueller Stand:
+Aktueller dokumentierter Stand:
 
 - `source_data_hash`: `77901fb00c984e360f563049f2e7f3dc64a6b2d764e77f3c32a737ef4bc82121`
 - `generated_artifact_hash`: `882987ec7c8a1eae7855e9bb3d995b79cb0aa498da2042c00fa6faec326ad9b8`
@@ -171,38 +179,48 @@ Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production
 
 Der Status `current` gilt nur für Palworld 1.0 und den Prüftag 13.07.2026. Die genaue Buildnummer wurde nicht unabhängig verifiziert. Nach jeder neueren Palworld-Version muss geprüft werden, ob Zuchtwerte, Formel, Spezialkombinationen, Geschlechtsbedingungen, Varianten-, Gleichstands-, Passiv- oder IV-Regeln betroffen sind, bevor die Referenz weiter als aktuell bezeichnet wird.
 
-## Dauerhafte Projektübergabe – verbindlich
+## Dauerhafte technische Projektübergabe – verbindlich
 
-ChatGPT- oder Codex-Chatverläufe sind kein verlässlicher Langzeitspeicher. Wichtige Informationen dürfen nicht nur im Chat verbleiben.
+ChatGPT- oder Codex-Chatverläufe sind kein verlässlicher Langzeitspeicher für den technischen Repositoryzustand. Wichtige technische Informationen dürfen nicht nur im Chat verbleiben.
 
-Bei jeder materiellen Weiterarbeit müssen im selben Pull Request oder Commit die passenden getrackten Dokumente aktualisiert werden. Dazu gehören insbesondere:
+Bei jeder materiellen technischen Weiterarbeit müssen im selben Pull Request oder Commit die passenden getrackten Dokumente aktualisiert werden. Dazu gehören insbesondere:
 
 - Architektur- und Datenentscheidungen
 - neue oder geänderte Endpunkte und MCP-Tools
 - geänderte kanonische Regeln, Quellen, Hashes oder Patchannahmen
-- Deployment- und Secret-Handhabung ohne Secretwerte
+- Deployment- und Secret-Handhabung ohne geheime Werte
 - ausgeführte Validierungen und deren Ergebnis
-- bekannte Fehler, Risiken, offene Fragen und konkrete nächste Schritte
-- Branch, Pull Request und maßgebliche Commits
+- bekannte technische Fehler, Risiken, offene Fragen und konkrete nächste Schritte
+- Branch, Pull Request und maßgebliche Commits als historischer Arbeitsstand
 
-Vor dem Ende einer größeren Sitzung ist diese Datei zu aktualisieren, wenn Breeding-, API-, MCP-, CI- oder Deploymentarbeit betroffen war. Ein neuer Chat muss anhand des Repositorys weiterarbeiten können, ohne eine frühere Unterhaltung lesen zu müssen.
+Vor dem Ende einer größeren technischen Sitzung ist diese Datei zu aktualisieren, wenn Breeding-, API-, MCP-, CI- oder Deploymentarbeit betroffen war. Eine neue technische Sitzung muss anhand des Repositorys weiterarbeiten können, ohne eine frühere Unterhaltung lesen zu müssen.
 
 Nicht speichern:
 
 - persönliche Nachrichten oder vollständige Gesprächsverläufe
-- beiläufiges Brainstorming ohne dauerhafte Projektentscheidung
-- Tokens, Passwörter, API-Schlüssel oder Secretwerte
+- persönliche Pal-Bestände, individuelle Ziel-Pals oder laufende private Zuchtprojekte
+- private Backup-Pakete oder private ChatGPT-Projektanweisungen
+- beiläufiges Brainstorming ohne dauerhafte technische Projektentscheidung
+- Zugangsschlüssel, Passwörter, API-Schlüssel oder andere geheime Werte
 - authentifizierte URLs
 - Account- oder personenbezogene Daten
-- private ChatGPT-Projekthinweise
+
+Persönliche Projektkontinuität gehört nur auf ausdrücklichen Wunsch in eine getrennte private Quelle oder ein privates Repository. Das öffentliche Repository bleibt frei von individuellem Spielerzustand.
 
 Bei Widersprüchen gelten Code, kanonische Daten, Manifest, gemergte Pull Requests und erfolgreiche Validierung als technische Wahrheit. Die Dokumentation ist dann vor Abschluss der Arbeit zu korrigieren.
 
-## Nächste Schritte bei einer neuen Sitzung
+## Nächste Schritte bei einer normalen ChatGPT-Zuchtanfrage
 
-1. Prüfen, ob seit dem 13.07.2026 eine neuere Palworld-Version erschienen ist.
-2. `breeding_status` über **Breeder** aufrufen und Validierungs-/Patchstatus prüfen.
-3. Aktuellen Main-Stand und offene Pull Requests lesen.
+1. Konkretes Ziel, vorhandene Pals und relevante Prioritäten erfassen.
+2. Die fachlich benötigten Tools der verbundenen App **Breeder** direkt verwenden.
+3. Artenroute anschließend getrennt nach Bestand, Geschlechtern, Passiven, IVs und praktischer Beschaffbarkeit bewerten.
+4. `breeding_status`, GitHub- und Patchprüfungen nur bei den oben dokumentierten Auslösern verwenden.
+
+## Nächste Schritte bei einer technischen Wartungs- oder Entwicklungssitzung
+
+1. Aktuellen `main`-Commit, aktive Branches und offene Pull Requests über GitHub bestimmen.
+2. Prüfen, ob seit dem 13.07.2026 eine neuere Palworld-Version erschienen ist, wenn Patchaktualität für die technische Arbeit relevant ist.
+3. `breeding_status` über **Breeder** aufrufen, wenn Deploymentzustand, Validierung, Schema, Hashes oder Patchmetadaten geprüft werden sollen.
 4. Bei Änderungen zuerst die kanonischen Dateien und vorhandenen Tests verstehen.
 5. Nach materieller Arbeit README und diese Übergabe im selben Change aktualisieren.
 6. Keine Secrets oder privaten URLs in Repository, Antworten, Screenshots oder Commits ausgeben.
