@@ -180,7 +180,7 @@ Eine Artenroute ist daher weder eine bestands-, passiv-, geschlechts- noch koste
 
 ## CI und Deployment
 
-`Breeding API CI` installiert mit `--frozen-lockfile`, validiert die bestehende Root-PWA, generiert beide Artefakte, prüft auf nicht committete Generated-Abweichungen, lintet, typprüft, testet, baut den Worker trocken, validiert strukturell und für Release, prüft Determinismus und scannt Secrets. Feature-Branches deployen nicht.
+`Breeding API CI` installiert mit `--frozen-lockfile`, validiert die bestehende Root-PWA, generiert beide Artefakte, prüft auf nicht committete Generated-Abweichungen, lintet, typprüft, testet, baut den Worker trocken, validiert strukturell und für Release, prüft Determinismus und scannt Secrets. Der Secretscan erfasst neben den unterstützten Textformaten ausdrücklich auch lokale Umgebungsdateien nach den Mustern `.env`, `.env.*`, `.dev.vars` und `.dev.vars.*`; passende Ignore-Regeln schützen diese Dateien zusätzlich vor versehentlichem Committen. Feature-Branches deployen nicht.
 
 Der PR-Head des öffentlichen MCP-Ausbaus wurde am 13.07.2026 erfolgreich durch `Breeding API CI` und die Root-PWA-Validierung geprüft.
 
