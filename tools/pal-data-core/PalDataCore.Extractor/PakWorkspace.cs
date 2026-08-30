@@ -42,6 +42,15 @@ internal sealed class PakWorkspace : IDisposable
         .EnumerateFiles(_pakDirectory, "*.pak", SearchOption.AllDirectories)
         .Sum(path => new FileInfo(path).Length);
 
+    public IReadOnlyList<string> FindPackages(string token, int limit = 50) => _provider.Files
+        .Select(file => file.Key)
+        .Where(path => path.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase))
+        .Where(path => path.Contains(token, StringComparison.OrdinalIgnoreCase))
+        .Order(StringComparer.OrdinalIgnoreCase)
+        .Take(limit)
+        .Select(path => path[..^".uasset".Length])
+        .ToArray();
+
     public bool PackageExists(string packagePath)
     {
         var needle = $"{packagePath}.uasset";
