@@ -10,11 +10,14 @@ namespace PalDataCore.Extractor;
 internal sealed class PakWorkspace : IDisposable
 {
     private readonly DefaultFileProvider _provider;
+    private readonly string _pakDirectory;
     private readonly Dictionary<string, UDataTable?> _cache = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, string> _errors = new(StringComparer.OrdinalIgnoreCase);
 
     public PakWorkspace(string pakDirectory, string? mappingsPath)
     {
+        _pakDirectory = pakDirectory;
+
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Warning()
             .WriteTo.Console()
@@ -35,15 +38,14 @@ internal sealed class PakWorkspace : IDisposable
         _provider.LoadVirtualPaths();
     }
 
-    public long PakBytes => _provider.Files
-        .Select(entry => entry.Value)
-        .Where(file => file.Path.EndsWith(".pak", StringComparison.OrdinalIgnoreCase))
-        .Sum(_ => 0L);
+    public long PakBytes => Directory
+        .EnumerateFiles(_pakDirectory, "*.pak", SearchOption.AllDirectories)
+        .Sum(path => new FileInfo(path).Length);
 
     public bool PackageExists(string packagePath)
     {
         var needle = $"{packagePath}.uasset";
-        return _provider.Files.Keys.Any(path => path.Equals(needle, StringComparison.OrdinalIgnoreCase));
+        return _provider.Files.Any(file => file.Key.Equals(needle, StringComparison.OrdinalIgnoreCase));
     }
 
     public UDataTable? Load(string packagePath)
