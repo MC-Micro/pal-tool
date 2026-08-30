@@ -51,55 +51,68 @@
   "verified_equidistant_rank_tests": [
     {
       "parents": [
-        "Braloha (rarity 8)",
-        "Dynamoff (rarity 6)"
+        "Braloha",
+        "Dynamoff"
       ],
       "target_rank": 1215,
       "candidates": [
-        "Quivern (1210 / rarity 7)",
-        "Azurobe Cryst (1220 / rarity 8)"
+        "Quivern (1210)",
+        "Azurobe Cryst (1220)"
       ],
-      "winner": "Quivern",
-      "reason": "rarity 7 exactly matches parent rarity average 7"
+      "winner": "Azurobe Cryst",
+      "reason": "equal rank distance; higher CombiDuplicatePriority wins"
     },
     {
       "parents": [
-        "Shaolong (rarity 9)",
-        "Helzephyr Lux (rarity 8)"
+        "Shaolong",
+        "Helzephyr Lux"
       ],
       "target_rank": 500,
       "candidates": [
-        "Astegon (490 / rarity 9)",
-        "Dualith (510 / rarity 8)"
+        "Astegon (490)",
+        "Dualith (510)"
       ],
       "winner": "Dualith",
-      "reason": "both rarity distances are 0.5; lower child rarity wins"
+      "reason": "equal rank distance; higher CombiDuplicatePriority wins"
     },
     {
       "parents": [
-        "Braloha (rarity 8)",
-        "Jetragon (rarity 20)"
+        "Braloha",
+        "Jetragon"
       ],
       "target_rank": 550,
       "candidates": [
-        "Univolt Cryst (540 / rarity 6)",
-        "Silvegis (560 / rarity 8)"
+        "Univolt Cryst (540)",
+        "Silvegis (560)"
       ],
       "winner": "Silvegis",
-      "reason": "rarity 8 is closer to parent rarity average 14"
+      "reason": "equal rank distance; higher CombiDuplicatePriority wins"
     },
     {
       "parents": [
-        "Lunaris MALE (rarity 6)",
-        "Grintale FEMALE (rarity 6)"
+        "Lunaris MALE",
+        "Grintale FEMALE"
       ],
       "target_rank": 2065,
       "candidates": [
-        "Mossanda (2060 / rarity 6)",
-        "Penking (2070 / rarity 6)"
+        "Mossanda (2060)",
+        "Penking (2070)"
       ],
       "winner": "Penking",
-      "reason": "direct Palworld 1.0 in-game egg test on 2026-07-13 confirms the higher CombiRank after rank-distance and rarity tie-breaks remain equal"
+      "reason": "direct in-game egg test agrees with the global higher-CombiDuplicatePriority tie rule"
+    },
+    {
+      "parents": [
+        "Snock FEMALE",
+        "Jolthog MALE"
+      ],
+      "target_rank": 2405,
+      "candidates": [
+        "Dazzi (2400)",
+        "Turtacle (2410)"
+      ],
+      "winner": "Turtacle",
+      "reason": "direct in-game egg test and current 1.0.3 cross-check agree with the global higher-CombiDuplicatePriority tie rule"
     }
   ],
   "important_notes": [
