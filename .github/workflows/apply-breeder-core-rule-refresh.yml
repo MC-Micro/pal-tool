@@ -71,8 +71,7 @@ jobs:
           )
 
           old_conflict = re.compile(r'''  const equalTieParentAId = findUniquePalId\(pals, "Mutant"\);.*?\n  return conflicts;''', re.S)
-          match = old_conflict.search(build)
-          if not match:
+          if not old_conflict.search(build):
               raise SystemExit('legacy equal-tie conflict block not found')
           new_conflict = '''  const equalTieParentAId = findUniquePalId(pals, "Mutant");
             const equalTieParentBId = findUniquePalId(pals, "NaughtyCat");
@@ -131,15 +130,7 @@ jobs:
           validate = validate.replace('effective_pair_results_changed_by_special_child_exclusion === 13_785', 'effective_pair_results_changed_by_special_child_exclusion === 13_479')
           validate = validate.replace('anubisAnalysis.canonical_rules_schema_version === 4', 'anubisAnalysis.canonical_rules_schema_version === 5')
           validate = validate.replace('anubisAnalysis.canonical_manifest_schema_version === 4', 'anubisAnalysis.canonical_manifest_schema_version === 5')
-          old_patch_check = '''    {
-              name: "patch check is version-scoped and current",
-              ok:
-                generated.status.patchCheck.status === "current" &&
-                generated.status.patchCheck.checked_game_version === "1.0" &&
-                generated.status.patchCheck.checked_on === "2026-07-13" &&
-                generated.status.patchCheck.build_verified === false &&
-                generated.status.patchCheck.requires_recheck_after_newer_patch,
-            },'''
+          patch_pattern = re.compile(r'''    \{\n      name: "patch check is version-scoped and current",\n      ok:\n        generated\.status\.patchCheck\.status === "current" &&\n        generated\.status\.patchCheck\.checked_game_version === "1\.0" &&\n        generated\.status\.patchCheck\.checked_on === "2026-07-13" &&\n        generated\.status\.patchCheck\.build_verified === false &&\n        generated\.status\.patchCheck\.requires_recheck_after_newer_patch,\n    \},''')
           new_patch_check = '''    {
               name: "patch check is version-scoped and freshness-aware",
               ok:
@@ -151,9 +142,9 @@ jobs:
                 generated.status.patchCheck.requires_recheck_after_newer_patch,
               detail: `${generated.status.patchCheck.status}; game=${generated.status.patchCheck.checked_game_version}; build=${generated.status.patchCheck.checked_game_build ?? "unverified"}`,
             },'''
-          if old_patch_check not in validate:
-              raise SystemExit('legacy patch validation block not found')
-          validate = validate.replace(old_patch_check, new_patch_check)
+          validate, replacements = patch_pattern.subn(new_patch_check, validate, count=1)
+          if replacements != 1:
+              raise SystemExit(f'legacy patch validation block replacements={replacements}')
           validate = validate.replace(
               'const releaseOk = structuralOk && generated.validation.conflicts.length === 0;',
               'const releaseOk =\n    structuralOk &&\n    generated.validation.conflicts.length === 0 &&\n    generated.status.patchCheck.status === "current";'
