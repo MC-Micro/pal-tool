@@ -1,12 +1,12 @@
 {
   "schema_version": 5,
-  "generated_at_utc": "2026-08-30T14:44:59Z",
+  "generated_at_utc": "2026-08-30T14:49:32Z",
   "sources": [
     {
       "source_kind": "official_dedicated_server_extraction",
       "role": "canonical_primary_source",
       "repository": "MC-Micro/pal-tool",
-      "commit": "963b975dc94e9cc8f32901f653cfdedc1e4ad407",
+      "commit": "caee35c613ae9890d56a1e9f51ec4088e0eddab4",
       "paths": [
         ".github/workflows/probe-pal-data-core.yml",
         "tools/pal-data-core/catalog.v1.json",
@@ -15,9 +15,9 @@
       "steam_app_id": "2394010",
       "steam_build_id": "24575149",
       "snapshot_schema_version": 2,
-      "workflow_run_id": "33317161250",
-      "artifact_id": "9733823613",
-      "artifact_digest": "sha256:78cdd2c731ceb71700b63efa5e17cd6197d13ae98484d834f75cbbf50bac1ee3",
+      "workflow_run_id": "33317818364",
+      "artifact_id": "9734008349",
+      "artifact_digest": "sha256:3310b22dfc804918ad9c71b559247b2c32d2db632bf7d338be17080740023a25",
       "sha256": {
         "technical_snapshot": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
         "technical_summary": "443236a4bb5a6593f553ce9515b2778549416f872f7ed58b2364559c1d657283",
@@ -121,7 +121,7 @@
     "ranks_not_divisible_by_10": 0
   },
   "patch_check": {
-    "checked_at_utc": "2026-08-30T14:36:20Z",
+    "checked_at_utc": "2026-08-30T14:49:32Z",
     "checked_on": "2026-08-30",
     "checked_timezone": "Europe/Berlin",
     "time_precision": "timestamp",
@@ -138,8 +138,8 @@
         "steam_build_id": "24575149",
         "snapshot_schema_version": 2,
         "snapshot_sha256": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
-        "workflow_run_id": "33317161250",
-        "artifact_id": "9733823613",
+        "workflow_run_id": "33317818364",
+        "artifact_id": "9734008349",
         "result": "pass",
         "reviewed_counts": {
           "technical_pal_rows": 753,
