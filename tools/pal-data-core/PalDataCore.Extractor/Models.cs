@@ -19,4 +19,5 @@ public sealed record ProbeReport(
     bool MappingsProvided,
     bool RequiredTablesPassed,
     IReadOnlyList<TableProbe> Tables,
+    IReadOnlyDictionary<string, IReadOnlyList<string>> Discoveries,
     IReadOnlyList<string> Notes);
