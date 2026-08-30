@@ -1,7 +1,7 @@
 {
-  "schema_version": 4,
-  "generated_at_utc": "2026-07-12T23:24:25.6053747Z",
-  "game_reference": "Palworld 1.0 direct game-table snapshot",
+  "schema_version": 5,
+  "generated_at_utc": "2026-08-30T11:05:00Z",
+  "game_reference": "Palworld 1.0 historical tables with 1.0.3 rule revalidation in progress",
   "decision_order": [
     {
       "order": 1,
@@ -16,43 +16,36 @@
     {
       "order": 3,
       "rule": "eligible_candidate_pool",
-      "description_de": "Für die normale Formel werden ausschließlich Pals mit CombiRank > 0 und IgnoreCombi = false verwendet, deren internal_name nicht als child_internal in special_combinations.json vorkommt. Die Spezialkindmenge wird dynamisch aus der Sondertabelle abgeleitet. Der Ausschluss gilt nur für die normale Formel; die Same-Species-Regel bleibt vorrangig gültig."
+      "description_de": "Für die normale Formel werden ausschließlich Pals mit CombiRank > 0 und IgnoreCombi = false verwendet, deren internal_name nicht als child_internal in special_combinations.json vorkommt. Die Spezialkindmenge wird dynamisch aus der Sondertabelle abgeleitet. Same-Species und direkte Specials bleiben gültig."
     },
     {
       "order": 4,
       "rule": "rounded_average",
       "formula": "target = floor((parent_a.combi_rank + parent_b.combi_rank + 1) / 2)",
-      "description_de": "Die aktuelle Implementierung rundet einen halben Ganzzahlwert formal auf. Da sämtliche aktuellen CombiRanks durch 10 teilbar sind, entspricht das derzeit immer exakt dem normalen arithmetischen Mittel."
+      "description_de": "Der Zielwert wird aus beiden CombiRanks gebildet. Bei den aktuellen durch 10 teilbaren Rängen entspricht dies dem arithmetischen Mittel."
     },
     {
       "order": 5,
       "rule": "nearest_combi_rank",
-      "description_de": "Gewählt wird der zulässige Kind-Rang mit dem kleinsten absoluten Abstand zum Zielwert."
+      "description_de": "Gewählt werden zunächst alle zulässigen Kinder mit dem kleinsten absoluten Abstand zum Zielwert."
     },
     {
       "order": 6,
-      "rule": "equidistant_different_ranks_parent_rarity_average",
-      "formula": "parent_rarity_average = (parent_a.rarity + parent_b.rarity) / 2",
-      "description_de": "Sind ein niedrigerer und ein höherer Kind-Rang gleich weit entfernt, gewinnt der Kandidat, dessen Seltenheit näher am Seltenheitsdurchschnitt der Eltern liegt.",
-      "confidence": "verified_by_current_in_game_tests"
+      "rule": "equidistant_higher_combi_duplicate_priority",
+      "description_de": "Bleiben mehrere Kandidaten mit gleichem Rangabstand übrig, gewinnt die höhere CombiDuplicatePriority. Die Seltenheit der Eltern oder Kinder ist kein Zucht-Tie-Breaker.",
+      "confidence": "verified_by_direct_tests_and_current_1_0_3_independent_extraction"
     },
     {
       "order": 7,
-      "rule": "equidistant_rarity_lower_rarity",
-      "description_de": "Ist auch der Seltenheitsabstand gleich, gewinnt die niedrigere Kind-Seltenheit.",
-      "confidence": "verified_by_current_in_game_tests"
+      "rule": "non_variant_before_variant",
+      "description_de": "Ist auch die CombiDuplicatePriority gleich, wird die Nicht-Variante vor einer Variante gewählt.",
+      "confidence": "current_game_table_semantics_and_cross_checks"
     },
     {
       "order": 8,
-      "rule": "equidistant_equal_rarity_higher_combi_rank",
-      "description_de": "Sind zwei unterschiedliche zulässige Kind-Ränge gleich weit vom Zielwert entfernt und bleiben sie nach Seltenheitsabstand sowie niedrigerer Kind-Seltenheit vollständig gleichberechtigt, gewinnt der höhere CombiRank.",
-      "confidence": "verified_by_direct_in_game_test_2026_07_13"
-    },
-    {
-      "order": 9,
-      "rule": "same_rank_duplicate_resolution",
-      "description_de": "Teilen mehrere zulässige Pals exakt denselben CombiRank, gewinnt die höhere CombiDuplicatePriority. Bei weiterem Gleichstand folgt die Nicht-Variante vor der Variante und danach die niedrigere InternalIndex-Reihenfolge.",
-      "confidence": "current_field_semantics_and_current_calculator_order"
+      "rule": "lower_internal_index",
+      "description_de": "Bleiben Priorität und Variantenstatus gleich, entscheidet die niedrigere interne Tabellenreihenfolge deterministisch.",
+      "confidence": "current_table_order_fallback"
     }
   ],
   "verified_equidistant_rank_tests": [
@@ -110,12 +103,12 @@
     }
   ],
   "important_notes": [
-    "CombiDuplicatePriority ist nicht der allgemeine Gleichstandsentscheid zwischen zwei unterschiedlich hohen, gleich weit entfernten CombiRanks.",
-    "Die Paldeck-Nummer ist kein Zucht-Tie-Breaker.",
-    "Gleichartige Eltern werden durch die globale Identitätsregel behandelt und deshalb nicht als hunderte künstliche Sonderkombinationen geführt.",
-    "Die direkte Monsterparametertabelle ist für CombiRank, Rarity, IgnoreCombi und CombiDuplicatePriority maßgeblich; abgeleitete Rechnerdaten dienen nur zur Kontrolle.",
-    "Jede Pal-Art, die als child_internal in special_combinations.json vorkommt, ist aus dem normalen Formel-Kandidatenpool ausgeschlossen; ihre Same-Species-Zucht und ihre direkten Spezialkombinationen bleiben gültig.",
-    "Lunaris MALE + Grintale FEMALE ergab am 2026-07-13 in Palworld 1.0 direkt Penking und bestätigt den globalen Higher-CombiRank-Tie-Break; die Elternreihenfolge ist für normale Formelpaarungen irrelevant.",
-    "Sibelyx + Lamball ergab am 2026-07-13 in Palworld 1.0 direkt Surfent und bestätigt den Ausschluss von Spezialkindern aus dem normalen Formel-Kandidatenpool."
+    "CombiDuplicatePriority ist der globale Gleichstandsentscheid für gleich weit vom Zielwert entfernte normale Kandidaten.",
+    "Die Paldeck-Nummer ist kein Zuchtwert und kein Tie-Breaker.",
+    "Rarity wird nicht zur Auswahl des normalen Kindes verwendet.",
+    "Gleichartige Eltern werden durch die globale Identitätsregel behandelt.",
+    "Arten aus special_combinations.child_internal sind aus dem normalen Formel-Kandidatenpool ausgeschlossen; Same-Species und direkte Specials bleiben gültig.",
+    "Snock + Jolthog ist eine Pflichtregression für die globale Priority-Regel und darf nicht als Einzelfall-Hardcode implementiert werden.",
+    "Der Datenbestand selbst bleibt needs_review, bis die kanonischen 1.0.3-Tabellen vollständig importiert und gegen Build/Quellen verifiziert sind."
   ]
 }

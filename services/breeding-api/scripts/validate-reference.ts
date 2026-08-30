@@ -189,31 +189,33 @@ async function main(): Promise<void> {
       name: "special-child impact report",
       ok:
         impact.pairCount === 44_850 &&
-        impact.changedPairCount === 13_785 &&
+        impact.changedPairCount === 13_479 &&
         impact.contentHash === generated.specialChildImpact.sha256 &&
         impact.contentHash ===
           computeSpecialChildImpactContentHash(impactContent),
       detail: `${impact.changedPairCount}/${impact.pairCount}`,
     },
     {
-      name: "patch check is version-scoped and current",
-      ok:
-        generated.status.patchCheck.status === "current" &&
-        generated.status.patchCheck.checked_game_version === "1.0" &&
-        generated.status.patchCheck.checked_on === "2026-07-13" &&
-        generated.status.patchCheck.build_verified === false &&
-        generated.status.patchCheck.requires_recheck_after_newer_patch,
-    },
+    name: "patch check is version-scoped and freshness-aware",
+    ok:
+      (generated.status.patchCheck.status === "current" ||
+        generated.status.patchCheck.status === "needs_review" ||
+        generated.status.patchCheck.status === "unknown") &&
+      generated.status.patchCheck.checked_game_version.length > 0 &&
+      generated.status.patchCheck.checked_on.length > 0 &&
+      generated.status.patchCheck.requires_recheck_after_newer_patch,
+    detail: `${generated.status.patchCheck.status}; game=${generated.status.patchCheck.checked_game_version}; build=${generated.status.patchCheck.checked_game_build ?? "unverified"}`,
+  },
     {
       name: "Anubis/Jolthog analysis matches schema-4 policy",
       ok:
         anubisAnalysis.schema_version === 2 &&
-        anubisAnalysis.canonical_rules_schema_version === 4 &&
-        anubisAnalysis.canonical_manifest_schema_version === 4 &&
+        anubisAnalysis.canonical_rules_schema_version === 5 &&
+        anubisAnalysis.canonical_manifest_schema_version === 5 &&
         anubisAnalysis.canonical_counts
           .normal_formula_candidate_pool_after_special_child_exclusion === 184 &&
         anubisAnalysis.canonical_counts
-          .effective_pair_results_changed_by_special_child_exclusion === 13_785 &&
+          .effective_pair_results_changed_by_special_child_exclusion === 13_479 &&
         anubisAnalysis.direct_two_stage_search.blank_first_mate_species_checked === 299 &&
         anubisAnalysis.direct_two_stage_search.direct_two_step_to_elphidran_count === 0 &&
         anubisAnalysis.direct_two_stage_search.direct_two_step_to_surfent_count === 0 &&
@@ -235,7 +237,10 @@ async function main(): Promise<void> {
   ];
 
   const structuralOk = checks.every(({ ok }) => ok) && generated.validation.canonicalDataValid;
-  const releaseOk = structuralOk && generated.validation.conflicts.length === 0;
+  const releaseOk =
+    structuralOk &&
+    generated.validation.conflicts.length === 0 &&
+    generated.status.patchCheck.status === "current";
   const ok = releaseMode ? releaseOk : structuralOk;
   const report = {
     ok,
