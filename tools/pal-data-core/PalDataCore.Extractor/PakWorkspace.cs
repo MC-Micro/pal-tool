@@ -42,7 +42,7 @@ internal sealed class PakWorkspace : IDisposable
         .EnumerateFiles(_pakDirectory, "*.pak", SearchOption.AllDirectories)
         .Sum(path => new FileInfo(path).Length);
 
-    public IReadOnlyList<string> FindPackages(string token, int limit = 50) => _provider.Files
+    public IReadOnlyList<string> FindPackages(string token, int limit = int.MaxValue) => _provider.Files
         .Select(file => file.Key)
         .Where(path => path.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase))
         .Where(path => path.Contains(token, StringComparison.OrdinalIgnoreCase))
@@ -94,42 +94,81 @@ internal sealed class PakWorkspace : IDisposable
 
     public TableProbe Probe(TableSpec spec)
     {
+        var sources = new List<TableSourceProbe>();
         foreach (var packagePath in spec.PackagePaths)
         {
-            if (!PackageExists(packagePath)) continue;
+            if (!PackageExists(packagePath))
+            {
+                sources.Add(new TableSourceProbe(packagePath, false, false, 0, [], "Package not present"));
+                continue;
+            }
 
             var table = Load(packagePath);
             if (table is null)
-                return new TableProbe(
-                    spec.Name,
-                    spec.Required,
+            {
+                sources.Add(new TableSourceProbe(
                     packagePath,
                     true,
                     false,
                     0,
                     [],
-                    _errors.GetValueOrDefault(packagePath, "Unable to deserialize table"));
+                    _errors.GetValueOrDefault(packagePath, "Unable to deserialize table")));
+                continue;
+            }
 
-            var fields = table.RowMap.Values
-                .Take(10)
-                .SelectMany(row => row.Properties.Select(property => property.Name.Text))
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .Order(StringComparer.OrdinalIgnoreCase)
-                .ToArray();
-
-            return new TableProbe(
-                spec.Name,
-                spec.Required,
+            sources.Add(new TableSourceProbe(
                 packagePath,
                 true,
                 true,
                 table.RowMap.Count,
-                fields,
-                null);
+                InventoryFields(table),
+                null));
         }
 
-        return new TableProbe(spec.Name, spec.Required, null, false, false, 0, [], "Package not present");
+        var parsedSources = sources.Where(source => source.Parsed).ToArray();
+        return new TableProbe(
+            spec.Name,
+            spec.Domain,
+            spec.Extractor,
+            spec.Required,
+            sources.Any(source => source.Present),
+            parsedSources.Length > 0,
+            parsedSources.Length,
+            parsedSources.Sum(source => source.RowCount),
+            MergeFields(parsedSources.SelectMany(source => source.Fields)),
+            sources);
     }
+
+    private static IReadOnlyList<FieldInventory> InventoryFields(UDataTable table) => table.RowMap.Values
+        .SelectMany(row => row.Properties
+            .GroupBy(property => property.Name.Text, StringComparer.OrdinalIgnoreCase)
+            .Select(group => new
+            {
+                Name = group.Key,
+                Types = group.Select(ValueReader.PropertyType).Distinct(StringComparer.Ordinal).ToArray(),
+            }))
+        .GroupBy(field => field.Name, StringComparer.OrdinalIgnoreCase)
+        .Select(group => new FieldInventory(
+            group.Key,
+            group.Count(),
+            group.SelectMany(field => field.Types)
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .ToArray()))
+        .OrderBy(field => field.Name, StringComparer.OrdinalIgnoreCase)
+        .ToArray();
+
+    private static IReadOnlyList<FieldInventory> MergeFields(IEnumerable<FieldInventory> fields) => fields
+        .GroupBy(field => field.Name, StringComparer.OrdinalIgnoreCase)
+        .Select(group => new FieldInventory(
+            group.Key,
+            group.Sum(field => field.RowsPresent),
+            group.SelectMany(field => field.PropertyTypes)
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .ToArray()))
+        .OrderBy(field => field.Name, StringComparer.OrdinalIgnoreCase)
+        .ToArray();
 
     public void Dispose()
     {

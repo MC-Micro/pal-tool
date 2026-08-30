@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - "feature/**"
+      - "breeder/**"
       - "release/**"
     paths:
       - "AGENTS.md"

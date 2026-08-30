@@ -17,23 +17,27 @@ internal sealed class ValueReader(FStructFallback row)
         return null;
     }
 
+    public static string PropertyType(FPropertyTag property) =>
+        property.TagData?.Type ?? "Unknown";
+
     public string String(string fallback, params string[] names)
     {
         var property = Find(names);
-        if (property is null) return fallback;
+        var tag = property?.Tag;
+        if (tag is null) return fallback;
 
         try
         {
-            return property.TagData.Type switch
+            return PropertyType(property!) switch
             {
-                "NameProperty" or "EnumProperty" => property.Tag.GetValue<FName>().Text,
-                "TextProperty" => property.Tag.GetValue<FText>().Text,
-                _ => property.Tag.GetValue<string>() ?? fallback,
+                "NameProperty" or "EnumProperty" => tag.GetValue<FName>().Text,
+                "TextProperty" => tag.GetValue<FText>().Text,
+                _ => tag.GetValue<string>() ?? fallback,
             };
         }
         catch
         {
-            try { return Convert.ToString(property.Tag.GetValue<object>()) ?? fallback; }
+            try { return Convert.ToString(tag.GetValue<object>()) ?? fallback; }
             catch { return fallback; }
         }
     }
@@ -41,11 +45,12 @@ internal sealed class ValueReader(FStructFallback row)
     public int Int(int fallback, params string[] names)
     {
         var property = Find(names);
-        if (property is null) return fallback;
+        var tag = property?.Tag;
+        if (tag is null) return fallback;
 
         foreach (var type in new[] { typeof(int), typeof(short), typeof(byte), typeof(long), typeof(float), typeof(double) })
         {
-            try { return Convert.ToInt32(property.Tag.GetValue(type)); }
+            try { return Convert.ToInt32(tag.GetValue(type)); }
             catch { }
         }
 
@@ -55,11 +60,12 @@ internal sealed class ValueReader(FStructFallback row)
     public double Number(double fallback, params string[] names)
     {
         var property = Find(names);
-        if (property is null) return fallback;
+        var tag = property?.Tag;
+        if (tag is null) return fallback;
 
         foreach (var type in new[] { typeof(double), typeof(float), typeof(int), typeof(long), typeof(short), typeof(byte) })
         {
-            try { return Convert.ToDouble(property.Tag.GetValue(type)); }
+            try { return Convert.ToDouble(tag.GetValue(type)); }
             catch { }
         }
 
@@ -69,8 +75,9 @@ internal sealed class ValueReader(FStructFallback row)
     public bool Bool(bool fallback, params string[] names)
     {
         var property = Find(names);
-        if (property is null) return fallback;
-        try { return property.Tag.GetValue<bool>(); }
+        var tag = property?.Tag;
+        if (tag is null) return fallback;
+        try { return tag.GetValue<bool>(); }
         catch { return fallback; }
     }
 }

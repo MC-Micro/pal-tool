@@ -2,7 +2,7 @@ using CUE4Parse.UE4.Assets.Exports.Engine;
 
 namespace PalDataCore.Extractor;
 
-internal sealed class SnapshotBuilder(PakWorkspace workspace)
+internal sealed class SnapshotBuilder(PakWorkspace workspace, TableCatalog catalog)
 {
     private static readonly string[] WorkSuitabilityKeys =
     [
@@ -23,7 +23,7 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace)
 
     public CoreTechnicalSnapshot Build(string buildId)
     {
-        var palTables = workspace.LoadAll(TableCatalog.Pals)
+        var palTables = workspace.LoadAll(catalog.Require("pals"))
             .Select(source => new SourceTableSnapshot<PalTechnicalRow>(
                 source.PackagePath,
                 source.Table.RowMap.Count,
@@ -33,7 +33,7 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace)
                     .ToArray()))
             .ToArray();
 
-        var breedingTables = workspace.LoadAll(TableCatalog.Breeding)
+        var breedingTables = workspace.LoadAll(catalog.Require("breeding-unique"))
             .Select(source => new SourceTableSnapshot<BreedingUniqueTechnicalRow>(
                 source.PackagePath,
                 source.Table.RowMap.Count,
@@ -43,8 +43,8 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace)
                     .ToArray()))
             .ToArray();
 
-        var namesEn = ReadTextTables(TableCatalog.PalNamesEn);
-        var namesDe = ReadTextTables(TableCatalog.PalNamesDe);
+        var namesEn = ReadTextTables(catalog.Require("pal-names-en"));
+        var namesDe = ReadTextTables(catalog.Require("pal-names-de"));
 
         if (palTables.Length == 0 || breedingTables.Length == 0)
             throw new InvalidOperationException("Technical snapshot requires Pal and CombiUnique source tables.");

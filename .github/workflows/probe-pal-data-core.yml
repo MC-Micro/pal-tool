@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - breeder/core-refresh-1.0.3
+      - "breeder/**"
     paths:
       - ".github/workflows/probe-pal-data-core.yml"
+      - "tools/pal-data-core/**"
 
 permissions:
   contents: read
@@ -56,7 +57,8 @@ jobs:
           dotnet build \
             tools/pal-data-core/PalDataCore.Extractor/PalDataCore.Extractor.csproj \
             --configuration Release \
-            --no-restore
+            --no-restore \
+            --warnaserror
 
       - name: Probe current server tables without external mappings
         shell: bash
@@ -68,6 +70,7 @@ jobs:
             -- \
             probe \
             --pak-dir "$RUNNER_TEMP/palworld-server/Pal/Content/Paks" \
+            --catalog "tools/pal-data-core/catalog.v1.json" \
             --output "$RUNNER_TEMP/pal-data-core-probe.json" \
             --build-id "${{ steps.build.outputs.id }}"
 
@@ -80,29 +83,65 @@ jobs:
           project="tools/pal-data-core/PalDataCore.Extractor/PalDataCore.Extractor.csproj"
           pak_dir="$RUNNER_TEMP/palworld-server/Pal/Content/Paks"
           build_id="${{ steps.build.outputs.id }}"
+          catalog="tools/pal-data-core/catalog.v1.json"
 
           dotnet run --project "$project" --configuration Release --no-build -- \
             snapshot \
             --pak-dir "$pak_dir" \
-            --output "$RUNNER_TEMP/core-snapshot-a.json" \
-            --summary "$RUNNER_TEMP/core-summary-a.json" \
+            --catalog "$catalog" \
+            --output "$RUNNER_TEMP/pal-data-core-candidate/core-snapshot-a.json" \
+            --summary "$RUNNER_TEMP/pal-data-core-candidate/core-summary-a.json" \
             --build-id "$build_id"
 
           dotnet run --project "$project" --configuration Release --no-build -- \
             snapshot \
             --pak-dir "$pak_dir" \
+            --catalog "$catalog" \
             --output "$RUNNER_TEMP/core-snapshot-b.json" \
             --summary "$RUNNER_TEMP/core-summary-b.json" \
             --build-id "$build_id"
 
-          cmp "$RUNNER_TEMP/core-snapshot-a.json" "$RUNNER_TEMP/core-snapshot-b.json"
-          cmp "$RUNNER_TEMP/core-summary-a.json" "$RUNNER_TEMP/core-summary-b.json"
+          cmp "$RUNNER_TEMP/pal-data-core-candidate/core-snapshot-a.json" "$RUNNER_TEMP/core-snapshot-b.json"
+          cmp "$RUNNER_TEMP/pal-data-core-candidate/core-summary-a.json" "$RUNNER_TEMP/core-summary-b.json"
 
           echo "----- Technical snapshot summary -----"
-          cat "$RUNNER_TEMP/core-summary-a.json"
+          cat "$RUNNER_TEMP/pal-data-core-candidate/core-summary-a.json"
 
-# The expensive full-server gate runs automatically only when this workflow
-# definition itself changes, plus explicit workflow_dispatch. Normal extractor
-# development does not redownload ~5 GB per commit.
-# No PAKs, mappings, raw DataTables, or original game assets are committed or uploaded.
+      - name: Build deterministic field and table inventory twice
+        shell: bash
+        run: |
+          project="tools/pal-data-core/PalDataCore.Extractor/PalDataCore.Extractor.csproj"
+          pak_dir="$RUNNER_TEMP/palworld-server/Pal/Content/Paks"
+          catalog="tools/pal-data-core/catalog.v1.json"
+          build_id="${{ steps.build.outputs.id }}"
+
+          dotnet run --project "$project" --configuration Release --no-build -- \
+            inventory \
+            --pak-dir "$pak_dir" \
+            --catalog "$catalog" \
+            --output "$RUNNER_TEMP/pal-data-core-candidate/core-inventory-a.json" \
+            --build-id "$build_id"
+
+          dotnet run --project "$project" --configuration Release --no-build -- \
+            inventory \
+            --pak-dir "$pak_dir" \
+            --catalog "$catalog" \
+            --output "$RUNNER_TEMP/core-inventory-b.json" \
+            --build-id "$build_id"
+
+          cmp "$RUNNER_TEMP/pal-data-core-candidate/core-inventory-a.json" "$RUNNER_TEMP/core-inventory-b.json"
+
+      - name: Upload normalized review candidate
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0 # v7.0.1
+        with:
+          name: pal-data-core-candidate-${{ steps.build.outputs.id }}
+          path: ${{ runner.temp }}/pal-data-core-candidate/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 9
+
+# The expensive full-server gate runs for Data Core changes on breeder branches and
+# explicit workflow_dispatch. Pull requests use the separate compile/catalog CI gate.
+# No PAKs, mappings, raw DataTables, or original game assets are committed or uploaded;
+# the artifact contains only deterministic normalized candidate JSON for review.
 # Canonical publication remains a later review-gated workflow.

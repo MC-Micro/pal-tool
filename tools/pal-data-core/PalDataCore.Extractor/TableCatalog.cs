@@ -1,99 +1,62 @@
+using System.Text.Json;
+
 namespace PalDataCore.Extractor;
 
-internal sealed record TableSpec(string Name, bool Required, params string[] PackagePaths);
+internal sealed record TableSpec(
+    string Name,
+    string Domain,
+    string Extractor,
+    bool Required,
+    IReadOnlyList<string> PackagePaths);
 
-internal static class TableCatalog
+internal sealed record DiscoverySpec(string Name, string Token);
+
+internal sealed record TableCatalog(
+    int SchemaVersion,
+    IReadOnlyList<TableSpec> Tables,
+    IReadOnlyList<DiscoverySpec> Discoveries)
 {
-    public static readonly TableSpec Pals = new(
-        "pals",
-        true,
-        "Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter",
-        "Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter_Common");
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+    };
 
-    public static readonly TableSpec Breeding = new(
-        "breeding-unique",
-        true,
-        "Pal/Content/Pal/DataTable/Character/DT_PalCombiUnique",
-        "Pal/Content/Pal/DataTable/Character/DT_PalCombiUnique_Common");
+    public static TableCatalog Load(string path)
+    {
+        var fullPath = Path.GetFullPath(path);
+        if (!File.Exists(fullPath))
+            throw new FileNotFoundException("Data Core catalog not found", fullPath);
 
-    public static readonly TableSpec PalNamesEn = new(
-        "pal-names-en",
-        false,
-        "Pal/Content/L10N/en/Pal/DataTable/Text/DT_PalNameText_Common");
+        var catalog = JsonSerializer.Deserialize<TableCatalog>(File.ReadAllText(fullPath), JsonOptions)
+            ?? throw new InvalidDataException("Data Core catalog is empty or invalid.");
 
-    public static readonly TableSpec PalNamesDe = new(
-        "pal-names-de",
-        false,
-        "Pal/Content/L10N/de/Pal/DataTable/Text/DT_PalNameText_Common");
+        catalog.Validate();
+        return catalog;
+    }
 
-    public static readonly TableSpec Items = new(
-        "items",
-        false,
-        "Pal/Content/Pal/DataTable/Item/DT_ItemDataTable",
-        "Pal/Content/Pal/DataTable/Item/DT_ItemDataTable_Common");
+    public TableSpec Require(string name) => Tables.SingleOrDefault(
+        table => table.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+        ?? throw new InvalidDataException($"Catalog table '{name}' is required by this extraction profile.");
 
-    public static readonly TableSpec ItemRecipes = new(
-        "item-recipes",
-        false,
-        "Pal/Content/Pal/DataTable/Item/DT_ItemRecipeDataTable",
-        "Pal/Content/Pal/DataTable/Item/DT_ItemRecipeDataTable_Common");
-
-    public static readonly TableSpec TechnologyRecipeUnlock = new(
-        "technology-recipe-unlock",
-        false,
-        "Pal/Content/Pal/DataTable/Technology/DT_TechnologyRecipeUnlock",
-        "Pal/Content/Pal/DataTable/Technology/DT_TechnologyRecipeUnlock_Common");
-
-    public static readonly TableSpec TechnologyNamesEn = new(
-        "technology-names-en",
-        false,
-        "Pal/Content/L10N/en/Pal/DataTable/Text/DT_TechnologyNameText_Common");
-
-    public static readonly TableSpec TechnologyNamesDe = new(
-        "technology-names-de",
-        false,
-        "Pal/Content/L10N/de/Pal/DataTable/Text/DT_TechnologyNameText_Common");
-
-    public static readonly TableSpec TechnologyDescriptionsEn = new(
-        "technology-descriptions-en",
-        false,
-        "Pal/Content/L10N/en/Pal/DataTable/Text/DT_TechnologyDescText_Common");
-
-    public static readonly TableSpec TechnologyDescriptionsDe = new(
-        "technology-descriptions-de",
-        false,
-        "Pal/Content/L10N/de/Pal/DataTable/Text/DT_TechnologyDescText_Common");
-
-    public static readonly TableSpec PartnerSkills = new(
-        "partner-skills",
-        false,
-        "Pal/Content/Pal/DataTable/PartnerSkill/DT_PartnerSkill");
-
-    public static readonly TableSpec PartnerSkillParameters = new(
-        "partner-skill-parameters",
-        false,
-        "Pal/Content/Pal/DataTable/PassiveSkill/DT_PartnerSkillParameter");
-
-    public static readonly TableSpec PassiveSkills = new(
-        "passives",
-        false,
-        "Pal/Content/Pal/DataTable/PassiveSkill/DT_PassiveSkill_Main");
-
-    public static readonly TableSpec[] All =
-    [
-        Pals,
-        Breeding,
-        PalNamesEn,
-        PalNamesDe,
-        Items,
-        ItemRecipes,
-        TechnologyRecipeUnlock,
-        TechnologyNamesEn,
-        TechnologyNamesDe,
-        TechnologyDescriptionsEn,
-        TechnologyDescriptionsDe,
-        PartnerSkills,
-        PartnerSkillParameters,
-        PassiveSkills,
-    ];
+    private void Validate()
+    {
+        if (SchemaVersion != 1)
+            throw new InvalidDataException($"Unsupported Data Core catalog schema {SchemaVersion}.");
+        if (Tables.Count == 0)
+            throw new InvalidDataException("Data Core catalog must contain at least one table.");
+        if (Tables.Any(table => string.IsNullOrWhiteSpace(table.Name)
+                                || string.IsNullOrWhiteSpace(table.Domain)
+                                || string.IsNullOrWhiteSpace(table.Extractor)
+                                || table.PackagePaths.Count == 0
+                                || table.PackagePaths.Any(string.IsNullOrWhiteSpace)))
+            throw new InvalidDataException("Every catalog table needs a name, domain, extractor, and package path.");
+        if (Tables.GroupBy(table => table.Name, StringComparer.OrdinalIgnoreCase).Any(group => group.Count() > 1))
+            throw new InvalidDataException("Data Core catalog table names must be unique.");
+        if (Discoveries.Any(discovery => string.IsNullOrWhiteSpace(discovery.Name)
+                                         || string.IsNullOrWhiteSpace(discovery.Token)))
+            throw new InvalidDataException("Every discovery entry needs a name and token.");
+        if (Discoveries.GroupBy(discovery => discovery.Name, StringComparer.OrdinalIgnoreCase)
+            .Any(group => group.Count() > 1))
+            throw new InvalidDataException("Data Core discovery names must be unique.");
+    }
 }
