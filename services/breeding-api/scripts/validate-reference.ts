@@ -207,7 +207,7 @@ async function main(): Promise<void> {
     detail: `${generated.status.patchCheck.status}; game=${generated.status.patchCheck.checked_game_version}; build=${generated.status.patchCheck.checked_game_build ?? "unverified"}`,
   },
     {
-      name: "Anubis/Jolthog analysis matches schema-4 policy",
+      name: "Anubis/Jolthog analysis matches current policy schema",
       ok:
         anubisAnalysis.schema_version === 2 &&
         anubisAnalysis.canonical_rules_schema_version === 5 &&

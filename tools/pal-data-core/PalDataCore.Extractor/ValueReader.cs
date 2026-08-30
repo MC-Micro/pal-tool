@@ -31,7 +31,7 @@ internal sealed class ValueReader(FStructFallback row)
             return PropertyType(property!) switch
             {
                 "NameProperty" or "EnumProperty" => tag.GetValue<FName>().Text,
-                "TextProperty" => tag.GetValue<FText>().Text,
+                "TextProperty" => tag.GetValue<FText>()?.Text ?? fallback,
                 _ => tag.GetValue<string>() ?? fallback,
             };
         }

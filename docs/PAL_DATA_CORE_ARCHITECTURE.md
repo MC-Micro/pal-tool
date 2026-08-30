@@ -1,7 +1,7 @@
 # Pal Data Core – Zielarchitektur
 
 **Stand:** 30. August 2026  
-**Status:** verbindliche Architekturgrundlage für den laufenden Core-/Breeder-Refresh; Implementierung wird schrittweise auf dem Feature-Branch aufgebaut
+**Status:** implementierte Architekturgrundlage auf `breeder/core-refresh-1.0.3`; kanonische Veröffentlichung bleibt review- und release-gated
 
 ## Zweck
 
@@ -66,6 +66,7 @@ Steam public build id
 → offizieller Dedicated Server
 → PAKs read-only mit CUE4Parse mounten
 → Tabellen-Probe
+→ vollständige Feld- und DataTable-Inventur
 → technischer Snapshot
 → Schema-/Row-/Field-Diff
 → Domain-Normalisierung
@@ -75,6 +76,12 @@ Steam public build id
 ```
 
 Raw PAKs, Mappings und vollständige extrahierte Originalassets werden nicht committed.
+
+### Erweiterung ohne Pipeline-Neubau
+
+`tools/pal-data-core/catalog.v1.json` trennt Tabellenkenntnis von Acquisition und PAK-Mount. Jeder Katalogeintrag nennt Domäne, Extraktionsprofil und exakte Package-Pfade. Neue Tabellen können zunächst mit `extractor: inventory-only` aufgenommen werden: Die Pipeline erfasst dann für alle Zeilen Feldnamen, Property-Typen, Vorkommen, Row-Counts und Quellen, ohne unbekannte Werte fachlich zu deuten.
+
+Die globale DataTable-Paketliste und tokenbasierte Discovery zeigen darüber hinaus neue beziehungsweise verschobene Assets. Eine spätere typisierte Projektion ist ein kleines Domain-Profil oberhalb derselben Acquisition-, Mount-, Inventur- und Reviewkette. Neue Palworld-Systeme benötigen dadurch keinen zweiten Downloader und keine parallele Game-Truth-Quelle.
 
 ## Technical Core vor Produktfilter
 
@@ -103,7 +110,7 @@ data/palworld-core/
   breeding.json
 ```
 
-Die exakte Datei- und Schemaaufteilung wird während der Revalidierung gegen die realen aktuellen Tabellen finalisiert. Keine Domain darf eine zweite Kopie derselben allgemeinen Pal-Fakten handpflegen.
+Die exakte kanonische Datei- und Schemaaufteilung wird während der Revalidierung gegen die realen aktuellen Tabellen finalisiert. Der technische Candidate bleibt davon getrennt. Keine Domain darf eine zweite Kopie derselben allgemeinen Pal-Fakten handpflegen.
 
 ## Breeding-Integration
 
@@ -129,6 +136,8 @@ Eine neue Spielversion erzwingt nicht automatisch eine neue Core-, Regel- oder A
 ## Patch- und Release-Gates
 
 Ein neuer Build darf nicht automatisch als kanonisch freigegeben werden.
+
+Der teure Build-Gate erzeugt ein zeitlich begrenztes GitHub-Actions-Artefakt ausschließlich aus normalisiertem Snapshot, deterministischer Zusammenfassung und Feld-/Tabelleninventur. PAKs, Mappings und Raw DataTables sind ausdrücklich ausgeschlossen. Ein separater schneller CI-Job kompiliert den Extractor warnings-as-errors und validiert den versionierten Katalog ohne Serverdownload.
 
 Der Refresh soll mindestens prüfen:
 
@@ -172,11 +181,9 @@ Der anonyme öffentliche MCP-Zugang darf dabei niemals Zugriff auf den privaten 
 
 ## Aktueller Umsetzungsblock
 
-1. aktuellen Dedicated-Server-Weg erneut reproduzierbar validieren;
-2. Acquisition von Extraction trennen und SteamCMD-Fehler robust behandeln;
-3. aktuellen Tabellenkatalog und Mapping-Bedarf bestimmen;
-4. Technical-Core-Extractor aufbauen;
-5. Pal- und Breeding-Module zuerst migrieren;
-6. aktuelle 1.0.3-Breeding-Daten aus demselben Core erzeugen;
-7. anschließend Work und Stats, danach Partner/Passives/Movement/Items/Tech erweitern;
-8. temporäre Probe-/Migrationsworkflows vor dem finalen PR entfernen.
+1. schnellen Compile-/Katalog-Gate und offiziellen Dedicated-Server-Gate live revalidieren;
+2. Candidate-Artefakt gegen den historischen Zuchtbestand diffen;
+3. Pal- und Breeding-Domain deterministisch aus dem Candidate ableiten;
+4. Breeding-Matrix, Pflichtregressionen und unabhängige Cross-Checks ausführen;
+5. kanonischen Patchstatus erst nach erfolgreicher fachlicher Prüfung auf `current` setzen;
+6. anschließend Work und Stats, danach Partner/Passives/Movement/Items/Tech als getrennte Profile erweitern.

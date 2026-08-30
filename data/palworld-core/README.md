@@ -46,7 +46,16 @@ DT_PartnerSkill: 50 Zeilen
 DT_PassiveSkill_Main: 1905 Zeilen
 ```
 
-`DT_PartnerSkillParameter` wurde beim ersten Kataloglauf unter dem historischen geratenen Pfad nicht gefunden. Dieser Status ist **kein Beleg dafür, dass die Tabelle im Build fehlt**; die Pipeline wird deshalb um dateilistebasierte Asset-Discovery erweitert, statt weitere Pfade zu raten.
+Die dateilistebasierte Discovery korrigierte den zunächst geratenen Pfad: `DT_PartnerSkillParameter` liegt im aktuellen Server unter `Pal/Content/Pal/DataTable/PassiveSkill/DT_PartnerSkillParameter` und umfasst **682 Zeilen**. Die Katalogpipeline speichert diese Korrektur als expliziten Package-Pfad und behält Discovery für künftige Verschiebungen bei.
+
+Weitere live bestätigte Katalogstände:
+
+```text
+DT_ItemRecipeDataTable: 1414 Zeilen
+DT_TechnologyRecipeUnlock: 588 Zeilen
+DT_TechnologyNameText_Common (en/de): 835 / 835 Zeilen
+DT_TechnologyDescText_Common (en/de): 587 / 587 Zeilen
+```
 
 ### Bestätigte gemeinsame Pal-Felder
 
@@ -91,7 +100,7 @@ Geplante beziehungsweise zu revalidierende Module:
 - `breeding`;
 - `manifest` / Provenienz und Status.
 
-Die endgültigen Dateinamen und Schemas werden erst nach der aktuellen 1.0.3-Revalidierung gegen die echten Tabellen festgezogen.
+Der versionierte technische Katalog liegt unter `tools/pal-data-core/catalog.v1.json`. Neue Tabellen werden zunächst generisch inventarisiert; endgültige kanonische Domain-Dateien und Interpretationen werden erst nach fachlicher 1.0.3-Revalidierung festgezogen.
 
 ## Breeder
 

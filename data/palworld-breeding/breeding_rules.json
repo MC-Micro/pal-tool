@@ -51,19 +51,6 @@
   "verified_equidistant_rank_tests": [
     {
       "parents": [
-        "Braloha",
-        "Dynamoff"
-      ],
-      "target_rank": 1215,
-      "candidates": [
-        "Quivern (1210)",
-        "Azurobe Cryst (1220)"
-      ],
-      "winner": "Azurobe Cryst",
-      "reason": "equal rank distance; higher CombiDuplicatePriority wins"
-    },
-    {
-      "parents": [
         "Shaolong",
         "Helzephyr Lux"
       ],
@@ -73,19 +60,6 @@
         "Dualith (510)"
       ],
       "winner": "Dualith",
-      "reason": "equal rank distance; higher CombiDuplicatePriority wins"
-    },
-    {
-      "parents": [
-        "Braloha",
-        "Jetragon"
-      ],
-      "target_rank": 550,
-      "candidates": [
-        "Univolt Cryst (540)",
-        "Silvegis (560)"
-      ],
-      "winner": "Silvegis",
       "reason": "equal rank distance; higher CombiDuplicatePriority wins"
     },
     {
@@ -121,6 +95,7 @@
     "Rarity wird nicht zur Auswahl des normalen Kindes verwendet.",
     "Gleichartige Eltern werden durch die globale Identitätsregel behandelt.",
     "Arten aus special_combinations.child_internal sind aus dem normalen Formel-Kandidatenpool ausgeschlossen; Same-Species und direkte Specials bleiben gültig.",
+    "Braloha + Dynamoff ergibt deshalb Quivern: Azurobe Cryst ist ein Special-Child und nimmt am normalen Distanzvergleich nicht teil.",
     "Snock + Jolthog ist eine Pflichtregression für die globale Priority-Regel und darf nicht als Einzelfall-Hardcode implementiert werden.",
     "Der Datenbestand selbst bleibt needs_review, bis die kanonischen 1.0.3-Tabellen vollständig importiert und gegen Build/Quellen verifiziert sind."
   ]

@@ -71,7 +71,7 @@
     "direct_two_step_to_elphidran": [],
     "direct_two_step_to_surfent": [],
     "direct_two_step_to_elphidran_aqua": [],
-    "conclusion": "No published blank mate species currently produces an intermediate from Anubis that yields Elphidran, Surfent, or Elphidran Aqua when paired directly with Jolthog under schema-4 rules. This does not rule out longer species routes."
+    "conclusion": "No published blank mate species currently produces an intermediate from Anubis that yields Elphidran, Surfent, or Elphidran Aqua when paired directly with Jolthog under schema-5 rules. This does not rule out longer species routes."
   },
   "invalidated_previous_routes": [
     {

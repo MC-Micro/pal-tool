@@ -107,13 +107,22 @@ describe("canonical breeding engine", () => {
   });
 
   it.each([
-    ["Braloha", "Dynamoff", "Azurobe Cryst"],
     ["Shaolong", "Helzephyr Lux", "Dualith"],
-    ["Braloha", "Jetragon", "Silvegis"],
   ])("matches the current duplicate-priority tie-break fixture %s + %s", (left, right, expected) => {
     const result = engine.resolveBasePair(aliasId(left), aliasId(right));
     expect(reference.pals[result.childId]?.name_en).toBe(expected);
     expect(result.appliedTieBreaks).toContain("equidistant_higher_combi_duplicate_priority");
+  });
+
+  it("excludes Azurobe Cryst before resolving Braloha and Dynamoff", () => {
+    const result = engine.resolveBasePair(aliasId("Braloha"), aliasId("Dynamoff"));
+    expect(reference.pals[result.childId]?.name_en).toBe("Quivern");
+    expect(result.nearestCandidateIds?.map((childId) => reference.pals[childId]?.name_en)).toEqual([
+      "Quivern",
+    ]);
+    expect(result.appliedTieBreaks).not.toContain(
+      "equidistant_higher_combi_duplicate_priority",
+    );
   });
 
   it("resolves the historic Snock/Jolthog regression to Turtacle via higher duplicate priority", () => {

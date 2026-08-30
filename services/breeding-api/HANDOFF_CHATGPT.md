@@ -29,20 +29,26 @@ Diese Datei soll eine neue technische Chat- oder Codex-Sitzung ohne Zugriff auf 
 | Öffentlicher MCP | anonymer Streamable-HTTP-Endpunkt `/mcp` |
 | Geschützte REST-API | weiterhin kompatibel; konkreter Pfad und Basisadresse werden absichtlich nicht dokumentiert |
 | Worker-Basisadresse | absichtlich nicht in diesem öffentlichen Repository gespeichert |
-| Kanonisches Schema | 4 |
+| Kanonisches Schema | 5 |
 | API-/Artefaktschema | 2 |
 | Pals | 299 |
 | normale Formel-Kinder | 184 |
 | Spezialkombinationen | 136 |
 | eindeutige Spezialkind-Arten | 90 |
 | ungeordnete Paare | 44.850 |
-| Policy-geänderte Paarergebnisse | 13.785 |
-| Release-Gate | PASS, null ungelöste Konflikte |
-| Patchstand | Palworld 1.0, geprüft am 13.07.2026; exakte Buildnummer nicht verifiziert |
+| Policy-geänderte Paarergebnisse | 13.479 |
+| Release-Gate | BLOCKED durch `needs_review`; strukturell valid, null ungelöste Konflikte |
+| Patchstand | historischer Palworld-1.0-Bestand vom 13.07.2026; Migration auf offiziellen Dedicated-Server-Build `24575149` in Review |
 
 Historische Statuswerte dokumentieren nur den zuletzt geprüften technischen Stand. Live-Erreichbarkeit, aktuelle Branches, aktuelle Commits, offene Pull Requests und ein möglicher neuerer Palworld-Patch müssen bei technischer Wartung oder Entwicklung erneut geprüft werden.
 
 ## Was das Repository enthält
+
+### 0. Pal Data Core
+
+`tools/pal-data-core/` enthält die GitHub-native, read-only Acquisition-/Extraction-Pipeline für den offiziellen Dedicated Server (Steam App `2394010`). Der aktuelle live verifizierte Server-Build ist `24575149`; erforderliche Tabellen wurden ohne externes Mapping gelesen.
+
+`catalog.v1.json` trennt Package-Pfade, Domänen und Extraktionsprofile vom allgemeinen PAK-Leser. `inventory-only` erlaubt neue DataTables zunächst vollständig nach Row-/Field-/Property-Type-Struktur zu erfassen, ohne unbekannte Felder zu interpretieren. `Pal Data Core CI` kompiliert warnings-as-errors und validiert den Katalog. Der teure `Probe Pal Data Core`-Gate lädt den offiziellen Server und erzeugt nur ein kurzlebiges normalisiertes Candidate-Artefakt; PAKs, Mappings und Raw DataTables werden weder committed noch hochgeladen.
 
 ### 1. Palworld Passives PWA
 
@@ -66,7 +72,7 @@ Bestätigte globale Reihenfolge:
 2. Direkte Spezialkombinationen samt Geschlechtsvorgaben danach.
 3. Erst dann normale Formel mit ausschließlich zulässigen normalen Kindern.
 4. Alle Arten aus `special_combinations.child_internal` sind aus dem normalen Kandidatenpool ausgeschlossen; Same-Species und direkte Specials bleiben gültig.
-5. Cross-Rank-Ties, Seltenheit, Duplicate-Priority, Variantenstatus und interne Reihenfolge exakt nach `breeding_rules.json` lösen.
+5. Gleich weit entfernte Kandidaten nach `CombiDuplicatePriority`, dann Variantenstatus und interner Reihenfolge lösen; Seltenheit ist kein Tie-Breaker.
 6. Paldeck-Nummern niemals als Rang oder Tie-Break verwenden.
 
 Direkte Palworld-1.0-Eiertests vom 13.07.2026:
@@ -130,7 +136,7 @@ Unterstützte Read-only-Funktionen:
 
 Fehlende oder ungültige Authentifizierung liefert neutral HTTP 404. Schreibmethoden sind nicht unterstützt. Geheime Werte dürfen weder in GitHub-Dateien noch in Chatprotokolle, Screenshots, Committexte oder öffentliche URLs übernommen werden.
 
-## Wichtige Routenfolgen von Schema 4
+## Wichtige Routenfolgen von Schema 5
 
 - `Sibelyx + Lamball → Surfent`
 - `Lunaris + Grintale → Penking`
@@ -149,8 +155,8 @@ Die Analyse `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet f
 
 Aktueller dokumentierter Stand:
 
-- `source_data_hash`: `77901fb00c984e360f563049f2e7f3dc64a6b2d764e77f3c32a737ef4bc82121`
-- `generated_artifact_hash`: `882987ec7c8a1eae7855e9bb3d995b79cb0aa498da2042c00fa6faec326ad9b8`
+- `source_data_hash`: `0e42421242027cdc6516b8f140d6fe1c0b94d6e9201164554a9337259bc21636`
+- `generated_artifact_hash`: `6189863ff6b8878bf2a6997064eb9a4e7455b306815d1173430427f9530bbee1`
 
 Der vollständige Ergebnisvergleich liegt unter `services/breeding-api/generated/special-child-impact.json`.
 
@@ -177,7 +183,7 @@ Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production
 
 ## Patchregel
 
-Der Status `current` gilt nur für Palworld 1.0 und den Prüftag 13.07.2026. Die genaue Buildnummer wurde nicht unabhängig verifiziert. Nach jeder neueren Palworld-Version muss geprüft werden, ob Zuchtwerte, Formel, Spezialkombinationen, Geschlechtsbedingungen, Varianten-, Gleichstands-, Passiv- oder IV-Regeln betroffen sind, bevor die Referenz weiter als aktuell bezeichnet wird.
+Der aktuelle Manifeststatus lautet `needs_review`. Der historische Stand gilt nur für Palworld 1.0 und den Prüftag 13.07.2026; die damalige genaue Buildnummer wurde nicht unabhängig verifiziert. Erst nach Import und Review der aktuellen Tabellen aus dem offiziellen Build darf der Status `current` verwendet werden.
 
 ## Dauerhafte technische Projektübergabe – verbindlich
 
