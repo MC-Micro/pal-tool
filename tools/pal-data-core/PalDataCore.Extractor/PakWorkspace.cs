@@ -81,6 +81,17 @@ internal sealed class PakWorkspace : IDisposable
         }
     }
 
+    public IReadOnlyList<(string PackagePath, UDataTable Table)> LoadAll(TableSpec spec)
+    {
+        var result = new List<(string PackagePath, UDataTable Table)>();
+        foreach (var packagePath in spec.PackagePaths)
+        {
+            var table = Load(packagePath);
+            if (table is not null) result.Add((packagePath, table));
+        }
+        return result;
+    }
+
     public TableProbe Probe(TableSpec spec)
     {
         foreach (var packagePath in spec.PackagePaths)
