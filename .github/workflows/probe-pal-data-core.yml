@@ -1,0 +1,80 @@
+name: Probe Pal Data Core
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - breeder/core-refresh-1.0.3
+    paths:
+      - "tools/pal-data-core/**"
+      - ".github/workflows/probe-pal-data-core.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pal-data-core-probe-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Prepare acquisition scripts
+        shell: bash
+        run: chmod +x tools/pal-data-core/scripts/*.sh
+
+      - name: Install SteamCMD
+        shell: bash
+        run: tools/pal-data-core/scripts/install-steamcmd.sh "$RUNNER_TEMP/steamcmd"
+
+      - name: Resolve current official Dedicated Server build
+        id: build
+        shell: bash
+        run: |
+          build_id="$(tools/pal-data-core/scripts/query-build-id.sh "$RUNNER_TEMP/steamcmd/steamcmd.sh")"
+          test -n "$build_id"
+          echo "id=$build_id" >> "$GITHUB_OUTPUT"
+          echo "Official Palworld Dedicated Server build: $build_id"
+
+      - name: Download official Dedicated Server
+        shell: bash
+        run: |
+          tools/pal-data-core/scripts/download-server.sh \
+            "$RUNNER_TEMP/steamcmd/steamcmd.sh" \
+            "$RUNNER_TEMP/palworld-server"
+
+      - name: Build Data Core extractor
+        shell: bash
+        run: |
+          dotnet --version
+          dotnet restore tools/pal-data-core/PalDataCore.Extractor/PalDataCore.Extractor.csproj
+          dotnet build \
+            tools/pal-data-core/PalDataCore.Extractor/PalDataCore.Extractor.csproj \
+            --configuration Release \
+            --no-restore
+
+      - name: Probe current server tables without external mappings
+        shell: bash
+        run: |
+          dotnet run \
+            --project tools/pal-data-core/PalDataCore.Extractor/PalDataCore.Extractor.csproj \
+            --configuration Release \
+            --no-build \
+            -- \
+            probe \
+            --pak-dir "$RUNNER_TEMP/palworld-server/Pal/Content/Paks" \
+            --output "$RUNNER_TEMP/pal-data-core-probe.json" \
+            --build-id "${{ steps.build.outputs.id }}"
+
+          echo "----- Pal Data Core probe report -----"
+          cat "$RUNNER_TEMP/pal-data-core-probe.json"
+
+# This workflow is a read-only gate. It does not commit or upload PAKs, mappings,
+# raw DataTables, or other original game assets. Canonical publication is a
+# separate later step and must remain review-gated.
