@@ -70,7 +70,7 @@ Der aktuelle `DT_PalMonsterParameter` liefert ohne externes Mapping unter andere
 - Partnertextreferenzen;
 - dreizehn `WorkSuitability_*`-Felder einschließlich `OilExtraction`.
 
-Damit können Breeding, Work, Stats und ein wesentlicher Teil des Movement-Rohmodells aus derselben aktuellen Pal-Tabelle gespeist werden.
+Damit können Breeding, Work, Stats und ein wesentlicher Teil des Movement-Rohmodells aus derselben aktuellen Pal-Tabelle gespeist werden. Work, Stats und die genannten Movement-Rohwerte verursachen deshalb keinen zusätzlichen PAK-Download; offen ist ihre fachliche Normalisierung und Produktfreigabe.
 
 ### Lokalisierung
 
@@ -100,12 +100,16 @@ Geplante beziehungsweise zu revalidierende Module:
 - `breeding`;
 - `manifest` / Provenienz und Status.
 
-Der versionierte technische Katalog liegt unter `tools/pal-data-core/catalog.v1.json`. Neue Tabellen werden zunächst generisch inventarisiert; endgültige kanonische Domain-Dateien und Interpretationen werden erst nach fachlicher 1.0.3-Revalidierung festgezogen.
+Der versionierte technische Katalog liegt unter `tools/pal-data-core/catalog.v1.json`. Neue Tabellen werden zunächst generisch inventarisiert; endgültige kanonische Domain-Dateien und Interpretationen werden erst nach fachlicher Revalidierung festgezogen.
+
+Die priorisierte, dynamische Ausbauplanung liegt in [`docs/PAL_DATA_CORE_ROADMAP.md`](../../docs/PAL_DATA_CORE_ROADMAP.md). Sie unterscheidet explizit zwischen `done`, bereits extrahierten aber noch nicht fachlich modellierten Daten, reiner Inventur und wirklich noch offenen Extraktions-/Forschungsblöcken.
 
 ## Breeder
 
 Die buildabhängigen Zuchtfelder und die vollständige Unique-Combination-Tabelle gehören in den Core. Die fachliche Resolverregel bleibt in `data/palworld-breeding/breeding_rules.json`.
 
-Bestehende `pal_values.json` und `special_combinations.json` sollen nach der Migration deterministisch aus dem Core erzeugt werden.
+Bestehende `pal_values.json` und `special_combinations.json` bleiben als deterministische Kompatibilitätsartefakte für den Breeder bestehen und werden gegen den offiziellen Core-Candidate validiert.
 
-Die 258 aktuellen `DT_PalCombiUnique`-Zeilen werden vor einer Domain-Aufteilung vollständig bewahrt. Same-Species-, Gender-, Cross-Species- und weitere technische Kombinationen dürfen nicht bereits beim Import verloren gehen.
+Die 258 aktuellen `DT_PalCombiUnique`-Zeilen werden vor einer Domain-Aufteilung vollständig bewahrt und sind für Build `24575149` vollständig klassifiziert. Same-Species-, Gender-, Cross-Species- und technische Kombinationen dürfen beim Import nicht verloren gehen.
+
+Der letzte deterministische Tabellen-Fallback wird aus dem offiziellen `sourceOrdinal` des Technical Snapshot abgeleitet. Das bestehende Breeder-Kompatibilitätsfeld `internal_index` spiegelt diesen Wert; es ist weder Paldecknummer noch ein unabhängig erfundener Zuchtindex.
