@@ -1,12 +1,12 @@
 {
   "schema_version": 5,
-  "generated_at_utc": "2026-08-30T14:25:47Z",
+  "generated_at_utc": "2026-08-30T14:36:20Z",
   "sources": [
     {
       "source_kind": "official_dedicated_server_extraction",
       "role": "canonical_primary_source",
       "repository": "MC-Micro/pal-tool",
-      "commit": "f5aee66c1f0eff347fdf3ca7a1546ca0492166ed",
+      "commit": "963b975dc94e9cc8f32901f653cfdedc1e4ad407",
       "paths": [
         ".github/workflows/probe-pal-data-core.yml",
         "tools/pal-data-core/catalog.v1.json",
@@ -15,13 +15,14 @@
       "steam_app_id": "2394010",
       "steam_build_id": "24575149",
       "snapshot_schema_version": 2,
-      "workflow_run_id": "33315757618",
-      "artifact_id": "9733402335",
-      "artifact_digest": "sha256:01eba881e18f191b84223f7593f5a3a850f647418cb6b7d0b197f9109b1c580d",
+      "workflow_run_id": "33317161250",
+      "artifact_id": "9733823613",
+      "artifact_digest": "sha256:78cdd2c731ceb71700b63efa5e17cd6197d13ae98484d834f75cbbf50bac1ee3",
       "sha256": {
         "technical_snapshot": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
         "technical_summary": "443236a4bb5a6593f553ce9515b2778549416f872f7ed58b2364559c1d657283",
-        "field_inventory": "7f1229deb4d61c04c727d3b67bf8103a8ed7d3742907158e78b87ee024f583c9"
+        "field_inventory": "7f1229deb4d61c04c727d3b67bf8103a8ed7d3742907158e78b87ee024f583c9",
+        "breeding_review": "82f9f9def33baa1fd7740c682cdcbf9ee9c4e09c94b83f5e094facafba9cca2a"
       },
       "used_for": [
         "authoritative_combi_rank",
@@ -115,7 +116,7 @@
     "ranks_not_divisible_by_10": 0
   },
   "patch_check": {
-    "checked_at_utc": "2026-08-30T14:25:47Z",
+    "checked_at_utc": "2026-08-30T14:36:20Z",
     "checked_on": "2026-08-30",
     "checked_timezone": "Europe/Berlin",
     "time_precision": "timestamp",
@@ -132,8 +133,8 @@
         "steam_build_id": "24575149",
         "snapshot_schema_version": 2,
         "snapshot_sha256": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
-        "workflow_run_id": "33315757618",
-        "artifact_id": "9733402335",
+        "workflow_run_id": "33317161250",
+        "artifact_id": "9733823613",
         "result": "pass",
         "reviewed_counts": {
           "technical_pal_rows": 753,

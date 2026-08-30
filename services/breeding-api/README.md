@@ -65,8 +65,8 @@ Aktueller dokumentierter Stand:
 - zulässige normale Formel-Kinder: 184 statt zuvor 261
 - ungeordnete Artenpaare einschließlich Same-Species: 44.850
 - durch die Spezialkindregel geänderte Paarergebnisse: 13.479
-- `source_data_hash`: `6c3b4abc6b985eee0154e1468238abf9a95928aab6f748423d42d3f341ea07bd`
-- `generated_artifact_hash`: `bd7c739198a7023cc6f7073f57166857077be91bb2d72099d11b26533d6c62af`
+- `source_data_hash`: `32f366e3691841bc7245cd7a94c7b52f718fb19f3651968b4176988b8423fe1d`
+- `generated_artifact_hash`: `ec57615973ff4125fa274c56b31a1c215279c2ace334b32e254947db1038e503`
 
 `source_data_hash` hasht deterministisch die vier kanonischen Eingabedateien. `generated_artifact_hash` hasht den kanonisch serialisierten generierten Referenzinhalt, wobei seine eigenen Hashfelder ausgeschlossen werden. Beide Begriffe werden öffentlich nicht vermischt.
 

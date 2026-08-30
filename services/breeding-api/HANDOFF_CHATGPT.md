@@ -155,8 +155,8 @@ Die Analyse `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet f
 
 Aktueller dokumentierter Stand:
 
-- `source_data_hash`: `6c3b4abc6b985eee0154e1468238abf9a95928aab6f748423d42d3f341ea07bd`
-- `generated_artifact_hash`: `bd7c739198a7023cc6f7073f57166857077be91bb2d72099d11b26533d6c62af`
+- `source_data_hash`: `32f366e3691841bc7245cd7a94c7b52f718fb19f3651968b4176988b8423fe1d`
+- `generated_artifact_hash`: `ec57615973ff4125fa274c56b31a1c215279c2ace334b32e254947db1038e503`
 
 Der vollständige Ergebnisvergleich liegt unter `services/breeding-api/generated/special-child-impact.json`.
 
