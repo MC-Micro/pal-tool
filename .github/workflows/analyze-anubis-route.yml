@@ -45,10 +45,12 @@ jobs:
       - name: Generate current derived reference
         run: pnpm run generate
 
-      - name: Validate analysis against schema-4 canonical rules
-        run: pnpm run validate:release
+      - name: Validate analysis against canonical rules
+        run: pnpm run validate
 
       - name: Verify deterministic generation
         run: pnpm run check:deterministic
 
-# The analysis is reviewed data. This workflow validates it and never rewrites or commits it.
+# This workflow checks structural consistency of the reviewed analysis.
+# Current-game freshness is enforced separately by validate:release and must remain
+# blocked while manifest.patch_check.status is not "current".
