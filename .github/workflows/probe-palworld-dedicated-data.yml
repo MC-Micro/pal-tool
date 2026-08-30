@@ -29,12 +29,24 @@ jobs:
             -o "$RUNNER_TEMP/steamcmd/steamcmd_linux.tar.gz"
           tar -xzf "$RUNNER_TEMP/steamcmd/steamcmd_linux.tar.gz" -C "$RUNNER_TEMP/steamcmd"
 
-      - name: Download free Palworld Dedicated Server anonymously
+      - name: Inspect Palworld Dedicated Server app metadata
         shell: bash
         run: |
           set -euo pipefail
           "$RUNNER_TEMP/steamcmd/steamcmd.sh" \
-            +force_install_dir "$RUNNER_TEMP/palserver" \
+            +login anonymous \
+            +app_info_update 1 \
+            +app_info_print 2394010 \
+            +quit | tee "$RUNNER_TEMP/palserver-app-info.txt"
+          grep -E '"(appid|name|buildid|oslist|FreeToDownload)"' "$RUNNER_TEMP/palserver-app-info.txt" | head -80 || true
+
+      - name: Download free Palworld Dedicated Server anonymously
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Use Pocketpair's documented default SteamCMD layout here. The first probe used
+          # force_install_dir and Steam returned "Missing configuration" on the hosted runner.
+          "$RUNNER_TEMP/steamcmd/steamcmd.sh" \
             +login anonymous \
             +app_update 2394010 validate \
             +quit
@@ -43,24 +55,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          manifest="$RUNNER_TEMP/steamcmd/steamapps/appmanifest_2394010.acf"
-          if [[ ! -f "$manifest" ]]; then
-            manifest="$(find "$RUNNER_TEMP" -name appmanifest_2394010.acf -print -quit)"
-          fi
+          manifest="$(find "$HOME" "$RUNNER_TEMP" -name appmanifest_2394010.acf -print -quit 2>/dev/null || true)"
+          server_dir="$(find "$HOME" "$RUNNER_TEMP" -type d -path '*/steamapps/common/PalServer' -print -quit 2>/dev/null || true)"
           echo "Dedicated Server manifest: ${manifest:-not-found}"
-          if [[ -n "${manifest:-}" && -f "$manifest" ]]; then
+          echo "Dedicated Server directory: ${server_dir:-not-found}"
+          if [[ -n "$manifest" && -f "$manifest" ]]; then
             grep -E '"(appid|buildid|LastUpdated)"' "$manifest" || true
           fi
+          test -n "$server_dir"
           echo "Disk usage:"
-          du -sh "$RUNNER_TEMP/palserver" || true
-          echo "PAK files:"
-          find "$RUNNER_TEMP/palserver" -type f \( -name '*.pak' -o -name '*.utoc' -o -name '*.ucas' \) -printf '%s\t%p\n' | sort -n
+          du -sh "$server_dir"
+          echo "PAK/IoStore files:"
+          find "$server_dir" -type f \( -name '*.pak' -o -name '*.utoc' -o -name '*.ucas' \) -printf '%s\t%p\n' | sort -n
 
-      - name: Confirm expected character DataTable path is addressable later
+      - name: Confirm packaged game data is present
         shell: bash
         run: |
           set -euo pipefail
-          pak_count="$(find "$RUNNER_TEMP/palserver" -type f -name '*.pak' | wc -l)"
+          server_dir="$(find "$HOME" "$RUNNER_TEMP" -type d -path '*/steamapps/common/PalServer' -print -quit 2>/dev/null || true)"
+          pak_count="$(find "$server_dir" -type f -name '*.pak' | wc -l)"
           test "$pak_count" -gt 0
           echo "Found $pak_count PAK file(s); extraction is the next gated step."
 
