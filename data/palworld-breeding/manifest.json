@@ -64,7 +64,7 @@
     "normal_formula_eligible_children": 184,
     "eligible_special_child_species_excluded_from_normal_formula": 77,
     "unordered_species_pairs_including_same_species": 44850,
-    "pair_results_changed_by_special_child_rule": 13785,
+    "pair_results_changed_by_special_child_rule": 13479,
     "duplicate_rank_groups": 1,
     "missing_game_table_rows": 0,
     "fallback_game_table_rows": 0,
@@ -90,7 +90,7 @@
     "checked_game_version": "1.0",
     "checked_game_build": null,
     "build_verified": false,
-    "status": "current",
+    "status": "needs_review",
     "breeding_relevant_changes_found": true,
     "evidence": [
       {
@@ -101,7 +101,7 @@
           "Grintale FEMALE"
         ],
         "child": "Penking",
-        "confirms": "equidistant_equal_rarity_higher_combi_rank"
+        "confirms": "higher_combi_duplicate_priority_cross_rank_tie"
       },
       {
         "kind": "direct_in_game_egg_test",
@@ -115,9 +115,9 @@
       }
     ],
     "source_notes": [
-      "Current means checked against Palworld 1.0 on the recorded date only.",
-      "No exact game build number was independently verified.",
-      "A newer Palworld version requires a new breeding-relevance check before this status may remain current."
+      "This canonical dataset is still the Palworld 1.0 snapshot recorded in July 2026.",
+      "The current public game version is newer, so this reference must not report itself as current until the 1.0.3 source tables and build are imported and revalidated.",
+      "No exact game build number was independently verified for the July snapshot."
     ],
     "requires_recheck_after_newer_patch": true
   },
@@ -130,6 +130,17 @@
       "verified_cases": [
         "Lunaris + Grintale -> Penking",
         "Sibelyx + Lamball -> Surfent"
+      ]
+    },
+    {
+      "source": "palworldbreeding.gg",
+      "authoritative": false,
+      "checked_on": "2026-08-30",
+      "purpose": "current Palworld 1.0.3 independent extraction cross-check while the repository source refresh is in progress",
+      "verified_cases": [
+        "Snock + Jolthog -> Turtacle",
+        "equal-distance normal-formula ties prefer higher CombiDuplicatePriority",
+        "normal formula excludes special-child species"
       ]
     }
   ],
