@@ -4,7 +4,7 @@ export interface PalValue {
   internal_name: string;
   name_de: string;
   name_en: string;
-  paldex_no: number;
+  paldex_no: number | null;
   is_variant: boolean;
   combi_rank: number;
   rarity: number;

@@ -249,7 +249,7 @@ export function validateCanonicalInputs(inputs: CanonicalInputs): void {
     ] as const) {
       requireString(value, `pals[${index}].${field}`);
     }
-    requireInteger(pal.paldex_no, `pals[${index}].paldex_no`);
+    if (pal.paldex_no !== null) requireInteger(pal.paldex_no, `pals[${index}].paldex_no`);
     requireInteger(pal.combi_rank, `pals[${index}].combi_rank`, 1);
     requireInteger(pal.rarity, `pals[${index}].rarity`);
     requireInteger(pal.combi_duplicate_priority, `pals[${index}].combi_duplicate_priority`);

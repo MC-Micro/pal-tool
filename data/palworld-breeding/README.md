@@ -40,6 +40,8 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 
 Details und jede Restunsicherheit stehen ausdrücklich in `breeding_rules.json` und `manifest.json`.
 
+Die Terraria-Crossover-Entitäten ohne offiziellen `ZukanIndex` verwenden `paldex_no: null`; frühere künstliche 10000er Nummern sind keine Game Truth. Der offizielle aktuelle Lokalisierungseintrag `ElecSnail_Ground` lautet in Englisch und Deutsch `Snock Terra`.
+
 ## Direkte Ingame-Bestätigung und Auswirkungen
 
 Am 13.07.2026 bestätigten ausgebrütete Eier in Palworld 1.0 `Lunaris MALE + Grintale FEMALE → Penking` sowie `Sibelyx + Lamball → Surfent`. Der erste Test stimmt mit dem globalen Higher-`CombiDuplicatePriority`-Tie-Break überein, der zweite mit dem globalen Spezialkind-Ausschluss. Palworld.gg wurde nur manuell und nicht-kanonisch gegengeprüft; weder Build noch Worker hängen davon ab.

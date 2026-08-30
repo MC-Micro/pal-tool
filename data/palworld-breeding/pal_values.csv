@@ -261,23 +261,23 @@ SamuraiDog,Pupperai,Pupperai,13,False,2930,2,False,293000,268,SamuraiDog
 PoseidonOrca,Neptilius,Neptilius,201,False,160,20,True,16000,269,PoseidonOrca
 SwordCutlassfish,Skutlass,Skutlass,128,False,1420,5,False,142000,270,SwordCutlassfish
 SwordCutlassfish_Fire,Skutlass Ignis,Skutlass Ignis,128,True,1590,5,False,159000,271,SwordCutlassfish_Fire
-YakushimaMonster001,Grüner Schleim,Green Slime,10002,False,3100,3,True,310000,272,YakushimaMonster001
-YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,10003,False,3100,3,True,310000,273,YakushimaMonster001_Blue
-YakushimaMonster001_Red,Roter Schleim,Red Slime,10007,False,3100,3,True,310000,274,YakushimaMonster001_Red
-YakushimaMonster001_Purple,Lila Schleim,Purple Slime,10005,False,3100,3,True,310000,275,YakushimaMonster001_Purple
-YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,10004,False,3100,4,True,310000,276,YakushimaMonster001_Pink
-YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,10006,False,3100,4,True,310000,277,YakushimaMonster001_Rainbow
-YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,10008,False,3100,3,True,310000,278,YakushimaMonster002
-YakushimaMonster003,Höhlenfledermaus,Cave Bat,10009,False,3100,3,True,310000,279,YakushimaMonster003
-YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,10010,False,3100,4,True,310000,280,YakushimaMonster003_Purple
-YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,10000,False,3100,6,True,310000,281,YakushimaBoss001
-YakushimaBoss001_Small,Dämonenauge,Demon Eye,10001,False,3100,3,True,310000,282,YakushimaBoss001_Small
+YakushimaMonster001,Grüner Schleim,Green Slime,,False,3100,3,True,310000,272,YakushimaMonster001
+YakushimaMonster001_Blue,Blauer Schleim,Blue Slime,,False,3100,3,True,310000,273,YakushimaMonster001_Blue
+YakushimaMonster001_Red,Roter Schleim,Red Slime,,False,3100,3,True,310000,274,YakushimaMonster001_Red
+YakushimaMonster001_Purple,Lila Schleim,Purple Slime,,False,3100,3,True,310000,275,YakushimaMonster001_Purple
+YakushimaMonster001_Pink,Leuchtschleim,Illuminant Slime,,False,3100,4,True,310000,276,YakushimaMonster001_Pink
+YakushimaMonster001_Rainbow,Regenbogenschleim,Rainbow Slime,,False,3100,4,True,310000,277,YakushimaMonster001_Rainbow
+YakushimaMonster002,Verzaubertes Schwert,Enchanted Sword,,False,3100,3,True,310000,278,YakushimaMonster002
+YakushimaMonster003,Höhlenfledermaus,Cave Bat,,False,3100,3,True,310000,279,YakushimaMonster003
+YakushimaMonster003_Purple,Leuchtfledermaus,Illuminant Bat,,False,3100,4,True,310000,280,YakushimaMonster003_Purple
+YakushimaBoss001,Auge von Cthulhu,Eye of Cthulhu,,False,3100,6,True,310000,281,YakushimaBoss001
+YakushimaBoss001_Small,Dämonenauge,Demon Eye,,False,3100,3,True,310000,282,YakushimaBoss001_Small
 MummyPal,Gildra,Gildra,120,False,1170,5,False,117000,283,MummyPal
 KingSunfish,Solmora,Solmora,169,False,1370,4,False,137000,284,KingSunfish
 KingSunfish_Thunder,Solmora Lux,Solmora Lux,169,True,1000,5,False,100000,285,KingSunfish_Thunder
 MonochromeQueen,Solenne,Solenne,182,False,280,7,False,28000,286,MonochromeQueen
 ElecSnail,Snock,Snock,163,False,1780,2,False,178000,287,ElecSnail
-ElecSnail_Ground,Snock Lux,Snock Lux,163,True,1500,3,False,150000,288,ElecSnail_Ground
+ElecSnail_Ground,Snock Terra,Snock Terra,163,True,1500,3,False,150000,288,ElecSnail_Ground
 LanternButler,Loomen,Loomen,180,False,890,5,False,89000,289,LanternButler
 SumoDog,Bulldosu,Bulldosu,156,False,1190,4,False,119000,290,SumoDog
 VenusFlytrap,Carnibora,Carnibora,136,False,1700,6,False,170000,291,VenusFlytrap

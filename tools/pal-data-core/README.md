@@ -67,6 +67,15 @@ dotnet run --project "$project" -- snapshot --pak-dir PAKS --catalog "$catalog" 
 
 `Pal Data Core CI` kompiliert warnings-as-errors und validiert den Katalog ohne Spieldownload. `Probe Pal Data Core` ist der teure offizielle Build-Gate; sein kurzlebiges Review-Artefakt enthält nur normalisierte Candidate-Dateien, niemals PAKs, Mappings oder Raw DataTables.
 
+`scripts/review-breeding-candidate.mjs` ist der read-only Breeding-Adapter-Gate. Er vergleicht den Candidate gegen die reviewte Produktmenge und blockiert bei:
+
+- abweichenden offiziellen Namen, Paldeck-Nummern, Rängen, Rarity-, Ignore- oder Priority-Werten;
+- widersprüchlichen Main-/Common-Quellen;
+- fehlenden oder neuen veröffentlichten Cross-Species-Specials;
+- nicht eindeutig reproduzierbarer technischer Snapshot-Provenienz.
+
+Der Adapter schreibt nur einen Reviewbericht und verändert keine kanonischen Daten. Die 299 veröffentlichte Arten umfassende Produktmenge bleibt ein expliziter Filter oberhalb der 753 technischen Zeilen.
+
 ## Spätere Module
 
 - PartnerSkill / PartnerSkillParameter;

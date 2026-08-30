@@ -1618,8 +1618,8 @@
     "parent_b_de": "Turtacle Terra",
     "parent_b_en": "Turtacle Terra",
     "child_internal": "ElecSnail_Ground",
-    "child_de": "Snock Lux",
-    "child_en": "Snock Lux",
+    "child_de": "Snock Terra",
+    "child_en": "Snock Terra",
     "parent_a_gender": "ANY",
     "parent_b_gender": "ANY"
   },

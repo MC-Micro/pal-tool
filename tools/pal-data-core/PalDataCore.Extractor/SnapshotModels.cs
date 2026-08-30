@@ -7,6 +7,7 @@ public sealed record SourceTableSnapshot<T>(
 
 public sealed record PalTechnicalRow(
     string SourceRow,
+    int SourceOrdinal,
     string Tribe,
     string BpClass,
     int ZukanIndex,
@@ -48,6 +49,7 @@ public sealed record PalTechnicalRow(
 
 public sealed record BreedingUniqueTechnicalRow(
     string SourceRow,
+    int SourceOrdinal,
     string ParentTribeA,
     string ParentTribeB,
     string ParentGenderA,
@@ -56,6 +58,7 @@ public sealed record BreedingUniqueTechnicalRow(
 
 public sealed record LocalizedTextRow(
     string SourceRow,
+    int SourceOrdinal,
     string Text);
 
 public sealed record CoreTechnicalSnapshot(

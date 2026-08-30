@@ -28,8 +28,9 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace, TableCatalog catal
                 source.PackagePath,
                 source.Table.RowMap.Count,
                 source.Table.RowMap
-                    .OrderBy(row => row.Key.Text, StringComparer.Ordinal)
-                    .Select(row => ReadPal(row.Key.Text, row.Value))
+                    .Select((row, sourceOrdinal) => (Row: row, SourceOrdinal: sourceOrdinal))
+                    .OrderBy(item => item.Row.Key.Text, StringComparer.Ordinal)
+                    .Select(item => ReadPal(item.Row.Key.Text, item.SourceOrdinal, item.Row.Value))
                     .ToArray()))
             .ToArray();
 
@@ -38,8 +39,9 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace, TableCatalog catal
                 source.PackagePath,
                 source.Table.RowMap.Count,
                 source.Table.RowMap
-                    .OrderBy(row => row.Key.Text, StringComparer.Ordinal)
-                    .Select(row => ReadBreeding(row.Key.Text, row.Value))
+                    .Select((row, sourceOrdinal) => (Row: row, SourceOrdinal: sourceOrdinal))
+                    .OrderBy(item => item.Row.Key.Text, StringComparer.Ordinal)
+                    .Select(item => ReadBreeding(item.Row.Key.Text, item.SourceOrdinal, item.Row.Value))
                     .ToArray()))
             .ToArray();
 
@@ -50,7 +52,7 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace, TableCatalog catal
             throw new InvalidOperationException("Technical snapshot requires Pal and CombiUnique source tables.");
 
         return new CoreTechnicalSnapshot(
-            1,
+            2,
             buildId,
             palTables,
             breedingTables,
@@ -64,14 +66,19 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace, TableCatalog catal
                 source.PackagePath,
                 source.Table.RowMap.Count,
                 source.Table.RowMap
-                    .OrderBy(row => row.Key.Text, StringComparer.Ordinal)
-                    .Select(row => new LocalizedTextRow(
-                        row.Key.Text,
-                        new ValueReader(row.Value).String("", "TextData", "Text", "Value")))
+                    .Select((row, sourceOrdinal) => (Row: row, SourceOrdinal: sourceOrdinal))
+                    .OrderBy(item => item.Row.Key.Text, StringComparer.Ordinal)
+                    .Select(item => new LocalizedTextRow(
+                        item.Row.Key.Text,
+                        item.SourceOrdinal,
+                        new ValueReader(item.Row.Value).String("", "TextData", "Text", "Value")))
                     .ToArray()))
             .ToArray();
 
-    private static PalTechnicalRow ReadPal(string sourceRow, CUE4Parse.UE4.Assets.Objects.FStructFallback row)
+    private static PalTechnicalRow ReadPal(
+        string sourceRow,
+        int sourceOrdinal,
+        CUE4Parse.UE4.Assets.Objects.FStructFallback row)
     {
         var reader = new ValueReader(row);
         var work = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -88,6 +95,7 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace, TableCatalog catal
 
         return new PalTechnicalRow(
             sourceRow,
+            sourceOrdinal,
             reader.String("", "Tribe"),
             reader.String("", "BPClass"),
             reader.Int(-1, "ZukanIndex", "PalDexNum"),
@@ -128,11 +136,15 @@ internal sealed class SnapshotBuilder(PakWorkspace workspace, TableCatalog catal
             reader.String("", "OverridePartnerSkillDescTextID"));
     }
 
-    private static BreedingUniqueTechnicalRow ReadBreeding(string sourceRow, CUE4Parse.UE4.Assets.Objects.FStructFallback row)
+    private static BreedingUniqueTechnicalRow ReadBreeding(
+        string sourceRow,
+        int sourceOrdinal,
+        CUE4Parse.UE4.Assets.Objects.FStructFallback row)
     {
         var reader = new ValueReader(row);
         return new BreedingUniqueTechnicalRow(
             sourceRow,
+            sourceOrdinal,
             reader.String("", "ParentTribeA"),
             reader.String("", "ParentTribeB"),
             reader.String("", "ParentGenderA"),
