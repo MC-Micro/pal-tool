@@ -1,0 +1,174 @@
+name: Probe Current Palworld Breeding Tables (temporary)
+
+on:
+  push:
+    branches:
+      - breeder/core-refresh-1.0.3
+    paths:
+      - ".github/workflows/probe-palworld-breeding-tables.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe-tables:
+    if: github.ref == 'refs/heads/breeder/core-refresh-1.0.3'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out feature branch
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Download SteamCMD and official Palworld Dedicated Server
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/steamcmd"
+          curl --fail --location --retry 3 \
+            https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+            -o "$RUNNER_TEMP/steamcmd/steamcmd_linux.tar.gz"
+          tar -xzf "$RUNNER_TEMP/steamcmd/steamcmd_linux.tar.gz" -C "$RUNNER_TEMP/steamcmd"
+          "$RUNNER_TEMP/steamcmd/steamcmd.sh" \
+            +login anonymous \
+            +app_update 2394010 validate \
+            +quit
+          manifest="$HOME/Steam/steamapps/appmanifest_2394010.acf"
+          test -f "$manifest"
+          echo "Official dedicated-server metadata:"
+          grep -E '"(appid|buildid|LastUpdated)"' "$manifest"
+          test -f "$HOME/Steam/steamapps/common/PalServer/Pal/Content/Paks/Pal-LinuxServer.pak"
+
+      - name: Download pinned repak and Palworld 1.0.3 mappings
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/tools"
+          curl --fail --location --retry 3 \
+            https://github.com/trumank/repak/releases/download/v0.2.3/repak_cli-x86_64-unknown-linux-gnu.tar.xz \
+            -o "$RUNNER_TEMP/tools/repak.tar.xz"
+          echo "933bdb8e26f34e8fd70ea50201efca39df041de58aa83b1cd6eb83da124a2046  $RUNNER_TEMP/tools/repak.tar.xz" | sha256sum --check
+          tar -xJf "$RUNNER_TEMP/tools/repak.tar.xz" -C "$RUNNER_TEMP/tools"
+          repak="$(find "$RUNNER_TEMP/tools" -type f -name repak -print -quit)"
+          test -n "$repak"
+          chmod +x "$repak"
+          echo "REPAK=$repak" >> "$GITHUB_ENV"
+
+          curl --fail --location --retry 3 \
+            https://raw.githubusercontent.com/PalworldModding/UsefulFiles/0e4ae19a05ba0d9fb95d859c09b28f168cb3624f/Mappings.usmap \
+            -o "$RUNNER_TEMP/tools/Mappings.usmap"
+          sha256sum "$RUNNER_TEMP/tools/Mappings.usmap"
+
+      - name: Extract only breeding-relevant assets from official PAK
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/extracted"
+          "$REPAK" unpack \
+            -o "$RUNNER_TEMP/extracted" \
+            -f \
+            -i "Pal/Content/Pal/DataTable/Character" \
+            -i "Pal/Content/L10N/en/Pal/DataTable/Text" \
+            "$HOME/Steam/steamapps/common/PalServer/Pal/Content/Paks/Pal-LinuxServer.pak"
+          echo "Extracted size:"
+          du -sh "$RUNNER_TEMP/extracted"
+
+      - name: Build pinned MIT CUE4Parse table exporter
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet --version
+          mkdir -p "$RUNNER_TEMP/exporter"
+          exporter_commit="2d622d64140fc90b1ac913c139d91dfd150d15dd"
+          curl --fail --location --retry 3 \
+            "https://raw.githubusercontent.com/ICSharperNow/palworld-breeding-calculator/$exporter_commit/tools/exporter/PalExport.csproj" \
+            -o "$RUNNER_TEMP/exporter/PalExport.csproj"
+          curl --fail --location --retry 3 \
+            "https://raw.githubusercontent.com/ICSharperNow/palworld-breeding-calculator/$exporter_commit/tools/exporter/Program.cs" \
+            -o "$RUNNER_TEMP/exporter/Program.cs"
+          curl --fail --location --retry 3 \
+            "https://raw.githubusercontent.com/ICSharperNow/palworld-breeding-calculator/$exporter_commit/LICENSE" \
+            -o "$RUNNER_TEMP/exporter/LICENSE"
+          dotnet restore "$RUNNER_TEMP/exporter/PalExport.csproj"
+
+      - name: Export DataTables to temporary JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/raw"
+          dotnet run --project "$RUNNER_TEMP/exporter/PalExport.csproj" -- \
+            "$RUNNER_TEMP/extracted" \
+            "$RUNNER_TEMP/tools/Mappings.usmap" \
+            "$RUNNER_TEMP/raw"
+          test -s "$RUNNER_TEMP/raw/DT_PalMonsterParameter.json"
+          test -s "$RUNNER_TEMP/raw/DT_PalCombiUnique.json"
+          test -s "$RUNNER_TEMP/raw/DT_PalNameText_Common.json"
+
+      - name: Report current breeding facts directly from extracted tables
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import re
+          import os
+          from pathlib import Path
+
+          raw = Path(os.environ['RUNNER_TEMP']) / 'raw'
+          def rows(name):
+              return json.loads((raw / f'{name}.json').read_text())['Rows']
+          def enum_val(value):
+              return value.split('::')[-1] if isinstance(value, str) else value
+
+          monster = rows('DT_PalMonsterParameter')
+          combos = rows('DT_PalCombiUnique')
+          name_rows = rows('DT_PalNameText_Common')
+          names = {}
+          for key, value in name_rows.items():
+              if key.startswith('PAL_NAME_'):
+                  names[key[len('PAL_NAME_'):].lower()] = value['TextData']['LocalizedString']
+
+          def display(internal):
+              return names.get(internal.lower(), internal)
+          def find_internal(display_name):
+              hits = [k for k in monster if display(k) == display_name]
+              if len(hits) != 1:
+                  raise SystemExit(f'{display_name}: expected one row, found {hits}')
+              return hits[0]
+
+          print(f'MONSTER_ROWS={len(monster)}')
+          print(f'COMBO_ROWS={len(combos)}')
+          print(f'NAME_ROWS={len(name_rows)}')
+          for wanted in ['Snock','Jolthog','Turtacle','Dazzi','Azurobe Cryst','Frostplume','Braloha','Dynamoff','Quivern']:
+              internal = find_internal(wanted)
+              row = monster[internal]
+              print('PAL', wanted, internal,
+                    'rank=', row.get('CombiRank'),
+                    'priority=', row.get('CombiDuplicatePriority'),
+                    'rarity=', row.get('Rarity'),
+                    'ignore=', row.get('IgnoreCombi'),
+                    'zukan=', row.get('ZukanIndex'), row.get('ZukanIndexSuffix'))
+
+          special_rows = []
+          for row_id, row in combos.items():
+              a = enum_val(row.get('ParentTribeA'))
+              b = enum_val(row.get('ParentTribeB'))
+              child = row.get('ChildCharacterID')
+              item = (str(row_id), display(str(a)), display(str(b)), display(str(child)),
+                      enum_val(row.get('ParentGenderA')), enum_val(row.get('ParentGenderB')))
+              special_rows.append(item)
+          print('SPECIAL_ROWS_WITH_AZUROBE_CRYST:')
+          for item in special_rows:
+              if item[3] == 'Azurobe Cryst':
+                  print(item)
+          print('SPECIAL_ROWS_WITH_TURTACLE:')
+          for item in special_rows:
+              if item[3] == 'Turtacle':
+                  print(item)
+          print('GENDERED_SPECIAL_ROWS:')
+          for item in special_rows:
+              if item[4] not in (None, 'None') or item[5] not in (None, 'None'):
+                  print(item)
+          PY
+
+# Temporary feature-branch probe. It reads the official free server package and reports
+# table-derived facts only; no raw game asset or exported table is committed or uploaded.
