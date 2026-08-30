@@ -46,7 +46,7 @@ Historische Statuswerte dokumentieren nur den zuletzt geprüften technischen Sta
 
 ### 0. Pal Data Core
 
-`tools/pal-data-core/` enthält die GitHub-native, read-only Acquisition-/Extraction-Pipeline für den offiziellen Dedicated Server (Steam App `2394010`). Der aktuelle live verifizierte Server-Build ist `24575149`; erforderliche Tabellen wurden ohne externes Mapping gelesen. Der Schema-2-Snapshot mit SHA-256 `78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc` wurde gegen den veröffentlichten Umfang geprüft: null Quellkonflikte, null Pal-Abweichungen und null fehlende oder neue veröffentlichte Specials.
+`tools/pal-data-core/` enthält die GitHub-native, read-only Acquisition-/Extraction-Pipeline für den offiziellen Dedicated Server (Steam App `2394010`). Der aktuelle live verifizierte Server-Build ist `24575149`; erforderliche Tabellen wurden ohne externes Mapping gelesen. Der Schema-2-Snapshot mit SHA-256 `78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc` wurde gegen den veröffentlichten Umfang geprüft: null Quellkonflikte, null Pal-Abweichungen und null fehlende oder neue veröffentlichte Specials. Alle 258 technischen Zuchtzeilen sind klassifiziert: 115 veröffentlichte Same-Species-Identitäten, 136 veröffentlichte Cross-Species-Specials und sieben technische Same-Species-Identitäten außerhalb des Produktfilters; keine technische Cross-Species-Zeile bleibt außerhalb des Filters.
 
 `catalog.v1.json` trennt Package-Pfade, Domänen und Extraktionsprofile vom allgemeinen PAK-Leser. `inventory-only` erlaubt neue DataTables zunächst vollständig nach Row-/Field-/Property-Type-Struktur zu erfassen, ohne unbekannte Felder zu interpretieren. `Pal Data Core CI` kompiliert warnings-as-errors und validiert den Katalog. Der teure `Probe Pal Data Core`-Gate lädt den offiziellen Server und erzeugt nur ein kurzlebiges normalisiertes Candidate-Artefakt; PAKs, Mappings und Raw DataTables werden weder committed noch hochgeladen.
 
@@ -155,8 +155,8 @@ Die Analyse `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet f
 
 Aktueller dokumentierter Stand:
 
-- `source_data_hash`: `32f366e3691841bc7245cd7a94c7b52f718fb19f3651968b4176988b8423fe1d`
-- `generated_artifact_hash`: `ec57615973ff4125fa274c56b31a1c215279c2ace334b32e254947db1038e503`
+- `source_data_hash`: `88962fcc1c2bbe7c2f0d22ece831efac18869e89b7a8750bf1d24daadb3c6473`
+- `generated_artifact_hash`: `389a67bc8fb3c8b54123b496a941837b73f2d1adca6969ee021ac73cfc6577af`
 
 Der vollständige Ergebnisvergleich liegt unter `services/breeding-api/generated/special-child-impact.json`.
 

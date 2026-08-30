@@ -72,9 +72,10 @@ dotnet run --project "$project" -- snapshot --pak-dir PAKS --catalog "$catalog" 
 - abweichenden offiziellen Namen, Paldeck-Nummern, Rängen, Rarity-, Ignore- oder Priority-Werten;
 - widersprüchlichen Main-/Common-Quellen;
 - fehlenden oder neuen veröffentlichten Cross-Species-Specials;
+- nicht klassifizierten technischen Cross-Species-Zeilen oder Same-Species-Zeilen mit abweichendem Kind;
 - nicht eindeutig reproduzierbarer technischer Snapshot-Provenienz.
 
-Der Adapter schreibt nur einen Reviewbericht und verändert keine kanonischen Daten. Die 299 veröffentlichte Arten umfassende Produktmenge bleibt ein expliziter Filter oberhalb der 753 technischen Zeilen.
+Der Adapter schreibt nur einen Reviewbericht und verändert keine kanonischen Daten. Er klassifiziert alle 258 technischen Zuchtzeilen einzeln. Im Build `24575149` sind das 115 veröffentlichte Same-Species-Identitäten, 136 veröffentlichte Cross-Species-Specials und sieben technische Same-Species-Identitäten außerhalb des Produktfilters; technische Cross-Species-Zeilen außerhalb des Filters gibt es nicht. Die 299 veröffentlichte Arten umfassende Produktmenge bleibt ein expliziter Filter oberhalb der 753 technischen Pal-Zeilen.
 
 ## Spätere Module
 

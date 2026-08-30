@@ -28,6 +28,8 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 
 - Pals: **299**
 - Artverschiedene direkte Spezialkombinationen: **136**
+- Technische `DT_PalCombiUnique`-Zeilen: **258** = **115** veröffentlichte Same-Species-Identitäten + **136** veröffentlichte Cross-Species-Specials + **7** technische Same-Species-Identitäten außerhalb des Produktfilters
+- Technische Cross-Species-Zeilen außerhalb des Produktfilters: **0**
 - Eindeutige Spezialkind-Arten: **90**
 - Zulässige normale Formel-Kinder: **184**
 - Durch die Spezialkindregel geänderte ungeordnete Paarergebnisse: **13.479 von 44.850**
@@ -40,7 +42,7 @@ Vor jeder Zuchtberechnung werden zuerst `breeding_rules.json`, danach `special_c
 
 Details und jede Restunsicherheit stehen ausdrücklich in `breeding_rules.json` und `manifest.json`.
 
-Der technische Candidate aus Steam App `2394010`, Build `24575149`, enthält 753 eindeutige Pal-Zeilen und 258 technische Sonderzuchtzeilen. Die beiden offiziellen Pal-Parametertabellen stimmen vollständig überein. Das read-only Review fand für 299 veröffentlichte Pals und 136 veröffentlichte artverschiedene Specials keine Quellkonflikte, Feldabweichungen, fehlenden oder neuen Kombinationen. Die technische Snapshot-SHA-256 lautet `78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc`.
+Der technische Candidate aus Steam App `2394010`, Build `24575149`, enthält 753 eindeutige Pal-Zeilen und 258 technische Zuchtzeilen. Die beiden offiziellen Pal-Parametertabellen stimmen vollständig überein. Das read-only Review klassifiziert jede technische Zuchtzeile und fand für 299 veröffentlichte Pals und 136 veröffentlichte artverschiedene Specials keine Quellkonflikte, Feldabweichungen, fehlenden oder neuen Kombinationen. Die sieben technischen Same-Species-Zeilen außerhalb des Produktfilters bleiben erhalten und werden nicht fälschlich als veröffentlichte Pals ausgegeben. Die technische Snapshot-SHA-256 lautet `78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc`.
 
 Die Terraria-Crossover-Entitäten ohne offiziellen `ZukanIndex` verwenden `paldex_no: null`; frühere künstliche 10000er Nummern sind keine Game Truth. Der offizielle aktuelle Lokalisierungseintrag `ElecSnail_Ground` lautet in Englisch und Deutsch `Snock Terra`.
 

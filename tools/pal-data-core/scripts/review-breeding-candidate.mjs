@@ -140,16 +140,58 @@ const releasedId = (value) => {
   return releasedByLowercase.get(raw.toLowerCase()) ?? raw;
 };
 const candidateSpecials = [];
+const breedingClassifications = [];
 for (const [sourceRow, row] of breeding.rows) {
   const parentA = releasedId(row.parentTribeA);
   const parentB = releasedId(row.parentTribeB);
   const child = releasedId(row.childCharacterId);
-  if (parentA === parentB || !released.has(parentA) || !released.has(parentB) || !released.has(child)) continue;
+  const missingReleasedReferences = [parentA, parentB, child].filter(
+    (internalName) => !released.has(internalName),
+  );
+  let classification;
+  if (missingReleasedReferences.length > 0 && parentA === parentB && parentA === child) {
+    classification = "technical_same_species_outside_product_filter";
+  } else if (missingReleasedReferences.length > 0) {
+    classification = "technical_cross_species_outside_product_filter";
+  } else if (parentA === parentB && parentA === child) {
+    classification = "released_same_species_identity";
+  } else if (parentA === parentB) {
+    classification = "same_species_non_identity";
+  } else {
+    classification = "released_cross_species_special";
+  }
+  breedingClassifications.push({
+    sourceRow,
+    classification,
+    parentA,
+    parentB,
+    child,
+    missingReleasedReferences,
+  });
+  if (classification !== "released_cross_species_special") continue;
   candidateSpecials.push({
     sourceRow,
     key: orientedSpecialKey(parentA, gender(row.parentGenderA), parentB, gender(row.parentGenderB), child),
   });
 }
+
+const breedingClassificationCounts = Object.fromEntries(
+  [
+    "released_same_species_identity",
+    "released_cross_species_special",
+    "technical_same_species_outside_product_filter",
+    "technical_cross_species_outside_product_filter",
+    "same_species_non_identity",
+  ].map((classification) => [
+    classification,
+    breedingClassifications.filter((row) => row.classification === classification).length,
+  ]),
+);
+const blockingBreedingClassifications = breedingClassifications.filter(
+  ({ classification }) =>
+    classification === "technical_cross_species_outside_product_filter" ||
+    classification === "same_species_non_identity",
+);
 
 const canonicalSpecialKeys = new Map(
   canonicalSpecials.map((row) => [
@@ -188,12 +230,16 @@ const report = {
     reviewedCanonicalSpecials: canonicalSpecials.length,
     candidateCrossSpeciesSpecials: candidateSpecials.length,
   },
+  breedingClassificationCounts,
+  breedingClassifications,
+  blockingBreedingClassifications,
   sourceConflicts,
   palMismatches,
   missingCanonicalSpecials,
   newCandidateSpecials,
   ok:
     sourceConflicts.length === 0 &&
+    blockingBreedingClassifications.length === 0 &&
     palMismatches.length === 0 &&
     missingCanonicalSpecials.length === 0 &&
     newCandidateSpecials.length === 0,

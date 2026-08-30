@@ -1,6 +1,6 @@
 {
   "schema_version": 5,
-  "generated_at_utc": "2026-08-30T14:36:20Z",
+  "generated_at_utc": "2026-08-30T14:44:59Z",
   "sources": [
     {
       "source_kind": "official_dedicated_server_extraction",
@@ -22,7 +22,7 @@
         "technical_snapshot": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
         "technical_summary": "443236a4bb5a6593f553ce9515b2778549416f872f7ed58b2364559c1d657283",
         "field_inventory": "7f1229deb4d61c04c727d3b67bf8103a8ed7d3742907158e78b87ee024f583c9",
-        "breeding_review": "82f9f9def33baa1fd7740c682cdcbf9ee9c4e09c94b83f5e094facafba9cca2a"
+        "breeding_review": "c66a0d874241fcbf5f56c95b7687a74af16d71bc8c58e182d6bd48c1ebc05c2d"
       },
       "used_for": [
         "authoritative_combi_rank",
@@ -93,6 +93,11 @@
   "counts": {
     "pal_values": 299,
     "cross_species_special_combinations": 136,
+    "technical_unique_combination_rows": 258,
+    "released_same_species_identity_rows": 115,
+    "technical_same_species_rows_outside_product_filter": 7,
+    "technical_cross_species_rows_outside_product_filter": 0,
+    "same_species_non_identity_rows": 0,
     "unique_special_child_species": 90,
     "normal_formula_eligible_children": 184,
     "eligible_special_child_species_excluded_from_normal_formula": 77,
@@ -140,7 +145,10 @@
           "technical_pal_rows": 753,
           "released_pals": 299,
           "technical_unique_rows": 258,
-          "released_cross_species_specials": 136
+          "released_same_species_identity_rows": 115,
+          "technical_same_species_rows_outside_product_filter": 7,
+          "released_cross_species_specials": 136,
+          "technical_cross_species_rows_outside_product_filter": 0
         },
         "confirms": "official values, names, Paldeck numbers, source ordinals and all released cross-species special combinations"
       },
@@ -201,6 +209,38 @@
     "official_pal_mismatches": [],
     "official_missing_special_combinations": [],
     "official_new_special_combinations": [],
+    "official_technical_same_species_outside_product_filter": [
+      {
+        "source_row": "58",
+        "internal_name": "PinkKangaroo"
+      },
+      {
+        "source_row": "59",
+        "internal_name": "BeardedDragon"
+      },
+      {
+        "source_row": "60",
+        "internal_name": "BlackFurDragon"
+      },
+      {
+        "source_row": "61",
+        "internal_name": "WaterLizard"
+      },
+      {
+        "source_row": "62",
+        "internal_name": "ElecLion"
+      },
+      {
+        "source_row": "63",
+        "internal_name": "GrassDragon"
+      },
+      {
+        "source_row": "64",
+        "internal_name": "DarkMutant"
+      }
+    ],
+    "official_technical_cross_species_outside_product_filter": [],
+    "official_same_species_non_identity_rows": [],
     "missing_game_table_rows": [],
     "fallback_game_table_rows": [],
     "palcalc_rank_mismatches": [],
