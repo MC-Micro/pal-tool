@@ -94,13 +94,8 @@ export function buildAliasMap(pals: readonly PalValue[]): Record<string, number[
   );
 }
 
-function resolveSameRankDuplicate(candidates: readonly PalValue[], pals: readonly PalValue[]): PalValue {
+function resolvePriorityTie(candidates: readonly PalValue[], pals: readonly PalValue[]): PalValue {
   if (candidates.length === 0) throw new Error("Cannot resolve an empty candidate list");
-  const ranks = new Set(candidates.map((candidate) => candidate.combi_rank));
-  if (ranks.size !== 1) {
-    const names = candidates.map((candidate) => candidate.internal_name).join(", ");
-    throw new Error(`Undocumented cross-rank tie remains after rarity rules: ${names}`);
-  }
 
   const sorted = [...candidates].sort((left, right) => {
     if (left.combi_duplicate_priority !== right.combi_duplicate_priority) {
@@ -111,7 +106,7 @@ function resolveSameRankDuplicate(candidates: readonly PalValue[], pals: readonl
   });
   const winner = sorted[0];
   if (winner === undefined || !pals.includes(winner)) {
-    throw new Error("Same-rank resolution produced an unknown candidate");
+    throw new Error("Priority resolution produced an unknown candidate");
   }
   return winner;
 }
@@ -143,36 +138,37 @@ function resolveFormula(
   });
   const appliedTieBreaks: string[] = [];
   const nearestRanks = new Set(candidates.map((candidate) => candidate.combi_rank));
+  // Kept in the response for API-schema compatibility and diagnostics. Rarity is
+  // no longer part of the canonical candidate selection rule.
   const parentRarityAverage = (parentA.rarity + parentB.rarity) / 2;
 
-  if (nearestRanks.size > 1) {
-    const rarityDistance = Math.min(
-      ...candidates.map((candidate) => Math.abs(candidate.rarity - parentRarityAverage)),
-    );
-    candidates = candidates.filter(
-      (candidate) => Math.abs(candidate.rarity - parentRarityAverage) === rarityDistance,
-    );
-    appliedTieBreaks.push("equidistant_different_ranks_parent_rarity_average");
-
-    if (candidates.length > 1) {
-      const lowerRarity = Math.min(...candidates.map((candidate) => candidate.rarity));
-      candidates = candidates.filter((candidate) => candidate.rarity === lowerRarity);
-      appliedTieBreaks.push("equidistant_rarity_lower_rarity");
-    }
-
-    const remainingRanks = new Set(candidates.map((candidate) => candidate.combi_rank));
-    if (remainingRanks.size > 1) {
-      // Direct Palworld 1.0 egg testing on 2026-07-13 confirmed that the higher
-      // CombiRank wins this fully equal cross-rank tie. This is a global rule,
-      // independent of source order, array order, or the tested parent pair.
-      const higherRank = Math.max(...candidates.map((candidate) => candidate.combi_rank));
-      candidates = candidates.filter((candidate) => candidate.combi_rank === higherRank);
-      appliedTieBreaks.push("equidistant_equal_rarity_higher_combi_rank");
+  if (candidates.length > 1) {
+    if (nearestRanks.size > 1) {
+      const higherPriority = Math.max(
+        ...candidates.map((candidate) => candidate.combi_duplicate_priority),
+      );
+      candidates = candidates.filter(
+        (candidate) => candidate.combi_duplicate_priority === higherPriority,
+      );
+      appliedTieBreaks.push("equidistant_higher_combi_duplicate_priority");
+    } else {
+      appliedTieBreaks.push("same_rank_duplicate_resolution");
     }
   }
 
-  if (candidates.length > 1) appliedTieBreaks.push("same_rank_duplicate_resolution");
-  const winner = resolveSameRankDuplicate(candidates, pals);
+  const winner = resolvePriorityTie(candidates, pals);
+  if (candidates.length > 1) {
+    const samePriority = candidates.filter(
+      (candidate) => candidate.combi_duplicate_priority === winner.combi_duplicate_priority,
+    );
+    if (samePriority.length > 1 && new Set(samePriority.map(({ is_variant }) => is_variant)).size > 1) {
+      appliedTieBreaks.push("non_variant_before_variant");
+    }
+    if (samePriority.filter(({ is_variant }) => is_variant === winner.is_variant).length > 1) {
+      appliedTieBreaks.push("lower_internal_index");
+    }
+  }
+
   const childId = palIds.get(winner);
   if (childId === undefined) throw new Error(`Winner ${winner.internal_name} lacks an id`);
 
