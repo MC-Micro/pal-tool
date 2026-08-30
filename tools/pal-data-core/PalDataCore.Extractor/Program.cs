@@ -38,6 +38,15 @@ internal static class Program
                 .Where(table => table.Required)
                 .All(table => table.Present && table.Parsed && table.RowCount > 0);
 
+            var discoveries = new Dictionary<string, IReadOnlyList<string>>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["PartnerSkillParameter"] = workspace.FindPackages("PartnerSkillParameter"),
+                ["Technology"] = workspace.FindPackages("Technology"),
+                ["Recipe"] = workspace.FindPackages("Recipe"),
+                ["BreedingItemEffect"] = workspace.FindPackages("BreedingItemEffect"),
+                ["PalGameSetting"] = workspace.FindPackages("PalGameSetting"),
+            };
+
             var notes = new List<string>();
             if (string.IsNullOrWhiteSpace(mappings))
                 notes.Add("No mappings file supplied. This is accepted only when all required current-build tables parse successfully without it.");
@@ -53,6 +62,7 @@ internal static class Program
                 !string.IsNullOrWhiteSpace(mappings),
                 requiredPassed,
                 tables,
+                discoveries,
                 notes);
 
             var fullOutput = Path.GetFullPath(output);
@@ -62,6 +72,13 @@ internal static class Program
             Console.WriteLine($"Build {buildId}: {tables.Count(table => table.Parsed)}/{tables.Length} catalog tables parsed.");
             foreach (var table in tables)
                 Console.WriteLine($"{table.Name}: present={table.Present} parsed={table.Parsed} rows={table.RowCount} path={table.PackagePath ?? "-"}");
+
+            foreach (var discovery in discoveries)
+            {
+                Console.WriteLine($"DISCOVERY {discovery.Key}: {discovery.Value.Count}");
+                foreach (var package in discovery.Value)
+                    Console.WriteLine($"  {package}");
+            }
 
             return requiredPassed ? 0 : 2;
         }
