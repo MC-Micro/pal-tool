@@ -27,7 +27,7 @@ Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene
 
 ## Fachlicher Stand
 
-Die Referenz enthält weiterhin den historischen Palworld-1.0-Artenbestand vom 13.07.2026. Ihre Schema-5-Mechanik ist strukturell validiert; die vollständige buildgenaue Migration auf den aktuellen offiziellen Dedicated Server ist noch nicht freigegeben. Zwei direkt erzeugte und ausgebrütete Eier bestätigen:
+Die Referenz enthält den veröffentlichten 299-Pal-Produktumfang aus dem normalisierten offiziellen Dedicated-Server-Build `24575149` für Palworld `1.0.3`. Werte, Namen, Paldeck-Nummern, Tabellenreihenfolge und 136 veröffentlichte artverschiedene Spezialkombinationen wurden buildgenau geprüft. Zwei frühere direkt erzeugte und ausgebrütete Eier bestätigen zusätzlich die globalen Regeln:
 
 - `Lunaris MALE + Grintale FEMALE → Penking`
 - `Sibelyx + Lamball → Surfent`
@@ -42,9 +42,9 @@ Daraus gelten global:
 6. Danach entscheiden Nicht-Variante und interne Reihenfolge.
 7. Paldeck-Nummern beeinflussen weder Zuchtwert noch Tie-Break.
 
-Palworld.gg wurde für die beiden Testfälle ausschließlich manuell und nicht-kanonisch gegengeprüft. Es ist keine Build-, Release- oder Runtime-Abhängigkeit.
+Community-Datensätze und Webseiten wurden ausschließlich unabhängig und nicht-kanonisch gegengeprüft. Sie sind keine Build-, Release- oder Runtime-Abhängigkeit.
 
-Die strukturelle Validierung ist grün und enthält keine ungelösten fachlichen Konflikte. Das Release-Gate bleibt absichtlich blockiert, solange `manifest.patch_check.status` nicht nach dem aktuellen Core-Import auf `current` gesetzt werden kann.
+Die strukturelle Validierung und das Release-Gate sind für Build `24575149` grün und enthalten keine ungelösten fachlichen Konflikte. Ein neuerer offizieller Build setzt einen neuen Candidate, deterministischen Vergleich und ein explizites Review voraus.
 
 ## Kanonische Quellen und Zähler
 
@@ -65,8 +65,8 @@ Aktueller dokumentierter Stand:
 - zulässige normale Formel-Kinder: 184 statt zuvor 261
 - ungeordnete Artenpaare einschließlich Same-Species: 44.850
 - durch die Spezialkindregel geänderte Paarergebnisse: 13.479
-- `source_data_hash`: `0e42421242027cdc6516b8f140d6fe1c0b94d6e9201164554a9337259bc21636`
-- `generated_artifact_hash`: `6189863ff6b8878bf2a6997064eb9a4e7455b306815d1173430427f9530bbee1`
+- `source_data_hash`: `6c3b4abc6b985eee0154e1468238abf9a95928aab6f748423d42d3f341ea07bd`
+- `generated_artifact_hash`: `bd7c739198a7023cc6f7073f57166857077be91bb2d72099d11b26533d6c62af`
 
 `source_data_hash` hasht deterministisch die vier kanonischen Eingabedateien. `generated_artifact_hash` hasht den kanonisch serialisierten generierten Referenzinhalt, wobei seine eigenen Hashfelder ausgeschlossen werden. Beide Begriffe werden öffentlich nicht vermischt.
 
@@ -176,7 +176,7 @@ Eine Artenroute ist daher weder eine bestands-, passiv-, geschlechts- noch koste
 
 ## Patchstatus
 
-`manifest.patch_check` nennt Version `1.0`, Prüftag `2026-07-13`, Status `needs_review`, keine verifizierte Buildnummer und `requires_recheck_after_newer_patch = true`. Erst ein vollständig geprüfter Import des aktuellen offiziellen Builds darf den Status wieder auf `current` setzen.
+`manifest.patch_check` nennt Version `1.0.3`, Prüftag `2026-08-30`, Status `current`, den verifizierten Dedicated-Server-Build `24575149` und `requires_recheck_after_newer_patch = true`. Der zugrunde liegende technische Snapshot hat SHA-256 `78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc`.
 
 ## CI und Deployment
 

@@ -13,8 +13,6 @@ on:
       - "services/breeding-api/**"
       - ".github/workflows/breeding-api-ci.yml"
       - ".github/workflows/deploy-breeding-api.yml"
-      - ".github/workflows/build-palworld-breeding-reference.yml"
-      - ".github/workflows/analyze-anubis-route.yml"
   pull_request:
     branches:
       - main
@@ -24,8 +22,6 @@ on:
       - "services/breeding-api/**"
       - ".github/workflows/breeding-api-ci.yml"
       - ".github/workflows/deploy-breeding-api.yml"
-      - ".github/workflows/build-palworld-breeding-reference.yml"
-      - ".github/workflows/analyze-anubis-route.yml"
 
 permissions:
   contents: read

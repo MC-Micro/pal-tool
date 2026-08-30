@@ -7,6 +7,8 @@ on:
       - "breeder/**"
     paths:
       - ".github/workflows/probe-pal-data-core.yml"
+      - "data/palworld-breeding/pal_values.json"
+      - "data/palworld-breeding/special_combinations.json"
       - "tools/pal-data-core/**"
 
 permissions:
@@ -106,6 +108,18 @@ jobs:
 
           echo "----- Technical snapshot summary -----"
           cat "$RUNNER_TEMP/pal-data-core-candidate/core-summary-a.json"
+
+      - name: Review released breeding data against official snapshot
+        shell: bash
+        run: |
+          node tools/pal-data-core/scripts/review-breeding-candidate.mjs \
+            "$RUNNER_TEMP/pal-data-core-candidate/core-snapshot-a.json" \
+            "data/palworld-breeding/pal_values.json" \
+            "data/palworld-breeding/special_combinations.json" \
+            "$RUNNER_TEMP/pal-data-core-candidate/breeding-review.json"
+
+          echo "----- Released breeding review -----"
+          cat "$RUNNER_TEMP/pal-data-core-candidate/breeding-review.json"
 
       - name: Build deterministic field and table inventory twice
         shell: bash

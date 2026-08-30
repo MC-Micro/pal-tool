@@ -59,3 +59,6 @@ jobs:
           --
           validate-catalog
           --catalog tools/pal-data-core/catalog.v1.json
+
+      - name: Check review script syntax
+        run: node --check tools/pal-data-core/scripts/review-breeding-candidate.mjs

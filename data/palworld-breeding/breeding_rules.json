@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at_utc": "2026-08-30T11:05:00Z",
-  "game_reference": "Palworld 1.0 historical tables with 1.0.3 rule revalidation in progress",
+  "generated_at_utc": "2026-08-30T14:25:47Z",
+  "game_reference": "Palworld 1.0.3 official Dedicated Server build 24575149",
   "decision_order": [
     {
       "order": 1,
@@ -33,7 +33,7 @@
       "order": 6,
       "rule": "equidistant_higher_combi_duplicate_priority",
       "description_de": "Bleiben mehrere Kandidaten mit gleichem Rangabstand übrig, gewinnt die höhere CombiDuplicatePriority. Die Seltenheit der Eltern oder Kinder ist kein Zucht-Tie-Breaker.",
-      "confidence": "verified_by_direct_tests_and_current_1_0_3_independent_extraction"
+      "confidence": "verified_by_direct_tests_and_official_dedicated_server_build_24575149"
     },
     {
       "order": 7,
@@ -97,6 +97,6 @@
     "Arten aus special_combinations.child_internal sind aus dem normalen Formel-Kandidatenpool ausgeschlossen; Same-Species und direkte Specials bleiben gültig.",
     "Braloha + Dynamoff ergibt deshalb Quivern: Azurobe Cryst ist ein Special-Child und nimmt am normalen Distanzvergleich nicht teil.",
     "Snock + Jolthog ist eine Pflichtregression für die globale Priority-Regel und darf nicht als Einzelfall-Hardcode implementiert werden.",
-    "Der Datenbestand selbst bleibt needs_review, bis die kanonischen 1.0.3-Tabellen vollständig importiert und gegen Build/Quellen verifiziert sind."
+    "Der veröffentlichte 299-Pal-Produktumfang ist gegen den normalisierten offiziellen Dedicated-Server-Build 24575149 geprüft; ein neuerer Build erfordert einen neuen Candidate und ein explizites Review."
   ]
 }

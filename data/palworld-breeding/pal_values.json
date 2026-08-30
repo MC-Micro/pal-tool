@@ -9,7 +9,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 125000,
-    "internal_index": 1,
+    "internal_index": 25,
     "game_table_row": "BadCatgirl"
   },
   {
@@ -22,7 +22,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 139000,
-    "internal_index": 2,
+    "internal_index": 26,
     "game_table_row": "BlueberryFairy"
   },
   {
@@ -35,7 +35,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 168000,
-    "internal_index": 3,
+    "internal_index": 340,
     "game_table_row": "BrownRabbit"
   },
   {
@@ -48,7 +48,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 73000,
-    "internal_index": 4,
+    "internal_index": 342,
     "game_table_row": "GoldenHorse"
   },
   {
@@ -61,7 +61,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 241000,
-    "internal_index": 5,
+    "internal_index": 344,
     "game_table_row": "TentacleTurtle"
   },
   {
@@ -74,7 +74,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 577,
-    "internal_index": 6,
+    "internal_index": 345,
     "game_table_row": "TentacleTurtle_Ground"
   },
   {
@@ -87,7 +87,7 @@
     "rarity": 10,
     "ignore_combi": false,
     "combi_duplicate_priority": 48000,
-    "internal_index": 7,
+    "internal_index": 349,
     "game_table_row": "Anubis"
   },
   {
@@ -100,7 +100,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 147000,
-    "internal_index": 8,
+    "internal_index": 350,
     "game_table_row": "Baphomet"
   },
   {
@@ -113,7 +113,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 131000,
-    "internal_index": 9,
+    "internal_index": 351,
     "game_table_row": "Baphomet_Dark"
   },
   {
@@ -126,7 +126,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 304000,
-    "internal_index": 10,
+    "internal_index": 352,
     "game_table_row": "Bastet"
   },
   {
@@ -139,7 +139,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 275000,
-    "internal_index": 11,
+    "internal_index": 353,
     "game_table_row": "Bastet_Ice"
   },
   {
@@ -152,7 +152,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 288000,
-    "internal_index": 12,
+    "internal_index": 354,
     "game_table_row": "Boar"
   },
   {
@@ -165,7 +165,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 302000,
-    "internal_index": 13,
+    "internal_index": 355,
     "game_table_row": "Carbunclo"
   },
   {
@@ -178,7 +178,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 273000,
-    "internal_index": 14,
+    "internal_index": 356,
     "game_table_row": "ColorfulBird"
   },
   {
@@ -191,7 +191,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 271000,
-    "internal_index": 15,
+    "internal_index": 357,
     "game_table_row": "Deer"
   },
   {
@@ -204,7 +204,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 258000,
-    "internal_index": 16,
+    "internal_index": 358,
     "game_table_row": "Deer_Ground"
   },
   {
@@ -217,7 +217,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 155000,
-    "internal_index": 17,
+    "internal_index": 359,
     "game_table_row": "DrillGame"
   },
   {
@@ -230,7 +230,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 257000,
-    "internal_index": 18,
+    "internal_index": 360,
     "game_table_row": "Eagle"
   },
   {
@@ -243,7 +243,7 @@
     "rarity": 8,
     "ignore_combi": true,
     "combi_duplicate_priority": 102000,
-    "internal_index": 19,
+    "internal_index": 361,
     "game_table_row": "ElecPanda"
   },
   {
@@ -256,7 +256,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 307000,
-    "internal_index": 20,
+    "internal_index": 362,
     "game_table_row": "Ganesha"
   },
   {
@@ -269,7 +269,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 268000,
-    "internal_index": 21,
+    "internal_index": 363,
     "game_table_row": "Garm"
   },
   {
@@ -282,7 +282,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 214000,
-    "internal_index": 22,
+    "internal_index": 364,
     "game_table_row": "Gorilla"
   },
   {
@@ -295,7 +295,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 188000,
-    "internal_index": 23,
+    "internal_index": 365,
     "game_table_row": "Gorilla_Ground"
   },
   {
@@ -308,7 +308,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 303000,
-    "internal_index": 24,
+    "internal_index": 366,
     "game_table_row": "Hedgehog"
   },
   {
@@ -321,7 +321,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 285000,
-    "internal_index": 25,
+    "internal_index": 367,
     "game_table_row": "Hedgehog_Ice"
   },
   {
@@ -334,7 +334,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 227000,
-    "internal_index": 26,
+    "internal_index": 368,
     "game_table_row": "Kirin"
   },
   {
@@ -347,7 +347,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 54000,
-    "internal_index": 27,
+    "internal_index": 369,
     "game_table_row": "Kirin_Ice"
   },
   {
@@ -360,7 +360,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 299000,
-    "internal_index": 28,
+    "internal_index": 370,
     "game_table_row": "Kitsunebi"
   },
   {
@@ -373,7 +373,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 269000,
-    "internal_index": 29,
+    "internal_index": 371,
     "game_table_row": "LittleBriarRose"
   },
   {
@@ -386,7 +386,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 201000,
-    "internal_index": 30,
+    "internal_index": 372,
     "game_table_row": "Mutant"
   },
   {
@@ -399,7 +399,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 296000,
-    "internal_index": 31,
+    "internal_index": 373,
     "game_table_row": "Penguin"
   },
   {
@@ -412,7 +412,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 572,
-    "internal_index": 32,
+    "internal_index": 374,
     "game_table_row": "Penguin_Electric"
   },
   {
@@ -425,7 +425,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 240000,
-    "internal_index": 33,
+    "internal_index": 375,
     "game_table_row": "RaijinDaughter"
   },
   {
@@ -438,7 +438,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 255000,
-    "internal_index": 34,
+    "internal_index": 376,
     "game_table_row": "SharkKid"
   },
   {
@@ -451,7 +451,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 243000,
-    "internal_index": 35,
+    "internal_index": 377,
     "game_table_row": "SharkKid_Fire"
   },
   {
@@ -464,7 +464,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 305000,
-    "internal_index": 36,
+    "internal_index": 378,
     "game_table_row": "SheepBall"
   },
   {
@@ -477,7 +477,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 59000,
-    "internal_index": 37,
+    "internal_index": 379,
     "game_table_row": "Umihebi"
   },
   {
@@ -490,7 +490,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 17000,
-    "internal_index": 38,
+    "internal_index": 380,
     "game_table_row": "Umihebi_Fire"
   },
   {
@@ -503,7 +503,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 211000,
-    "internal_index": 39,
+    "internal_index": 381,
     "game_table_row": "Werewolf"
   },
   {
@@ -516,7 +516,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 278000,
-    "internal_index": 40,
+    "internal_index": 382,
     "game_table_row": "WindChimes"
   },
   {
@@ -529,7 +529,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 251000,
-    "internal_index": 41,
+    "internal_index": 383,
     "game_table_row": "WindChimes_Ice"
   },
   {
@@ -542,7 +542,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 120000,
-    "internal_index": 42,
+    "internal_index": 384,
     "game_table_row": "Suzaku"
   },
   {
@@ -555,7 +555,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 74000,
-    "internal_index": 43,
+    "internal_index": 385,
     "game_table_row": "Suzaku_Water"
   },
   {
@@ -568,7 +568,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 198000,
-    "internal_index": 44,
+    "internal_index": 386,
     "game_table_row": "FireKirin"
   },
   {
@@ -581,7 +581,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 187000,
-    "internal_index": 45,
+    "internal_index": 387,
     "game_table_row": "FireKirin_Dark"
   },
   {
@@ -594,7 +594,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 228000,
-    "internal_index": 46,
+    "internal_index": 388,
     "game_table_row": "FairyDragon"
   },
   {
@@ -607,7 +607,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 164000,
-    "internal_index": 47,
+    "internal_index": 389,
     "game_table_row": "FairyDragon_Water"
   },
   {
@@ -620,7 +620,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 282000,
-    "internal_index": 48,
+    "internal_index": 390,
     "game_table_row": "SweetsSheep"
   },
   {
@@ -633,7 +633,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 203000,
-    "internal_index": 49,
+    "internal_index": 391,
     "game_table_row": "SweetsSheep_Ground"
   },
   {
@@ -646,7 +646,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 104000,
-    "internal_index": 50,
+    "internal_index": 392,
     "game_table_row": "WhiteTiger"
   },
   {
@@ -659,7 +659,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 272000,
-    "internal_index": 51,
+    "internal_index": 393,
     "game_table_row": "Alpaca"
   },
   {
@@ -672,7 +672,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 244000,
-    "internal_index": 52,
+    "internal_index": 394,
     "game_table_row": "Serpent"
   },
   {
@@ -685,7 +685,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 184000,
-    "internal_index": 53,
+    "internal_index": 395,
     "game_table_row": "Serpent_Ground"
   },
   {
@@ -698,7 +698,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 237000,
-    "internal_index": 54,
+    "internal_index": 396,
     "game_table_row": "DarkCrow"
   },
   {
@@ -711,7 +711,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 183000,
-    "internal_index": 55,
+    "internal_index": 397,
     "game_table_row": "BlueDragon"
   },
   {
@@ -724,7 +724,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 578,
-    "internal_index": 56,
+    "internal_index": 398,
     "game_table_row": "BlueDragon_Ice"
   },
   {
@@ -737,7 +737,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 276000,
-    "internal_index": 57,
+    "internal_index": 399,
     "game_table_row": "PinkCat"
   },
   {
@@ -750,7 +750,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 300000,
-    "internal_index": 58,
+    "internal_index": 400,
     "game_table_row": "NegativeKoala"
   },
   {
@@ -763,7 +763,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 196000,
-    "internal_index": 59,
+    "internal_index": 401,
     "game_table_row": "FengyunDeeper"
   },
   {
@@ -776,7 +776,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 106000,
-    "internal_index": 60,
+    "internal_index": 402,
     "game_table_row": "VolcanicMonster"
   },
   {
@@ -789,7 +789,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 60000,
-    "internal_index": 61,
+    "internal_index": 403,
     "game_table_row": "VolcanicMonster_Ice"
   },
   {
@@ -802,7 +802,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 171000,
-    "internal_index": 62,
+    "internal_index": 404,
     "game_table_row": "GhostBeast"
   },
   {
@@ -815,7 +815,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 226000,
-    "internal_index": 63,
+    "internal_index": 405,
     "game_table_row": "RobinHood"
   },
   {
@@ -828,7 +828,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 205000,
-    "internal_index": 64,
+    "internal_index": 406,
     "game_table_row": "RobinHood_Ground"
   },
   {
@@ -841,7 +841,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 109000,
-    "internal_index": 65,
+    "internal_index": 407,
     "game_table_row": "LazyDragon"
   },
   {
@@ -854,7 +854,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 77000,
-    "internal_index": 66,
+    "internal_index": 408,
     "game_table_row": "LazyDragon_Electric"
   },
   {
@@ -867,7 +867,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 167000,
-    "internal_index": 67,
+    "internal_index": 409,
     "game_table_row": "AmaterasuWolf"
   },
   {
@@ -880,7 +880,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 267000,
-    "internal_index": 68,
+    "internal_index": 410,
     "game_table_row": "LizardMan"
   },
   {
@@ -893,7 +893,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 264000,
-    "internal_index": 69,
+    "internal_index": 411,
     "game_table_row": "LizardMan_Fire"
   },
   {
@@ -906,7 +906,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 298000,
-    "internal_index": 70,
+    "internal_index": 412,
     "game_table_row": "BluePlatypus"
   },
   {
@@ -919,7 +919,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 575,
-    "internal_index": 71,
+    "internal_index": 413,
     "game_table_row": "BluePlatypus_Fire"
   },
   {
@@ -932,7 +932,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 165000,
-    "internal_index": 72,
+    "internal_index": 415,
     "game_table_row": "BirdDragon"
   },
   {
@@ -945,7 +945,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 143000,
-    "internal_index": 73,
+    "internal_index": 416,
     "game_table_row": "BirdDragon_Ice"
   },
   {
@@ -958,7 +958,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 308000,
-    "internal_index": 74,
+    "internal_index": 417,
     "game_table_row": "ChickenPal"
   },
   {
@@ -971,7 +971,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 210000,
-    "internal_index": 75,
+    "internal_index": 418,
     "game_table_row": "FlowerDinosaur"
   },
   {
@@ -984,7 +984,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 189000,
-    "internal_index": 76,
+    "internal_index": 419,
     "game_table_row": "FlowerDinosaur_Electric"
   },
   {
@@ -997,7 +997,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 301000,
-    "internal_index": 77,
+    "internal_index": 420,
     "game_table_row": "ElecCat"
   },
   {
@@ -1010,7 +1010,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 15000,
-    "internal_index": 78,
+    "internal_index": 421,
     "game_table_row": "IceHorse"
   },
   {
@@ -1023,7 +1023,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 11000,
-    "internal_index": 79,
+    "internal_index": 422,
     "game_table_row": "IceHorse_Dark"
   },
   {
@@ -1036,7 +1036,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 134000,
-    "internal_index": 80,
+    "internal_index": 423,
     "game_table_row": "GrassMammoth"
   },
   {
@@ -1049,7 +1049,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 107000,
-    "internal_index": 81,
+    "internal_index": 424,
     "game_table_row": "GrassMammoth_Ice"
   },
   {
@@ -1062,7 +1062,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 157000,
-    "internal_index": 82,
+    "internal_index": 425,
     "game_table_row": "CatVampire"
   },
   {
@@ -1075,7 +1075,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 138000,
-    "internal_index": 83,
+    "internal_index": 426,
     "game_table_row": "SakuraSaurus"
   },
   {
@@ -1088,7 +1088,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 108000,
-    "internal_index": 84,
+    "internal_index": 427,
     "game_table_row": "SakuraSaurus_Water"
   },
   {
@@ -1101,7 +1101,7 @@
     "rarity": 9,
     "ignore_combi": true,
     "combi_duplicate_priority": 50000,
-    "internal_index": 85,
+    "internal_index": 428,
     "game_table_row": "Horus"
   },
   {
@@ -1114,7 +1114,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 41000,
-    "internal_index": 86,
+    "internal_index": 429,
     "game_table_row": "KingBahamut"
   },
   {
@@ -1127,7 +1127,7 @@
     "rarity": 10,
     "ignore_combi": true,
     "combi_duplicate_priority": 10000,
-    "internal_index": 87,
+    "internal_index": 430,
     "game_table_row": "KingBahamut_Dragon"
   },
   {
@@ -1140,7 +1140,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 261000,
-    "internal_index": 88,
+    "internal_index": 431,
     "game_table_row": "BerryGoat"
   },
   {
@@ -1153,7 +1153,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 193000,
-    "internal_index": 89,
+    "internal_index": 432,
     "game_table_row": "IceDeer"
   },
   {
@@ -1166,7 +1166,7 @@
     "rarity": 10,
     "ignore_combi": true,
     "combi_duplicate_priority": 55000,
-    "internal_index": 90,
+    "internal_index": 433,
     "game_table_row": "BlackGriffon"
   },
   {
@@ -1179,7 +1179,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 181000,
-    "internal_index": 91,
+    "internal_index": 434,
     "game_table_row": "WhiteMoth"
   },
   {
@@ -1192,7 +1192,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 65000,
-    "internal_index": 92,
+    "internal_index": 435,
     "game_table_row": "WhiteMoth_Neutral"
   },
   {
@@ -1205,7 +1205,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 306000,
-    "internal_index": 93,
+    "internal_index": 436,
     "game_table_row": "CuteFox"
   },
   {
@@ -1218,7 +1218,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 208000,
-    "internal_index": 94,
+    "internal_index": 437,
     "game_table_row": "FoxMage"
   },
   {
@@ -1231,7 +1231,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 149000,
-    "internal_index": 95,
+    "internal_index": 438,
     "game_table_row": "FoxMage_Dark"
   },
   {
@@ -1244,7 +1244,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 209000,
-    "internal_index": 96,
+    "internal_index": 439,
     "game_table_row": "PinkLizard"
   },
   {
@@ -1257,7 +1257,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 294000,
-    "internal_index": 97,
+    "internal_index": 440,
     "game_table_row": "WizardOwl"
   },
   {
@@ -1270,7 +1270,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 281000,
-    "internal_index": 98,
+    "internal_index": 441,
     "game_table_row": "Kelpie"
   },
   {
@@ -1283,7 +1283,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 247000,
-    "internal_index": 99,
+    "internal_index": 442,
     "game_table_row": "Kelpie_Fire"
   },
   {
@@ -1296,7 +1296,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 277000,
-    "internal_index": 100,
+    "internal_index": 443,
     "game_table_row": "NegativeOctopus"
   },
   {
@@ -1309,7 +1309,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 571,
-    "internal_index": 101,
+    "internal_index": 444,
     "game_table_row": "NegativeOctopus_Neutral"
   },
   {
@@ -1322,7 +1322,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 280000,
-    "internal_index": 102,
+    "internal_index": 445,
     "game_table_row": "CowPal"
   },
   {
@@ -1335,7 +1335,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 83000,
-    "internal_index": 103,
+    "internal_index": 446,
     "game_table_row": "Yeti"
   },
   {
@@ -1348,7 +1348,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 61000,
-    "internal_index": 104,
+    "internal_index": 447,
     "game_table_row": "Yeti_Grass"
   },
   {
@@ -1361,7 +1361,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 148000,
-    "internal_index": 105,
+    "internal_index": 448,
     "game_table_row": "VioletFairy"
   },
   {
@@ -1374,7 +1374,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 256000,
-    "internal_index": 106,
+    "internal_index": 449,
     "game_table_row": "HawkBird"
   },
   {
@@ -1387,7 +1387,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 266000,
-    "internal_index": 107,
+    "internal_index": 450,
     "game_table_row": "FlowerRabbit"
   },
   {
@@ -1400,7 +1400,7 @@
     "rarity": 9,
     "ignore_combi": true,
     "combi_duplicate_priority": 24000,
-    "internal_index": 108,
+    "internal_index": 451,
     "game_table_row": "LilyQueen"
   },
   {
@@ -1413,7 +1413,7 @@
     "rarity": 10,
     "ignore_combi": true,
     "combi_duplicate_priority": 22000,
-    "internal_index": 109,
+    "internal_index": 452,
     "game_table_row": "LilyQueen_Dark"
   },
   {
@@ -1426,7 +1426,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 179000,
-    "internal_index": 110,
+    "internal_index": 453,
     "game_table_row": "QueenBee"
   },
   {
@@ -1439,7 +1439,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 235000,
-    "internal_index": 111,
+    "internal_index": 454,
     "game_table_row": "SoldierBee"
   },
   {
@@ -1452,7 +1452,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 234000,
-    "internal_index": 112,
+    "internal_index": 455,
     "game_table_row": "CatBat"
   },
   {
@@ -1465,7 +1465,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 206000,
-    "internal_index": 113,
+    "internal_index": 456,
     "game_table_row": "GrassPanda"
   },
   {
@@ -1478,7 +1478,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 144000,
-    "internal_index": 114,
+    "internal_index": 457,
     "game_table_row": "GrassPanda_Electric"
   },
   {
@@ -1491,7 +1491,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 232000,
-    "internal_index": 115,
+    "internal_index": 458,
     "game_table_row": "FlameBuffalo"
   },
   {
@@ -1504,7 +1504,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 192000,
-    "internal_index": 116,
+    "internal_index": 459,
     "game_table_row": "ThunderDog"
   },
   {
@@ -1517,7 +1517,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 160000,
-    "internal_index": 117,
+    "internal_index": 460,
     "game_table_row": "ThunderDog_Ice"
   },
   {
@@ -1530,7 +1530,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 279000,
-    "internal_index": 118,
+    "internal_index": 461,
     "game_table_row": "CuteMole"
   },
   {
@@ -1543,7 +1543,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 49000,
-    "internal_index": 119,
+    "internal_index": 462,
     "game_table_row": "BlackMetalDragon"
   },
   {
@@ -1556,7 +1556,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 116000,
-    "internal_index": 120,
+    "internal_index": 463,
     "game_table_row": "GrassRabbitMan"
   },
   {
@@ -1569,7 +1569,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 197000,
-    "internal_index": 121,
+    "internal_index": 464,
     "game_table_row": "IceFox"
   },
   {
@@ -1582,7 +1582,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 7000,
-    "internal_index": 122,
+    "internal_index": 465,
     "game_table_row": "JetDragon"
   },
   {
@@ -1595,7 +1595,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 291000,
-    "internal_index": 123,
+    "internal_index": 466,
     "game_table_row": "DreamDemon"
   },
   {
@@ -1608,7 +1608,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 290000,
-    "internal_index": 124,
+    "internal_index": 467,
     "game_table_row": "Monkey"
   },
   {
@@ -1621,7 +1621,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 283000,
-    "internal_index": 125,
+    "internal_index": 469,
     "game_table_row": "Monkey_Fire"
   },
   {
@@ -1634,7 +1634,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 136000,
-    "internal_index": 126,
+    "internal_index": 470,
     "game_table_row": "Manticore"
   },
   {
@@ -1647,7 +1647,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 127000,
-    "internal_index": 127,
+    "internal_index": 471,
     "game_table_row": "Manticore_Dark"
   },
   {
@@ -1660,7 +1660,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 222000,
-    "internal_index": 128,
+    "internal_index": 472,
     "game_table_row": "KingAlpaca"
   },
   {
@@ -1673,7 +1673,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 153000,
-    "internal_index": 129,
+    "internal_index": 473,
     "game_table_row": "KingAlpaca_Ice"
   },
   {
@@ -1686,7 +1686,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 295000,
-    "internal_index": 130,
+    "internal_index": 474,
     "game_table_row": "PlantSlime"
   },
   {
@@ -1699,7 +1699,7 @@
     "rarity": 10,
     "ignore_combi": false,
     "combi_duplicate_priority": 295000,
-    "internal_index": 131,
+    "internal_index": 475,
     "game_table_row": "PlantSlime_Flower"
   },
   {
@@ -1712,7 +1712,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 284000,
-    "internal_index": 132,
+    "internal_index": 477,
     "game_table_row": "MopBaby"
   },
   {
@@ -1725,7 +1725,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 215000,
-    "internal_index": 133,
+    "internal_index": 478,
     "game_table_row": "MopKing"
   },
   {
@@ -1738,7 +1738,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 204000,
-    "internal_index": 134,
+    "internal_index": 479,
     "game_table_row": "CatMage"
   },
   {
@@ -1751,7 +1751,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 180000,
-    "internal_index": 135,
+    "internal_index": 480,
     "game_table_row": "CatMage_Fire"
   },
   {
@@ -1764,7 +1764,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 286000,
-    "internal_index": 136,
+    "internal_index": 481,
     "game_table_row": "PinkRabbit"
   },
   {
@@ -1777,7 +1777,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 169000,
-    "internal_index": 137,
+    "internal_index": 482,
     "game_table_row": "ThunderBird"
   },
   {
@@ -1790,7 +1790,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 58000,
-    "internal_index": 138,
+    "internal_index": 483,
     "game_table_row": "ThunderBird_Ice"
   },
   {
@@ -1803,7 +1803,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 128000,
-    "internal_index": 139,
+    "internal_index": 484,
     "game_table_row": "HerculesBeetle"
   },
   {
@@ -1816,7 +1816,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 63000,
-    "internal_index": 140,
+    "internal_index": 485,
     "game_table_row": "HerculesBeetle_Ground"
   },
   {
@@ -1829,7 +1829,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 18000,
-    "internal_index": 141,
+    "internal_index": 486,
     "game_table_row": "SaintCentaur"
   },
   {
@@ -1842,7 +1842,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 292000,
-    "internal_index": 142,
+    "internal_index": 487,
     "game_table_row": "NightFox"
   },
   {
@@ -1855,7 +1855,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 207000,
-    "internal_index": 143,
+    "internal_index": 488,
     "game_table_row": "CaptainPenguin"
   },
   {
@@ -1868,7 +1868,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 573,
-    "internal_index": 144,
+    "internal_index": 489,
     "game_table_row": "CaptainPenguin_Black"
   },
   {
@@ -1881,7 +1881,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 233000,
-    "internal_index": 145,
+    "internal_index": 490,
     "game_table_row": "WeaselDragon"
   },
   {
@@ -1894,7 +1894,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 195000,
-    "internal_index": 146,
+    "internal_index": 491,
     "game_table_row": "WeaselDragon_Fire"
   },
   {
@@ -1907,7 +1907,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 121000,
-    "internal_index": 147,
+    "internal_index": 492,
     "game_table_row": "SkyDragon"
   },
   {
@@ -1920,7 +1920,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 130000,
-    "internal_index": 148,
+    "internal_index": 493,
     "game_table_row": "SkyDragon_Grass"
   },
   {
@@ -1933,7 +1933,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 113000,
-    "internal_index": 149,
+    "internal_index": 494,
     "game_table_row": "HadesBird"
   },
   {
@@ -1946,7 +1946,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 96000,
-    "internal_index": 150,
+    "internal_index": 495,
     "game_table_row": "HadesBird_Electric"
   },
   {
@@ -1959,7 +1959,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 105000,
-    "internal_index": 151,
+    "internal_index": 496,
     "game_table_row": "RedArmorBird"
   },
   {
@@ -1972,7 +1972,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 156000,
-    "internal_index": 152,
+    "internal_index": 497,
     "game_table_row": "Ronin"
   },
   {
@@ -1985,7 +1985,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 84000,
-    "internal_index": 153,
+    "internal_index": 498,
     "game_table_row": "Ronin_Dark"
   },
   {
@@ -1998,7 +1998,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 274000,
-    "internal_index": 154,
+    "internal_index": 499,
     "game_table_row": "FlyingManta"
   },
   {
@@ -2011,7 +2011,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 574,
-    "internal_index": 155,
+    "internal_index": 500,
     "game_table_row": "FlyingManta_Thunder"
   },
   {
@@ -2024,7 +2024,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 19000,
-    "internal_index": 156,
+    "internal_index": 501,
     "game_table_row": "BlackCentaur"
   },
   {
@@ -2037,7 +2037,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 172000,
-    "internal_index": 157,
+    "internal_index": 502,
     "game_table_row": "FlowerDoll"
   },
   {
@@ -2050,7 +2050,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 82000,
-    "internal_index": 158,
+    "internal_index": 503,
     "game_table_row": "FlowerDoll_Fire"
   },
   {
@@ -2063,7 +2063,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 212000,
-    "internal_index": 159,
+    "internal_index": 504,
     "game_table_row": "NaughtyCat"
   },
   {
@@ -2076,7 +2076,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 262000,
-    "internal_index": 160,
+    "internal_index": 505,
     "game_table_row": "CuteButterfly"
   },
   {
@@ -2089,7 +2089,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 112000,
-    "internal_index": 161,
+    "internal_index": 506,
     "game_table_row": "DarkScorpion"
   },
   {
@@ -2102,7 +2102,7 @@
     "rarity": 10,
     "ignore_combi": false,
     "combi_duplicate_priority": 64000,
-    "internal_index": 162,
+    "internal_index": 507,
     "game_table_row": "DarkScorpion_Ground"
   },
   {
@@ -2115,7 +2115,7 @@
     "rarity": 9,
     "ignore_combi": true,
     "combi_duplicate_priority": 12000,
-    "internal_index": 163,
+    "internal_index": 508,
     "game_table_row": "ThunderDragonMan"
   },
   {
@@ -2128,7 +2128,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 289000,
-    "internal_index": 164,
+    "internal_index": 509,
     "game_table_row": "WoolFox"
   },
   {
@@ -2141,7 +2141,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 229000,
-    "internal_index": 165,
+    "internal_index": 510,
     "game_table_row": "LazyCatfish"
   },
   {
@@ -2154,7 +2154,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 576,
-    "internal_index": 166,
+    "internal_index": 511,
     "game_table_row": "LazyCatfish_Gold"
   },
   {
@@ -2167,7 +2167,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 270000,
-    "internal_index": 167,
+    "internal_index": 512,
     "game_table_row": "LavaGirl"
   },
   {
@@ -2180,7 +2180,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 287000,
-    "internal_index": 168,
+    "internal_index": 513,
     "game_table_row": "FlameBambi"
   },
   {
@@ -2193,7 +2193,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 62000,
-    "internal_index": 169,
+    "internal_index": 514,
     "game_table_row": "NightLady"
   },
   {
@@ -2206,7 +2206,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 13000,
-    "internal_index": 170,
+    "internal_index": 515,
     "game_table_row": "NightLady_Dark"
   },
   {
@@ -2219,7 +2219,7 @@
     "rarity": 9,
     "ignore_combi": true,
     "combi_duplicate_priority": 36000,
-    "internal_index": 171,
+    "internal_index": 516,
     "game_table_row": "MoonQueen"
   },
   {
@@ -2232,7 +2232,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 260000,
-    "internal_index": 172,
+    "internal_index": 517,
     "game_table_row": "KendoFrog"
   },
   {
@@ -2245,7 +2245,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 186000,
-    "internal_index": 173,
+    "internal_index": 518,
     "game_table_row": "KendoFrog_Dark"
   },
   {
@@ -2258,7 +2258,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 199000,
-    "internal_index": 174,
+    "internal_index": 519,
     "game_table_row": "LeafPrincess"
   },
   {
@@ -2271,7 +2271,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 152000,
-    "internal_index": 175,
+    "internal_index": 520,
     "game_table_row": "MushroomDragon"
   },
   {
@@ -2284,7 +2284,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 145000,
-    "internal_index": 176,
+    "internal_index": 521,
     "game_table_row": "MushroomDragon_Dark"
   },
   {
@@ -2297,7 +2297,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 231000,
-    "internal_index": 177,
+    "internal_index": 522,
     "game_table_row": "SmallArmadillo"
   },
   {
@@ -2310,7 +2310,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 98000,
-    "internal_index": 178,
+    "internal_index": 523,
     "game_table_row": "CandleGhost"
   },
   {
@@ -2323,7 +2323,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 151000,
-    "internal_index": 179,
+    "internal_index": 524,
     "game_table_row": "ScorpionMan"
   },
   {
@@ -2336,7 +2336,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 85000,
-    "internal_index": 180,
+    "internal_index": 525,
     "game_table_row": "ScorpionMan_Electric"
   },
   {
@@ -2349,7 +2349,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 26000,
-    "internal_index": 181,
+    "internal_index": 526,
     "game_table_row": "WingGolem"
   },
   {
@@ -2362,7 +2362,7 @@
     "rarity": 10,
     "ignore_combi": false,
     "combi_duplicate_priority": 21000,
-    "internal_index": 182,
+    "internal_index": 527,
     "game_table_row": "WingGolem_Fire"
   },
   {
@@ -2375,7 +2375,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 223000,
-    "internal_index": 183,
+    "internal_index": 528,
     "game_table_row": "GuardianDog"
   },
   {
@@ -2388,7 +2388,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 146000,
-    "internal_index": 184,
+    "internal_index": 529,
     "game_table_row": "SifuDog"
   },
   {
@@ -2401,7 +2401,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 221000,
-    "internal_index": 185,
+    "internal_index": 530,
     "game_table_row": "FeatherOstrich"
   },
   {
@@ -2414,7 +2414,7 @@
     "rarity": 7,
     "ignore_combi": true,
     "combi_duplicate_priority": 174000,
-    "internal_index": 186,
+    "internal_index": 531,
     "game_table_row": "MimicDog"
   },
   {
@@ -2427,7 +2427,7 @@
     "rarity": 7,
     "ignore_combi": true,
     "combi_duplicate_priority": 182000,
-    "internal_index": 187,
+    "internal_index": 532,
     "game_table_row": "DarkAlien"
   },
   {
@@ -2440,7 +2440,7 @@
     "rarity": 9,
     "ignore_combi": true,
     "combi_duplicate_priority": 99000,
-    "internal_index": 188,
+    "internal_index": 533,
     "game_table_row": "WhiteAlienDragon"
   },
   {
@@ -2453,7 +2453,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 75000,
-    "internal_index": 189,
+    "internal_index": 534,
     "game_table_row": "VolcanoDragon"
   },
   {
@@ -2466,7 +2466,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 38000,
-    "internal_index": 190,
+    "internal_index": 535,
     "game_table_row": "VolcanoDragon_Ice"
   },
   {
@@ -2479,7 +2479,7 @@
     "rarity": 8,
     "ignore_combi": true,
     "combi_duplicate_priority": 40000,
-    "internal_index": 191,
+    "internal_index": 536,
     "game_table_row": "DarkMechaDragon"
   },
   {
@@ -2492,7 +2492,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 123000,
-    "internal_index": 192,
+    "internal_index": 537,
     "game_table_row": "GhostRabbit"
   },
   {
@@ -2505,7 +2505,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 132000,
-    "internal_index": 193,
+    "internal_index": 538,
     "game_table_row": "GhostRabbit_Grass"
   },
   {
@@ -2518,7 +2518,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 115000,
-    "internal_index": 194,
+    "internal_index": 539,
     "game_table_row": "NightBlueHorse"
   },
   {
@@ -2531,7 +2531,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 43000,
-    "internal_index": 195,
+    "internal_index": 540,
     "game_table_row": "NightBlueHorse_Neutral"
   },
   {
@@ -2544,7 +2544,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 56000,
-    "internal_index": 196,
+    "internal_index": 541,
     "game_table_row": "WhiteShieldDragon"
   },
   {
@@ -2557,7 +2557,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 176000,
-    "internal_index": 197,
+    "internal_index": 542,
     "game_table_row": "BlackPuppy"
   },
   {
@@ -2570,7 +2570,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 161000,
-    "internal_index": 198,
+    "internal_index": 543,
     "game_table_row": "BlackPuppy_Ice"
   },
   {
@@ -2583,7 +2583,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 57000,
-    "internal_index": 199,
+    "internal_index": 544,
     "game_table_row": "WhiteDeer"
   },
   {
@@ -2596,7 +2596,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 27000,
-    "internal_index": 200,
+    "internal_index": 545,
     "game_table_row": "WhiteDeer_Dark"
   },
   {
@@ -2609,7 +2609,7 @@
     "rarity": 10,
     "ignore_combi": true,
     "combi_duplicate_priority": 2000,
-    "internal_index": 201,
+    "internal_index": 546,
     "game_table_row": "KingWhale"
   },
   {
@@ -2622,7 +2622,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 114000,
-    "internal_index": 202,
+    "internal_index": 547,
     "game_table_row": "MysteryMask"
   },
   {
@@ -2635,7 +2635,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 177000,
-    "internal_index": 203,
+    "internal_index": 548,
     "game_table_row": "HoodGhost"
   },
   {
@@ -2648,7 +2648,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 87000,
-    "internal_index": 204,
+    "internal_index": 549,
     "game_table_row": "Sekhmet"
   },
   {
@@ -2661,7 +2661,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 175000,
-    "internal_index": 205,
+    "internal_index": 550,
     "game_table_row": "ElecLizard"
   },
   {
@@ -2674,7 +2674,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 78000,
-    "internal_index": 206,
+    "internal_index": 551,
     "game_table_row": "GrimGirl"
   },
   {
@@ -2687,7 +2687,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 173000,
-    "internal_index": 207,
+    "internal_index": 552,
     "game_table_row": "PurpleSpider"
   },
   {
@@ -2700,7 +2700,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 42000,
-    "internal_index": 208,
+    "internal_index": 553,
     "game_table_row": "BlueThunderHorse"
   },
   {
@@ -2713,7 +2713,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 111000,
-    "internal_index": 209,
+    "internal_index": 554,
     "game_table_row": "RockBeast"
   },
   {
@@ -2726,7 +2726,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 46000,
-    "internal_index": 210,
+    "internal_index": 555,
     "game_table_row": "RockBeast_Ice"
   },
   {
@@ -2739,7 +2739,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 253000,
-    "internal_index": 211,
+    "internal_index": 556,
     "game_table_row": "OctopusGirl"
   },
   {
@@ -2752,7 +2752,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 163000,
-    "internal_index": 212,
+    "internal_index": 557,
     "game_table_row": "OctopusGirl_Neutral"
   },
   {
@@ -2765,7 +2765,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 71000,
-    "internal_index": 213,
+    "internal_index": 558,
     "game_table_row": "IceNarwhal"
   },
   {
@@ -2778,7 +2778,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 37000,
-    "internal_index": 214,
+    "internal_index": 559,
     "game_table_row": "IceNarwhal_Fire"
   },
   {
@@ -2791,7 +2791,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 265000,
-    "internal_index": 215,
+    "internal_index": 560,
     "game_table_row": "JellyfishFairy"
   },
   {
@@ -2804,7 +2804,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 250000,
-    "internal_index": 219,
+    "internal_index": 610,
     "game_table_row": "Kitsunebi_Ice"
   },
   {
@@ -2817,7 +2817,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 194000,
-    "internal_index": 220,
+    "internal_index": 611,
     "game_table_row": "BerryGoat_Dark"
   },
   {
@@ -2830,7 +2830,7 @@
     "rarity": 1,
     "ignore_combi": false,
     "combi_duplicate_priority": 246000,
-    "internal_index": 221,
+    "internal_index": 612,
     "game_table_row": "PinkRabbit_Grass"
   },
   {
@@ -2843,7 +2843,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 129000,
-    "internal_index": 222,
+    "internal_index": 613,
     "game_table_row": "Werewolf_Ice"
   },
   {
@@ -2856,7 +2856,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 80000,
-    "internal_index": 223,
+    "internal_index": 614,
     "game_table_row": "AmaterasuWolf_Dark"
   },
   {
@@ -2869,7 +2869,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 191000,
-    "internal_index": 224,
+    "internal_index": 615,
     "game_table_row": "RaijinDaughter_Water"
   },
   {
@@ -2882,7 +2882,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 47000,
-    "internal_index": 225,
+    "internal_index": 616,
     "game_table_row": "WhiteTiger_Ground"
   },
   {
@@ -2895,7 +2895,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 90000,
-    "internal_index": 226,
+    "internal_index": 617,
     "game_table_row": "FengyunDeeper_Electric"
   },
   {
@@ -2908,7 +2908,7 @@
     "rarity": 9,
     "ignore_combi": true,
     "combi_duplicate_priority": 45000,
-    "internal_index": 227,
+    "internal_index": 618,
     "game_table_row": "Horus_Water"
   },
   {
@@ -2921,7 +2921,7 @@
     "rarity": 8,
     "ignore_combi": true,
     "combi_duplicate_priority": 5000,
-    "internal_index": 228,
+    "internal_index": 619,
     "game_table_row": "SnowTigerBeastman"
   },
   {
@@ -2934,7 +2934,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 97000,
-    "internal_index": 235,
+    "internal_index": 626,
     "game_table_row": "SnakeGirl"
   },
   {
@@ -2947,7 +2947,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 88000,
-    "internal_index": 236,
+    "internal_index": 627,
     "game_table_row": "GhostAnglerfish"
   },
   {
@@ -2960,7 +2960,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 72000,
-    "internal_index": 237,
+    "internal_index": 628,
     "game_table_row": "GhostAnglerfish_Fire"
   },
   {
@@ -2973,7 +2973,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 126000,
-    "internal_index": 238,
+    "internal_index": 629,
     "game_table_row": "IceWitch"
   },
   {
@@ -2986,7 +2986,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 52000,
-    "internal_index": 239,
+    "internal_index": 630,
     "game_table_row": "ClownRabbit"
   },
   {
@@ -2999,7 +2999,7 @@
     "rarity": 10,
     "ignore_combi": true,
     "combi_duplicate_priority": 9000,
-    "internal_index": 240,
+    "internal_index": 631,
     "game_table_row": "LegendDeer"
   },
   {
@@ -3012,7 +3012,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 263000,
-    "internal_index": 241,
+    "internal_index": 632,
     "game_table_row": "LeafMomonga"
   },
   {
@@ -3025,7 +3025,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 239000,
-    "internal_index": 242,
+    "internal_index": 633,
     "game_table_row": "SmallYeti"
   },
   {
@@ -3038,7 +3038,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 213000,
-    "internal_index": 243,
+    "internal_index": 634,
     "game_table_row": "IceCrocodile"
   },
   {
@@ -3051,7 +3051,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 242000,
-    "internal_index": 244,
+    "internal_index": 635,
     "game_table_row": "CactusDoll"
   },
   {
@@ -3064,7 +3064,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 158000,
-    "internal_index": 245,
+    "internal_index": 636,
     "game_table_row": "CactusDoll_Dark"
   },
   {
@@ -3077,7 +3077,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 76000,
-    "internal_index": 246,
+    "internal_index": 637,
     "game_table_row": "MushroomLady"
   },
   {
@@ -3090,7 +3090,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 245000,
-    "internal_index": 247,
+    "internal_index": 638,
     "game_table_row": "StuffedShark"
   },
   {
@@ -3103,7 +3103,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 581,
-    "internal_index": 248,
+    "internal_index": 639,
     "game_table_row": "StuffedShark_Fire"
   },
   {
@@ -3116,7 +3116,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 39000,
-    "internal_index": 249,
+    "internal_index": 640,
     "game_table_row": "FoxExorcist"
   },
   {
@@ -3129,7 +3129,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 166000,
-    "internal_index": 250,
+    "internal_index": 641,
     "game_table_row": "IceSeal"
   },
   {
@@ -3142,7 +3142,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 110000,
-    "internal_index": 251,
+    "internal_index": 642,
     "game_table_row": "IceSeal_Ground"
   },
   {
@@ -3155,7 +3155,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 297000,
-    "internal_index": 252,
+    "internal_index": 643,
     "game_table_row": "CloverFairy"
   },
   {
@@ -3168,7 +3168,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 236000,
-    "internal_index": 253,
+    "internal_index": 644,
     "game_table_row": "ElecPomeranian"
   },
   {
@@ -3181,7 +3181,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 225000,
-    "internal_index": 254,
+    "internal_index": 645,
     "game_table_row": "GhostBlackCat"
   },
   {
@@ -3194,7 +3194,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 53000,
-    "internal_index": 255,
+    "internal_index": 646,
     "game_table_row": "ThiefBird"
   },
   {
@@ -3207,7 +3207,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 154000,
-    "internal_index": 256,
+    "internal_index": 647,
     "game_table_row": "OniGhostGirl"
   },
   {
@@ -3220,7 +3220,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 103000,
-    "internal_index": 257,
+    "internal_index": 649,
     "game_table_row": "Plesiosaur"
   },
   {
@@ -3233,7 +3233,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 124000,
-    "internal_index": 258,
+    "internal_index": 650,
     "game_table_row": "TropicalOstrich"
   },
   {
@@ -3246,7 +3246,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 51000,
-    "internal_index": 259,
+    "internal_index": 651,
     "game_table_row": "GrassGolem"
   },
   {
@@ -3259,7 +3259,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 25000,
-    "internal_index": 260,
+    "internal_index": 652,
     "game_table_row": "GrassGolem_Dark"
   },
   {
@@ -3272,7 +3272,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 86000,
-    "internal_index": 261,
+    "internal_index": 653,
     "game_table_row": "SnowPeafowl"
   },
   {
@@ -3285,7 +3285,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 79000,
-    "internal_index": 262,
+    "internal_index": 654,
     "game_table_row": "CubeTurtle"
   },
   {
@@ -3298,7 +3298,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 20000,
-    "internal_index": 263,
+    "internal_index": 655,
     "game_table_row": "CubeTurtle_Neutral"
   },
   {
@@ -3311,7 +3311,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 190000,
-    "internal_index": 264,
+    "internal_index": 656,
     "game_table_row": "LongCat"
   },
   {
@@ -3324,7 +3324,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 259000,
-    "internal_index": 265,
+    "internal_index": 657,
     "game_table_row": "JellyfishGhost"
   },
   {
@@ -3337,7 +3337,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 140000,
-    "internal_index": 266,
+    "internal_index": 658,
     "game_table_row": "ThunderFluffyBird"
   },
   {
@@ -3350,7 +3350,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 118000,
-    "internal_index": 267,
+    "internal_index": 659,
     "game_table_row": "MoonChild"
   },
   {
@@ -3363,7 +3363,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 293000,
-    "internal_index": 268,
+    "internal_index": 660,
     "game_table_row": "SamuraiDog"
   },
   {
@@ -3376,7 +3376,7 @@
     "rarity": 20,
     "ignore_combi": true,
     "combi_duplicate_priority": 16000,
-    "internal_index": 269,
+    "internal_index": 661,
     "game_table_row": "PoseidonOrca"
   },
   {
@@ -3389,7 +3389,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 142000,
-    "internal_index": 270,
+    "internal_index": 662,
     "game_table_row": "SwordCutlassfish"
   },
   {
@@ -3402,7 +3402,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 159000,
-    "internal_index": 271,
+    "internal_index": 663,
     "game_table_row": "SwordCutlassfish_Fire"
   },
   {
@@ -3415,7 +3415,7 @@
     "rarity": 3,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 272,
+    "internal_index": 664,
     "game_table_row": "YakushimaMonster001"
   },
   {
@@ -3428,7 +3428,7 @@
     "rarity": 3,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 273,
+    "internal_index": 665,
     "game_table_row": "YakushimaMonster001_Blue"
   },
   {
@@ -3441,7 +3441,7 @@
     "rarity": 3,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 274,
+    "internal_index": 666,
     "game_table_row": "YakushimaMonster001_Red"
   },
   {
@@ -3454,7 +3454,7 @@
     "rarity": 3,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 275,
+    "internal_index": 667,
     "game_table_row": "YakushimaMonster001_Purple"
   },
   {
@@ -3467,7 +3467,7 @@
     "rarity": 4,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 276,
+    "internal_index": 668,
     "game_table_row": "YakushimaMonster001_Pink"
   },
   {
@@ -3480,7 +3480,7 @@
     "rarity": 4,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 277,
+    "internal_index": 669,
     "game_table_row": "YakushimaMonster001_Rainbow"
   },
   {
@@ -3493,7 +3493,7 @@
     "rarity": 3,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 278,
+    "internal_index": 670,
     "game_table_row": "YakushimaMonster002"
   },
   {
@@ -3506,7 +3506,7 @@
     "rarity": 3,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 279,
+    "internal_index": 671,
     "game_table_row": "YakushimaMonster003"
   },
   {
@@ -3519,7 +3519,7 @@
     "rarity": 4,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 280,
+    "internal_index": 672,
     "game_table_row": "YakushimaMonster003_Purple"
   },
   {
@@ -3532,7 +3532,7 @@
     "rarity": 6,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 281,
+    "internal_index": 673,
     "game_table_row": "YakushimaBoss001"
   },
   {
@@ -3545,7 +3545,7 @@
     "rarity": 3,
     "ignore_combi": true,
     "combi_duplicate_priority": 310000,
-    "internal_index": 282,
+    "internal_index": 675,
     "game_table_row": "YakushimaBoss001_Small"
   },
   {
@@ -3558,7 +3558,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 117000,
-    "internal_index": 283,
+    "internal_index": 689,
     "game_table_row": "MummyPal"
   },
   {
@@ -3571,7 +3571,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 137000,
-    "internal_index": 284,
+    "internal_index": 690,
     "game_table_row": "KingSunfish"
   },
   {
@@ -3584,7 +3584,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 100000,
-    "internal_index": 285,
+    "internal_index": 691,
     "game_table_row": "KingSunfish_Thunder"
   },
   {
@@ -3597,7 +3597,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 28000,
-    "internal_index": 286,
+    "internal_index": 692,
     "game_table_row": "MonochromeQueen"
   },
   {
@@ -3610,7 +3610,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 178000,
-    "internal_index": 287,
+    "internal_index": 693,
     "game_table_row": "ElecSnail"
   },
   {
@@ -3623,7 +3623,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 150000,
-    "internal_index": 288,
+    "internal_index": 695,
     "game_table_row": "ElecSnail_Ground"
   },
   {
@@ -3636,7 +3636,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 89000,
-    "internal_index": 289,
+    "internal_index": 696,
     "game_table_row": "LanternButler"
   },
   {
@@ -3649,7 +3649,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 119000,
-    "internal_index": 290,
+    "internal_index": 697,
     "game_table_row": "SumoDog"
   },
   {
@@ -3662,7 +3662,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 170000,
-    "internal_index": 291,
+    "internal_index": 698,
     "game_table_row": "VenusFlytrap"
   },
   {
@@ -3675,7 +3675,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 248000,
-    "internal_index": 292,
+    "internal_index": 701,
     "game_table_row": "FluffyBird"
   },
   {
@@ -3688,7 +3688,7 @@
     "rarity": 3,
     "ignore_combi": false,
     "combi_duplicate_priority": 200000,
-    "internal_index": 293,
+    "internal_index": 703,
     "game_table_row": "DandelionGirl"
   },
   {
@@ -3701,7 +3701,7 @@
     "rarity": 2,
     "ignore_combi": false,
     "combi_duplicate_priority": 252000,
-    "internal_index": 294,
+    "internal_index": 707,
     "game_table_row": "ClioneTwins"
   },
   {
@@ -3714,7 +3714,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 101000,
-    "internal_index": 295,
+    "internal_index": 708,
     "game_table_row": "DarkFlameFox"
   },
   {
@@ -3727,7 +3727,7 @@
     "rarity": 5,
     "ignore_combi": false,
     "combi_duplicate_priority": 135000,
-    "internal_index": 296,
+    "internal_index": 710,
     "game_table_row": "RedFlowerBird"
   },
   {
@@ -3740,7 +3740,7 @@
     "rarity": 4,
     "ignore_combi": false,
     "combi_duplicate_priority": 81000,
-    "internal_index": 297,
+    "internal_index": 711,
     "game_table_row": "SleeveRabbit"
   },
   {
@@ -3753,7 +3753,7 @@
     "rarity": 9,
     "ignore_combi": false,
     "combi_duplicate_priority": 23000,
-    "internal_index": 298,
+    "internal_index": 712,
     "game_table_row": "LotusDragon"
   },
   {
@@ -3766,7 +3766,7 @@
     "rarity": 9,
     "ignore_combi": true,
     "combi_duplicate_priority": 4000,
-    "internal_index": 299,
+    "internal_index": 713,
     "game_table_row": "BlueSkyDragon"
   },
   {
@@ -3779,7 +3779,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 141000,
-    "internal_index": 300,
+    "internal_index": 715,
     "game_table_row": "PandaGirl"
   },
   {
@@ -3792,7 +3792,7 @@
     "rarity": 6,
     "ignore_combi": false,
     "combi_duplicate_priority": 202000,
-    "internal_index": 301,
+    "internal_index": 716,
     "game_table_row": "GrassMinotaur"
   },
   {
@@ -3805,7 +3805,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 44000,
-    "internal_index": 302,
+    "internal_index": 717,
     "game_table_row": "GrassMinotaur_Ice"
   },
   {
@@ -3818,7 +3818,7 @@
     "rarity": 8,
     "ignore_combi": true,
     "combi_duplicate_priority": 8000,
-    "internal_index": 303,
+    "internal_index": 720,
     "game_table_row": "Mothman"
   },
   {
@@ -3831,7 +3831,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 30000,
-    "internal_index": 304,
+    "internal_index": 721,
     "game_table_row": "GhostDragon"
   },
   {
@@ -3844,7 +3844,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 14000,
-    "internal_index": 305,
+    "internal_index": 722,
     "game_table_row": "GhostDragon_Fire"
   },
   {
@@ -3857,7 +3857,7 @@
     "rarity": 8,
     "ignore_combi": true,
     "combi_duplicate_priority": 6000,
-    "internal_index": 306,
+    "internal_index": 723,
     "game_table_row": "FlowerPrince"
   },
   {
@@ -3870,7 +3870,7 @@
     "rarity": 7,
     "ignore_combi": false,
     "combi_duplicate_priority": 29000,
-    "internal_index": 307,
+    "internal_index": 725,
     "game_table_row": "KabukiMan"
   },
   {
@@ -3883,7 +3883,7 @@
     "rarity": 8,
     "ignore_combi": false,
     "combi_duplicate_priority": 3000,
-    "internal_index": 308,
+    "internal_index": 726,
     "game_table_row": "DomeArmorDragon"
   }
 ]

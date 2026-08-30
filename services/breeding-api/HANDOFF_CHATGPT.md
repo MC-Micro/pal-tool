@@ -37,8 +37,8 @@ Diese Datei soll eine neue technische Chat- oder Codex-Sitzung ohne Zugriff auf 
 | eindeutige Spezialkind-Arten | 90 |
 | ungeordnete Paare | 44.850 |
 | Policy-geänderte Paarergebnisse | 13.479 |
-| Release-Gate | BLOCKED durch `needs_review`; strukturell valid, null ungelöste Konflikte |
-| Patchstand | historischer Palworld-1.0-Bestand vom 13.07.2026; Migration auf offiziellen Dedicated-Server-Build `24575149` in Review |
+| Release-Gate | PASS für den reviewten Build `24575149`; null ungelöste Konflikte |
+| Patchstand | Palworld `1.0.3`, offizieller Dedicated-Server-Build `24575149`, Review vom 30.08.2026 |
 
 Historische Statuswerte dokumentieren nur den zuletzt geprüften technischen Stand. Live-Erreichbarkeit, aktuelle Branches, aktuelle Commits, offene Pull Requests und ein möglicher neuerer Palworld-Patch müssen bei technischer Wartung oder Entwicklung erneut geprüft werden.
 
@@ -46,7 +46,7 @@ Historische Statuswerte dokumentieren nur den zuletzt geprüften technischen Sta
 
 ### 0. Pal Data Core
 
-`tools/pal-data-core/` enthält die GitHub-native, read-only Acquisition-/Extraction-Pipeline für den offiziellen Dedicated Server (Steam App `2394010`). Der aktuelle live verifizierte Server-Build ist `24575149`; erforderliche Tabellen wurden ohne externes Mapping gelesen.
+`tools/pal-data-core/` enthält die GitHub-native, read-only Acquisition-/Extraction-Pipeline für den offiziellen Dedicated Server (Steam App `2394010`). Der aktuelle live verifizierte Server-Build ist `24575149`; erforderliche Tabellen wurden ohne externes Mapping gelesen. Der Schema-2-Snapshot mit SHA-256 `78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc` wurde gegen den veröffentlichten Umfang geprüft: null Quellkonflikte, null Pal-Abweichungen und null fehlende oder neue veröffentlichte Specials.
 
 `catalog.v1.json` trennt Package-Pfade, Domänen und Extraktionsprofile vom allgemeinen PAK-Leser. `inventory-only` erlaubt neue DataTables zunächst vollständig nach Row-/Field-/Property-Type-Struktur zu erfassen, ohne unbekannte Felder zu interpretieren. `Pal Data Core CI` kompiliert warnings-as-errors und validiert den Katalog. Der teure `Probe Pal Data Core`-Gate lädt den offiziellen Server und erzeugt nur ein kurzlebiges normalisiertes Candidate-Artefakt; PAKs, Mappings und Raw DataTables werden weder committed noch hochgeladen.
 
@@ -155,8 +155,8 @@ Die Analyse `data/palworld-breeding/analysis/anubis_jolthog_route.json` findet f
 
 Aktueller dokumentierter Stand:
 
-- `source_data_hash`: `0e42421242027cdc6516b8f140d6fe1c0b94d6e9201164554a9337259bc21636`
-- `generated_artifact_hash`: `6189863ff6b8878bf2a6997064eb9a4e7455b306815d1173430427f9530bbee1`
+- `source_data_hash`: `6c3b4abc6b985eee0154e1468238abf9a95928aab6f748423d42d3f341ea07bd`
+- `generated_artifact_hash`: `bd7c739198a7023cc6f7073f57166857077be91bb2d72099d11b26533d6c62af`
 
 Der vollständige Ergebnisvergleich liegt unter `services/breeding-api/generated/special-child-impact.json`.
 
@@ -183,7 +183,7 @@ Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production
 
 ## Patchregel
 
-Der aktuelle Manifeststatus lautet `needs_review`. Der historische Stand gilt nur für Palworld 1.0 und den Prüftag 13.07.2026; die damalige genaue Buildnummer wurde nicht unabhängig verifiziert. Erst nach Import und Review der aktuellen Tabellen aus dem offiziellen Build darf der Status `current` verwendet werden.
+Der aktuelle Manifeststatus lautet `current` für Palworld `1.0.3`, den Prüftag 30.08.2026 und den verifizierten offiziellen Dedicated-Server-Build `24575149`. `requires_recheck_after_newer_patch = true` bleibt als harte Aktualitätsgrenze bestehen: Ein neuerer Build darf erst nach neuem Candidate, deterministischem Vergleich und explizitem Review veröffentlicht werden.
 
 ## Dauerhafte technische Projektübergabe – verbindlich
 
@@ -225,7 +225,7 @@ Bei Widersprüchen gelten Code, kanonische Daten, Manifest, gemergte Pull Reques
 ## Nächste Schritte bei einer technischen Wartungs- oder Entwicklungssitzung
 
 1. Aktuellen `main`-Commit, aktive Branches und offene Pull Requests über GitHub bestimmen.
-2. Prüfen, ob seit dem 13.07.2026 eine neuere Palworld-Version erschienen ist, wenn Patchaktualität für die technische Arbeit relevant ist.
+2. Prüfen, ob nach dem am 30.08.2026 verifizierten Dedicated-Server-Build `24575149` ein neuerer Build erschienen ist, wenn Patchaktualität für die technische Arbeit relevant ist.
 3. `breeding_status` über **Breeder** aufrufen, wenn Deploymentzustand, Validierung, Schema, Hashes oder Patchmetadaten geprüft werden sollen.
 4. Bei Änderungen zuerst die kanonischen Dateien und vorhandenen Tests verstehen.
 5. Nach materieller Arbeit README und diese Übergabe im selben Change aktualisieren.

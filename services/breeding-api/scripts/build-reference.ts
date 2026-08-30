@@ -42,7 +42,7 @@ const REQUIRED_DECISION_ORDER = [
 ] as const;
 const GENDER_CODE: Record<Gender, number> = { ANY: 0, MALE: 1, FEMALE: 2 };
 const IMPLEMENTATION_NOTES = [
-  "Direct Palworld egg tests and the current 1.0.3 independent extraction agree that special children are excluded from normal-formula candidates and equal-distance candidates resolve by higher CombiDuplicatePriority; in the current eligible pool this tracks the higher CombiRank.",
+  "Direct Palworld egg tests and official Dedicated Server build 24575149 agree that special children are excluded from normal-formula candidates and equal-distance candidates resolve by higher CombiDuplicatePriority; in the current eligible pool this tracks the higher CombiRank.",
   "Same-species identity remains the first rule, including for species that are otherwise direct-special children.",
   "External calculators and extraction projects are non-authoritative cross-checks only and are never runtime dependencies of the build or Worker.",
 ] as const;

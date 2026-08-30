@@ -56,6 +56,13 @@ function coalesce(tables, kind) {
       conflicts.push({ kind, sourceRow, packagePaths: entries.map(({ packagePath }) => packagePath) });
       continue;
     }
+    const ordinals = new Set(
+      entries.map(({ row }) => row.sourceOrdinal).filter((value) => value !== undefined),
+    );
+    if (ordinals.size > 1) {
+      conflicts.push({ kind: `${kind}-ordinal`, sourceRow, packagePaths: entries.map(({ packagePath }) => packagePath) });
+      continue;
+    }
     rows.set(sourceRow, entries[0].row);
   }
   return { rows, conflicts };
@@ -107,7 +114,7 @@ for (const canonical of canonicalPals) {
     ? row.overrideNameTextId
     : null;
   const officialNameKey = overrideName ?? `PAL_NAME_${enumValue(row.tribe)}`;
-  for (const [field, expected, actual] of [
+  const comparisons = [
     ["combi_rank", canonical.combi_rank, row.combiRank],
     ["rarity", canonical.rarity, row.rarity],
     ["ignore_combi", canonical.ignore_combi, row.ignoreCombi],
@@ -115,7 +122,11 @@ for (const canonical of canonicalPals) {
     ["paldex_no", canonical.paldex_no, row.zukanIndex >= 0 ? row.zukanIndex : null],
     ["name_en", canonical.name_en, namesEnByLowercase.get(officialNameKey.toLowerCase()) ?? null],
     ["name_de", canonical.name_de, namesDeByLowercase.get(officialNameKey.toLowerCase()) ?? null],
-  ]) {
+  ];
+  if (snapshot.schemaVersion >= 2) {
+    comparisons.push(["internal_index", canonical.internal_index, row.sourceOrdinal]);
+  }
+  for (const [field, expected, actual] of comparisons) {
     if (expected !== actual) palMismatches.push({ internalName: canonical.internal_name, field, expected, actual });
   }
 }

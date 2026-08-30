@@ -269,17 +269,17 @@ describe("worker HTTP surface", () => {
     expect(response.status).toBe(200);
     expect(json.pal_count).toBe(299);
     expect(json.special_combination_count).toBe(136);
-    expect(json.known_patch_check_status).toBe("needs_review");
+    expect(json.known_patch_check_status).toBe("current");
     expect(json.validation_status).toBe("valid");
     expect(json.source_data_hash).toMatch(/^[a-f0-9]{64}$/);
     expect(json.generated_artifact_hash).toMatch(/^[a-f0-9]{64}$/);
     expect(json.source_data_hash).not.toBe(json.generated_artifact_hash);
     expect(json.patch_check).toMatchObject({
-      status: "needs_review",
-      checked_on: "2026-07-13",
-      checked_game_version: "1.0",
-      checked_game_build: null,
-      build_verified: false,
+      status: "current",
+      checked_on: "2026-08-30",
+      checked_game_version: "1.0.3",
+      checked_game_build: "24575149",
+      build_verified: true,
       breeding_relevant_changes_found: true,
       requires_recheck_after_newer_patch: true,
     });

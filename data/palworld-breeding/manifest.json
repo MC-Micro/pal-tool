@@ -1,8 +1,42 @@
 {
   "schema_version": 5,
-  "generated_at_utc": "2026-08-30T11:05:00Z",
+  "generated_at_utc": "2026-08-30T14:25:47Z",
   "sources": [
     {
+      "source_kind": "official_dedicated_server_extraction",
+      "role": "canonical_primary_source",
+      "repository": "MC-Micro/pal-tool",
+      "commit": "f5aee66c1f0eff347fdf3ca7a1546ca0492166ed",
+      "paths": [
+        ".github/workflows/probe-pal-data-core.yml",
+        "tools/pal-data-core/catalog.v1.json",
+        "tools/pal-data-core/PalDataCore.Extractor"
+      ],
+      "steam_app_id": "2394010",
+      "steam_build_id": "24575149",
+      "snapshot_schema_version": 2,
+      "workflow_run_id": "33315757618",
+      "artifact_id": "9733402335",
+      "artifact_digest": "sha256:01eba881e18f191b84223f7593f5a3a850f647418cb6b7d0b197f9109b1c580d",
+      "sha256": {
+        "technical_snapshot": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
+        "technical_summary": "443236a4bb5a6593f553ce9515b2778549416f872f7ed58b2364559c1d657283",
+        "field_inventory": "7f1229deb4d61c04c727d3b67bf8103a8ed7d3742907158e78b87ee024f583c9"
+      },
+      "used_for": [
+        "authoritative_combi_rank",
+        "authoritative_rarity",
+        "authoritative_ignore_combi",
+        "authoritative_combi_duplicate_priority",
+        "authoritative_unique_combinations_and_gender_constraints",
+        "authoritative_localized_names",
+        "authoritative_paldex_numbers",
+        "authoritative_source_table_order"
+      ]
+    },
+    {
+      "source_kind": "community_extraction",
+      "role": "historical_cross_check",
       "repository": "PalModding/UtililityFiles",
       "commit": "455de2110d8414f703699204f33cb6ac052a3f98",
       "paths": [
@@ -16,14 +50,13 @@
         "unique": "b080c5b80587634d225b251e9e852043a6c91c4478df79988c0f9fb162c8da6f"
       },
       "used_for": [
-        "authoritative_combi_rank",
-        "authoritative_rarity",
-        "authoritative_ignore_combi",
-        "authoritative_combi_duplicate_priority",
-        "authoritative_unique_combinations_and_gender_constraints"
+        "historical_value_cross_check",
+        "historical_unique_combination_cross_check"
       ]
     },
     {
+      "source_kind": "community_calculator_dataset",
+      "role": "product_membership_and_independent_cross_check",
       "repository": "tylercamp/palcalc",
       "commit": "dcff62b00014869d742762919410d95568023b8b",
       "paths": [
@@ -37,15 +70,14 @@
       },
       "used_for": [
         "released_pal_filter",
-        "German_and_English_names",
-        "paldex",
-        "internal_index",
         "independent_value_cross_check",
         "resolved_special_combo_cross_check",
         "normal_formula_special_child_exclusion_algorithm_cross_check"
       ]
     },
     {
+      "source_kind": "community_save_tool_dataset",
+      "role": "independent_cross_check",
       "repository": "deafdudecomputers/PalworldSaveTools",
       "commit": "f12633787c82d1a652dab3235cabb785ec22134e",
       "path": "resources/game_data/breedingdata.json",
@@ -83,16 +115,34 @@
     "ranks_not_divisible_by_10": 0
   },
   "patch_check": {
-    "checked_at_utc": null,
-    "checked_on": "2026-07-13",
+    "checked_at_utc": "2026-08-30T14:25:47Z",
+    "checked_on": "2026-08-30",
     "checked_timezone": "Europe/Berlin",
-    "time_precision": "date_only",
-    "checked_game_version": "1.0",
-    "checked_game_build": null,
-    "build_verified": false,
-    "status": "needs_review",
+    "time_precision": "timestamp",
+    "checked_game_version": "1.0.3",
+    "checked_game_build": "24575149",
+    "build_verified": true,
+    "status": "current",
     "breeding_relevant_changes_found": true,
     "evidence": [
+      {
+        "kind": "official_dedicated_server_snapshot_review",
+        "date": "2026-08-30",
+        "steam_app_id": "2394010",
+        "steam_build_id": "24575149",
+        "snapshot_schema_version": 2,
+        "snapshot_sha256": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
+        "workflow_run_id": "33315757618",
+        "artifact_id": "9733402335",
+        "result": "pass",
+        "reviewed_counts": {
+          "technical_pal_rows": 753,
+          "released_pals": 299,
+          "technical_unique_rows": 258,
+          "released_cross_species_specials": 136
+        },
+        "confirms": "official values, names, Paldeck numbers, source ordinals and all released cross-species special combinations"
+      },
       {
         "kind": "direct_in_game_egg_test",
         "date": "2026-07-13",
@@ -115,9 +165,10 @@
       }
     ],
     "source_notes": [
-      "This canonical dataset is still the Palworld 1.0 snapshot recorded in July 2026.",
-      "The current public game version is newer, so this reference must not report itself as current until the 1.0.3 source tables and build are imported and revalidated.",
-      "No exact game build number was independently verified for the July snapshot."
+      "The canonical breeding values, localization, Paldeck numbers, source ordinals and released cross-species specials were reviewed against the normalized official Dedicated Server build 24575149 snapshot.",
+      "Both official Pal parameter tables agree for all 753 technical rows; the released product filter contains 299 Pals and is explicitly separate from Game Truth.",
+      "Community datasets remain independent cross-checks and historical provenance only; they are not the canonical source for current game values.",
+      "A newer official build requires a new snapshot, deterministic comparison and explicit review before publication."
     ],
     "requires_recheck_after_newer_patch": true
   },
@@ -136,7 +187,7 @@
       "source": "palworldbreeding.gg",
       "authoritative": false,
       "checked_on": "2026-08-30",
-      "purpose": "current Palworld 1.0.3 independent extraction cross-check while the repository source refresh is in progress",
+      "purpose": "independent Palworld 1.0.3 extraction cross-check only; never a canonical source, runtime dependency or release gate",
       "verified_cases": [
         "Snock + Jolthog -> Turtacle",
         "equal-distance normal-formula ties prefer higher CombiDuplicatePriority",
@@ -145,6 +196,10 @@
     }
   ],
   "validation": {
+    "official_source_conflicts": [],
+    "official_pal_mismatches": [],
+    "official_missing_special_combinations": [],
+    "official_new_special_combinations": [],
     "missing_game_table_rows": [],
     "fallback_game_table_rows": [],
     "palcalc_rank_mismatches": [],
