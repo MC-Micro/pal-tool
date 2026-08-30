@@ -36,16 +36,15 @@ const REQUIRED_DECISION_ORDER = [
   "eligible_candidate_pool",
   "rounded_average",
   "nearest_combi_rank",
-  "equidistant_different_ranks_parent_rarity_average",
-  "equidistant_rarity_lower_rarity",
-  "equidistant_equal_rarity_higher_combi_rank",
-  "same_rank_duplicate_resolution",
+  "equidistant_higher_combi_duplicate_priority",
+  "non_variant_before_variant",
+  "lower_internal_index",
 ] as const;
 const GENDER_CODE: Record<Gender, number> = { ANY: 0, MALE: 1, FEMALE: 2 };
 const IMPLEMENTATION_NOTES = [
-  "Direct Palworld 1.0 egg tests on 2026-07-13 resolved both former release blockers: special children are excluded from normal-formula candidates, and fully equal cross-rank ties select the higher CombiRank.",
+  "Direct Palworld egg tests and official Dedicated Server build 24575149 agree that special children are excluded from normal-formula candidates and equal-distance candidates resolve by higher CombiDuplicatePriority; in the current eligible pool this tracks the higher CombiRank.",
   "Same-species identity remains the first rule, including for species that are otherwise direct-special children.",
-  "Palworld.gg is documented only as a non-authoritative manual cross-check and is never queried by the build or Worker.",
+  "External calculators and extraction projects are non-authoritative cross-checks only and are never runtime dependencies of the build or Worker.",
 ] as const;
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
@@ -250,7 +249,7 @@ export function validateCanonicalInputs(inputs: CanonicalInputs): void {
     ] as const) {
       requireString(value, `pals[${index}].${field}`);
     }
-    requireInteger(pal.paldex_no, `pals[${index}].paldex_no`);
+    if (pal.paldex_no !== null) requireInteger(pal.paldex_no, `pals[${index}].paldex_no`);
     requireInteger(pal.combi_rank, `pals[${index}].combi_rank`, 1);
     requireInteger(pal.rarity, `pals[${index}].rarity`);
     requireInteger(pal.combi_duplicate_priority, `pals[${index}].combi_duplicate_priority`);
@@ -394,21 +393,45 @@ function buildAssignmentConflicts(
   const penkingId = findUniquePalId(pals, "CaptainPenguin");
   const equalTieActual = resolveBasePair(equalTieParentAId, equalTieParentBId);
   const equalTieChild = pals[equalTieActual.childId];
-  if (equalTieChild === undefined) throw new Error("Equal-rarity fixture child lookup failed");
+  if (equalTieChild === undefined) throw new Error("Priority-tie fixture child lookup failed");
   if (
     equalTieActual.childId !== penkingId ||
     !equalTieActual.appliedTieBreaks?.includes(
-      "equidistant_equal_rarity_higher_combi_rank",
+      "equidistant_higher_combi_duplicate_priority",
     )
   ) {
     conflicts.push({
-      code: "UNDOCUMENTED_EQUAL_RARITY_SOURCE_ORDER_FALLBACK",
+      code: "LUNARIS_GRINTALE_PRIORITY_TIE_CONFLICT",
       description:
-        "The direct Palworld 1.0 egg test requires the canonical higher-CombiRank rule for the fully equal cross-rank tie.",
+        "The verified Lunaris + Grintale result requires Penking under the global higher-CombiDuplicatePriority equal-distance rule.",
       parents: ["Lunaris", "Grintale"],
-      expected: "Penking via equidistant_equal_rarity_higher_combi_rank",
+      expected: "Penking via equidistant_higher_combi_duplicate_priority",
       canonicalActual: equalTieChild.name_en,
       canonicalReason: `target=${equalTieActual.targetRank}; applied=${equalTieActual.appliedTieBreaks?.join(",") ?? "none"}`,
+      blocking: true,
+    });
+  }
+
+  const snockId = findUniquePalId(pals, "ElecSnail");
+  const jolthogId = findUniquePalId(pals, "Hedgehog");
+  const turtacleId = findUniquePalId(pals, "TentacleTurtle");
+  const snockActual = resolveBasePair(snockId, jolthogId);
+  const snockChild = pals[snockActual.childId];
+  if (snockChild === undefined) throw new Error("Snock/Jolthog fixture child lookup failed");
+  if (
+    snockActual.childId !== turtacleId ||
+    !snockActual.appliedTieBreaks?.includes(
+      "equidistant_higher_combi_duplicate_priority",
+    )
+  ) {
+    conflicts.push({
+      code: "SNOCK_JOLTHOG_PRIORITY_TIE_CONFLICT",
+      description:
+        "The direct Snock + Jolthog egg test and current 1.0.3 cross-check require Turtacle without a pair-specific override.",
+      parents: ["Snock", "Jolthog"],
+      expected: "Turtacle via equidistant_higher_combi_duplicate_priority",
+      canonicalActual: snockChild.name_en,
+      canonicalReason: `target=${snockActual.targetRank}; applied=${snockActual.appliedTieBreaks?.join(",") ?? "none"}`,
       blocking: true,
     });
   }

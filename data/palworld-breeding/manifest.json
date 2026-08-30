@@ -1,8 +1,43 @@
 {
-  "schema_version": 4,
-  "generated_at_utc": "2026-07-12T23:24:25.6053747Z",
+  "schema_version": 5,
+  "generated_at_utc": "2026-08-30T14:49:32Z",
   "sources": [
     {
+      "source_kind": "official_dedicated_server_extraction",
+      "role": "canonical_primary_source",
+      "repository": "MC-Micro/pal-tool",
+      "commit": "caee35c613ae9890d56a1e9f51ec4088e0eddab4",
+      "paths": [
+        ".github/workflows/probe-pal-data-core.yml",
+        "tools/pal-data-core/catalog.v1.json",
+        "tools/pal-data-core/PalDataCore.Extractor"
+      ],
+      "steam_app_id": "2394010",
+      "steam_build_id": "24575149",
+      "snapshot_schema_version": 2,
+      "workflow_run_id": "33317818364",
+      "artifact_id": "9734008349",
+      "artifact_digest": "sha256:3310b22dfc804918ad9c71b559247b2c32d2db632bf7d338be17080740023a25",
+      "sha256": {
+        "technical_snapshot": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
+        "technical_summary": "443236a4bb5a6593f553ce9515b2778549416f872f7ed58b2364559c1d657283",
+        "field_inventory": "7f1229deb4d61c04c727d3b67bf8103a8ed7d3742907158e78b87ee024f583c9",
+        "breeding_review": "c66a0d874241fcbf5f56c95b7687a74af16d71bc8c58e182d6bd48c1ebc05c2d"
+      },
+      "used_for": [
+        "authoritative_combi_rank",
+        "authoritative_rarity",
+        "authoritative_ignore_combi",
+        "authoritative_combi_duplicate_priority",
+        "authoritative_unique_combinations_and_gender_constraints",
+        "authoritative_localized_names",
+        "authoritative_paldex_numbers",
+        "authoritative_source_table_order"
+      ]
+    },
+    {
+      "source_kind": "community_extraction",
+      "role": "historical_cross_check",
       "repository": "PalModding/UtililityFiles",
       "commit": "455de2110d8414f703699204f33cb6ac052a3f98",
       "paths": [
@@ -16,14 +51,13 @@
         "unique": "b080c5b80587634d225b251e9e852043a6c91c4478df79988c0f9fb162c8da6f"
       },
       "used_for": [
-        "authoritative_combi_rank",
-        "authoritative_rarity",
-        "authoritative_ignore_combi",
-        "authoritative_combi_duplicate_priority",
-        "authoritative_unique_combinations_and_gender_constraints"
+        "historical_value_cross_check",
+        "historical_unique_combination_cross_check"
       ]
     },
     {
+      "source_kind": "community_calculator_dataset",
+      "role": "product_membership_and_independent_cross_check",
       "repository": "tylercamp/palcalc",
       "commit": "dcff62b00014869d742762919410d95568023b8b",
       "paths": [
@@ -37,15 +71,14 @@
       },
       "used_for": [
         "released_pal_filter",
-        "German_and_English_names",
-        "paldex",
-        "internal_index",
         "independent_value_cross_check",
         "resolved_special_combo_cross_check",
         "normal_formula_special_child_exclusion_algorithm_cross_check"
       ]
     },
     {
+      "source_kind": "community_save_tool_dataset",
+      "role": "independent_cross_check",
       "repository": "deafdudecomputers/PalworldSaveTools",
       "commit": "f12633787c82d1a652dab3235cabb785ec22134e",
       "path": "resources/game_data/breedingdata.json",
@@ -60,11 +93,16 @@
   "counts": {
     "pal_values": 299,
     "cross_species_special_combinations": 136,
+    "technical_unique_combination_rows": 258,
+    "released_same_species_identity_rows": 115,
+    "technical_same_species_rows_outside_product_filter": 7,
+    "technical_cross_species_rows_outside_product_filter": 0,
+    "same_species_non_identity_rows": 0,
     "unique_special_child_species": 90,
     "normal_formula_eligible_children": 184,
     "eligible_special_child_species_excluded_from_normal_formula": 77,
     "unordered_species_pairs_including_same_species": 44850,
-    "pair_results_changed_by_special_child_rule": 13785,
+    "pair_results_changed_by_special_child_rule": 13479,
     "duplicate_rank_groups": 1,
     "missing_game_table_rows": 0,
     "fallback_game_table_rows": 0,
@@ -83,16 +121,37 @@
     "ranks_not_divisible_by_10": 0
   },
   "patch_check": {
-    "checked_at_utc": null,
-    "checked_on": "2026-07-13",
+    "checked_at_utc": "2026-08-30T14:49:32Z",
+    "checked_on": "2026-08-30",
     "checked_timezone": "Europe/Berlin",
-    "time_precision": "date_only",
-    "checked_game_version": "1.0",
-    "checked_game_build": null,
-    "build_verified": false,
+    "time_precision": "timestamp",
+    "checked_game_version": "1.0.3",
+    "checked_game_build": "24575149",
+    "build_verified": true,
     "status": "current",
     "breeding_relevant_changes_found": true,
     "evidence": [
+      {
+        "kind": "official_dedicated_server_snapshot_review",
+        "date": "2026-08-30",
+        "steam_app_id": "2394010",
+        "steam_build_id": "24575149",
+        "snapshot_schema_version": 2,
+        "snapshot_sha256": "78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc",
+        "workflow_run_id": "33317818364",
+        "artifact_id": "9734008349",
+        "result": "pass",
+        "reviewed_counts": {
+          "technical_pal_rows": 753,
+          "released_pals": 299,
+          "technical_unique_rows": 258,
+          "released_same_species_identity_rows": 115,
+          "technical_same_species_rows_outside_product_filter": 7,
+          "released_cross_species_specials": 136,
+          "technical_cross_species_rows_outside_product_filter": 0
+        },
+        "confirms": "official values, names, Paldeck numbers, source ordinals and all released cross-species special combinations"
+      },
       {
         "kind": "direct_in_game_egg_test",
         "date": "2026-07-13",
@@ -101,7 +160,7 @@
           "Grintale FEMALE"
         ],
         "child": "Penking",
-        "confirms": "equidistant_equal_rarity_higher_combi_rank"
+        "confirms": "higher_combi_duplicate_priority_cross_rank_tie"
       },
       {
         "kind": "direct_in_game_egg_test",
@@ -115,9 +174,10 @@
       }
     ],
     "source_notes": [
-      "Current means checked against Palworld 1.0 on the recorded date only.",
-      "No exact game build number was independently verified.",
-      "A newer Palworld version requires a new breeding-relevance check before this status may remain current."
+      "The canonical breeding values, localization, Paldeck numbers, source ordinals and released cross-species specials were reviewed against the normalized official Dedicated Server build 24575149 snapshot.",
+      "Both official Pal parameter tables agree for all 753 technical rows; the released product filter contains 299 Pals and is explicitly separate from Game Truth.",
+      "Community datasets remain independent cross-checks and historical provenance only; they are not the canonical source for current game values.",
+      "A newer official build requires a new snapshot, deterministic comparison and explicit review before publication."
     ],
     "requires_recheck_after_newer_patch": true
   },
@@ -131,9 +191,56 @@
         "Lunaris + Grintale -> Penking",
         "Sibelyx + Lamball -> Surfent"
       ]
+    },
+    {
+      "source": "palworldbreeding.gg",
+      "authoritative": false,
+      "checked_on": "2026-08-30",
+      "purpose": "independent Palworld 1.0.3 extraction cross-check only; never a canonical source, runtime dependency or release gate",
+      "verified_cases": [
+        "Snock + Jolthog -> Turtacle",
+        "equal-distance normal-formula ties prefer higher CombiDuplicatePriority",
+        "normal formula excludes special-child species"
+      ]
     }
   ],
   "validation": {
+    "official_source_conflicts": [],
+    "official_pal_mismatches": [],
+    "official_missing_special_combinations": [],
+    "official_new_special_combinations": [],
+    "official_technical_same_species_outside_product_filter": [
+      {
+        "source_row": "58",
+        "internal_name": "PinkKangaroo"
+      },
+      {
+        "source_row": "59",
+        "internal_name": "BeardedDragon"
+      },
+      {
+        "source_row": "60",
+        "internal_name": "BlackFurDragon"
+      },
+      {
+        "source_row": "61",
+        "internal_name": "WaterLizard"
+      },
+      {
+        "source_row": "62",
+        "internal_name": "ElecLion"
+      },
+      {
+        "source_row": "63",
+        "internal_name": "GrassDragon"
+      },
+      {
+        "source_row": "64",
+        "internal_name": "DarkMutant"
+      }
+    ],
+    "official_technical_cross_species_outside_product_filter": [],
+    "official_same_species_non_identity_rows": [],
     "missing_game_table_rows": [],
     "fallback_game_table_rows": [],
     "palcalc_rank_mismatches": [],

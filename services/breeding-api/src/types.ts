@@ -4,7 +4,7 @@ export interface PalValue {
   internal_name: string;
   name_de: string;
   name_en: string;
-  paldex_no: number;
+  paldex_no: number | null;
   is_variant: boolean;
   combi_rank: number;
   rarity: number;
@@ -55,11 +55,19 @@ export interface BreedingRulesFile {
 }
 
 export interface ManifestSource {
+  source_kind?: string;
+  role?: string;
   repository: string;
   commit: string;
   path?: string;
   paths?: string[];
   database_version?: string;
+  steam_app_id?: string;
+  steam_build_id?: string;
+  snapshot_schema_version?: number;
+  workflow_run_id?: string;
+  artifact_id?: string;
+  artifact_digest?: string;
   sha256: string | Record<string, string>;
   used_for: string[];
 }
@@ -67,9 +75,17 @@ export interface ManifestSource {
 export interface PatchCheckEvidence {
   kind: string;
   date: string;
-  parents: string[];
-  child: string;
+  parents?: string[];
+  child?: string;
   confirms: string;
+  steam_app_id?: string;
+  steam_build_id?: string;
+  snapshot_schema_version?: number;
+  snapshot_sha256?: string;
+  workflow_run_id?: string;
+  artifact_id?: string;
+  result?: string;
+  reviewed_counts?: Record<string, number>;
 }
 
 export interface PatchCheck {

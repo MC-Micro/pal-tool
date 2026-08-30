@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "canonical_rules_schema_version": 4,
-  "canonical_manifest_schema_version": 4,
+  "canonical_rules_schema_version": 5,
+  "canonical_manifest_schema_version": 5,
   "derived_from_manifest_generated_at_utc": "2026-07-12T23:24:25.6053747Z",
   "source_files": [
     "data/palworld-breeding/breeding_rules.json",
@@ -41,7 +41,7 @@
     "same_species_base_pairs": 299,
     "universal_special_base_pairs": 134,
     "effective_normal_formula_base_pairs": 44417,
-    "effective_pair_results_changed_by_special_child_exclusion": 13785,
+    "effective_pair_results_changed_by_special_child_exclusion": 13479,
     "raw_formula_results_changed_before_precedence_overrides": 13893,
     "raw_changes_hidden_by_same_species_or_universal_special_precedence": 108,
     "effective_formula_pairs_using_final_higher_combi_rank_tie_break": 3458
@@ -71,7 +71,7 @@
     "direct_two_step_to_elphidran": [],
     "direct_two_step_to_surfent": [],
     "direct_two_step_to_elphidran_aqua": [],
-    "conclusion": "No published blank mate species currently produces an intermediate from Anubis that yields Elphidran, Surfent, or Elphidran Aqua when paired directly with Jolthog under schema-4 rules. This does not rule out longer species routes."
+    "conclusion": "No published blank mate species currently produces an intermediate from Anubis that yields Elphidran, Surfent, or Elphidran Aqua when paired directly with Jolthog under schema-5 rules. This does not rule out longer species routes."
   },
   "invalidated_previous_routes": [
     {

@@ -27,7 +27,7 @@ Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene
 
 ## Fachlicher Stand
 
-Die Referenz ist für Palworld 1.0 am 13.07.2026 geprüft. Zwei direkt erzeugte und ausgebrütete Eier bestätigen:
+Die Referenz enthält den veröffentlichten 299-Pal-Produktumfang aus dem normalisierten offiziellen Dedicated-Server-Build `24575149` für Palworld `1.0.3`. Werte, Namen, Paldeck-Nummern, Tabellenreihenfolge und 136 veröffentlichte artverschiedene Spezialkombinationen wurden buildgenau geprüft. Zwei frühere direkt erzeugte und ausgebrütete Eier bestätigen zusätzlich die globalen Regeln:
 
 - `Lunaris MALE + Grintale FEMALE → Penking`
 - `Sibelyx + Lamball → Surfent`
@@ -38,13 +38,13 @@ Daraus gelten global:
 2. Danach gelten direkte Spezialkombinationen samt Geschlechtsvorgaben.
 3. Spezialkinder, also alle Arten aus `special_combinations.child_internal`, sind keine normalen Formel-Kandidaten. Ihre Same-Species-Zucht und Spezialkombinationen bleiben gültig.
 4. Der normale Pool verlangt `CombiRank > 0`, `IgnoreCombi = false` und keine Spezialkind-Art.
-5. Bei vollständig gleichem Cross-Rank-Abstand nach den Seltenheitsregeln gewinnt der höhere `CombiRank`.
-6. Same-Rank-Duplikate verwenden separat `CombiDuplicatePriority`, Nicht-Variante und interne Reihenfolge.
+5. Bei gleichem Rank-Abstand gewinnt die höhere `CombiDuplicatePriority`; Seltenheit ist kein Zucht-Tie-Breaker.
+6. Danach entscheiden Nicht-Variante und interne Reihenfolge.
 7. Paldeck-Nummern beeinflussen weder Zuchtwert noch Tie-Break.
 
-Palworld.gg wurde für die beiden Testfälle ausschließlich manuell und nicht-kanonisch gegengeprüft. Es ist keine Build-, Release- oder Runtime-Abhängigkeit.
+Community-Datensätze und Webseiten wurden ausschließlich unabhängig und nicht-kanonisch gegengeprüft. Sie sind keine Build-, Release- oder Runtime-Abhängigkeit.
 
-Das Release-Gate ist grün; es bestehen keine ungelösten fachlichen Konflikte. Der öffentliche MCP-Ausbau aus PR #4 hat die kanonischen Daten nicht verändert.
+Die strukturelle Validierung und das Release-Gate sind für Build `24575149` grün und enthalten keine ungelösten fachlichen Konflikte. Ein neuerer offizieller Build setzt einen neuen Candidate, deterministischen Vergleich und ein explizites Review voraus.
 
 ## Kanonische Quellen und Zähler
 
@@ -57,20 +57,20 @@ Verbindliche Lesereihenfolge:
 
 Aktueller dokumentierter Stand:
 
-- kanonisches Schema: 4
+- kanonisches Schema: 5
 - API-/Artefaktschema: 2
 - Pals: 299
 - Spezialkombinationen: 136
 - eindeutige Spezialkind-Arten: 90
 - zulässige normale Formel-Kinder: 184 statt zuvor 261
 - ungeordnete Artenpaare einschließlich Same-Species: 44.850
-- durch die Spezialkindregel geänderte Paarergebnisse: 13.785
-- `source_data_hash`: `77901fb00c984e360f563049f2e7f3dc64a6b2d764e77f3c32a737ef4bc82121`
-- `generated_artifact_hash`: `882987ec7c8a1eae7855e9bb3d995b79cb0aa498da2042c00fa6faec326ad9b8`
+- durch die Spezialkindregel geänderte Paarergebnisse: 13.479
+- `source_data_hash`: `1ec025acb446321e74ce4af3c1a7b094112a6054e6cd8ae7c0ae5a469d09ef3c`
+- `generated_artifact_hash`: `092cf2387266f5bcaa9d0cfc7705e447abe466000930597c21dadcaabb9e8db5`
 
 `source_data_hash` hasht deterministisch die vier kanonischen Eingabedateien. `generated_artifact_hash` hasht den kanonisch serialisierten generierten Referenzinhalt, wobei seine eigenen Hashfelder ausgeschlossen werden. Beide Begriffe werden öffentlich nicht vermischt.
 
-Der vollständige Policyvergleich steht in `generated/special-child-impact.json`. Die separate Bestandsanalyse unter `../../data/palworld-breeding/analysis/anubis_jolthog_route.json` ist ebenfalls auf Schema 4 aktualisiert.
+Der vollständige Policyvergleich steht in `generated/special-child-impact.json`. Die separate Bestandsanalyse unter `../../data/palworld-breeding/analysis/anubis_jolthog_route.json` ist ebenfalls auf Schema 5 aktualisiert.
 
 ## Bekannte Routenänderungen
 
@@ -81,7 +81,7 @@ Der vollständige Policyvergleich steht in `generated/special-child-impact.json`
 - `Kingpaca Cryst + Jolthog → Elphidran` bleibt gültig.
 - `Elphidran + Surfent → Elphidran Aqua` bleibt als Spezialkombination gültig.
 
-Die frühere direkte Zweistufen-Abkürzung vom schmutzigen Anubis über einen beliebigen blanken Mate und anschließend den festen Jolthog liefert unter Schema 4 keinen Elphidran, Surfent oder Elphidran Aqua. Längere Routen bleiben möglich.
+Die frühere direkte Zweistufen-Abkürzung vom schmutzigen Anubis über einen beliebigen blanken Mate und anschließend den festen Jolthog liefert unter Schema 5 keinen Elphidran, Surfent oder Elphidran Aqua. Längere Routen bleiben möglich.
 
 ## Architektur
 
@@ -176,7 +176,7 @@ Eine Artenroute ist daher weder eine bestands-, passiv-, geschlechts- noch koste
 
 ## Patchstatus
 
-`manifest.patch_check` nennt Version `1.0`, Prüftag `2026-07-13`, Status `current`, keine verifizierte Buildnummer und `requires_recheck_after_newer_patch = true`. `current` gilt nur für diese Version und dieses Datum. Ein neuerer Patch verlangt eine erneute Zuchtrelevanzprüfung.
+`manifest.patch_check` nennt Version `1.0.3`, Prüftag `2026-08-30`, Status `current`, den verifizierten Dedicated-Server-Build `24575149` und `requires_recheck_after_newer_patch = true`. Der zugrunde liegende technische Snapshot hat SHA-256 `78b598e7a4745f11061411ed0c976fac4e06d21ee9d9bb3002a0e90324b827cc`.
 
 ## CI und Deployment
 
@@ -184,7 +184,7 @@ Eine Artenroute ist daher weder eine bestands-, passiv-, geschlechts- noch koste
 
 Der PR-Head des öffentlichen MCP-Ausbaus wurde am 13.07.2026 erfolgreich durch `Breeding API CI` und die Root-PWA-Validierung geprüft.
 
-Die früher schreibenden Workflows `Build Palworld Breeding Reference` und `Analyze Anubis Breeding Route` sind auf read-only Validierung umgestellt. Sie können Schema-4-Daten beziehungsweise die geprüfte Analyse nicht mehr automatisch mit älterer Logik überschreiben.
+Temporäre schreibende Migrations-, Probe- und Generated-Refresh-Workflows des Feature-Branches sind entfernt. Kanonische Daten und generierte Artefakte werden reviewbar gemeinsam committed; CI besitzt nur Leserechte.
 
 `Deploy Breeding API` ist manuell, nur auf `main`, verwendet das GitHub-Environment `production`, wiederholt die gesamte Freigabekette und deployt erst danach mit `pnpm exec wrangler deploy --keep-vars`. Dadurch bleibt das vorhandene Worker-Secret erhalten.
 

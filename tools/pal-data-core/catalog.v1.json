@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "tables": [
+    {
+      "name": "pals",
+      "domain": "pal",
+      "extractor": "pal-technical-v1",
+      "required": true,
+      "packagePaths": [
+        "Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter",
+        "Pal/Content/Pal/DataTable/Character/DT_PalMonsterParameter_Common"
+      ]
+    },
+    {
+      "name": "breeding-unique",
+      "domain": "breeding",
+      "extractor": "breeding-unique-v1",
+      "required": true,
+      "packagePaths": [
+        "Pal/Content/Pal/DataTable/Character/DT_PalCombiUnique",
+        "Pal/Content/Pal/DataTable/Character/DT_PalCombiUnique_Common"
+      ]
+    },
+    {
+      "name": "pal-names-en",
+      "domain": "localization",
+      "extractor": "localized-text-v1",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/en/Pal/DataTable/Text/DT_PalNameText_Common"]
+    },
+    {
+      "name": "pal-names-de",
+      "domain": "localization",
+      "extractor": "localized-text-v1",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/de/Pal/DataTable/Text/DT_PalNameText_Common"]
+    },
+    {
+      "name": "items",
+      "domain": "item",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": [
+        "Pal/Content/Pal/DataTable/Item/DT_ItemDataTable",
+        "Pal/Content/Pal/DataTable/Item/DT_ItemDataTable_Common"
+      ]
+    },
+    {
+      "name": "item-recipes",
+      "domain": "item",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": [
+        "Pal/Content/Pal/DataTable/Item/DT_ItemRecipeDataTable",
+        "Pal/Content/Pal/DataTable/Item/DT_ItemRecipeDataTable_Common"
+      ]
+    },
+    {
+      "name": "technology-recipe-unlock",
+      "domain": "technology",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": [
+        "Pal/Content/Pal/DataTable/Technology/DT_TechnologyRecipeUnlock",
+        "Pal/Content/Pal/DataTable/Technology/DT_TechnologyRecipeUnlock_Common"
+      ]
+    },
+    {
+      "name": "technology-names-en",
+      "domain": "technology",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/en/Pal/DataTable/Text/DT_TechnologyNameText_Common"]
+    },
+    {
+      "name": "technology-names-de",
+      "domain": "technology",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/de/Pal/DataTable/Text/DT_TechnologyNameText_Common"]
+    },
+    {
+      "name": "technology-descriptions-en",
+      "domain": "technology",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/en/Pal/DataTable/Text/DT_TechnologyDescText_Common"]
+    },
+    {
+      "name": "technology-descriptions-de",
+      "domain": "technology",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/de/Pal/DataTable/Text/DT_TechnologyDescText_Common"]
+    },
+    {
+      "name": "partner-skills",
+      "domain": "partner-skill",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": ["Pal/Content/Pal/DataTable/PartnerSkill/DT_PartnerSkill"]
+    },
+    {
+      "name": "partner-skill-parameters",
+      "domain": "partner-skill",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": ["Pal/Content/Pal/DataTable/PassiveSkill/DT_PartnerSkillParameter"]
+    },
+    {
+      "name": "passives",
+      "domain": "passive-skill",
+      "extractor": "inventory-only",
+      "required": false,
+      "packagePaths": ["Pal/Content/Pal/DataTable/PassiveSkill/DT_PassiveSkill_Main"]
+    }
+  ],
+  "discoveries": [
+    { "name": "partner-skill-parameter", "token": "PartnerSkillParameter" },
+    { "name": "technology", "token": "Technology" },
+    { "name": "recipe", "token": "Recipe" },
+    { "name": "breeding-item-effect", "token": "BreedingItemEffect" },
+    { "name": "pal-game-setting", "token": "PalGameSetting" }
+  ]
+}

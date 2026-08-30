@@ -263,7 +263,7 @@ describe("path authentication", () => {
 });
 
 describe("worker HTTP surface", () => {
-  it("returns the version-scoped current patch check and distinct hashes", async () => {
+  it("returns the version-scoped freshness check and distinct hashes", async () => {
     const response = await request("/status");
     const json = await body(response);
     expect(response.status).toBe(200);
@@ -276,10 +276,10 @@ describe("worker HTTP surface", () => {
     expect(json.source_data_hash).not.toBe(json.generated_artifact_hash);
     expect(json.patch_check).toMatchObject({
       status: "current",
-      checked_on: "2026-07-13",
-      checked_game_version: "1.0",
-      checked_game_build: null,
-      build_verified: false,
+      checked_on: "2026-08-30",
+      checked_game_version: "1.0.3",
+      checked_game_build: "24575149",
+      build_verified: true,
       breeding_relevant_changes_found: true,
       requires_recheck_after_newer_patch: true,
     });
@@ -339,7 +339,7 @@ describe("worker HTTP surface", () => {
     expect(json.applied_rule).toBe(rule);
   });
 
-  it("explains the global higher-CombiRank tie for Lunaris and Grintale", async () => {
+  it("explains the global higher-priority tie for Lunaris and Grintale", async () => {
     const response = await request("/pair?parent_a=Lunaris&parent_b=Grintale");
     const json = await body(response);
     expect(json.result_child?.name_en).toBe("Penking");
@@ -348,7 +348,7 @@ describe("worker HTTP surface", () => {
       "Penking",
     ]);
     expect(json.applied_tie_breaks).toContain(
-      "equidistant_equal_rarity_higher_combi_rank",
+      "equidistant_higher_combi_duplicate_priority",
     );
   });
 
