@@ -107,15 +107,29 @@ describe("canonical breeding engine", () => {
   });
 
   it.each([
-    ["Braloha", "Dynamoff", "Quivern"],
+    ["Braloha", "Dynamoff", "Azurobe Cryst"],
     ["Shaolong", "Helzephyr Lux", "Dualith"],
     ["Braloha", "Jetragon", "Silvegis"],
-  ])("matches the independent rarity tie-break fixture %s + %s", (left, right, expected) => {
+  ])("matches the current duplicate-priority tie-break fixture %s + %s", (left, right, expected) => {
     const result = engine.resolveBasePair(aliasId(left), aliasId(right));
     expect(reference.pals[result.childId]?.name_en).toBe(expected);
+    expect(result.appliedTieBreaks).toContain("equidistant_higher_combi_duplicate_priority");
   });
 
-  it("selects the higher CombiRank for the fully equal Lunaris/Grintale cross-rank tie", () => {
+  it("resolves the historic Snock/Jolthog regression to Turtacle via higher duplicate priority", () => {
+    const result = engine.resolvePair(id("ElecSnail"), id("Hedgehog"), "FEMALE", "MALE");
+    expect(result.kind).toBe("resolved");
+    if (result.kind !== "resolved") return;
+    expect(internalName(result.childId)).toBe("TentacleTurtle");
+    expect(result.targetRank).toBe(2405);
+    expect(result.nearestCandidateIds?.map(internalName)).toEqual([
+      "TentacleTurtle",
+      "RaijinDaughter",
+    ]);
+    expect(result.appliedTieBreaks).toContain("equidistant_higher_combi_duplicate_priority");
+  });
+
+  it("selects Penking for the Lunaris/Grintale cross-rank priority tie", () => {
     const result = engine.resolveBasePair(id("Mutant"), id("NaughtyCat"));
     expect(internalName(result.childId)).toBe("CaptainPenguin");
     expect(result.targetRank).toBe(2065);
@@ -124,7 +138,7 @@ describe("canonical breeding engine", () => {
       "CaptainPenguin",
     ]);
     expect(result.appliedTieBreaks).toContain(
-      "equidistant_equal_rarity_higher_combi_rank",
+      "equidistant_higher_combi_duplicate_priority",
     );
   });
 
@@ -145,6 +159,7 @@ describe("canonical breeding engine", () => {
     const result = engine.resolveBasePair(id("SheepBall"), id("Hedgehog_Ice"));
     expect(internalName(result.childId)).toBe("PlantSlime");
     expect(result.appliedTieBreaks).toContain("same_rank_duplicate_resolution");
+    expect(result.appliedTieBreaks).toContain("non_variant_before_variant");
   });
 
   it("resolves every direct special row in both parent orders", () => {
