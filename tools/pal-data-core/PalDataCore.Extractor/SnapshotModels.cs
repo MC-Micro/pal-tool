@@ -61,7 +61,6 @@ public sealed record LocalizedTextRow(
 public sealed record CoreTechnicalSnapshot(
     int SchemaVersion,
     string SteamBuildId,
-    DateTimeOffset GeneratedAt,
     IReadOnlyList<SourceTableSnapshot<PalTechnicalRow>> PalTables,
     IReadOnlyList<SourceTableSnapshot<BreedingUniqueTechnicalRow>> BreedingTables,
     IReadOnlyList<SourceTableSnapshot<LocalizedTextRow>> PalNamesEn,
