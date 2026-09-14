@@ -4,29 +4,34 @@
 
 Der laufende Core-Refresh erweitert das Repository von den bisherigen Passiven-/Breeder-Bausteinen zu einer gemeinsamen, GitHub-nativen Pal Data Core Architektur.
 
-## Aktive Bausteine
+## Aktive und geplante Bausteine
 
 1. installierbare **Palworld Passives PWA** im Repository-Root;
 2. kanonische **Breeding-Regel- und Datenebene** unter `data/palworld-breeding/`;
 3. daraus erzeugte read-only **Breeding API mit Cloudflare Worker und öffentlichem MCP** unter `services/breeding-api/`;
 4. im Aufbau befindlicher **Pal Data Core** unter `data/palworld-core/`;
-5. im Aufbau befindliches **GitHub-natives Data-Core-Tooling** unter `tools/pal-data-core/`.
+5. im Aufbau befindliches **GitHub-natives Data-Core-Tooling** unter `tools/pal-data-core/`;
+6. als Zielarchitektur dokumentierte private **Breeder AI PWA mit Multi-User Inventory und bestandsoptimiertem Planner**.
 
 Die Runtime-API verwendet weiterhin ausschließlich vorab erzeugte Repository-Artefakte und ruft bei einem normalen Request weder GitHub noch externe Zuchtrechner auf.
+
+Die Breeder AI PWA ist zum aktuellen Stand nur geplant. Es existieren daraus noch keine neue Runtime, Datenbank, Access-Policy, API, MCP-Funktion oder Deploymentfolge.
 
 ## Repository-Grenzen
 
 - Allgemeine Palworld-Spielwahrheit, Data Core, Fachregeln und Engines: dieses Repository.
-- Persönlicher Player State, IVs/Talente, konkrete Passivkombinationen und private Projekte: `MC-Micro/pal-vault`.
+- Persönlicher Multi-User-Runtime-State der geplanten PWA: ausschließlich authentifizierte private Runtime-Persistenz; niemals Commit in dieses öffentliche Repository.
+- Ausdrücklich im Vault gespeicherte persönliche Projekte und Kontinuität: `MC-Micro/pal-vault`.
 - Server-/Hoststeuerung: `MC-Micro/pal-control`.
 
-`pal-tool` darf für Build, Tests oder öffentliche Runtime nicht von den privaten Repositories abhängig sein.
+`pal-tool` darf für Build, Tests oder öffentliche Runtime nicht von den privaten Repositories abhängig sein. Die geplante Friends-&-Family-PWA darf insbesondere nicht voraussetzen, dass jeder Nutzer einen eigenen Vault-Bereich oder eine Git-Datei besitzt.
 
 ## Einstieg für neue Chats und Maintainer
 
 - Repositoryweite Arbeitsregeln: [`AGENTS.md`](AGENTS.md)
 - Data-Core-Zielarchitektur: [`docs/PAL_DATA_CORE_ARCHITECTURE.md`](docs/PAL_DATA_CORE_ARCHITECTURE.md)
-- Private Planner-Zielarchitektur: [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
+- Fachliche Planner-Zielarchitektur: [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
+- Multi-User-/Sprach-/PWA-Zielarchitektur: [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
 - Data-Core-Datenbereich: [`data/palworld-core/README.md`](data/palworld-core/README.md)
 - GitHub-native Pipeline: [`tools/pal-data-core/README.md`](tools/pal-data-core/README.md)
 - Zuchtregeln und Datenstand: [`data/palworld-breeding/README.md`](data/palworld-breeding/README.md)
@@ -117,7 +122,7 @@ Für den Resolver gilt weiterhin die Domain-Lesereihenfolge:
 3. `pal_values.json`;
 4. `manifest.json`.
 
-Während des aktuellen 1.0.3-Core-Refresh ist der Datenstand auf dem Feature-Branch **nicht als endgültig aktueller Release zu behandeln**. Das Schema wurde bereits für die neue Prioritäts-/Tie-Logik angehoben, die buildabhängigen Pal- und Spezialkombinationsdaten werden jedoch erst nach vollständiger aktueller Dedicated-Server-Revalidierung ersetzt.
+Der veröffentlichte 1.0.3-Stand wurde gegen den offiziellen Dedicated-Server-Build revalidiert. Bei einem neueren Palworld-Build ist vor einer erneuten `current`-Kennzeichnung wieder ein Candidate, deterministischer Vergleich und explizites Review erforderlich.
 
 Langfristig sollen `pal_values.json` und `special_combinations.json` deterministisch aus dem Pal Data Core erzeugt werden. `breeding_rules.json` bleibt die getestete Fachregelwahrheit des Resolvers.
 
@@ -125,7 +130,7 @@ Langfristig sollen `pal_values.json` und `special_combinations.json` determinist
 
 Das Modul `services/breeding-api/` baut aus der kanonischen Breeding-Domain einen deterministischen Cloudflare Worker.
 
-Der bestehende öffentliche MCP bleibt zunächst stateless und read-only mit den fünf Tools:
+Der bestehende öffentliche MCP bleibt stateless und read-only mit den fünf Tools:
 
 - `breeding_status`;
 - `breeding_pair`;
@@ -133,12 +138,40 @@ Der bestehende öffentliche MCP bleibt zunächst stateless und read-only mit den
 - `breeding_children`;
 - `breeding_route`.
 
-Der öffentliche MCP darf keinen privaten Player State lesen oder ausgeben.
+Der öffentliche MCP darf keinen privaten Player State lesen oder ausgeben und erhält keine schreibenden Funktionen.
 
-## Private Planner-Zielrichtung
+# Breeder AI PWA und bestandsoptimierter Planner
 
-Eine spätere authentifizierte Planner-Schicht soll allgemeine Breeding-/Data-Core-Daten mit einem privaten, validierten Player-State-Snapshot verbinden können. Dadurch werden bestandsoptimierte Routen mit Geschlecht, Passiven, IVs/Talenten, Varianten und vorhandenen Zwischenprodukten möglich, ohne bei jeder Anfrage zwei GitHub-Repositories live durchsuchen zu müssen.
+Die geplante Breeder AI PWA ergänzt den Breeder um eine private, geräteübergreifende Multi-User-Oberfläche für Friends-&-Family-Nutzung.
 
-Die kanonische private Quelle bleibt `MC-Micro/pal-vault`; ein Runtime-Snapshot wäre nur ein validiertes, versioniertes Spiegelartefakt.
+Zielrichtung:
 
-Details stehen in [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md).
+- Chat-artige PWA für Handy, Tablet, Laptop und PC;
+- Text und Sprache;
+- deutsche und englische Entity-Auflösung;
+- pro Nutzer isolierter serverseitiger Bestand;
+- stabile interne User-ID unabhängig vom Gerät;
+- keine eigene Passwortdatenbank, zunächst geplanter externer Identity-/OTP-Weg;
+- wertvolle konkrete Pals mit Geschlecht, Passiven, IVs/Talenten, Varianten, Sterne/Kondensation und Keeper-Flag;
+- separate Material-/Duplikatpools;
+- typisierte, validierte Bestandsmutationen statt direkter LLM-Schreibrechte;
+- Mutation Log, Undo, Revisionen und Idempotency-Schutz;
+- inventory-aware Breeding Planner;
+- Kondensations-/Sterneplanner;
+- Provider-Abstraktion für Speech-to-Text und Reasoning.
+
+Die Verantwortung bleibt getrennt:
+
+```text
+Breeder = Was ist züchterisch möglich?
+Inventory = Was besitzt dieser Nutzer konkret?
+Planner = Welche realen Routen passen praktisch zum Bestand?
+LLM = Welche validierten Optionen passen zu den Nutzerprioritäten und wie werden sie erklärt?
+```
+
+Persönlicher PWA-Runtime-State wird nicht in GitHub gespeichert. `MC-Micro/pal-vault` bleibt eine separate private Kontinuitätsquelle für ausdrücklich dort gespeicherte Projekte und ist keine verpflichtende Abhängigkeit für andere PWA-Nutzer.
+
+Details:
+
+- [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
+- [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
