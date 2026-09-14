@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "palworld-breeder-ai-phase0-local-only",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "send_metrics": false,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "breeder-ai-phase0-local",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "preview_database_id": "breeder-ai-phase0-local",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
