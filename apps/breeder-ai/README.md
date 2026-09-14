@@ -5,6 +5,8 @@
 
 Dieser Bereich ist die isolierte Phase-0-Probe für die geplante private Breeder-AI-Anwendung. Er verändert weder die öffentliche read-only Breeding API unter `services/breeding-api/` noch die historische Passives PWA im Repository-Root.
 
+Der vollständige chatübergreifende technische Handoff steht in [`docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`](../../docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md).
+
 ## Ergebnis und Grenze
 
 Der Spike beweist lokal:

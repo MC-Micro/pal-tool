@@ -187,6 +187,8 @@ Der isolierte Spike liegt unter `apps/breeder-ai/`. Lokal bewiesen sind:
 
 Noch nicht live bewiesen sind OTP/Access-Policy, echter JWKS-Abruf und Rotation, zwei reale Geräte, E-Mail-Wechsel, Static-Assets-/API-Topologie, Remote D1 sowie reale Reasoning-/Speech-/Research-Provider. Deshalb ist der lokale technische Proof erfolgreich, das externe Phase-0-Gate aber bewusst nicht geschlossen. Es wurden keine Cloud-Ressourcen, Secrets oder Deployments verändert. Der Review-Stop gilt.
 
+Der vollständige Abschluss- und Übergabebericht liegt in `docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`.
+
 ---
 
 ## 4. Phase 1 – Core Runtime Skeleton

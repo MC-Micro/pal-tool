@@ -49,6 +49,7 @@ UI-spezifische Bewertungen, Erklärungen, Prioritäten oder redaktionelle Tags d
 - **Breeder-AI-Pre-Build-Verträge:** [`docs/BREEDER_AI_PREBUILD_CONTRACTS.md`](docs/BREEDER_AI_PREBUILD_CONTRACTS.md)
 - **Aktuelle Breeder-AI-Entscheidungswahrheit:** [`docs/BREEDER_AI_CURRENT_BLUEPRINT.md`](docs/BREEDER_AI_CURRENT_BLUEPRINT.md)
 - **Breeder-AI-Implementierungsfahrplan/Handoff:** [`docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`](docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md)
+- **Breeder-AI-Phase-0-Abschlussbericht:** [`docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`](docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md)
 - **Breeder-AI-Capability-Index:** [`docs/BREEDER_AI_CAPABILITY_INDEX.md`](docs/BREEDER_AI_CAPABILITY_INDEX.md)
 - Multi-User-/Sprach-/PWA-Detailarchitektur: [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
 - Fachliche Planner-Zielarchitektur: [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
