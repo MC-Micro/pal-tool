@@ -29,14 +29,19 @@ Die Breeder AI PWA ist zum aktuellen Stand nur geplant. Es existieren daraus noc
 ## Einstieg für neue Chats und Maintainer
 
 - Repositoryweite Arbeitsregeln: [`AGENTS.md`](AGENTS.md)
-- Data-Core-Zielarchitektur: [`docs/PAL_DATA_CORE_ARCHITECTURE.md`](docs/PAL_DATA_CORE_ARCHITECTURE.md)
+- **Aktuelle Breeder-AI-Entscheidungswahrheit:** [`docs/BREEDER_AI_CURRENT_BLUEPRINT.md`](docs/BREEDER_AI_CURRENT_BLUEPRINT.md)
+- **Breeder-AI-Implementierungsfahrplan/Handoff:** [`docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`](docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md)
+- Multi-User-/Sprach-/PWA-Detailarchitektur: [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
 - Fachliche Planner-Zielarchitektur: [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
-- Multi-User-/Sprach-/PWA-Zielarchitektur: [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
+- Social-/Server-/Freigabe-Zukunftsarchitektur: [`docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md`](docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md)
+- Data-Core-Zielarchitektur: [`docs/PAL_DATA_CORE_ARCHITECTURE.md`](docs/PAL_DATA_CORE_ARCHITECTURE.md)
 - Data-Core-Datenbereich: [`data/palworld-core/README.md`](data/palworld-core/README.md)
 - GitHub-native Pipeline: [`tools/pal-data-core/README.md`](tools/pal-data-core/README.md)
 - Zuchtregeln und Datenstand: [`data/palworld-breeding/README.md`](data/palworld-breeding/README.md)
 - API-/Worker-Dokumentation: [`services/breeding-api/README.md`](services/breeding-api/README.md)
 - ChatGPT-/Codex-Handoff: [`services/breeding-api/HANDOFF_CHATGPT.md`](services/breeding-api/HANDOFF_CHATGPT.md)
+
+Für die geplante Breeder AI PWA ist bei widersprüchlichen älteren Konzeptpassagen zuerst `BREEDER_AI_CURRENT_BLUEPRINT.md` zu lesen. Der Implementierungsfahrplan definiert danach Phasen, Gates, Stopppunkte und Testanforderungen.
 
 Chatverläufe sind kein dauerhafter Projektspeicher. Materielle Entscheidungen, Architekturänderungen, Validierungsergebnisse, Deploymentfolgen und offene Restschritte müssen in den passenden getrackten Dateien aktualisiert werden. Persönliche Gesprächsinhalte, Tokens, Zugangsdaten und authentifizierte URLs gehören nicht ins Repository.
 
@@ -149,29 +154,37 @@ Zielrichtung:
 - Chat-artige PWA für Handy, Tablet, Laptop und PC;
 - Text und Sprache;
 - deutsche und englische Entity-Auflösung;
-- pro Nutzer isolierter serverseitiger Bestand;
-- stabile interne User-ID unabhängig vom Gerät;
+- aktives Reasoning-Modell für Intent, Rückfragen, Abwägung und Erklärung;
+- pro Nutzer und Spielkontext isolierter serverseitiger Bestand;
+- stabile interne User-ID unabhängig von E-Mail, Nickname oder Gerät;
+- vorbereitete `play_space_id` für mehrere Server/Welten;
 - keine eigene Passwortdatenbank, zunächst geplanter externer Identity-/OTP-Weg;
-- wertvolle konkrete Pals mit Geschlecht, Passiven, IVs/Talenten, Varianten, Sterne/Kondensation und Keeper-Flag;
-- separate Material-/Duplikatpools;
-- typisierte, validierte Bestandsmutationen statt direkter LLM-Schreibrechte;
-- Mutation Log, Undo, Revisionen und Idempotency-Schutz;
+- wertvolle konkrete Pals mit Geschlecht, Passiven, IVs/Talenten, Varianten, Sterne/Kondensation, Erweckung und Keeper-Flag;
+- neutraler Bulk-/Kopienpool für nicht individuell gepflegte Massenkopien;
+- typisierte, validierte Actions statt globaler Autosave-Logik oder direkter LLM-Schreibrechte;
+- Project-Graph mit Checkpoints und Verzweigungen statt vollständiger Chat-History;
+- Trace IDs, Mutation Log, Revisionen, Idempotency und Feedback-/Improvement-Signale;
 - inventory-aware Breeding Planner;
 - Kondensations-/Sterneplanner;
-- Provider-Abstraktion für Speech-to-Text und Reasoning.
+- Provider-Abstraktion für Speech-to-Text, Reasoning und spätere Research-Provider;
+- optionaler, vom Kern getrennter Social-/Showcase-Bereich in späteren Phasen.
 
 Die Verantwortung bleibt getrennt:
 
 ```text
-Breeder = Was ist züchterisch möglich?
-Inventory = Was besitzt dieser Nutzer konkret?
-Planner = Welche realen Routen passen praktisch zum Bestand?
-LLM = Welche validierten Optionen passen zu den Nutzerprioritäten und wie werden sie erklärt?
+Breeder / Data Core = Was ist fachlich wahr und züchterisch möglich?
+Inventory / Projects = Was besitzt dieser Nutzer und woran arbeitet er?
+Planner = Welche realen Routen passen praktisch zum validierten Zustand?
+Reasoning LLM = Was meint der Nutzer, welche Rückfrage fehlt und wie sind valide Optionen abzuwägen?
+Mutation Engine = Welche bestätigte/zulässige Zustandsänderung wird tatsächlich persistiert?
 ```
 
 Persönlicher PWA-Runtime-State wird nicht in GitHub gespeichert. `MC-Micro/pal-vault` bleibt eine separate private Kontinuitätsquelle für ausdrücklich dort gespeicherte Projekte und ist keine verpflichtende Abhängigkeit für andere PWA-Nutzer.
 
-Details:
+Aktuelle Lesereihenfolge für diesen Baustein:
 
-- [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
-- [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
+1. [`docs/BREEDER_AI_CURRENT_BLUEPRINT.md`](docs/BREEDER_AI_CURRENT_BLUEPRINT.md)
+2. [`docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`](docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md)
+3. [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
+4. [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
+5. [`docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md`](docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md)
