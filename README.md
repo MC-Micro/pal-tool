@@ -9,13 +9,13 @@ Das Repository ist historisch aus der Palworld Passives PWA entstanden, hat sich
 1. im Aufbau befindlicher **Pal Data Core** unter `data/palworld-core/` als gemeinsame buildbezogene Datengrundlage;
 2. kanonische **Breeding-Regel- und Datenebene** unter `data/palworld-breeding/`;
 3. daraus erzeugte read-only **Breeding API mit Cloudflare Worker und öffentlichem MCP** unter `services/breeding-api/`;
-4. **Breeder AI PWA** als neue zentrale private Friends-&-Family-Anwendung mit Multi-User Inventory und bestandsoptimiertem Planner;
+4. **Breeder AI PWA** mit einem isolierten lokalen Phase-0-Spike unter `apps/breeder-ai/` als Vorstufe der privaten Friends-&-Family-Anwendung;
 5. bestehende installierbare **Palworld Passives PWA** derzeit noch im Repository-Root, langfristig als eigenständige Consumer-App auf gemeinsamen kanonischen Daten;
 6. **GitHub-natives Data-Core-Tooling** unter `tools/pal-data-core/`.
 
 Die bestehende Breeding Runtime verwendet weiterhin ausschließlich vorab erzeugte Repository-Artefakte und ruft bei einem normalen Request weder GitHub noch externe Zuchtrechner auf.
 
-Die Breeder AI PWA ist zum aktuellen Stand noch nicht implementiert. Es existieren daraus noch keine neue Runtime, Datenbank, Access-Policy, API, MCP-Funktion oder Deploymentfolge.
+Für Breeder AI existiert nun ausschließlich ein lokaler Phase-0-Proof mit Auth-/Identity-, D1-/Concurrency-, Resolver- und Providergrenzen. Er stellt keine produktive Runtime oder API bereit; es wurden keine Cloud-Datenbank, Access-Policy, MCP-Funktion oder Deploymentfolge angelegt. Details und offene Live-Proofs stehen in [`apps/breeder-ai/README.md`](apps/breeder-ai/README.md).
 
 ## Repository-Grenzen
 
@@ -72,6 +72,8 @@ Aktueller physischer Stand:
 .
 ├── index.html, app.js, app.css
 ├── data-passives.js, data-overrides.js
+├── apps/
+│   └── breeder-ai/        # lokaler Phase-0-Spike, nicht deployt
 ├── data/
 │   ├── palworld-core/
 │   └── palworld-breeding/

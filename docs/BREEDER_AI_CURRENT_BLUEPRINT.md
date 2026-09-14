@@ -1,7 +1,7 @@
 # Breeder AI PWA – Current Blueprint
 
 **Stand:** 14. September 2026  
-**Status:** aktuelle konzeptionelle Entscheidungswahrheit für die geplante Breeder AI PWA; noch keine Runtime-Implementierung und kein Deployment
+**Status:** aktuelle konzeptionelle Entscheidungswahrheit; lokaler Phase-0-Spike unter `apps/breeder-ai/`, noch keine produktive Runtime und kein Deployment
 
 ## 0. Dokumentstatus und Vorrangregel
 

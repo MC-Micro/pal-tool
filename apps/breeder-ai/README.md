@@ -1,6 +1,6 @@
 # Breeder AI – lokaler Phase-0-Spike
 
-**Stand:** 14. September 2026  
+**Stand:** 14. September 2026
 **Status:** lokaler technischer Proof; keine produktive Runtime, keine Cloud-Ressource und kein Deployment
 
 Dieser Bereich ist die isolierte Phase-0-Probe für die geplante private Breeder-AI-Anwendung. Er verändert weder die öffentliche read-only Breeding API unter `services/breeding-api/` noch die historische Passives PWA im Repository-Root.

@@ -1,7 +1,7 @@
 # Breeder AI PWA – Implementation Roadmap & Handoff
 
 **Stand:** 14. September 2026  
-**Status:** verbindlicher Implementierungsfahrplan für die nächste technische Phase; noch nicht umgesetzt oder deployt
+**Status:** Phase-0-Spike lokal umgesetzt; Review-Stop vor Phase 1, Live-Infrastruktur oder Deployment
 
 ## 0. Zweck dieses Dokuments
 
@@ -173,6 +173,19 @@ Mindestens testen:
 - sichere Rückfrage bei Ambiguität.
 
 **Exit-Kriterium Phase 0:** Auth, Persistenz, Provider und Resolver sind jeweils mit kleinen realen Proofs-of-Concept technisch tragfähig oder die Architektur wurde bewusst angepasst.
+
+### 3.5 Lokales Ergebnis vom 14. September 2026
+
+Der isolierte Spike liegt unter `apps/breeder-ai/`. Lokal bewiesen sind:
+
+- RS256-Signatur- und Claimprüfung einer Access-artigen JWT gegen injizierte JWKS;
+- qualifiziertes Identity-Mapping, stabile interne User-ID, autorisierter Rebind und E-Mail-unabhängige Identität;
+- D1-Commit-/Retry-Semantik in Workerd/Miniflare einschließlich der sieben vorgeschriebenen Fälle, Parallelzustellung und Rollback einer später scheiternden Batch-Anweisung;
+- User-/Play-Space-Isolation;
+- kanonischer Species-Crosswalk mit Dataset-Bindung, DE/EN, Varianten, Ambiguität und sicheren Fuzzy-Kandidaten;
+- Provider-Interfaces, strikte strukturierte Output-Grenze, Timeout-/Fehlervertrag und Test-Doubles.
+
+Noch nicht live bewiesen sind OTP/Access-Policy, echter JWKS-Abruf und Rotation, zwei reale Geräte, E-Mail-Wechsel, Static-Assets-/API-Topologie, Remote D1 sowie reale Reasoning-/Speech-/Research-Provider. Deshalb ist der lokale technische Proof erfolgreich, das externe Phase-0-Gate aber bewusst nicht geschlossen. Es wurden keine Cloud-Ressourcen, Secrets oder Deployments verändert. Der Review-Stop gilt.
 
 ---
 
@@ -719,13 +732,13 @@ Nach Merge dieses Konzept-PRs soll der Status lauten:
 
 ```text
 Breeder AI PWA
-Status: Architektur weitgehend konvergiert
-Runtime: noch nicht gebaut
+Status: lokaler Phase-0-Spike implementiert; Review-Stop
+Runtime: nur lokaler 503-Shell und technische Proofs
 Deployment: keines
-D1: nicht angelegt
-Access/Auth: nicht final implementiert
-Provider: nicht final ausgewählt
-Next Gate: Phase-0 technical spike
+D1: nur lokale Workerd-/Miniflare-Migration, keine Cloud-Datenbank
+Access/Auth: lokale JWT-/Identity-Grenze bewiesen, Live-OTP/Policy offen
+Provider: Interfaces und Doubles, kein realer Provider ausgewählt
+Next Gate: Phase-0 review and explicit authorization
 ```
 
 Die nächste sinnvolle Produktdiskussion kann offene Werte weiter schärfen, ohne dass dafür der Kernfahrplan neu erfunden werden muss.
