@@ -16,7 +16,7 @@ export interface AuthEvidence {
 }
 
 export interface AuthVerifier {
-  verify(evidence: AuthEvidence, signal: AbortSignal): Promise<VerifiedExternalIdentity>;
+  verify(evidence: AuthEvidence, signal: AbortSignal): Promise<ExternalIdentityClaims>;
 }
 
 export interface AuthContext {
@@ -39,9 +39,16 @@ export interface AdminRecoveryPort {
   recoverIdentity(request: AdminRecoveryRequest): Promise<AuthContext>;
 }
 
-export function verifiedIdentityFromVerifier(
-  claims: ExternalIdentityClaims,
-): VerifiedExternalIdentity {
+/**
+ * The verifier is the runtime trust boundary. The brand prevents accidental
+ * mixing in typed code; it is not a runtime security primitive.
+ */
+export async function verifyExternalIdentity(
+  verifier: AuthVerifier,
+  evidence: AuthEvidence,
+  signal: AbortSignal,
+): Promise<VerifiedExternalIdentity> {
+  const claims = await verifier.verify(evidence, signal);
   const provider = requireQualifiedClaim(claims.provider, "provider");
   const issuer = requireQualifiedClaim(claims.issuer, "issuer");
   const subject = requireQualifiedClaim(claims.subject, "subject");

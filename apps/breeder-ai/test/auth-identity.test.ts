@@ -1,7 +1,11 @@
 import { env } from "cloudflare:workers";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { verifiedIdentityFromVerifier } from "../src/auth/contracts.ts";
+import {
+  verifyExternalIdentity,
+  type ExternalIdentityClaims,
+  type VerifiedExternalIdentity,
+} from "../src/auth/contracts.ts";
 import {
   AuthenticationRequiredError,
   IdentityConflictError,
@@ -17,6 +21,16 @@ import {
 describe("qualified auth identity mapping", () => {
   beforeEach(resetDatabase);
 
+  it("brands claims only after the verifier boundary returns valid identity fields", async () => {
+    await expect(
+      verifiedIdentity({
+        provider: "   ",
+        issuer: "https://team.cloudflareaccess.com",
+        subject: "subject-a",
+      }),
+    ).rejects.toThrow(/provider must not be empty/u);
+  });
+
   it("maps the same provider/issuer/subject to one stable user on multiple devices", async () => {
     await seedUser({
       userId: "user-a",
@@ -25,13 +39,13 @@ describe("qualified auth identity mapping", () => {
       issuer: "https://team-a.cloudflareaccess.com",
       subject: "subject-1",
     });
-    const deviceOne = verifiedIdentityFromVerifier({
+    const deviceOne = await verifiedIdentity({
       provider: "cloudflare-access",
       issuer: "https://team-a.cloudflareaccess.com",
       subject: "subject-1",
       email: "first@example.test",
     });
-    const deviceTwo = verifiedIdentityFromVerifier({
+    const deviceTwo = await verifiedIdentity({
       provider: "cloudflare-access",
       issuer: "https://team-a.cloudflareaccess.com",
       subject: "subject-1",
@@ -60,7 +74,7 @@ describe("qualified auth identity mapping", () => {
 
     const context = await resolveAuthContext(
       env.DB,
-      verifiedIdentityFromVerifier({
+      await verifiedIdentity({
         provider: "cloudflare-access",
         issuer: "https://team-b.cloudflareaccess.com",
         subject: "shared-subject",
@@ -70,7 +84,7 @@ describe("qualified auth identity mapping", () => {
   });
 
   it("does not provision state for an unknown external identity", async () => {
-    const unknown = verifiedIdentityFromVerifier({
+    const unknown = await verifiedIdentity({
       provider: "cloudflare-access",
       issuer: "https://team-a.cloudflareaccess.com",
       subject: "unknown",
@@ -93,7 +107,7 @@ describe("qualified auth identity mapping", () => {
       issuer: "https://team.cloudflareaccess.com",
       subject: "old-subject",
     });
-    const replacement = verifiedIdentityFromVerifier({
+    const replacement = await verifiedIdentity({
       provider: "cloudflare-access",
       issuer: "https://team.cloudflareaccess.com",
       subject: "new-subject",
@@ -115,7 +129,7 @@ describe("qualified auth identity mapping", () => {
     await expect(
       resolveAuthContext(
         env.DB,
-        verifiedIdentityFromVerifier({
+        await verifiedIdentity({
           provider: current.provider,
           issuer: current.issuer,
           subject: current.subject,
@@ -143,7 +157,7 @@ describe("qualified auth identity mapping", () => {
       rebindIdentity(
         env.DB,
         current,
-        verifiedIdentityFromVerifier({
+        await verifiedIdentity({
           provider: "cloudflare-access",
           issuer: "https://team.cloudflareaccess.com",
           subject: "new-subject",
@@ -177,7 +191,7 @@ describe("qualified auth identity mapping", () => {
 
     const contextA = await resolveAuthContext(
       env.DB,
-      verifiedIdentityFromVerifier({
+      await verifiedIdentity({
         provider: "cloudflare-access",
         issuer: "https://team.cloudflareaccess.com",
         subject: "subject-a",
@@ -186,7 +200,7 @@ describe("qualified auth identity mapping", () => {
     );
     const contextB = await resolveAuthContext(
       env.DB,
-      verifiedIdentityFromVerifier({
+      await verifiedIdentity({
         provider: "cloudflare-access",
         issuer: "https://team.cloudflareaccess.com",
         subject: "subject-b",
@@ -217,7 +231,7 @@ describe("qualified auth identity mapping", () => {
       rebindIdentity(
         env.DB,
         current,
-        verifiedIdentityFromVerifier({
+        await verifiedIdentity({
           provider: "cloudflare-access",
           issuer: "https://team.cloudflareaccess.com",
           subject: "subject-b",
@@ -232,4 +246,55 @@ describe("qualified auth identity mapping", () => {
     ).rejects.toBeInstanceOf(IdentityConflictError);
     expect(await tableCount("identity_rebinds")).toBe(0);
   });
+
+  it("rejects invalid server-generated rebind options before writing", async () => {
+    const current = await seedUser({
+      userId: "user-a",
+      authIdentityId: "identity-a",
+      provider: "cloudflare-access",
+      issuer: "https://team.cloudflareaccess.com",
+      subject: "subject-a",
+    });
+    const replacement = await verifiedIdentity({
+      provider: "cloudflare-access",
+      issuer: "https://team.cloudflareaccess.com",
+      subject: "subject-new",
+    });
+
+    const validOptions = {
+      traceId: "trace-rebind",
+      now: "2026-09-14T12:01:00.000Z",
+      newAuthIdentityId: "identity-new",
+      identityRebindId: "rebind-1",
+    };
+    for (const invalidOptions of [
+      { ...validOptions, traceId: "" },
+      { ...validOptions, now: "not-a-timestamp" },
+      { ...validOptions, newAuthIdentityId: "   " },
+      { ...validOptions, identityRebindId: "invalid id with spaces" },
+    ]) {
+      await expect(
+        rebindIdentity(env.DB, current, replacement, invalidOptions),
+      ).rejects.toThrow(/Identity rebind options are invalid/u);
+    }
+    expect(await tableCount("identity_rebinds")).toBe(0);
+    const identities = await env.DB.prepare(
+      "SELECT COUNT(*) AS count FROM auth_identities",
+    ).first<{ count: number }>();
+    expect(identities?.count).toBe(1);
+  });
 });
+
+async function verifiedIdentity(
+  claims: ExternalIdentityClaims,
+): Promise<VerifiedExternalIdentity> {
+  return verifyExternalIdentity(
+    {
+      verify(): Promise<ExternalIdentityClaims> {
+        return Promise.resolve(claims);
+      },
+    },
+    { assertion: "trusted-test-verifier" },
+    new AbortController().signal,
+  );
+}

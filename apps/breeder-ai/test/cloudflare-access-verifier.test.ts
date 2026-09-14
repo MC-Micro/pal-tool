@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { verifyExternalIdentity } from "../src/auth/contracts.ts";
 import {
   CloudflareAccessJwtVerifier,
   InvalidAccessAssertionError,
@@ -20,7 +21,8 @@ describe("Cloudflare Access JWT verification boundary", () => {
       nowEpochSeconds: () => NOW,
     });
 
-    const identity = await verifier.verify(
+    const identity = await verifyExternalIdentity(
+      verifier,
       { assertion: fixture.token },
       new AbortController().signal,
     );
@@ -63,6 +65,26 @@ describe("Cloudflare Access JWT verification boundary", () => {
       ),
     ).rejects.toMatchObject({ message: "Access assertion is expired." });
   });
+
+  it("rejects a validly signed non-application Access token", async () => {
+    const fixture = await jwtFixture();
+    const verifier = new CloudflareAccessJwtVerifier({
+      issuer: ISSUER,
+      audience: AUDIENCE,
+      jwks: fixture.jwks,
+      nowEpochSeconds: () => NOW,
+    });
+
+    await expect(
+      verifyExternalIdentity(
+        verifier,
+        { assertion: await fixture.sign({ type: "org" }) },
+        new AbortController().signal,
+      ),
+    ).rejects.toMatchObject({
+      message: "Access assertion is not an application token.",
+    });
+  });
 });
 
 async function jwtFixture(): Promise<{
@@ -72,6 +94,7 @@ async function jwtFixture(): Promise<{
     overrides?: Partial<{
       aud: string;
       exp: number;
+      type: string;
     }>,
   ) => Promise<string>;
 }> {
@@ -87,10 +110,11 @@ async function jwtFixture(): Promise<{
   );
   const publicJwk = await crypto.subtle.exportKey("jwk", keys.publicKey);
   const sign = async (
-    overrides: Partial<{ aud: string; exp: number }> = {},
+    overrides: Partial<{ aud: string; exp: number; type: string }> = {},
   ): Promise<string> => {
     const header = encodeJson({ alg: "RS256", kid: "phase0-key" });
     const claims = encodeJson({
+      type: overrides.type ?? "app",
       iss: ISSUER,
       sub: "access-user-subject",
       aud: overrides.aud ?? AUDIENCE,

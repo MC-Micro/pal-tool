@@ -1,8 +1,7 @@
 import {
-  verifiedIdentityFromVerifier,
   type AuthEvidence,
   type AuthVerifier,
-  type VerifiedExternalIdentity,
+  type ExternalIdentityClaims,
 } from "./contracts.ts";
 
 interface AccessJwtHeader {
@@ -11,6 +10,7 @@ interface AccessJwtHeader {
 }
 
 interface AccessJwtClaims {
+  type: string;
   iss: string;
   sub: string;
   aud: string | string[];
@@ -67,7 +67,7 @@ export class CloudflareAccessJwtVerifier implements AuthVerifier {
   async verify(
     evidence: AuthEvidence,
     signal: AbortSignal,
-  ): Promise<VerifiedExternalIdentity> {
+  ): Promise<ExternalIdentityClaims> {
     const parts = evidence.assertion.split(".");
     if (parts.length !== 3) {
       throw new InvalidAccessAssertionError("Access assertion is not a JWT.");
@@ -118,12 +118,12 @@ export class CloudflareAccessJwtVerifier implements AuthVerifier {
       this.#clockSkewSeconds,
     );
 
-    return verifiedIdentityFromVerifier({
+    return {
       provider: "cloudflare-access",
       issuer: claims.iss,
       subject: claims.sub,
       ...(claims.email === undefined ? {} : { email: claims.email }),
-    });
+    };
   }
 }
 
@@ -140,6 +140,7 @@ function parseHeader(encoded: string): AccessJwtHeader {
 function parseClaims(encoded: string): AccessJwtClaims {
   const value = parseJsonObject(encoded, "claims");
   if (
+    typeof value.type !== "string" ||
     typeof value.iss !== "string" ||
     typeof value.sub !== "string" ||
     (typeof value.aud !== "string" &&
@@ -156,6 +157,7 @@ function parseClaims(encoded: string): AccessJwtClaims {
     );
   }
   return {
+    type: value.type,
     iss: value.iss,
     sub: value.sub,
     aud: value.aud,
@@ -172,6 +174,11 @@ function validateClaims(
   now: number,
   clockSkewSeconds: number,
 ): void {
+  if (claims.type !== "app") {
+    throw new InvalidAccessAssertionError(
+      "Access assertion is not an application token.",
+    );
+  }
   if (claims.iss !== issuer) {
     throw new InvalidAccessAssertionError("Access assertion issuer is invalid.");
   }

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import type {
   AuthContext,
   VerifiedExternalIdentity,
@@ -11,12 +13,23 @@ interface IdentityRow {
   subject: string;
 }
 
-interface RebindOptions {
-  traceId: string;
-  now: string;
-  newAuthIdentityId: string;
-  identityRebindId: string;
-}
+const generatedIdentifierSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(200)
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._:-]*$/u);
+
+const RebindOptionsSchema = z
+  .object({
+    traceId: generatedIdentifierSchema,
+    now: z.iso.datetime({ offset: true }),
+    newAuthIdentityId: generatedIdentifierSchema,
+    identityRebindId: generatedIdentifierSchema,
+  })
+  .strict();
+
+type RebindOptions = z.infer<typeof RebindOptionsSchema>;
 
 export class AuthenticationRequiredError extends Error {
   constructor(message = "The external identity is not authorized.") {
@@ -63,9 +76,14 @@ export async function rebindIdentity(
   replacement: VerifiedExternalIdentity,
   options: RebindOptions,
 ): Promise<AuthContext> {
-  if (options.traceId.trim().length === 0) {
-    throw new Error("Identity rebind requires a trace_id.");
+  const parsedOptions = RebindOptionsSchema.safeParse(options);
+  if (!parsedOptions.success) {
+    const details = parsedOptions.error.issues
+      .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+      .join("; ");
+    throw new Error(`Identity rebind options are invalid: ${details}`);
   }
+  const validatedOptions = parsedOptions.data;
 
   const current = await db
     .prepare(
@@ -110,12 +128,12 @@ export async function rebindIdentity(
            RETURNING auth_identity_id`,
         )
         .bind(
-          options.newAuthIdentityId,
+          validatedOptions.newAuthIdentityId,
           currentContext.userId,
           replacement.provider,
           replacement.issuer,
           replacement.subject,
-          options.now,
+          validatedOptions.now,
           currentContext.authIdentityId,
         ),
       db
@@ -132,7 +150,7 @@ export async function rebindIdentity(
         .bind(
           currentContext.authIdentityId,
           currentContext.userId,
-          options.newAuthIdentityId,
+          validatedOptions.newAuthIdentityId,
         ),
       db
         .prepare(
@@ -147,12 +165,12 @@ export async function rebindIdentity(
            )`,
         )
         .bind(
-          options.identityRebindId,
+          validatedOptions.identityRebindId,
           currentContext.userId,
           currentContext.authIdentityId,
-          options.newAuthIdentityId,
-          options.traceId,
-          options.now,
+          validatedOptions.newAuthIdentityId,
+          validatedOptions.traceId,
+          validatedOptions.now,
         ),
     ]);
 
