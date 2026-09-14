@@ -19,6 +19,10 @@ Für Breeder-AI-Implementierungsarbeit gilt bei Widersprüchen:
 
 Technischer Live-Zustand, kanonische Daten und getesteter Code haben für bereits implementierte Fakten weiterhin Vorrang vor Dokumentannahmen.
 
+Diese Pre-Build-Contracts sind die verbindliche aktuelle Baseline für Phase 0, aber keine unumstößliche Architektur für alle späteren Phasen. Reale Spike-, Test- oder Implementierungsergebnisse dürfen eine heutige Annahme bewusst in Frage stellen. Eine solche Änderung darf jedoch weder still erfolgen noch bestehende Schutzmechanismen beiläufig umgehen: Der betroffene Vertrag und die zugehörigen Regeln/Architekturdokumente werden begründet angepasst, ersetzt oder enger gescoped; Auswirkungen auf Identitäten, Datenmigration, Tenant-Isolation, Commit-/Retry-Semantik, Kompatibilität, Tests, Rollback und Deployment werden ausdrücklich geprüft.
+
+Damit gilt auch für B1–B4: Ihre Sicherheits- und Konsistenzziele bleiben verbindlich, solange sie nicht durch einen nachvollziehbaren neuen Architekturentscheid ersetzt werden. Historische Entscheidungen bleiben Provenienz; validierte neue technische Wahrheit darf sie kontrolliert superseden.
+
 ---
 
 ## B1 – Runtime- und Repository-Grenze

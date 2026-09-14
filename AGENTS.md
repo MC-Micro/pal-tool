@@ -15,6 +15,31 @@ These instructions apply to the entire repository. Component-specific rules belo
 
 For Breeder AI work, read `docs/BREEDER_AI_PREBUILD_CONTRACTS.md` before implementation.
 
+## Controlled evolution of rules and architecture
+
+Repository rules, architecture decisions and technical handoffs describe the best validated baseline for the product and technical state in which they were written. They are binding for that baseline, but they are not immutable laws and must not be used to force future product work to remain inside a superseded architecture.
+
+Rules exist to protect continuity, safety, consistency and validated invariants while still allowing controlled technical evolution. Therefore:
+
+- do not ignore or bypass an existing rule merely because it is inconvenient;
+- do not preserve an old rule merely because it was documented earlier if the product scope, technical capabilities, requirements or architecture have materially changed;
+- scope component-specific rules as narrowly as the actual component/runtime boundary requires;
+- when a materially better architecture conflicts with an existing rule, review the rule explicitly and change, replace or narrow it in the same deliberate change set before relying on the new architecture;
+- document why the previous rule no longer fits, what replaces it, which safety properties must remain, and the effects on migrations, compatibility, tests, rollback and deployment;
+- preserve old decisions as provenance when useful, but let newer validated architecture and implementation evidence supersede historical assumptions explicitly;
+- if Phase 0 or later implementation evidence disproves a current Breeder-AI assumption, update the relevant rule/contract/blueprint/roadmap deliberately rather than either blindly obeying the stale assumption or silently violating it.
+
+Before a major new development step, explicitly check:
+
+1. which current rules still fit the present technical baseline;
+2. which rules exist mainly because of historical constraints;
+3. which rules should be narrowed to a specific module or runtime;
+4. which rules must be adapted or replaced for the new target state;
+5. which existing safety and correctness invariants must survive the architecture change;
+6. which migrations and tests are required to avoid unnecessary regressions.
+
+Guiding principle: **rules should protect and guide the project, not block justified evolution; architecture follows current product goals and technical reality, not the other way around.**
+
 ## Canonical breeding reference
 
 Read the canonical breeding files in this order:
