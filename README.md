@@ -31,6 +31,7 @@ Die Breeder AI PWA ist zum aktuellen Stand nur geplant. Es existieren daraus noc
 - Repositoryweite Arbeitsregeln: [`AGENTS.md`](AGENTS.md)
 - **Aktuelle Breeder-AI-Entscheidungswahrheit:** [`docs/BREEDER_AI_CURRENT_BLUEPRINT.md`](docs/BREEDER_AI_CURRENT_BLUEPRINT.md)
 - **Breeder-AI-Implementierungsfahrplan/Handoff:** [`docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`](docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md)
+- **Breeder-AI-Capability-Index:** [`docs/BREEDER_AI_CAPABILITY_INDEX.md`](docs/BREEDER_AI_CAPABILITY_INDEX.md)
 - Multi-User-/Sprach-/PWA-Detailarchitektur: [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
 - Fachliche Planner-Zielarchitektur: [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
 - Social-/Server-/Freigabe-Zukunftsarchitektur: [`docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md`](docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md)
@@ -41,7 +42,7 @@ Die Breeder AI PWA ist zum aktuellen Stand nur geplant. Es existieren daraus noc
 - API-/Worker-Dokumentation: [`services/breeding-api/README.md`](services/breeding-api/README.md)
 - ChatGPT-/Codex-Handoff: [`services/breeding-api/HANDOFF_CHATGPT.md`](services/breeding-api/HANDOFF_CHATGPT.md)
 
-Für die geplante Breeder AI PWA ist bei widersprüchlichen älteren Konzeptpassagen zuerst `BREEDER_AI_CURRENT_BLUEPRINT.md` zu lesen. Der Implementierungsfahrplan definiert danach Phasen, Gates, Stopppunkte und Testanforderungen.
+Für die geplante Breeder AI PWA ist bei widersprüchlichen älteren Konzeptpassagen zuerst `BREEDER_AI_CURRENT_BLUEPRINT.md` zu lesen. Der Implementierungsfahrplan definiert danach Phasen, Gates, Stopppunkte und Testanforderungen. Der Capability-Index verweist auf spezialisierte Species-/Mobility- und Pal-Modification-Domains.
 
 Chatverläufe sind kein dauerhafter Projektspeicher. Materielle Entscheidungen, Architekturänderungen, Validierungsergebnisse, Deploymentfolgen und offene Restschritte müssen in den passenden getrackten Dateien aktualisiert werden. Persönliche Gesprächsinhalte, Tokens, Zugangsdaten und authentifizierte URLs gehören nicht ins Repository.
 
@@ -185,6 +186,7 @@ Aktuelle Lesereihenfolge für diesen Baustein:
 
 1. [`docs/BREEDER_AI_CURRENT_BLUEPRINT.md`](docs/BREEDER_AI_CURRENT_BLUEPRINT.md)
 2. [`docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`](docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md)
-3. [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
-4. [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
-5. [`docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md`](docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md)
+3. [`docs/BREEDER_AI_CAPABILITY_INDEX.md`](docs/BREEDER_AI_CAPABILITY_INDEX.md)
+4. [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
+5. [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
+6. [`docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md`](docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md)
