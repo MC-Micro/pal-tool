@@ -6,10 +6,12 @@ import {
   IdempotencyConflictError,
   MutationConflictError,
   ScopeAccessError,
+  SpeciesMigrationRequiredError,
   commitStateMutation,
   readState,
   type MutationEnvelope,
 } from "../src/persistence/state-store.ts";
+import { currentSpeciesDataset } from "../src/resolver/species-resolver.ts";
 import {
   resetDatabase,
   seedUser,
@@ -43,7 +45,10 @@ describe("D1 revision, idempotency, and atomic commit spike", () => {
     expect(committed.duplicate).toBe(false);
     expect(retry).toEqual({ ...committed, duplicate: true });
     expect(retry.stateRevision).toBe(1);
-    expect(retry.state.bulkCopies[speciesKey("Serpent")]).toBe(4);
+    expect(retry.state.bulkCopies[speciesKey("Serpent")]).toMatchObject({
+      count: 4,
+      species: species("Serpent"),
+    });
     expect(await tableCount("mutations")).toBe(1);
     expect(await tableCount("idempotency_receipts")).toBe(1);
   });
@@ -79,7 +84,7 @@ describe("D1 revision, idempotency, and atomic commit spike", () => {
     expect(results.filter((result) => result.duplicate)).toHaveLength(1);
     expect((await readState(env.DB, context, "space-a")).state.bulkCopies[
       speciesKey("Serpent")
-    ]).toBe(7);
+    ]?.count).toBe(7);
     expect(await tableCount("mutations")).toBe(1);
     expect(await tableCount("idempotency_receipts")).toBe(1);
   });
@@ -105,7 +110,7 @@ describe("D1 revision, idempotency, and atomic commit spike", () => {
     ).rejects.toBeInstanceOf(IdempotencyConflictError);
     const state = await readState(env.DB, context, "space-a");
     expect(state.stateRevision).toBe(1);
-    expect(state.state.bulkCopies[speciesKey("Serpent")]).toBe(3);
+    expect(state.state.bulkCopies[speciesKey("Serpent")]?.count).toBe(3);
     expect(await tableCount("mutations")).toBe(1);
   });
 
@@ -184,7 +189,7 @@ describe("D1 revision, idempotency, and atomic commit spike", () => {
 
     const state = await readState(env.DB, context, "space-a");
     expect(state.stateRevision).toBe(1);
-    expect(state.state.bulkCopies[speciesKey("Serpent")]).toBe(1);
+    expect(state.state.bulkCopies[speciesKey("Serpent")]?.count).toBe(1);
     expect(await tableCount("mutations")).toBe(1);
     expect(await tableCount("idempotency_receipts")).toBe(1);
   });
@@ -234,6 +239,116 @@ describe("D1 revision, idempotency, and atomic commit spike", () => {
       commitStateMutation(env.DB, context, "space-a", envelope, NOW),
     ).rejects.toBeInstanceOf(ActionValidationError);
   });
+
+  it("rejects an unknown action type before creating mutation artifacts", async () => {
+    const context = await seededContext();
+    await expectRejectedWithoutArtifacts(context, {
+      ...mutation("unknown-action", 0, 1),
+      actions: [{ type: "DELETE_EVERYTHING" }],
+    });
+  });
+
+  it("rejects missing required action fields before creating mutation artifacts", async () => {
+    const context = await seededContext();
+    await expectRejectedWithoutArtifacts(context, {
+      ...mutation("missing-field", 0, 1),
+      actions: [
+        {
+          type: "ADD_BULK_COPIES",
+          species: species("Serpent"),
+        },
+      ],
+    });
+  });
+
+  it("rejects wrong runtime field types before creating mutation artifacts", async () => {
+    const context = await seededContext();
+    await expectRejectedWithoutArtifacts(context, {
+      ...mutation("wrong-type", 0, 1),
+      expectedStateRevision: "0",
+    });
+  });
+
+  it("rejects a foreign species dataset as an explicit migration case", async () => {
+    const context = await seededContext();
+    const envelope = mutation("foreign-dataset", 0, 1);
+    const action = envelope.actions[0];
+    if (action?.type !== "ADD_BULK_COPIES") throw new Error("Invalid fixture.");
+    action.species = {
+      ...action.species,
+      dataset: {
+        ...currentSpeciesDataset,
+        dedicatedServerBuildId: "older-build",
+      },
+    };
+
+    await expect(
+      commitStateMutation(env.DB, context, "space-a", envelope, NOW),
+    ).rejects.toBeInstanceOf(SpeciesMigrationRequiredError);
+    expect((await readState(env.DB, context, "space-a")).stateRevision).toBe(0);
+    expect(await tableCount("mutations")).toBe(0);
+    expect(await tableCount("idempotency_receipts")).toBe(0);
+  });
+
+  it("fails closed when persisted species state belongs to another dataset", async () => {
+    const context = await seededContext();
+    const committed = await commitStateMutation(
+      env.DB,
+      context,
+      "space-a",
+      mutation("persisted-foreign-dataset", 0, 1),
+      NOW,
+    );
+    const storedState = structuredClone(committed.state);
+    const entry = storedState.bulkCopies[speciesKey("Serpent")];
+    if (entry === undefined) throw new Error("Invalid fixture.");
+    entry.species.dataset.dedicatedServerBuildId = "older-build";
+    await env.DB.prepare(
+      "UPDATE inventory_states SET state_json = ?1 WHERE user_id = ?2 AND play_space_id = ?3",
+    )
+      .bind(JSON.stringify(storedState), context.userId, "space-a")
+      .run();
+
+    await expect(readState(env.DB, context, "space-a")).rejects.toBeInstanceOf(
+      SpeciesMigrationRequiredError,
+    );
+  });
+
+  it("stores prototype-shaped note keys as ordinary own properties", async () => {
+    const context = await seededContext();
+    const envelope: MutationEnvelope = {
+      mutationId: "mutation-prototype-note",
+      traceId: "trace-prototype-note",
+      idempotencyKey: "key-prototype-note",
+      expectedStateRevision: 0,
+      actions: [{ type: "SET_NOTE", key: "__proto__", value: "safe" }],
+    };
+
+    const result = await commitStateMutation(
+      env.DB,
+      context,
+      "space-a",
+      envelope,
+      NOW,
+    );
+    expect(result.state.notes.__proto__).toBe("safe");
+    expect(Object.hasOwn(result.state.notes, "__proto__")).toBe(true);
+    expect(Object.getPrototypeOf(result.state.notes)).toBeNull();
+    const persisted = await readState(env.DB, context, "space-a");
+    expect(persisted.state.notes.__proto__).toBe("safe");
+    expect(Object.hasOwn(persisted.state.notes, "__proto__")).toBe(true);
+    expect(Object.getPrototypeOf(persisted.state.notes)).toBeNull();
+    const retry = await commitStateMutation(
+      env.DB,
+      context,
+      "space-a",
+      envelope,
+      NOW,
+    );
+    expect(retry.duplicate).toBe(true);
+    expect(retry.state.notes.__proto__).toBe("safe");
+    expect(Object.getPrototypeOf(retry.state.notes)).toBeNull();
+  });
 });
 
 async function seededContext() {
@@ -269,11 +384,28 @@ function mutation(
 
 function species(value: string) {
   return {
-    namespace: "palworld.species.internal_name" as const,
-    value,
+    adapterKey: {
+      namespace: "palworld.species.internal_name" as const,
+      value,
+    },
+    dataset: { ...currentSpeciesDataset },
   };
 }
 
 function speciesKey(value: string): string {
   return `palworld.species.internal_name:${value}`;
+}
+
+async function expectRejectedWithoutArtifacts(
+  context: Awaited<ReturnType<typeof seededContext>>,
+  envelope: unknown,
+): Promise<void> {
+  await expect(
+    commitStateMutation(env.DB, context, "space-a", envelope, NOW),
+  ).rejects.toBeInstanceOf(ActionValidationError);
+  const state = await readState(env.DB, context, "space-a");
+  expect(state.stateRevision).toBe(0);
+  expect(state.state).toEqual({ bulkCopies: {}, notes: {} });
+  expect(await tableCount("mutations")).toBe(0);
+  expect(await tableCount("idempotency_receipts")).toBe(0);
 }

@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   SpeciesResolver,
   currentSpeciesDataset,
+  speciesDatasetFromManifest,
 } from "../src/resolver/species-resolver.ts";
 
 describe("species resolver and durable crosswalk", () => {
@@ -115,4 +116,60 @@ describe("species resolver and durable crosswalk", () => {
       }).status,
     ).toBe("unknown_key");
   });
+
+  it("selects the technical snapshot by canonical source role, not array position", () => {
+    const dataset = speciesDatasetFromManifest({
+      schema_version: 7,
+      patch_check: {
+        checked_game_version: "test-version",
+        checked_game_build: "test-build",
+      },
+      sources: [
+        {
+          role: "historical_cross_check",
+          sha256: {
+            technical_snapshot: "f".repeat(64),
+          },
+        },
+        {
+          role: "canonical_primary_source",
+          sha256: {
+            technical_snapshot: "a".repeat(64),
+          },
+        },
+      ],
+    });
+
+    expect(dataset.technicalSnapshotSha256).toBe("a".repeat(64));
+  });
+
+  it("fails closed for a missing, duplicate, or malformed canonical source", () => {
+    const manifest = {
+      schema_version: 7,
+      patch_check: {
+        checked_game_version: "test-version",
+        checked_game_build: "test-build",
+      },
+      sources: [] as unknown[],
+    };
+
+    expect(() => speciesDatasetFromManifest(manifest)).toThrow(
+      /exactly one canonical_primary_source/u,
+    );
+    manifest.sources = [canonicalSource("a".repeat(64)), canonicalSource("b".repeat(64))];
+    expect(() => speciesDatasetFromManifest(manifest)).toThrow(
+      /exactly one canonical_primary_source/u,
+    );
+    manifest.sources = [canonicalSource("not-a-sha256")];
+    expect(() => speciesDatasetFromManifest(manifest)).toThrow(
+      /fingerprint is invalid/u,
+    );
+  });
 });
+
+function canonicalSource(technicalSnapshot: string): Record<string, unknown> {
+  return {
+    role: "canonical_primary_source",
+    sha256: { technical_snapshot: technicalSnapshot },
+  };
+}

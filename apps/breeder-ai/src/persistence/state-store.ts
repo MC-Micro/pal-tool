@@ -1,39 +1,115 @@
+import { z } from "zod";
+
 import type { AuthContext } from "../auth/contracts.ts";
+import {
+  PersistedSpeciesReferenceSchema,
+  type PersistedSpeciesReference,
+  type SpeciesDatasetReference,
+} from "../domain/species-reference.ts";
+import {
+  SpeciesResolver,
+} from "../resolver/species-resolver.ts";
 import {
   canonicalJson,
   sha256Hex,
   type JsonValue,
 } from "../shared/canonical-json.ts";
 
-export interface SpeciesAdapterKey {
-  namespace: "palworld.species.internal_name";
-  value: string;
+export interface BulkCopiesEntry {
+  species: PersistedSpeciesReference;
+  count: number;
 }
 
 export interface Phase0State {
-  bulkCopies: Record<string, number>;
+  bulkCopies: Record<string, BulkCopiesEntry>;
   notes: Record<string, string>;
 }
 
-export type Phase0Action =
-  | {
-      type: "ADD_BULK_COPIES";
-      species: SpeciesAdapterKey;
-      amount: number;
-    }
-  | {
-      type: "SET_NOTE";
-      key: string;
-      value: string;
-    };
+const identifierSchema = z.string().trim().min(1).max(200);
 
-export interface MutationEnvelope {
-  mutationId: string;
-  traceId: string;
-  idempotencyKey: string;
-  expectedStateRevision: number;
-  actions: Phase0Action[];
-}
+const AddBulkCopiesActionSchema = z
+  .object({
+    type: z.literal("ADD_BULK_COPIES"),
+    species: PersistedSpeciesReferenceSchema,
+    amount: z.number().int().positive().max(Number.MAX_SAFE_INTEGER),
+  })
+  .strict();
+
+const SetNoteActionSchema = z
+  .object({
+    type: z.literal("SET_NOTE"),
+    key: z.string().trim().min(1).max(100),
+    value: z.string().max(1_000),
+  })
+  .strict();
+
+export const Phase0ActionSchema = z.discriminatedUnion("type", [
+  AddBulkCopiesActionSchema,
+  SetNoteActionSchema,
+]);
+
+export type Phase0Action = z.infer<typeof Phase0ActionSchema>;
+
+export const MutationEnvelopeSchema = z
+  .object({
+    mutationId: identifierSchema,
+    traceId: identifierSchema,
+    idempotencyKey: identifierSchema,
+    expectedStateRevision: z
+      .number()
+      .int()
+      .nonnegative()
+      .max(Number.MAX_SAFE_INTEGER),
+    actions: z.array(Phase0ActionSchema).min(1).max(100),
+  })
+  .strict()
+  .superRefine((value, context) => {
+    if (value.traceId === value.idempotencyKey) {
+      context.addIssue({
+        code: "custom",
+        path: ["traceId"],
+        message: "trace_id must differ from idempotency_key.",
+      });
+    }
+  });
+
+export type MutationEnvelope = z.infer<typeof MutationEnvelopeSchema>;
+
+const BulkCopiesEntrySchema = z
+  .object({
+    species: PersistedSpeciesReferenceSchema,
+    count: z.number().int().positive().max(Number.MAX_SAFE_INTEGER),
+  })
+  .strict();
+
+const NoteRecordSchema = z.custom<Record<string, string>>(
+  (value) =>
+    isRecord(value) &&
+    Object.values(value).every((entry) => typeof entry === "string"),
+  "notes must be a string record",
+);
+
+const Phase0StateSchema = z
+  .object({
+    bulkCopies: z.record(z.string(), BulkCopiesEntrySchema),
+    notes: NoteRecordSchema,
+  })
+  .strict();
+
+const receiptResultSchema = z
+  .object({
+    userId: z.string(),
+    playSpaceId: z.string(),
+    mutationId: z.string(),
+    traceId: z.string(),
+    idempotencyKey: z.string(),
+    beforeRevision: z.number().int().nonnegative(),
+    stateRevision: z.number().int().nonnegative(),
+    state: Phase0StateSchema,
+  })
+  .strict();
+
+const speciesResolver = new SpeciesResolver();
 
 export interface StateSnapshot {
   userId: string;
@@ -83,6 +159,18 @@ export class ActionValidationError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "ActionValidationError";
+  }
+}
+
+export class SpeciesMigrationRequiredError extends Error {
+  readonly currentDataset: SpeciesDatasetReference;
+
+  constructor(currentDataset: SpeciesDatasetReference) {
+    super(
+      "The persisted species reference belongs to another dataset and requires an explicit migration.",
+    );
+    this.name = "SpeciesMigrationRequiredError";
+    this.currentDataset = currentDataset;
   }
 }
 
@@ -141,16 +229,16 @@ export async function commitStateMutation(
   db: D1Database,
   context: AuthContext,
   playSpaceId: string,
-  envelope: MutationEnvelope,
+  untrustedEnvelope: unknown,
   now: string,
 ): Promise<CommitResult> {
-  validateEnvelope(envelope);
+  const envelope = validateEnvelope(untrustedEnvelope);
 
   const normalizedPayload = canonicalJson({
     mutationId: envelope.mutationId,
     expectedStateRevision: envelope.expectedStateRevision,
     actions: envelope.actions,
-  } as unknown as JsonValue);
+  });
   const payloadHash = await sha256Hex(normalizedPayload);
 
   const existingReceipt = await readReceipt(
@@ -316,76 +404,48 @@ export async function commitStateMutation(
   throw new MutationConflictError("The mutation could not claim a commit receipt.");
 }
 
-function validateEnvelope(envelope: MutationEnvelope): void {
-  for (const [name, value] of [
-    ["mutation_id", envelope.mutationId],
-    ["trace_id", envelope.traceId],
-    ["idempotency_key", envelope.idempotencyKey],
-  ] as const) {
-    if (value.trim().length === 0) {
-      throw new ActionValidationError(`${name} must not be empty.`);
-    }
+function validateEnvelope(envelope: unknown): MutationEnvelope {
+  const parsed = MutationEnvelopeSchema.safeParse(envelope);
+  if (!parsed.success) {
+    const details = parsed.error.issues
+      .map((issue) => `${issue.path.join(".") || "envelope"}: ${issue.message}`)
+      .join("; ");
+    throw new ActionValidationError(`Invalid mutation envelope: ${details}`);
   }
-  if (envelope.traceId === envelope.idempotencyKey) {
-    throw new ActionValidationError("trace_id must differ from idempotency_key.");
-  }
-  if (
-    !Number.isSafeInteger(envelope.expectedStateRevision) ||
-    envelope.expectedStateRevision < 0
-  ) {
-    throw new ActionValidationError(
-      "expected_state_revision must be a non-negative safe integer.",
-    );
-  }
-  if (envelope.actions.length === 0) {
-    throw new ActionValidationError("An action group must not be empty.");
-  }
+  return parsed.data;
 }
 
 function applyActions(
   input: Phase0State,
   actions: Phase0Action[],
 ): Phase0State {
-  const state: Phase0State = {
-    bulkCopies: { ...input.bulkCopies },
-    notes: { ...input.notes },
-  };
+  const state = cloneState(input);
 
   for (const action of actions) {
     switch (action.type) {
       case "ADD_BULK_COPIES": {
-        if (
-          action.species.namespace !== "palworld.species.internal_name" ||
-          action.species.value.trim().length === 0
-        ) {
-          throw new ActionValidationError("A qualified species adapter key is required.");
+        const resolution = speciesResolver.resolvePersisted(action.species);
+        if (resolution.status === "migration_required") {
+          throw new SpeciesMigrationRequiredError(resolution.currentDataset);
         }
-        if (!Number.isSafeInteger(action.amount) || action.amount <= 0) {
+        if (resolution.status === "unknown_key") {
           throw new ActionValidationError(
-            "ADD_BULK_COPIES requires a positive safe integer amount.",
+            "ADD_BULK_COPIES references an unknown canonical species key.",
           );
         }
-        const key = `${action.species.namespace}:${action.species.value}`;
-        const next = (state.bulkCopies[key] ?? 0) + action.amount;
+        const key = speciesStorageKey(action.species);
+        const next = (state.bulkCopies[key]?.count ?? 0) + action.amount;
         if (!Number.isSafeInteger(next)) {
           throw new ActionValidationError("Bulk copy count exceeds safe integer range.");
         }
-        state.bulkCopies[key] = next;
+        state.bulkCopies[key] = {
+          species: action.species,
+          count: next,
+        };
         break;
       }
       case "SET_NOTE": {
-        const key = action.key.trim();
-        if (key.length === 0 || key.length > 100) {
-          throw new ActionValidationError(
-            "SET_NOTE key must contain between 1 and 100 characters.",
-          );
-        }
-        if (action.value.length > 1_000) {
-          throw new ActionValidationError(
-            "SET_NOTE value must not exceed 1000 characters.",
-          );
-        }
-        state.notes[key] = action.value;
+        state.notes[action.key] = action.value;
         break;
       }
     }
@@ -424,7 +484,18 @@ function resultFromReceipt(
     throw new IdempotencyConflictError();
   }
 
-  const parsed = JSON.parse(receipt.result_json) as Omit<CommitResult, "duplicate">;
+  const receiptResult = receiptResultSchema.safeParse(
+    JSON.parse(receipt.result_json) as unknown,
+  );
+  if (!receiptResult.success) {
+    throw new Error("Committed idempotency receipt has an invalid result schema.", {
+      cause: receiptResult.error,
+    });
+  }
+  const parsed = {
+    ...receiptResult.data,
+    state: normalizeState(receiptResult.data.state),
+  };
   if (
     parsed.mutationId !== receipt.mutation_id ||
     parsed.traceId !== receipt.trace_id ||
@@ -442,6 +513,63 @@ function snapshotFromRow(row: StateRow): StateSnapshot {
     userId: row.user_id,
     playSpaceId: row.play_space_id,
     stateRevision: row.state_revision,
-    state: JSON.parse(row.state_json) as Phase0State,
+    state: normalizeState(JSON.parse(row.state_json) as unknown),
   };
+}
+
+function normalizeState(value: unknown): Phase0State {
+  const parsed = Phase0StateSchema.safeParse(value);
+  if (!parsed.success) {
+    throw new Error("Persisted Phase-0 state has an invalid schema.", {
+      cause: parsed.error,
+    });
+  }
+
+  const state = emptyState();
+  for (const [key, entry] of Object.entries(parsed.data.bulkCopies)) {
+    const resolution = speciesResolver.resolvePersisted(entry.species);
+    if (resolution.status === "migration_required") {
+      throw new SpeciesMigrationRequiredError(resolution.currentDataset);
+    }
+    if (
+      resolution.status === "unknown_key" ||
+      key !== speciesStorageKey(entry.species)
+    ) {
+      throw new Error("Persisted Phase-0 state contains an invalid species reference.");
+    }
+    state.bulkCopies[key] = entry;
+  }
+  for (const [key, note] of Object.entries(parsed.data.notes)) {
+    state.notes[key] = note;
+  }
+  return state;
+}
+
+function cloneState(input: Phase0State): Phase0State {
+  const state = emptyState();
+  for (const [key, entry] of Object.entries(input.bulkCopies)) {
+    state.bulkCopies[key] = {
+      species: entry.species,
+      count: entry.count,
+    };
+  }
+  for (const [key, value] of Object.entries(input.notes)) {
+    state.notes[key] = value;
+  }
+  return state;
+}
+
+function emptyState(): Phase0State {
+  return {
+    bulkCopies: Object.create(null) as Record<string, BulkCopiesEntry>,
+    notes: Object.create(null) as Record<string, string>,
+  };
+}
+
+function speciesStorageKey(reference: PersistedSpeciesReference): string {
+  return `${reference.adapterKey.namespace}:${reference.adapterKey.value}`;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }

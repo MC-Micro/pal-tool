@@ -1,9 +1,15 @@
 import manifestJson from "../../../../data/palworld-breeding/manifest.json";
 import palValuesJson from "../../../../data/palworld-breeding/pal_values.json";
 
-import type { SpeciesAdapterKey } from "../persistence/state-store.ts";
-
-const SPECIES_NAMESPACE = "palworld.species.internal_name" as const;
+import {
+  PersistedSpeciesReferenceSchema,
+  SPECIES_NAMESPACE,
+  SpeciesDatasetReferenceSchema,
+  sameSpeciesDataset,
+  type PersistedSpeciesReference,
+  type SpeciesAdapterKey,
+  type SpeciesDatasetReference,
+} from "../domain/species-reference.ts";
 
 interface PalValueRow {
   internal_name: string;
@@ -22,13 +28,6 @@ interface AliasEntry {
   value: string;
   normalized: string;
   source: "internal_name" | "game_table_row" | "name_de" | "name_en";
-}
-
-export interface SpeciesDatasetReference {
-  schemaVersion: number;
-  gameVersion: string;
-  dedicatedServerBuildId: string;
-  technicalSnapshotSha256: string;
 }
 
 export interface SpeciesRecord {
@@ -69,35 +68,54 @@ export type SpeciesResolution =
       exact: false;
     };
 
-export interface PersistedSpeciesReference {
-  adapterKey: SpeciesAdapterKey;
-  dataset: SpeciesDatasetReference;
-}
-
 export type PersistedSpeciesResolution =
   | { status: "current"; species: SpeciesRecord }
   | { status: "migration_required"; currentDataset: SpeciesDatasetReference }
   | { status: "unknown_key"; currentDataset: SpeciesDatasetReference };
 
 const rows = palValuesJson as PalValueRow[];
-const manifest = manifestJson as {
-  schema_version: number;
-  patch_check: {
-    checked_game_version: string;
-    checked_game_build: string;
-  };
-  sources: Array<{
-    sha256: { technical_snapshot: string };
-  }>;
-};
 
-export const currentSpeciesDataset: SpeciesDatasetReference = Object.freeze({
-  schemaVersion: manifest.schema_version,
-  gameVersion: manifest.patch_check.checked_game_version,
-  dedicatedServerBuildId: manifest.patch_check.checked_game_build,
-  technicalSnapshotSha256:
-    manifest.sources[0]?.sha256.technical_snapshot ?? "missing",
-});
+export const currentSpeciesDataset = speciesDatasetFromManifest(manifestJson);
+
+export function speciesDatasetFromManifest(
+  value: unknown,
+): Readonly<SpeciesDatasetReference> {
+  if (!isRecord(value) || !isRecord(value.patch_check)) {
+    throw new Error("Breeding manifest does not have the required structure.");
+  }
+  if (!Array.isArray(value.sources)) {
+    throw new Error("Breeding manifest sources must be an array.");
+  }
+
+  const canonicalSources = value.sources.filter(
+    (source): source is Record<string, unknown> =>
+      isRecord(source) && source.role === "canonical_primary_source",
+  );
+  if (canonicalSources.length !== 1) {
+    throw new Error(
+      "Breeding manifest must contain exactly one canonical_primary_source.",
+    );
+  }
+
+  const canonicalSource = canonicalSources[0];
+  const sha256 = canonicalSource?.sha256;
+  if (!isRecord(sha256)) {
+    throw new Error("Canonical breeding source does not expose hash metadata.");
+  }
+
+  const parsed = SpeciesDatasetReferenceSchema.safeParse({
+    schemaVersion: value.schema_version,
+    gameVersion: value.patch_check.checked_game_version,
+    dedicatedServerBuildId: value.patch_check.checked_game_build,
+    technicalSnapshotSha256: sha256.technical_snapshot,
+  });
+  if (!parsed.success) {
+    throw new Error("Canonical breeding source fingerprint is invalid.", {
+      cause: parsed.error,
+    });
+  }
+  return Object.freeze(parsed.data);
+}
 
 export class SpeciesResolver {
   readonly count: number;
@@ -218,16 +236,17 @@ export class SpeciesResolver {
   resolvePersisted(
     reference: PersistedSpeciesReference,
   ): PersistedSpeciesResolution {
-    if (!sameDataset(reference.dataset, currentSpeciesDataset)) {
+    const parsed = PersistedSpeciesReferenceSchema.safeParse(reference);
+    if (!parsed.success) {
+      return { status: "unknown_key", currentDataset: currentSpeciesDataset };
+    }
+    if (!sameSpeciesDataset(parsed.data.dataset, currentSpeciesDataset)) {
       return {
         status: "migration_required",
         currentDataset: currentSpeciesDataset,
       };
     }
-    if (reference.adapterKey.namespace !== SPECIES_NAMESPACE) {
-      return { status: "unknown_key", currentDataset: currentSpeciesDataset };
-    }
-    const entry = this.#byKey.get(reference.adapterKey.value);
+    const entry = this.#byKey.get(parsed.data.adapterKey.value);
     return entry === undefined
       ? { status: "unknown_key", currentDataset: currentSpeciesDataset }
       : { status: "current", species: entry.species };
@@ -314,14 +333,6 @@ function longestFallback(left: string, right: string): number {
   return Math.max(left.length, right.length);
 }
 
-function sameDataset(
-  left: SpeciesDatasetReference,
-  right: SpeciesDatasetReference,
-): boolean {
-  return (
-    left.schemaVersion === right.schemaVersion &&
-    left.gameVersion === right.gameVersion &&
-    left.dedicatedServerBuildId === right.dedicatedServerBuildId &&
-    left.technicalSnapshotSha256 === right.technicalSnapshotSha256
-  );
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }

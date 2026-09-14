@@ -11,7 +11,7 @@ export function canonicalJson(value: JsonValue): string {
   }
 
   const entries = Object.entries(value).sort(([left], [right]) =>
-    left.localeCompare(right),
+    left < right ? -1 : left > right ? 1 : 0,
   );
   return `{${entries
     .map(([key, entry]) => `${JSON.stringify(key)}:${canonicalJson(entry)}`)
