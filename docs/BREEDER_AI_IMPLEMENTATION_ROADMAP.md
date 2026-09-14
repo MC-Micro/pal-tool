@@ -12,10 +12,11 @@ Es baut auf der aktuellen Produktwahrheit in `docs/BREEDER_AI_CURRENT_BLUEPRINT.
 Bei Widersprüchen gilt folgende Reihenfolge:
 
 1. aktuelle Repository-Regeln (`AGENTS.md` und relevante technische Handoffs);
-2. `docs/BREEDER_AI_CURRENT_BLUEPRINT.md`;
-3. dieses Implementierungsroadmap-Dokument;
-4. spezialisierte ältere Konzeptdokumente wie PWA-, Planner- und Social-Architektur;
-5. ältere Chatannahmen.
+2. `docs/BREEDER_AI_PREBUILD_CONTRACTS.md`;
+3. `docs/BREEDER_AI_CURRENT_BLUEPRINT.md`;
+4. dieses Implementierungsroadmap-Dokument;
+5. spezialisierte ältere Konzeptdokumente wie PWA-, Planner- und Social-Architektur;
+6. ältere Chatannahmen.
 
 Dieser Fahrplan ist bewusst in Gates unterteilt. Keine spätere Phase darf durch ungeprüfte Annahmen aus einer früheren Phase technisch festgezurrt werden.
 
@@ -47,6 +48,10 @@ Noch nicht vorhanden:
 - Deployment der neuen PWA.
 
 Der bestehende öffentliche Breeder darf durch die neue Runtime nicht zu einer schreibenden oder user-state-haltenden API umgebaut werden.
+
+Die Breeder-AI-Runtime wird in einem eigenen App-/Package-Bereich isoliert. Vorgesehener Zielbereich ist `apps/breeder-ai/`; die interne Aufteilung wird in Phase 0 festgelegt. Die historische Passives PWA bleibt zunächst unverändert im Root und wird nicht im Konzept-PR verschoben.
+
+Vor dem ersten Runtime-Code gelten zusätzlich die vier verbindlichen Verträge aus `docs/BREEDER_AI_PREBUILD_CONTRACTS.md`: Runtime-/Repository-Grenze, dauerhafte Identitäten, Auth-/Tenant-Invarianten und Commit-/Retry-Semantik.
 
 ---
 

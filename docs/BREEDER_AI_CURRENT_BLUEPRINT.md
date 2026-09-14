@@ -65,6 +65,11 @@ Folgende Grenzen gelten als verbindlich:
 8. Social-Funktionen dürfen den Kern aus Auth, Inventory, Projects, Resolver, Planner und Breeder nicht technisch voraussetzen oder ausbremsen.
 9. Aktuelle externe Recherche darf niemals still zur kanonischen Spielwahrheit werden.
 10. Keine Secrets, privaten Bestände oder authentifizierten URLs werden im Repository dokumentiert.
+11. `pal-tool` wird evolutionär restrukturiert und nicht durch ein neues Repository ersetzt. Die Git-Historie bleibt als technische Provenienz erhalten.
+12. Breeder AI ist der zentrale neue Anwendungsausbau. Die historische Passives PWA bleibt als eigenständiges Side-Tool erhalten und wird erst in einem getrennten Refactor kontrolliert aus dem Repository-Root migriert.
+13. Consumer-Apps sollen langfristig dieselben kanonischen Data-Core-/Domain-Daten nutzen; app-spezifische Bewertungen und redaktionelle Overlays bleiben von Spielwahrheit getrennt.
+
+Die verbindlichen Pre-Build-Grenzen für Runtime-Isolation, dauerhafte IDs, Auth/Tenant-Invarianten und Commit/Retry-Semantik stehen in `docs/BREEDER_AI_PREBUILD_CONTRACTS.md`.
 
 ---
 
