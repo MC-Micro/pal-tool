@@ -120,6 +120,9 @@
     { "name": "technology", "token": "Technology" },
     { "name": "recipe", "token": "Recipe" },
     { "name": "breeding-item-effect", "token": "BreedingItemEffect" },
-    { "name": "pal-game-setting", "token": "PalGameSetting" }
+    { "name": "pal-game-setting", "token": "PalGameSetting" },
+    { "name": "passive-skill-tables", "token": "DT_PassiveSkill" },
+    { "name": "skill-name-localization", "token": "SkillNameText" },
+    { "name": "skill-description-localization", "token": "SkillDescText" }
   ]
 }
