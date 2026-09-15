@@ -114,21 +114,16 @@ Die 258 aktuellen `DT_PalCombiUnique`-Zeilen werden vor einer Domain-Aufteilung 
 
 Der letzte deterministische Tabellen-Fallback wird aus dem offiziellen `sourceOrdinal` des Technical Snapshot abgeleitet. Das bestehende Breeder-Kompatibilitätsfeld `internal_index` spiegelt diesen Wert; es ist weder Paldecknummer noch ein unabhängig erfundener Zuchtindex.
 
-## Passive-Identity-Candidate
+## Kanonischer Passive-Identity-Reference-Space
 
-Ein neuerer Discovery-Lauf vom 15. September 2026 bestätigte auf dem offiziellen Dedicated-Server-Build `25247047` zusätzlich `DT_PassiveSkill_Main_Common` sowie die EN-/DE-Tabellen `DT_SkillNameText_Common`. Der nachfolgende Run `34970361170` auf Commit `ac8fe06` erzeugte den typisierten Candidate zweimal deterministisch; Artefakt `pal-data-core-candidate-25247047`, ID `10397252031`, Digest `sha256:ddfd31c24c4cbe764f573848fe0c5dee64d7ea32f5515f7d213ddacbf558aba0`.
+Der bestätigende Schema-2-Lauf `34975314764` auf Commit `e28b6148f47ec2179f63de8c104664be8f31df73` erzeugte für den offiziellen Dedicated-Server-Build `25247047` das Artefakt `pal-data-core-candidate-25247047`, ID `10399160981`, Digest `sha256:1bd93cb80144833315dc7d6d6232f31fc57bb00cb11e317081ea34ee2a7ae63c`. Die unabhängige lokale Auswertung des vollständigen Artefakts war erfolgreich; es wurde nichts aus Dokumentation oder Review-Diffs rekonstruiert.
 
 Das Artefakt belegt 3810 technische Source Rows, konfliktfrei coalesced zu 1905 Entities. Davon sind 115 `EPalPassiveCategory::SortDisplayable` und 1790 `SortNotDisplayable`. Bei allen 1905 steht `OverrideNameTextId` auf `None`; für alle 115 displaybaren Entities existiert jedoch der offizielle Key `PASSIVE_<sourceRow>` in EN und DE. `Rank` ist im Inventory ein `IntProperty`; Candidate-Schema 2 liest den Rohwert deshalb numerisch, ohne Rank-Semantik abzuleiten.
 
-Die Candidate-Pipeline bewahrt weiterhin alle 1905 Entities mit `sourceRow`, Package-Pfad, `sourceOrdinal` als reine Provenienz, numerischem `Rank`, `LotteryWeight`, `Category`, `OverrideNameTextId` und den offiziellen EN-/DE-Lokalisierungszeilen. Ein bytegenauer Candidate-Hash belegt das breite technische Artefakt. Der engere Resolver-Reference-Space-Hash umfasst nur displaybare `sourceRow`, die belegte Namensreferenz und EN-/DE-Namen; interne Entities, Package-/Ordinal-Provenienz und Balancefelder lösen keine user-facing Referenzmigration aus. Der bestehende Species-/Breeding-Snapshot und dessen Fingerprint bleiben unverändert.
+Die Candidate-Pipeline bewahrt weiterhin alle 1905 Entities mit `sourceRow`, Package-Pfad, `sourceOrdinal` als reine Provenienz, numerischem `Rank`, `LotteryWeight`, `Category`, `OverrideNameTextId` und den offiziellen EN-/DE-Lokalisierungszeilen. Der bytegenaue Candidate-Hash lautet `06ae40a0aafd4aa6da69841f526ac291eb82d5c91f70b118d0bdafda26540b5b`. Der engere Resolver-Reference-Space-Hash `5050fc82e7b14dad5ebb06de6aa3f5fbafbd8d168aae525b4b4fa05214efeb4b` umfasst nur displaybare `sourceRow`, die belegte Namensreferenz und EN-/DE-Namen; interne Entities, Package-/Ordinal-Provenienz und Balancefelder lösen keine user-facing Referenzmigration aus. Der bestehende Species-/Breeding-Snapshot und dessen Fingerprint bleiben unverändert.
 
 Die Namensauflösung bevorzugt einen künftigen expliziten Override. Nur bei leerem/`None`-Override wird `PASSIVE_<sourceRow>` geprüft, und auch dann nur als belegte Referenz, wenn der Key in offizieller Lokalisierung tatsächlich existiert. Der historische Overlay ist nach dieser korrigierten Regel 102/102 exakt bilingual zuordenbar; 13 weitere aktuelle displaybare Entities zeigen, dass er keine vollständige Game-Truth-Whitelist ist. Die reale deutsche Ambiguität `Erleuchteter` bleibt für `ElementBoost_Normal_2_PAL` und `WorldTree_Sanity` erhalten.
 
-Noch nicht kanonisch veröffentlicht sind:
+[`passives.json`](passives.json) veröffentlicht daraus ausschließlich die 115 displaybaren Identitäten und Namen. [`passives.approval.json`](passives.approval.json) bindet diese Veröffentlichung explizit an Review-Schema, Referenz- und Candidate-Hash, Run, Commit, Artifact-Digest und die erwarteten Zählwerte. Der freigegebene Adapter-Key ist `{ namespace: "palworld.passive.source_row", value: sourceRow }`; persistierte Verweise tragen zusätzlich Schema 1 und den Reference-Space-Hash. Ein fremder Referenzraum ist ein ausdrücklicher Migrationsfall. Namen, PWA-Nummern, Arraypositionen, Rank, `sourceOrdinal` oder Generator-IDs sind keine dauerhaften Identitäten.
 
-- ein endgültiger Passive-Adapter-Key;
-- die erneute Current-Build-Bestätigung des korrigierten Candidate-Schemas 2 und Review-Gates;
-- ein Breeder-AI-`PassiveResolver`;
-- Passive-Wirkungssemantik.
-
-Diese Punkte bleiben bis zur Auswertung eines neuen offiziellen Probe-Artefakts auf dem Korrekturcode offen. `SortDisplayable` beweist nur user-facing Resolver-Relevanz, nicht Vererbbarkeit, Züchtbarkeit oder Effect-Semantik. Insbesondere ist `data-passives.js.nr` keine Domain-ID.
+Weiter offen bleibt die Passive-Wirkungsdomäne. `SortDisplayable` beweist nur user-facing Resolver-Relevanz, nicht Vererbbarkeit, Züchtbarkeit, Effect-Semantik oder Balance. Insbesondere ist `data-passives.js.nr` keine Domain-ID.

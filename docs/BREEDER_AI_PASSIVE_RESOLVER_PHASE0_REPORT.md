@@ -1,4 +1,4 @@
-# Breeder AI – Phase-0 Passive Candidate/Resolver Abschlussbericht
+# Breeder AI – Phase-0 Passive Reference/Resolver Abschlussbericht
 
 **Berichtsstand:** 15. September 2026
 
@@ -6,334 +6,322 @@
 
 **Lokaler Branch:** `breeder/passive-resolver-discovery`
 
-**Korrektur-Ausgangs-HEAD / Remote-HEAD:** `ac8fe06a0483b31fdc24122e82230b91f860a85d`
+**Review-Basis:** Branch-HEAD `e28b6148f47ec2179f63de8c104664be8f31df73`
 
-**Lokaler Implementierungscommit:** `d21110b fix(data-core): correct passive reference review`
-
-**Status:** lokaler Korrekturblock vollständig validiert; Review-Stop; erneuter offizieller Probe-Lauf noch offen
+**Status:** Technischer Passive-Identity-/Resolver-Block lokal abgeschlossen; Review-Stop; kein Phase-1-Start
 
 ## 1. Ergebnis
 
-Der offizielle Run `34970361170` hat den typisierten Passive-Candidate technisch erfolgreich erzeugt, gleichzeitig aber zwei Annahmen des ersten Reviewcodes widerlegt:
+Der Phase-0-Block für Passive Reference Space, dauerhafte PassiveReference und PassiveResolver ist lokal vollständig umgesetzt und validiert.
 
-1. `OverrideNameTextId` ist im Current Build nicht der alleinige Namenspfad. Alle 1905 technischen Entities tragen dort `None`; für sämtliche 115 displaybaren Entities existiert stattdessen der offizielle Schlüssel `PASSIVE_<sourceRow>` in EN und DE.
-2. `Rank` ist ein `IntProperty`, kein String. Der erste Candidate hatte deshalb für alle 1905 Entities einen leeren Rank-Wert ausgegeben.
+Ergebnis in Kurzform:
 
-Der lokale Korrekturblock behebt beide Punkte, begrenzt Gate und Resolver-Fingerprint auf den belegten user-facing Reference Space und verschärft den Review-Erfolg auf vollständige relevante Namen und einen vollständigen 102er-Overlay-Crosswalk. Der breite technische Candidate bewahrt weiterhin alle 1905 Entities.
+- das vollständige offiziell bestätigte Schema-2-Artefakt wurde als alleinige fachliche Eingabe verwendet;
+- genau 115 `SortDisplayable`-Entities wurden als minimaler kanonischer Reference Space veröffentlicht;
+- der freigegebene Adapter-Key ist `{ namespace: "palworld.passive.source_row", value: sourceRow }`;
+- persistierte Passive-Referenzen tragen zusätzlich Schema 1 und den Reference-Space-SHA-256;
+- ein anderer Reference-Space-Hash ergibt ausdrücklich `migration_required`;
+- exakte EN-/DE-Namen werden nur eindeutig autoritativ aufgelöst;
+- die reale deutsche Ambiguität `Erleuchteter` bleibt erhalten;
+- Fuzzy-Treffer sind ausschließlich nichtautoritative Kandidaten und werden nie automatisch persistiert oder migriert;
+- die 1790 nicht-displaybaren technischen Entities bleiben außerhalb des Resolver-Reference-Space;
+- `data-passives.js` bleibt ein getrennter historischer 102er Produkt-Overlay und keine Identitätsquelle;
+- es wurde keine numerische `passive_id`, PWA-Nummer, Arrayposition, Rank-, Ordinal- oder Generator-ID eingeführt.
 
-Noch nicht erfolgt sind die erneute Ausführung des korrigierten Candidate-Schemas gegen den offiziellen Current Build, die Freigabe eines endgültigen Adapter-Keys, die Veröffentlichung eines kanonischen Passive-Reference-Space und die Implementierung eines `PassiveResolver`.
+Es trat kein Klasse-C-Konflikt auf. Die bestehenden Sicherheits-, Persistenz-, Tenant-, Repository- und Data-Core-Invarianten mussten nicht gelockert werden.
 
-In diesem Korrekturblock erfolgten kein Push, kein PR, kein Merge, kein Deployment, kein Workflow-Dispatch und keine Cloud-, Secret- oder Provideränderung.
+## 2. Verwendete offizielle Evidenz
 
-## 2. Verbindliche offizielle Evidenz
-
-Der ausdrücklich zuvor freigegebene Push und Current-Build-Lauf betrafen exakt:
-
-```text
-branch: breeder/passive-resolver-discovery
-commit: ac8fe06a0483b31fdc24122e82230b91f860a85d
-workflow: Probe Pal Data Core
-run: 34970361170
-conclusion: success
-Dedicated Server build: 25247047
-artifact: pal-data-core-candidate-25247047
-artifact id: 10397252031
-artifact digest: sha256:ddfd31c24c4cbe764f573848fe0c5dee64d7ea32f5515f7d213ddacbf558aba0
-```
-
-Candidate-Doppelbuild, Passive-Review, bestehende Breeding-Regression und Artefakt-Upload liefen technisch erfolgreich. Dass das damalige Review trotz `overlayMapped = 0` grün war, war kein Extraktions- oder Workflowfehler, sondern ein zu schwaches Review-Gate in Kombination mit der falschen Namensannahme.
-
-Die unabhängige Auswertung dieses offiziellen Artefakts belegt:
-
-- 3810 technische Source Rows aus Main und Main_Common;
-- 1905 konfliktfrei coalesced technische Entities;
-- jede `sourceRow` exakt einmal pro Tabelle;
-- keine Case-Kollisionen;
-- 115 `EPalPassiveCategory::SortDisplayable`;
-- 1790 `SortNotDisplayable`;
-- `OverrideNameTextId = None` bei allen 1905 Entities;
-- `PASSIVE_<sourceRow>` in EN und DE für 115/115 displaybare Entities;
-- 102/102 historische Overlay-Einträge exakt bilingual zuordenbar;
-- 0 fehlende und 0 mehrdeutige Overlay-Paarzuordnungen;
-- 13 zusätzliche aktuelle displaybare Entities außerhalb des historischen Overlays;
-- 0 englische und 1 deutsche Anzeigenamen-Ambiguität;
-- `Category` als `EnumProperty`, `LotteryWeight` und `Rank` als `IntProperty`, `OverrideNameTextId` als `NameProperty`.
-
-Diese Werte sind Artefaktevidenz aus Run `34970361170`. Sie sind noch kein Ergebnis eines erneuten Runs des lokal korrigierten Candidate-Schemas 2.
-
-## 3. Korrigierte Namensreferenzlogik
-
-Für jede coalesced technische Entity gilt deterministisch:
-
-1. Ein nichtleerer expliziter `OverrideNameTextId`, der nicht `None` ist, hat Vorrang. Die Ausgabe markiert ihn als `explicit_override` und nennt `overrideNameTextId` als Quellfeld.
-2. Fehlt ein solcher Override, wird der Kandidat `PASSIVE_<sourceRow>` gebildet.
-3. Dieser Default wird nur dann als beobachtete Referenz akzeptiert, wenn der exakte Key in mindestens einer der eingelesenen offiziellen EN-/DE-Lokalisierungstabellen vorhanden ist. Auch ein für diesen Key erkannter Lokalisierungskonflikt zählt als vorhandene, aber anschließend blockierende Evidenz.
-4. Existiert der Key nirgends, bleibt `nameReference = null`. Es wird kein Name erfunden.
-5. Für displaybare Entities müssen anschließend sowohl ein konfliktfreier EN- als auch DE-Text vorhanden sein; andernfalls schlägt das Gate fehl.
-
-Belegte Beispiele:
+Verwendet wurde ausschließlich die lokale Kopie unter:
 
 ```text
-Rare             -> PASSIVE_Rare             -> Lucky / Außergewöhnlich
-MoveSpeed_up_3   -> PASSIVE_MoveSpeed_up_3   -> Swift / Blitzschnell
-CraftSpeed_up3   -> PASSIVE_CraftSpeed_up3   -> Remarkable Craftsmanship / Goldenes Händchen
-Legend           -> PASSIVE_Legend           -> Legend / Legendär
+LOCAL_ARTIFACTS/artifacts/schema2-25247047/
 ```
 
-Die Referenzquelle bleibt im Reviewartefakt sichtbar. Dadurch kann ein zukünftiger echter Override die Current-Build-Default-Konvention kontrolliert übersteuern, ohne dass beide Fälle semantisch vermischt werden.
+Die lokale Kopie bleibt durch `.git/info/exclude` ausgeschlossen und ist nicht Bestandteil eines Commits.
 
-## 4. Technischer Bestand und Resolver-Domänengrenze
+Provenienz:
 
-Der technische Candidate bleibt ein vollständiges, feldbegrenztes Audit-Artefakt über alle 1905 Entities. Er enthält Build-ID, Package-Provenienz, `sourceRow`, `sourceOrdinal`, Feldpräsenz sowie die Rohwerte `Rank`, `LotteryWeight`, `Category`, `OverrideNameTextId` und die offiziellen EN-/DE-Lokalisierungszeilen.
+| Feld | Wert |
+| --- | --- |
+| Workflow | `Probe Pal Data Core` |
+| Run | `34975314764` |
+| Artifact ID | `10399160981` |
+| Artifact | `pal-data-core-candidate-25247047` |
+| Branch-HEAD | `e28b6148f47ec2179f63de8c104664be8f31df73` |
+| Dedicated-Server-Build | `25247047` |
+| GitHub-Artifact-Digest | `sha256:1bd93cb80144833315dc7d6d6232f31fc57bb00cb11e317081ea34ee2a7ae63c` |
+| `passive-candidate-a.json` SHA-256 | `06ae40a0aafd4aa6da69841f526ac291eb82d5c91f70b118d0bdafda26540b5b` |
+| `passive-review.json` SHA-256 | `99fee598a0de3681cdc084edbeb31812beeabd780b52814c056a7d006ac0150a` |
+| Passive Reference-Space SHA-256 | `5050fc82e7b14dad5ebb06de6aa3f5fbafbd8d168aae525b4b4fa05214efeb4b` |
 
-Der user-facing Resolver-Reference-Space umfasst dagegen nur Entities, deren exakter Category-Enum-Endwert `SortDisplayable` ist. Im belegten Build sind das 115 Entities. Die 1790 `SortNotDisplayable`-Entities bleiben im technischen Candidate erhalten, blockieren aber nicht allein wegen fehlender Usernamen das Resolver-Gate.
+Bestätigte Review-Zählwerte:
 
-Diese Grenze beweist ausschließlich user-visible beziehungsweise resolver-relevante Passive-Identität. Sie beweist ausdrücklich nicht:
+| Bereich | Anzahl |
+| --- | ---: |
+| technische Main/Common Source Rows | 3810 |
+| konfliktfrei coalesced technische Entities | 1905 |
+| `SortDisplayable` | 115 |
+| `SortNotDisplayable` | 1790 |
+| historische Overlay-Einträge | 102 |
+| eindeutig bilingual gemappt | 102 |
+| aktuelle displaybare Entities außerhalb des Overlays | 13 |
+| englische Namensambiguitäten | 0 |
+| deutsche Namensambiguitäten | 1 |
+| relevante technische/Lokalisierungskonflikte | 0 |
 
-- Vererbbarkeit;
-- Züchtbarkeit;
-- Stackability;
-- Effekt-, Target- oder Balance-Semantik;
-- sonstige Gameplay-Legalität.
+`passive-review.json` besitzt keine Gate-Fehler und meldet `ok: true`. Es wurden ausdrücklich keine 115 Einträge aus Dokumentation, Diffs oder Erinnerungswissen rekonstruiert.
 
-Der historische 102er-Overlay ist ein redaktioneller Regression-/Crosswalk-Beleg und keine Whitelist. Die 13 zusätzlichen aktuellen displaybaren Entities gehören daher zum offiziellen Reference-Space, obwohl sie im Overlay fehlen.
+## 3. Kanonische Publikationsgrenze
 
-## 5. Fingerprint-Entscheidung
-
-Die Korrektur trennt zwei unterschiedliche Änderungsgrenzen:
-
-### `technicalCandidateSha256`
-
-Bytegenauer SHA-256 des vollständigen technischen Candidate-Artefakts. Er reagiert unter anderem auf technische Provenienz, interne Entities, Rohfelder und Balancewerte und dient der Artefakt- und Extraktionsnachvollziehbarkeit.
-
-### `referenceSpaceSha256`
-
-Kanonischer SHA-256 über Candidate-Schema 2 und die ordinal sortierte Menge der displaybaren Entities mit genau:
+Die kanonische Datei ist `data/palworld-core/passives.json`. Sie enthält ausschließlich:
 
 - `sourceRow`;
-- belegter Namensreferenz einschließlich ihrer Herkunft;
-- offiziellem EN-Namen;
-- offiziellem DE-Namen.
+- die belegte Namensreferenz;
+- den offiziellen englischen Anzeigenamen;
+- den offiziellen deutschen Anzeigenamen;
+- die datasetweite Reference-Space-Identität und getrennte technische Provenienz.
 
-Ausgeschlossen sind Package-Pfade, `sourceOrdinal`, `Rank`, `LotteryWeight`, Category-Balancewerte, nicht-displaybare Entities und der historische Overlay. Damit erzeugen interne oder reine Balanceänderungen keine falsche Migration des user-facing Passive-Referenzraums. Eine Änderung der Displayable-Zugehörigkeit verändert dagegen über die enthaltene Entity-Menge den Hash.
+Nicht enthalten sind `Rank`, `LotteryWeight`, Category-Balancewerte, Package-Pfade, `sourceOrdinal`, technische Rohzeilen oder PWA-Bewertungen.
 
-Der Reference-Space-Hash wird nur erzeugt, wenn keine technischen oder relevanten Lokalisierungskonflikte und keine fehlenden Referenzen/EN-/DE-Namen im displaybaren Raum bestehen. Der Overlay ist ein separates Gate: Er bestimmt nicht den Hash, muss aber für ein positives Review vollständig und widerspruchsfrei mapbar sein.
+`data/palworld-core/passives.approval.json` ist die explizite Freigabegrenze. Sie bindet die Publikation an Review-Schema, Steam-Build, technischen Candidate-Hash, Reference-Space-Hash, Repository, Workflow, Run, Commit, Artifact ID, Artifact-Digest und alle erwarteten Zählwerte.
 
-Der bestehende Species-/Breeding-Snapshot und dessen Fingerprint wurden nicht verändert.
+`publish-passive-reference.mjs` veröffentlicht nicht automatisch aus einem Workflow-Lauf. Der Aufruf verlangt Review, Approval und einen neuen Ausgabeweg. Er bricht fail-closed ab bei:
 
-## 6. Rank- und Rohwertkorrektur
+- nicht erfolgreichem Review oder nichtleeren Gate-Fehlern;
+- abweichendem Schema, Build, Hash, Provenienz- oder Zählwert;
+- manipuliertem Reference Space;
+- unbekannten oder zusätzlichen Entity-Feldern;
+- fehlenden Namen oder ungültigen Namensreferenzen;
+- doppelten oder case-kollidierenden `sourceRow`-Werten;
+- nicht deterministischer beziehungsweise nicht ordinal sortierter Ausgabe;
+- einem bereits vorhandenen Zielpfad.
 
-`PassiveTechnicalRow.Rank` wurde von `string` auf `int` geändert. Der Extractor verwendet `ValueReader.Int` und Candidate-Schema 2 verlangt zur Laufzeit einen Integer. Es wird keine fachliche Rank-Bedeutung interpretiert.
+Root-Validierung und Data-Core-Tests reproduzieren den Reference-Space-Hash und vergleichen die eingecheckte Publikation erneut mit der Approval-Datei.
 
-Weil dasselbe offizielle Inventory `LotteryWeight` als `IntProperty` ausweist, wird auch dieser Rohwert verlustfrei als Integer modelliert und validiert. Beide Balancefelder bleiben außerhalb des Resolver-Reference-Space-Hashes, sind aber weiterhin Bestandteil des technischen Candidate-Hashes.
+## 4. Dauerhafte PassiveReference
 
-## 7. Ambiguitäts- und Crosswalk-Verhalten
-
-Displaynamen werden pro Sprache unabhängig indexiert. Mehrere technische Keys mit demselben Namen bleiben als echte Ambiguität erhalten; Rank, Reihenfolge, Overlay-Nummer, `sourceOrdinal` und Fuzzy Matching lösen sie nicht auf.
-
-Belegte deutsche Ambiguität:
+Der Phase-0-Vertrag lautet:
 
 ```text
-ElementBoost_Normal_2_PAL -> Celestial Emperor -> Erleuchteter
-WorldTree_Sanity          -> Hermit Sage        -> Erleuchteter
+adapterKey.namespace = palworld.passive.source_row
+adapterKey.value     = sourceRow
+dataset.schemaVersion = 1
+dataset.referenceSpaceSha256 = 5050fc82e7b14dad5ebb06de6aa3f5fbafbd8d168aae525b4b4fa05214efeb4b
 ```
 
-Ein späterer Resolver muss bei rein deutschem Exact-Input `Erleuchteter` beide Kandidaten liefern. Der historische Overlay-Crosswalk kann dennoch eindeutig sein: Er bildet die Schnittmenge der exakten EN- und DE-Treffer. Wenn diese Schnittmenge genau eine `sourceRow` enthält, ist das bilinguale Paar eindeutig, selbst wenn eine Einzelsprache mehrere Treffer hat.
+Steam-Build, technischer Candidate-Hash und GitHub-Artefaktmetadaten bleiben nachvollziehbare Provenienz im kanonischen Artefakt. Sie werden bewusst nicht zusätzlich in jede persistierte Referenz kopiert. Die persistierte Dataset-Identität ist der fachlich engere Reference-Space-Hash.
 
-Es gibt weiterhin kein Fuzzy-, Nummern-, Positions- oder Rank-basiertes autoritatives Mapping.
+Folge: Ein künftiger Steam-Build mit identischem relevantem Reference Space bleibt dasselbe Dataset. Ein abweichender Reference-Space-Hash ist immer ein expliziter Migrationsfall, selbst wenn der alte `sourceRow` im neuen Raum zufällig noch vorhanden ist. Es gibt keine automatische Namens-, Fuzzy-, Positions- oder Nummernmigration.
 
-## 8. Verschärftes Review-Gate
+## 5. Resolververhalten
 
-`ok` ist nicht mehr nur an `sourceConflicts.length === 0` gebunden. Ein positives Review verlangt jetzt mindestens:
+Der `PassiveResolver` importiert das kanonische Repository-Artefakt direkt und validiert dessen Runtime-Schema strikt.
 
-- keine technischen Main/Common-Inhaltskonflikte;
-- keine Lokalisierungskonflikte für tatsächlich verwendete displaybare Namensreferenzen;
-- eine belegte Namensreferenz für jede displaybare Entity;
-- einen offiziellen EN- und DE-Namen für jede displaybare Entity;
-- keine fehlenden Overlay-Zuordnungen;
-- keine widersprüchlichen oder mehrfach gemeinsam passenden Overlay-Zuordnungen;
-- `overlayMapped === overlayRecords`.
+Autoritativ auflösbar sind:
 
-Nicht blockierend, aber im Bericht sichtbar sind:
+- ein exakter namespaceter Adapter-Key;
+- ein exakter veröffentlichter `sourceRow`;
+- ein eindeutiger exakter englischer Anzeigename;
+- ein eindeutiger exakter deutscher Anzeigename.
 
-- echte Ambiguitäten einer einzelnen Sprache;
-- displaybare Current-Build-Entities außerhalb des historischen Overlays;
-- Lokalisierungskonflikte zu Keys, die keine displaybare Entity verwendet.
+Nicht autoritativ:
 
-Jeder Gate-Grund wird maschinenlesbar in `gateFailures` ausgegeben. Bei unvollständigem Reference Space bleibt `referenceSpaceSha256 = null`.
+- Fuzzy-Treffer werden als sortierte `candidates` zurückgegeben;
+- ein unbekannter serialisierter technischer Key wird nicht fuzzy weiterinterpretiert;
+- nicht-displaybare technische Entities werden nicht indexiert;
+- eine echte Namensmehrdeutigkeit bleibt `ambiguous`.
 
-## 9. Erwartete Counts des nächsten offiziellen Schema-2-Runs
+Die Normalisierung behandelt Groß-/Kleinschreibung, Whitespace, Satzzeichen und deutsche Umlaute reproduzierbar. Die Kandidatensortierung verwendet einen ordinalen Vergleich und keine implizite Locale-Sortierung.
 
-Auf Basis der unabhängigen Auswertung von Run `34970361170` werden beim erneuten Current-Build-Lauf erwartet:
+Die belegte Ambiguität bleibt exakt:
 
-| Zähler | Erwartet |
-|---|---:|
-| technische Source Rows | 3810 |
-| coalesced technische Entities | 1905 |
-| displaybare Entities | 115 |
-| nicht-displaybare Entities | 1790 |
-| technische Main/Common-Konflikte | 0 |
-| displaybare Entities ohne Namensreferenz | 0 |
-| displaybare Entities ohne EN | 0 |
-| displaybare Entities ohne DE | 0 |
-| EN-Ambiguitäten | 0 |
-| DE-Ambiguitäten | 1 |
-| Overlay-Einträge | 102 |
-| Overlay gemappt | 102 |
-| Overlay fehlend | 0 |
-| Overlay mehrdeutig | 0 |
-| displaybare Entities außerhalb des Overlays | 13 |
+| Eingabe | Kandidat 1 | Kandidat 2 |
+| --- | --- | --- |
+| `Erleuchteter` | `ElementBoost_Normal_2_PAL` / `Celestial Emperor` | `WorldTree_Sanity` / `Hermit Sage` |
 
-Diese Tabelle ist eine überprüfbare Erwartung, keine Behauptung, dass der korrigierte lokale Commit bereits offiziell ausgeführt wurde.
+## 6. Persistenz- und Migrationsverhalten
 
-## 10. Neue und geänderte Tests
+`resolvePersisted` prüft in dieser Reihenfolge:
 
-Die Passive-Review-Suite wurde von 9 auf 18 Tests erweitert. Sie deckt jetzt ab:
+1. striktes Runtime-Schema der persistierten Referenz;
+2. Gleichheit von Dataset-Schema und Reference-Space-Hash;
+3. Existenz des exakten Adapter-Keys im aktuellen 115er Raum.
 
-- deterministische Reviewausgabe;
-- Main/Common-Coalescing trotz unterschiedlicher Ordinals;
-- fail-closed Main/Common-Inhaltskonflikt;
-- fehlendes Feld gegenüber vorhandenem Fallbackwert;
-- fehlende Lokalisierung ohne erfundenen Namensschlüssel;
-- belegte `PASSIVE_Rare`-Defaultregel mit `Lucky` / `Außergewöhnlich`;
-- Vorrang eines expliziten Overrides;
-- unresolved Default ohne offiziellen Lokalisierungsschlüssel;
-- nicht blockierende unbenannte `SortNotDisplayable`-Entity;
-- blockierende relevante gegenüber nur berichteten irrelevanten Lokalisierungskonflikten;
-- echte EN-/DE-Namensambiguität;
-- reale DE-Mehrdeutigkeit `Erleuchteter` bei eindeutigem bilingualem Paar;
-- numerischen Rank und Ausschluss von Rank/Lottery aus dem Resolver-Fingerprint;
-- fail-closed fehlenden Overlay-Crosswalk;
-- getrennte technische, displaybare, Overlay-, Ambiguitäts- und Outside-Overlay-Counts;
-- exakte bilinguale Zuordnung ohne Nummernidentität;
-- Overlay-Parsing als Daten statt Codeausführung;
-- Runtime-Ablehnung nichtnumerischer Rank-/Lotterywerte.
+Ein gültiger fremder Dataset-Stand liefert vor jeder Key-Neuzuordnung `migration_required`. Ein unbekannter Key im aktuellen Dataset liefert `unknown_key`. Ein Anzeigename an Stelle des `sourceRow` wird nicht als Key akzeptiert. Damit kann ein fremder oder veralteter State nicht stillschweigend als aktuelle Identität erscheinen.
 
-## 11. Vollständige lokale Validierung
+Es gibt in Phase 0 noch keine Passive-Mutation im minimalen Inventory-Aggregat. Der neue Vertrag führt deshalb keine vorgezogene Phase-1-State-Struktur ein; er stellt die überprüfbare Referenz- und Migrationsgrenze bereit, die spätere Passive-State-Felder zwingend verwenden müssen.
 
-### Pal Data Core
+## 7. Architekturentscheidungen
 
-- `.NET SDK 10.0.401` Restore: PASS;
-- Release-Build `--no-restore --warnaserror`: PASS, 0 Warnungen, 0 Fehler;
-- Catalog Validation: PASS, Schema 1, 16 Tabellen, 8 Discoveries;
-- Syntax `review-passive-candidate.mjs`: PASS;
-- Passive-Review-Tests: PASS, 18/18;
-- Syntax des bestehenden `review-breeding-candidate.mjs`: PASS.
+### Klasse A
 
-### Breeder AI
+- eigenständiges Runtime-Schema und eigener Resolver im Breeder-AI-Package;
+- deterministische ordinale Sortierung;
+- Fuzzy-Threshold und Levenshtein-Implementierung als lokales Spike-Detail;
+- explizite Approval-Datei und nichtautomatischer Publisher;
+- getrennte fokussierte Commits für Publikationsgrenze, kanonische Daten und Resolver.
 
-- Lint: PASS;
-- Typecheck: PASS;
-- Tests: PASS, 7 Dateien, 45/45 Tests;
-- Worker Dry Run: PASS, 0.26 KiB / gzip 0.21 KiB, kein Deployment;
-- Secret-Scan: PASS.
+### Klasse B
 
-Die Vitest-Workerintegration meldete in der eingeschränkten Sandbox bekannte Warnungen bei der statischen Analyse des absoluten Workerpfads; alle 45 Tests bestanden. Der Dry Run wurde mit normaler lokaler Dateisicht erfolgreich wiederholt.
+- `sourceRow` wird nach positiver offizieller Schema-2-Evidenz als namespaceter Adapter-Key freigegeben;
+- Reference-Space-Hash ist die primäre persistierte Passive-Dataset-Identität;
+- Steam-Build und technischer Candidate-Hash bleiben Provenienz;
+- `SortDisplayable` begrenzt den user-facing Identity-Reference-Space, ohne Effect- oder Vererbungssemantik zu behaupten;
+- SpeciesResolver und PassiveResolver bleiben getrennt, da Aliasquellen, Datasetgrenzen und Domänensemantik verschieden sind. Eine vorzeitige gemeinsame Abstraktion hätte keine zusätzliche Invariante bewiesen.
 
-### Öffentliche Breeding API / bestehende Breeding-Regression
+### Klasse C
 
-- Frozen-Lockfile-Install: PASS;
-- Generate: PASS, 299 Pals und 44850 Paare, 0 Konflikte;
-- Lint: PASS;
-- Typecheck: PASS;
-- Tests: PASS, 5 Dateien, 73/73 Tests;
-- Worker Dry Run: PASS, 2412.46 KiB / gzip 500.95 KiB, kein Deployment;
-- strukturelle Validierung: PASS;
-- Release-Validierung: PASS;
-- Determinismus: PASS, `46c200858d2f4eb9f84c973441640632c1497bdac4fc5df55b041de6a4a77f25`;
-- Secret-Scan: PASS.
+Kein Konflikt. Keine bindende Sicherheits-, Tenant-, Auth-, Persistenz-, Canonical-Data- oder Deploymentgrenze wurde geändert.
 
-### Root und Git
+## 8. Neue und geänderte Tests
 
-- `node scripts/validate-data.mjs`: PASS, 102 Passives sowie Datenstruktur, PWA-Dateien und Cache-Verweise konsistent;
-- `git diff --check`: PASS.
+Data Core:
 
-## 12. Dateien des Korrekturblocks
+- deterministische minimale Publikation;
+- Ablehnung eines erfolglosen Reviews;
+- Ablehnung abweichender Provenienz und Zählwerte;
+- Erkennung eines manipulierten Reference Space;
+- Ablehnung unbekannter Semantikfelder;
+- Ablehnung von Duplikaten und Case-Kollisionen;
+- Post-Publication-Tamper-Erkennung;
+- Validierung des eingecheckten 115er Artefakts gegen Approval;
+- struktureller Ausschluss technischer Balancefelder;
+- Beleg aller 13 Entities außerhalb des historischen Overlays;
+- Erhalt der realen `Erleuchteter`-Ambiguität.
 
-Implementierung und Tests:
+Breeder AI:
 
-- `tools/pal-data-core/PalDataCore.Extractor/PassiveCandidateBuilder.cs`
-- `tools/pal-data-core/PalDataCore.Extractor/PassiveCandidateModels.cs`
-- `tools/pal-data-core/scripts/review-passive-candidate.mjs`
-- `tools/pal-data-core/tests/review-passive-candidate.test.mjs`
+- aktueller 115er Count, Reference-Space-Hash und Provenienz;
+- Current-Build-Beispiele `Lucky`/`Rare` und `Blitzschnell`/`MoveSpeed_up_3`;
+- reale `Erleuchteter`-Ambiguität;
+- exakte namespacete und rohe `sourceRow`-Auflösung;
+- Ausschluss der realen nicht-displaybaren Entity `ATK_up_PartnerSkill_1`;
+- eindeutige EN-/DE-Auflösung und Normalisierung;
+- Fuzzy nur als Kandidat;
+- unbekannter technischer Key ohne Fuzzy-Migration;
+- aktueller persistierter Key;
+- unbekannter Key und falscher Datentyp;
+- fremder Reference-Space-Hash vor Keyprüfung als `migration_required`;
+- anderer Steam-Build bei identischem Reference Space ohne Scheinemigration;
+- Ablehnung unsortierter, duplizierter, case-kollidierender oder malformed Artefakte;
+- Konsistenz von Steam-Build und Artifact-Name an der Runtime-Schema-Grenze.
 
-Dokumentation:
+## 9. Vollständige Validierung
 
-- `tools/pal-data-core/README.md`
-- `data/palworld-core/README.md`
-- `docs/PAL_DATA_CORE_ARCHITECTURE.md`
-- `docs/PAL_DATA_CORE_ROADMAP.md`
-- `docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`
-- `docs/BREEDER_AI_PASSIVE_RESOLVER_DISCOVERY.md`
-- `docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md`
-- `docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`
+Alle Abschlussprüfungen liefen am 15. September 2026 lokal erfolgreich.
 
-Keine Raw PAKs, Raw DataTables, Mappings, Secrets oder lokalen Buildartefakte werden committet.
+| Prüfung | Ergebnis |
+| --- | --- |
+| Data Core `dotnet restore --locked-mode` | PASS |
+| Data Core Release-Build `--warnaserror` | PASS, 0 Warnungen, 0 Fehler |
+| Data-Core-Katalog | PASS, Schema 1, 16 Tabellen, 8 Discoveries |
+| Syntax der drei Review-/Publisher-Skripte | PASS |
+| Data-Core-Node-Tests | PASS, 29/29 |
+| offizielles lokales `breeding-review.json` | PASS, `ok: true`, 299 Species, 136/136 Specials |
+| Breeding API Frozen Install | PASS |
+| Breeding API Generate | PASS, 299 Pals, 44850 Paare |
+| Breeding API Lint | PASS |
+| Breeding API Typecheck | PASS |
+| Breeding API Tests | PASS, 73/73 |
+| Breeding API Worker-Dry-Run | PASS, kein Deployment |
+| Breeding API Structural Validation | PASS |
+| Breeding API Release Validation | PASS |
+| Breeding API Determinismus | PASS, `46c200858d2f4eb9f84c973441640632c1497bdac4fc5df55b041de6a4a77f25` |
+| Breeding API Secret-Scan | PASS |
+| Breeder AI Frozen Install | PASS |
+| Breeder AI Lint | PASS |
+| Breeder AI Typecheck | PASS |
+| Breeder AI vollständige Tests | PASS, 57/57 in 8 Dateien |
+| Breeder AI Worker-Dry-Run | PASS, 503-only Spike-Bundle, kein Deployment |
+| Breeder AI Secret-Scan | PASS |
+| Root `node scripts/validate-data.mjs` | PASS, 115er Canonical Reference Space und 102er PWA-Overlay |
+| `git diff --check` | PASS |
 
-## 13. Vollständiger `main...HEAD`-Umfang
+Der erste Wrangler-Aufruf innerhalb der Dateisandbox konnte außerhalb des Workspace weder lesen noch ein Wrangler-Log schreiben. Derselbe fest konfigurierte `--dry-run` bestand anschließend mit der dafür vorgesehenen lokalen Berechtigung. Dies war eine Sandboxgrenze, kein Code- oder Buildfehler.
 
-Der gesamte Folgebranch gegenüber `main` umfasst:
+## 10. Exakt geänderte Dateien dieses Abschlussblocks
 
 - `.github/workflows/pal-data-core-ci.yml`
-- `.github/workflows/probe-pal-data-core.yml`
-- `.gitignore`
+- `README.md`
+- `apps/breeder-ai/README.md`
+- `apps/breeder-ai/src/domain/passive-reference.ts`
+- `apps/breeder-ai/src/resolver/passive-resolver.ts`
+- `apps/breeder-ai/test/passive-resolver.test.ts`
 - `data/palworld-core/README.md`
+- `data/palworld-core/passives.approval.json`
+- `data/palworld-core/passives.json`
+- `docs/BREEDER_AI_CURRENT_BLUEPRINT.md`
 - `docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`
-- `docs/BREEDER_AI_PASSIVE_RESOLVER_DISCOVERY.md`
-- `docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md`
 - `docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`
+- `docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md`
 - `docs/PAL_DATA_CORE_ARCHITECTURE.md`
 - `docs/PAL_DATA_CORE_ROADMAP.md`
-- `tools/pal-data-core/PalDataCore.Extractor/PassiveCandidateBuilder.cs`
-- `tools/pal-data-core/PalDataCore.Extractor/PassiveCandidateModels.cs`
-- `tools/pal-data-core/PalDataCore.Extractor/Program.cs`
-- `tools/pal-data-core/PalDataCore.Extractor/ValueReader.cs`
+- `scripts/validate-data.mjs`
 - `tools/pal-data-core/README.md`
-- `tools/pal-data-core/catalog.v1.json`
+- `tools/pal-data-core/scripts/publish-passive-reference.mjs`
 - `tools/pal-data-core/scripts/review-passive-candidate.mjs`
-- `tools/pal-data-core/tests/review-passive-candidate.test.mjs`
+- `tools/pal-data-core/tests/publish-passive-reference.test.mjs`
+- `tools/pal-data-core/tests/published-passive-reference.test.mjs`
 
-Die Commitfolge ist in vier logisch getrennte Blöcke gegliedert:
+`LOCAL_ARTIFACTS/` ist nicht getrackt und nicht committed.
 
-1. Discovery-Katalog und offizieller erster Build-Proof (`f99a2dd`, `e4e325c`);
-2. Candidate-Extraktion, ursprüngliche Reviewpipeline, CI und Handoff (`e95f856`, `2d44fa1`, `f4e60e0`, `ac8fe06`);
-3. evidenzbasierte Schema-2-/Namens-/Gate-/Fingerprint-Korrektur (`d21110b`);
-4. aktualisierte Abschluss- und Architektur-Dokumentation im nachfolgenden lokalen Dokumentationscommit.
+## 11. Lokale fokussierte Commits
 
-Nicht verändert wurden Breeder-AI-Runtime oder Resolver, Species-Verträge, Canonical Breeding-Daten und -Regeln, öffentliche API-/MCP-Verträge, historische PWA-Daten, Cloudressourcen oder Secrets.
+- `ae07579 feat(data-core): gate passive reference publication`
+- `15b5273 feat(data-core): publish canonical passive references`
+- `c90e0fb feat(breeder-ai): add passive reference resolver`
+- ein abschließender fokussierter Dokumentationscommit aktualisiert Roadmap, technische Wahrheitsquellen und diesen Bericht.
 
-## 14. Architekturentscheidungen
+Es erfolgte kein Push.
 
-- Technisches Audit-Artefakt und fachlicher Resolver-Reference-Space besitzen getrennte Hash-Grenzen.
-- Main und Main_Common bleiben gleichrangige Evidenz; widersprüchlicher Inhalt wird nicht durch Source-Priorität verdeckt.
-- Feldpräsenz bleibt Teil des technischen Vergleichs, damit „fehlend“ nicht mit einem Defaultwert gleichgesetzt wird.
-- Der Default-Namensschlüssel ist eine durch offizielle Lokalisierung belegte Konvention, keine frei erfundene Ableitung.
-- `SortDisplayable` begrenzt nur die user-facing Identitätsdomäne; Gameplay-Semantik bleibt offen.
-- Einzelsprachen-Ambiguitäten sind korrekte Domain-Wahrheit und werden nicht heuristisch aufgelöst.
-- Der historische Overlay prüft Rückwärtszuordnung, definiert aber weder Identität noch Vollständigkeit aktueller Game Truth.
-- Ein endgültiger namespaceter `sourceRow`-Adapter-Key wird erst nach erneutem offiziellen Schema-2-Artefaktreview entschieden.
+Repositoryzustand am Review-Stop:
 
-## 15. Verbleibende Risiken und offene Gates
+```text
+Branch: breeder/passive-resolver-discovery
+Upstream: origin/breeder/passive-resolver-discovery
+Upstream-Stand: e28b6148f47ec2179f63de8c104664be8f31df73
+main = origin/main: b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3
+Lokaler Branch: 4 Commits vor seinem Upstream
+Working Tree: clean
+```
 
-1. Der korrigierte lokale Commit wurde noch nicht im offiziellen Dedicated-Server-Workflow ausgeführt. Die erwarteten Counts und der neue Reference-Space-Hash müssen durch ein neues Artefakt bestätigt werden.
-2. `sourceRow` ist der stärkste technische Kandidat, aber noch kein freigegebener dauerhafter `passive_id`-Contract.
-3. Ein zukünftiger Build kann echte Overrides, neue Categories, Lokalisierungsänderungen, neue Ambiguitäten oder Entity-Zugänge/-Abgänge einführen; das Gate muss diese als neue Evidenz sichtbar machen.
-4. `SortDisplayable` beweist keine Breeding-Eligibility oder Effect-Semantik. Dafür fehlt weiterhin ein autoritatives Domain-Artefakt.
-5. Der historische Overlay deckt nur 102 der 115 aktuellen displaybaren Entities ab und darf nicht zur Whitelist werden.
-6. Ein später persistierter Passive-Verweis muss an den freigegebenen Passive-Dataset-/Reference-Space-Fingerprint gebunden sein; fremde Dataset-Stände müssen explizite Migrationsfälle bleiben.
-7. Der `PassiveResolver`, seine Exact-/Ambiguous-/Fuzzy-Candidate-Tests und sein Persistenz-/Migrationsverhalten bleiben bewusst unimplementiert.
-8. Die bereits dokumentierten externen Phase-0-Gates für reale Auth/JWKS/OTP, Multi-Device, Remote D1, Provider und Betriebstopologie bleiben offen.
+Der vollständige Branch-Diff gegen `main` ist zusätzlich lokal und ausgeschlossen unter `LOCAL_ARTIFACTS/diffs/passive-reference-resolver-phase0-main-head.diff` gespeichert. Maßgeblich für den jeweils aktuellen Commitstand bleiben `git status` und `git log main..HEAD`.
 
-## 16. Nächster zulässiger Schritt
+## 12. Verbleibende offene Phase-0-Gates
 
-Nach unabhängiger Review und nur mit neuer ausdrücklicher Freigabe:
+Der lokale Passive-Identity-/Resolver-Gate ist erfüllt. Phase 0 als Gesamtgate und Phase 1 bleiben dennoch gesperrt, weil weiterhin extern oder betrieblich zu beweisen beziehungsweise zu entscheiden sind:
 
-1. den bestehenden Branch pushen;
-2. `Probe Pal Data Core` auf dem exakten korrigierten Commit ausführen;
-3. Candidate, Reviewbericht, Summary, Hashes und alle erwarteten Counts aus dem neuen Artefakt prüfen;
-4. `sourceRow` entweder als datasetgebundenen namespaceten Adapter-Key bestätigen oder die Abweichung dokumentieren;
-5. erst danach über kanonische Veröffentlichung, `PassiveResolver` und Persistenzmigration entscheiden.
+1. echte Cloudflare-Access-Anwendung, OTP-Policy, Allowlist/Provisioning und Assertion-Weitergabe;
+2. Live-JWKS-Abruf, Cache, Rotation, unbekannte `kid` und Netzwerkfehler;
+3. zwei reale Geräte und echter E-Mail-/Identity-Rebind inklusive Recovery-/Abuse-Policy;
+4. Static-Assets-/API-/Routingtopologie;
+5. Remote-D1-Migration, Backup, Restore und Rollback;
+6. reale Reasoning-/Speech-/Research-Provider einschließlich Modelle, Limits, Kosten und Retention;
+7. Security-Review des begrenzten JWT-/Auth-Adapters vor Produktion;
+8. fachliche Passive-Wirkungs-, Vererbungs-, Züchtbarkeits- und Balance-Domain als getrennte spätere Data-Core-Arbeit;
+9. unabhängiger Review des lokalen `main..HEAD`-Diffs und jede weitere Remote-/Releasefreigabe.
 
-## Review-Stop
+## 13. Nicht erfolgt
 
-Die lokale Korrekturarbeit endet an diesem Punkt. Phase 1 bleibt gesperrt. Ohne neue ausdrückliche Freigabe erfolgen keine weiteren Repository- oder Remoteaktionen.
+- kein Push;
+- kein Pull Request;
+- kein Merge;
+- kein Deployment;
+- keine Cloud-Ressource oder Remote-D1;
+- keine Secret- oder Provideränderung;
+- keine Änderung der öffentlichen API-/MCP-Verträge;
+- keine Änderung der historischen PWA-Daten;
+- kein Phase-1-Scope.
+
+## 14. Review-Stop und nächste sichere Aktion
+
+Der Auftrag endet an diesem Review-Stop. Der nächste sichere Schritt ist eine unabhängige Prüfung des lokalen Diffs, insbesondere:
+
+- Approval-/Publisher-Grenze und Reproduzierbarkeit des Reference-Space-Hashes;
+- Ausschluss technischer Felder und nicht-displaybarer Entities;
+- Dataset-/Migrationsvertrag;
+- Ambiguitäts- und Fuzzy-Verhalten;
+- Abgrenzung des Identity-Reference-Space von noch offener Passive-Wirkungssemantik.
+
+Push, PR, Merge, Deployment, Cloud-/Secret-Änderungen oder Phase 1 benötigen jeweils eine neue ausdrückliche Freigabe.

@@ -137,7 +137,9 @@ Eine neue Spielversion erzwingt nicht automatisch eine neue Core-, Regel- oder A
 
 Technische Candidates dürfen getrennte Hash-Grenzen besitzen, wenn ihre Fachdomänen unabhängig versioniert und persistiert werden. Der Passive-Identity-Candidate erhält deshalb einen bytegenauen technischen SHA-256 über alle 1905 technischen Entities. Zusätzlich bildet ein deterministischer Resolver-Reference-Space-SHA-256 nur die `EPalPassiveCategory::SortDisplayable`-Entities mit `sourceRow`, belegter Namensreferenz und offiziellen EN-/DE-Namen ab. Package-Pfade, `sourceOrdinal`, `Rank`, `LotteryWeight`, Category-Balancewerte und nicht-displaybare Runtime-/Partner-Entities bleiben außerhalb dieses fachlichen Resolver-Fingerprints. Passive- oder interne Balanceänderungen dürfen den bereits verwendeten Species-/Breeding-Fingerprint nicht künstlich verändern; reine Quellreihenfolge oder resolverfremde Änderungen dürfen ihrerseits nicht als Änderung des user-facing Passive-Referenzraums erscheinen.
 
-Ein später persistierter Passive-Verweis muss an diese Passive-Dataset-Referenz gebunden sein und bei einem fremden Dataset explizit einen Migrationsfall ergeben. `SortDisplayable` belegt dabei nur user-facing Resolver-Relevanz, nicht Vererbbarkeit, Züchtbarkeit oder Effect-Semantik. Der Candidate-Hash allein veröffentlicht noch keinen Adapter-Key: Der namespacete `sourceRow`-Ansatz bleibt bis zur erneuten erfolgreichen Current-Build-Artefaktreview nach der Namens-/Rank-Korrektur ein Kandidat. Unbekannte Keys oder nicht eindeutige Namenszuordnungen bleiben fail-closed.
+Der Current-Build-Review aus Run `34975314764` bestätigt den namespaceten Adapter-Key `{ namespace: "palworld.passive.source_row", value: sourceRow }` für den veröffentlichten user-facing Reference Space. Persistierte Verweise sind an Schema 1 und den Reference-Space-SHA-256 gebunden; ein fremder Hash ist ausdrücklich ein Migrationsfall. Steam-Build, technischer Candidate-Hash und Artifact-Metadaten bleiben Provenienz und sind nicht zusätzlich Teil der persistierten Dataset-Identität. Dadurch erzwingt ein anderer Build bei bytegleich relevantem Referenzraum keine Scheinemigration. Unbekannte Keys, nicht eindeutige Namen und Fuzzy-Treffer bleiben fail-closed beziehungsweise reine Kandidaten.
+
+`SortDisplayable` belegt weiterhin nur user-facing Resolver-Relevanz, nicht Vererbbarkeit, Züchtbarkeit oder Effect-Semantik. Die 1790 nicht-displaybaren Entities bleiben im technischen Candidate, aber außerhalb der kanonischen 115er Resolver-Publikation.
 
 ## Patch- und Release-Gates
 
@@ -192,5 +194,5 @@ Der anonyme öffentliche MCP-Zugang darf dabei niemals Zugriff auf den privaten 
 3. Pal- und Breeding-Domain deterministisch aus dem Candidate ableiten;
 4. Breeding-Matrix, Pflichtregressionen und unabhängige Cross-Checks ausführen;
 5. kanonischen Patchstatus erst nach erfolgreicher fachlicher Prüfung auf `current` setzen;
-6. den implementierten Passive-Identity-Candidate gegen einen neuen offiziellen Build ausführen und reviewen;
-7. erst bei positiver Evidenz Passive-Adapter-Key/Crosswalk veröffentlichen, anschließend Work, Stats, Partner, Movement, Items und Tech als getrennte Profile erweitern.
+6. den veröffentlichten Passive-Identity-Reference-Space bei einem neuen offiziellen Build erneut ausführen, diffen und reviewen;
+7. Work, Stats, Passive-Wirkungen, Partner, Movement, Items und Tech als getrennte Profile erweitern.

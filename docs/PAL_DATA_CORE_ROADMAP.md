@@ -127,9 +127,9 @@ Offen:
 
 ## P6 – Passiven
 
-**Status:** `candidate_pipeline` für Identity/Lokalisierungs-Crosswalk; Wirkungsdomäne weiterhin `inventory_only`.
+**Status:** Identity-/Lokalisierungs-Reference-Space kanonisch veröffentlicht; Wirkungsdomäne weiterhin `inventory_only`.
 
-Offiziell bestätigter Candidate-Stand (Build `25247047`, Run `34970361170`, Commit `ac8fe06`):
+Offiziell bestätigter Schema-2-Stand (Build `25247047`, Run `34975314764`, Commit `e28b6148f47ec2179f63de8c104664be8f31df73`, Artifact ID `10399160981`):
 
 - `DT_PassiveSkill_Main`: 1905 Zeilen.
 - `DT_PassiveSkill_Main_Common`: vorhanden und parsebar;
@@ -152,18 +152,18 @@ Lokal implementiert:
 - expliziter Override vor belegter `PASSIVE_<sourceRow>`-Konvention, ohne erfundenen Fallback;
 - user-facing Gate und Resolver-Reference-Space nur für `SortDisplayable`;
 - eigener technischer Candidate- und enger Resolver-Reference-Space-Fingerprint, getrennt von Species/Breeding.
+- explizit freigegebene, fail-closed kanonische 115er Publikation unter `data/palworld-core/passives.json`;
+- namespaceter Adapter-Key `palworld.passive.source_row` mit `sourceRow` als Wert;
+- datasetgebundene Persistenzreferenz und Breeder-AI-Resolver mit Exact-/Ambiguous-/Candidate-Verhalten.
 
 Offen:
 
-- neuer offizieller Probe-Lauf auf dem korrigierten Candidate-Schema 2 und Auswertung seines normalisierten Artefakts;
-- Bestätigung oder Widerlegung von `sourceRow` als namespacetem, datasetgebundenem Phase-0-Adapter-Key;
-- kanonische Candidate-/Crosswalk-Veröffentlichung und erst danach Breeder-AI-`PassiveResolver`;
 - EffectTypes/-Values;
 - Targets;
 - Invoke-Kontexte;
 - Stackability;
 - World-Tree-/Mutation-/Partner-Sonderfälle;
-- fachliche Freigabe der bereits technisch aufgenommenen Lokalisierungszuordnung;
+- fachliche Klassifikation der Wirkungs-/Vererbungssemantik; die Identity-/Lokalisierungszuordnung ist veröffentlicht.
 - Wirkung auf Pal, Spieler, Reiten, Basis und Partnerfähigkeit strikt trennen.
 
 ## P7 – Partnerfähigkeiten

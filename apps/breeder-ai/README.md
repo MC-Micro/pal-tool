@@ -18,6 +18,7 @@ Der Spike beweist lokal:
 - atomaren D1-Commit von State, Revision, Mutation Log und Idempotency Receipt;
 - Receipt-first Retry, deterministische Payload-Bindung, Parallelzustellung, harte Konflikte und vollständigen Rollback;
 - einen Resolver über die 299 kanonischen Species mit DE-/EN-Namen, belegten Aliasen, Varianten/Formen, Ambiguität und nicht-autoritativen Fuzzy-Kandidaten;
+- einen Resolver über den freigegebenen 115er Passive-Reference-Space mit exakten EN-/DE-Namen, realer deutscher Ambiguität, nicht-autoritativen Fuzzy-Kandidaten und datasetgebundener Persistenzreferenz;
 - Providergrenzen für Reasoning, Speech und Research mit strikter strukturierter Ausgabe, Timeouts und Test-Doubles.
 
 Ausdrücklich nicht bewiesen sind:
@@ -27,7 +28,7 @@ Ausdrücklich nicht bewiesen sind:
 - die endgültige Static-Assets-/API-Topologie;
 - Remote-D1-Verhalten, Migration, Backup und Restore in einer echten Cloud-Ressource;
 - reale Reasoning-, Speech- oder Research-Provider, deren aktuelle Modelle, Limits, Kosten und Retention;
-- ein autoritativer oder belastbarer nichtpersistenter Passive-Resolver; für diese Domain wurde bewusst kein Key erfunden und der Provider-Mention-Typ ist kein Resolver-Proof;
+- Passive-Wirkungs-, Vererbungs-, Züchtbarkeits- oder Balance-Semantik; der Resolver-Proof belegt ausschließlich user-facing Identität und Namensauflösung;
 - eine produktive API, UI oder Phase-1-Inventory-Runtime.
 
 Der Worker-Einstieg antwortet ausschließlich mit HTTP 503 und `PHASE0_LOCAL_SPIKE_ONLY`. Die Wrangler-Konfiguration enthält nur eine offensichtlich ungültige Null-ID und der Build-Befehl nutzt immer `--dry-run`.
@@ -106,7 +107,19 @@ dataset   = schema version + game version + build id + technical snapshot hash
 
 Der Resolver importiert `data/palworld-breeding/pal_values.json` und `manifest.json` direkt. Der technische Snapshot wird ausschließlich aus der genau einmal vorhandenen Manifest-Quelle mit Rolle `canonical_primary_source` gelesen; fehlende, doppelte oder fehlerhafte Rollen-/Hash-Metadaten brechen fail-closed ab. Numerische REST-IDs, Paldecknummern, `internal_index`, `sourceOrdinal`, Array- oder Generatorpositionen werden nicht persistiert. Ein Fuzzy-Treffer ist immer nur ein Kandidat. Bei einem anderen Dataset oder unbekannten Key wird eine explizite Migration verlangt; es gibt keine automatische Positions- oder Fuzzy-Migration.
 
-Für Passiven wurde kein Resolver ergänzt. `data-passives.js` ist der redaktionelle Produktdaten-Overlay der historischen PWA; sein Feld `nr` ist keine dauerhafte Domain-Identität. Pal Data Core führt `DT_PassiveSkill_Main` derzeit nur als `inventory_only` und hat noch kein freigegebenes kanonisches Passive-Domain-Artefakt mit belastbarem Lokalisierungs-/Crosswalk-Vertrag. Damit ist auch ein als belastbar geltender nichtpersistenter Passive-Mention/Candidate-Proof noch offen.
+### Passive-Crosswalk
+
+Das offiziell bestätigte Schema-2-Artefakt aus Workflow-Run `34975314764` für Dedicated-Server-Build `25247047` veröffentlicht 115 `SortDisplayable`-Entities als [`data/palworld-core/passives.json`](../../data/palworld-core/passives.json). Der dauerhafte Phase-0-Verweis besteht aus:
+
+```text
+namespace = palworld.passive.source_row
+value     = sourceRow
+dataset   = schema version + reference-space SHA-256
+```
+
+Der technische Candidate-Hash, Steam-Build und die Workflow-/Artefaktangaben bleiben nachvollziehbare Provenienz. Die primäre persistierte Dataset-Identität ist dagegen der engere Reference-Space-Hash über `sourceRow`, belegte Namensreferenz und offizielle EN-/DE-Namen. Ein anderer Steam-Build mit identischem Reference-Space verlangt deshalb keine Migration; ein anderer Reference-Space-Hash immer. Es gibt keine automatische Name-, Positions- oder Fuzzy-Migration.
+
+Exakte namespacete Keys und exakte veröffentlichte `sourceRow`-Werte werden autoritativ aufgelöst. Exakte EN-/DE-Anzeigenamen werden nur bei Eindeutigkeit aufgelöst; `Erleuchteter` bleibt absichtlich mehrdeutig zwischen `ElementBoost_Normal_2_PAL` und `WorldTree_Sanity`. Fuzzy-Treffer sind ausschließlich Kandidaten. Die 1790 `SortNotDisplayable`-Entities des technischen Candidates sind keine Resolver-Keys. `data-passives.js` bleibt ein separater 102er PWA-Overlay; insbesondere wird sein Feld `nr` nicht als Domain-ID verwendet.
 
 ## Entscheidungen
 
@@ -124,6 +137,7 @@ Für Passiven wurde kein Resolver ergänzt. `data-passives.js` ist der redaktion
 - `auth_identity_id` ist eine eigene interne Zeilenidentität; die externe Eindeutigkeit bleibt `provider + issuer + subject`;
 - der Phase-0-State bleibt bewusst als minimales JSON-Aggregat pro User/Play-Space, damit die verbindliche Commit-Grenze ohne vorschnelles Produktionsschema geprüft werden kann;
 - der Species-Key wird als namespaceter Adapter-Key mit Dataset-Fingerprint geführt;
+- der Passive-Key wird nach erfolgreicher Current-Build-Review als namespaceter `sourceRow`-Adapter-Key mit eigenem Reference-Space-Fingerprint geführt; Build- und Artifact-Daten bleiben Provenienz;
 - der normalisierte Idempotency-Payload bindet Mutation-ID, erwartete Revision und Action-Gruppe; Trace und Key behalten ihre getrennten Rollen;
 - Self-Service-Rebind deaktiviert die alte Identity atomar. Eine spätere Grace-/Recovery-Policy ist eine Phase-1-/Security-Entscheidung.
 
@@ -152,7 +166,7 @@ Die Tests laufen vollständig lokal in Workerd/Miniflare über das offizielle Vi
 
 Vor Phase 1 ist ein Review dieses Spikes erforderlich. Danach müssen mindestens entschieden beziehungsweise live bewiesen werden:
 
-1. belastbarer Passive-Domain-/Candidate-Input und Resolver-Crosswalk;
+1. fachliche Passive-Wirkungs-/Vererbungsdomäne getrennt vom nun belegten Identity-/Resolver-Reference-Space;
 2. echte Access-Anwendung, OTP-Policy, Allowlist/Provisioning und JWT-Weitergabe;
 3. sicherer JWKS-Abruf mit Cache-/Rotation-/Failure-Verhalten;
 4. reale Multi-Device- und Rebind-Abläufe;

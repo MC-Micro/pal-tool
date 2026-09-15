@@ -90,12 +90,14 @@ Der Adapter schreibt nur einen Reviewbericht und verändert keine kanonischen Da
 - verwendet weder Overlay-Nummer, Arrayposition, Rank, Displayname noch Fuzzy-Ähnlichkeit als technische Identität;
 - bindet den Bericht sowohl an den bytegenauen Passive-Candidate-SHA-256 als auch an einen kanonischen Reference-Space-SHA-256 nur über displaybare `sourceRow`, belegte Namensreferenz und EN-/DE-Namen; Package-/Ordinal-Provenienz sowie Rank-, Lottery- und Category-Balancewerte sind nicht Teil dieses Resolver-Fingerprints.
 
-Candidate-Schema 2 modelliert den inventarbelegten `IntProperty`-Rohwert `Rank` als Integer; es interpretiert seine Spielsemantik nicht. Der offizielle Probe-Workflow erzeugt Candidate und Summary zweimal und vergleicht beide bytegenau. Das Gate verlangt konfliktfreie relevante Quellen, vollständige EN-/DE-Namen aller displaybaren Entities und einen vollständig eindeutigen historischen Overlay-Crosswalk. Echte Einzelsprachen-Ambiguitäten und neue offizielle displaybare Entities außerhalb des Overlays bleiben erlaubt und sichtbar. Konflikte werden erst nach Upload des normalisierten Review-Artefakts als fehlgeschlagenes Gate markiert, damit der Widerspruch prüfbar bleibt. Eine kanonische Passive-Datei oder ein Breeder-AI-`PassiveResolver` entsteht aus diesem Candidate nicht automatisch; beides erfordert erneut die explizite Review eines aktuellen offiziellen Build-Artefakts.
+Candidate-Schema 2 modelliert den inventarbelegten `IntProperty`-Rohwert `Rank` als Integer; es interpretiert seine Spielsemantik nicht. Der offizielle Probe-Workflow erzeugt Candidate und Summary zweimal und vergleicht beide bytegenau. Das Gate verlangt konfliktfreie relevante Quellen, vollständige EN-/DE-Namen aller displaybaren Entities und einen vollständig eindeutigen historischen Overlay-Crosswalk. Echte Einzelsprachen-Ambiguitäten und neue offizielle displaybare Entities außerhalb des Overlays bleiben erlaubt und sichtbar. Konflikte werden erst nach Upload des normalisierten Review-Artefakts als fehlgeschlagenes Gate markiert, damit der Widerspruch prüfbar bleibt.
+
+`scripts/publish-passive-reference.mjs` ist die getrennte, bewusst nicht automatisch vom Probe-Workflow ausgelöste Publikationsgrenze. Sie verlangt eine explizite Freigabedatei, gleicht Schema, Build, Candidate-/Reference-Hash, Provenienz und alle Zählwerte mit dem erfolgreichen Review ab, reproduziert den Reference-Space-Hash und weist unbekannte Felder, Duplikate sowie Case-Kollisionen ab. Das Ergebnis enthält ausschließlich `sourceRow`, belegte Namensreferenz und offizielle EN-/DE-Namen; technische Balance- und Quellfelder werden nicht veröffentlicht. Root-Validierung und Data-Core-Tests prüfen die eingecheckte Veröffentlichung erneut gegen diese Freigabe.
 
 ## Spätere Module
 
 - PartnerSkill / PartnerSkillParameter;
-- kanonische Passive-Wirkungssemantik und Resolver-Veröffentlichung;
+- kanonische Passive-Wirkungssemantik;
 - Movement- und Blueprint-Ergänzungen;
 - Items und Tech;
 - weitere aktuell oder künftig relevante Spieldaten.

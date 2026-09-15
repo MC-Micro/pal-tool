@@ -174,7 +174,7 @@ Mindestens testen:
 
 **Exit-Kriterium Phase 0:** Auth, Persistenz, Provider und Resolver sind jeweils mit kleinen realen Proofs-of-Concept technisch tragfähig oder die Architektur wurde bewusst angepasst.
 
-### 3.5 Lokales Ergebnis vom 14. September und Review-Fix vom 15. September 2026
+### 3.5 Lokales Ergebnis vom 14. und 15. September 2026
 
 Der isolierte Spike liegt unter `apps/breeder-ai/`. Lokal bewiesen sind:
 
@@ -183,11 +183,12 @@ Der isolierte Spike liegt unter `apps/breeder-ai/`. Lokal bewiesen sind:
 - D1-Commit-/Retry-Semantik in Workerd/Miniflare einschließlich der sieben vorgeschriebenen Fälle, Parallelzustellung und Rollback einer später scheiternden Batch-Anweisung;
 - User-/Play-Space-Isolation;
 - kanonischer Species-Crosswalk mit Dataset-Bindung, DE/EN, Varianten, Ambiguität und sicheren Fuzzy-Kandidaten;
+- kanonischer Passive-Crosswalk mit eigenem Reference-Space-Hash, 115 displaybaren Current-Build-Entities, exakten DE-/EN-Namen, realer DE-Ambiguität und sicheren Fuzzy-Kandidaten;
 - Provider-Interfaces, strikte strukturierte Output-Grenze, Timeout-/Fehlervertrag und Test-Doubles.
 
-Der in 3.4 geforderte Passive-Resolver-Proof ist **nicht erfüllt**. Der offizielle Run `34970361170` auf Commit `ac8fe06` bewies jedoch den typisierten Candidate: 3810 Main/Common-Source-Rows, 1905 konfliktfrei coalesced Entities, davon 115 `SortDisplayable` und 1790 `SortNotDisplayable`. Die unabhängige Artefaktreview widerlegte die Annahme, `OverrideNameTextId` sei der alleinige Namenspfad: Er ist bei allen 1905 Entities `None`, während `PASSIVE_<sourceRow>` für 115/115 displaybare Entities in EN und DE existiert. Der korrigierte lokale Folgeblock bevorzugt weiterhin echte Overrides, akzeptiert die Default-Konvention nur bei tatsächlich vorhandenem offiziellem Key, liest `Rank` entsprechend dem belegten `IntProperty` numerisch und begrenzt Gate/Fingerprint auf den user-facing Reference Space. Der historische Overlay mappt danach 102/102; 13 weitere aktuelle displaybare Entities bleiben offizielle Game Truth außerhalb dieses Overlays. Deshalb wurde weiterhin weder eine `passive_id` erfunden noch der PWA-Overlay als Whitelist oder autoritative Identität umgedeutet. Dass der Providervertrag Passive-Mentions syntaktisch zulässt, ist kein Resolver-Proof.
+Der in 3.4 geforderte Passive-Identity-/Resolver-Proof ist lokal erfüllt. Das vollständige offizielle Schema-2-Artefakt aus Run `34975314764` auf Commit `e28b6148f47ec2179f63de8c104664be8f31df73` bestätigt 3810 Main/Common-Source-Rows, 1905 konfliktfrei coalesced Entities, davon 115 `SortDisplayable` und 1790 `SortNotDisplayable`. Der historische Overlay mappt 102/102; 13 weitere aktuelle displaybare Entities bleiben offizielle Game Truth. Der veröffentlichte Key `{ namespace: "palworld.passive.source_row", value: sourceRow }` ist an den Reference-Space-Hash gebunden. Fuzzy-Treffer werden nicht persistiert; fremde Reference-Space-Hashes sind explizite Migrationsfälle. `data-passives.js.nr`, Arraypositionen, Rank, `sourceOrdinal` oder generierte IDs sind keine Domain-Identität. Die reale deutsche Ambiguität `Erleuchteter` bleibt erhalten.
 
-Noch nicht live bewiesen sind außerdem OTP/Access-Policy, echter JWKS-Abruf und Rotation, zwei reale Geräte, E-Mail-Wechsel, Static-Assets-/API-Topologie, Remote D1 sowie reale Reasoning-/Speech-/Research-Provider. Deshalb ist der lokale technische Proof für Auth, Persistenz, Species und Provider erfolgreich; das vollständige Phase-0-Gate einschließlich Passive-Resolver und externer Proofs bleibt bewusst offen. Es wurden keine Cloud-Ressourcen, Secrets oder Deployments verändert. Der Review-Stop gilt.
+Noch nicht live bewiesen sind OTP/Access-Policy, echter JWKS-Abruf und Rotation, zwei reale Geräte, E-Mail-Wechsel, Static-Assets-/API-Topologie, Remote D1 sowie reale Reasoning-/Speech-/Research-Provider. Deshalb sind die lokalen technischen Proofs für Auth, Persistenz, Species, Passive-Identity und Provider erfolgreich; das vollständige Phase-0-Gate bleibt wegen dieser externen Proofs bewusst offen. Passive-Wirkungs-/Vererbungssemantik bleibt eine getrennte spätere Data-Core-Domain. Es wurden keine Cloud-Ressourcen, Secrets oder Deployments verändert. Der Review-Stop gilt.
 
 Der vollständige Abschluss- und Übergabebericht liegt in `docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`.
 
@@ -664,16 +665,14 @@ Vor einem produktiven Friends-&-Family-Rollout mindestens:
 
 Der Phase-0-Spike aus `codex/breeder-ai-phase0-spikes` wurde am 15. September 2026 durch PR #10 als Merge-Commit `b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3` auf `main` übernommen. Die zugehörigen Push-Gates `Validate Palworld data` und `Breeder AI Phase 0 CI` waren grün. PR #10 führte kein Breeder-AI-/Cloudflare-Deployment durch. Der Merge auf `main` löste getrennt davon den bereits bestehenden GitHub-Pages-Workflow aus; dessen Run `34943406733` war erfolgreich. Das bedeutet **nicht**, dass Phase 0 als Gesamt-Gate abgeschlossen oder Phase 1 freigegeben ist.
 
-Der Passive-Folgeblock liegt auf `breeder/passive-resolver-discovery`. Der erste Candidate-Stand `ac8fe06` wurde ausdrücklich freigegeben gepusht und durch Run `34970361170` geprüft. Die daraus folgende Namens-/Rank-/Gate-Korrektur bleibt lokal und wird in diesem Korrekturblock weder gepusht noch remote ausgeführt.
+Der Passive-Folgeblock liegt auf `breeder/passive-resolver-discovery`. Das bestätigende Schema-2-Artefakt aus Run `34975314764` auf Branch-HEAD `e28b6148f47ec2179f63de8c104664be8f31df73` wurde vollständig lokal ausgewertet. Darauf basieren die lokale kanonische Publikation und der Resolver; beide bleiben ungepusht.
 
 Der nächste sichere Ablauf ist:
 
-1. lokalen `main...HEAD`-Diff, Candidate-Schema, Reviewlogik und Tests unabhängig prüfen;
-2. nur nach erneuter ausdrücklicher Nutzerfreigabe den korrigierten bestehenden `breeder/**`-Branch pushen, damit der offizielle `Probe Pal Data Core` Candidate-Schema 2 exakt ausführt;
-3. das normalisierte Passive-Candidate-/Review-Artefakt auswerten und `sourceRow` entweder bestätigen oder als ungeeignet dokumentieren;
-4. nur bei positiver Evidenz den datasetgebundenen Adapter-Key, den kanonischen Crosswalk und den `PassiveResolver` implementieren;
-5. offene externe Auth-/D1-/Provider-Gates weiterhin ausdrücklich sichtbar lassen;
-6. PR, Merge und jede Deploymententscheidung jeweils nur nach separater ausdrücklicher Freigabe durchführen.
+1. lokalen `main...HEAD`-Diff, Publikationsgrenze, kanonisches Artefakt, Resolver und Tests unabhängig prüfen;
+2. offene externe Auth-/D1-/Provider-Gates weiterhin ausdrücklich sichtbar lassen;
+3. Passive-Wirkungs-/Vererbungssemantik nicht mit dem bewiesenen Identity-Reference-Space vermischen;
+4. Push, PR, Merge und jede Deploymententscheidung jeweils nur nach separater ausdrücklicher Freigabe durchführen.
 
 ### Stopppunkt
 
@@ -737,14 +736,14 @@ Aktueller Stand nach Merge von PR #10 und im lokalen Passive-Folgeblock:
 
 ```text
 Breeder AI PWA
-Status: Phase-0-Spike auf main gemergt; Passive-Candidate-/Review-Pipeline lokal implementiert; Current-Build-Review offen
+Status: Phase-0-Spike auf main gemergt; Passive Current-Build-Reference-Space und Resolver lokal implementiert; Review-Stop
 Runtime: nur 503-Shell und technische Phase-0-Proofs, keine produktive Runtime
 Deployment: kein Breeder-AI-/Cloudflare-Deployment; bestehender GitHub-Pages-Workflow lief nach main-Merge erfolgreich
 D1: nur lokale Workerd-/Miniflare-Migration, keine Cloud-Datenbank
 Access/Auth: lokale JWT-/Identity-Grenze bewiesen, Live-OTP/Policy/JWKS-Rotation offen
 Provider: Interfaces und Doubles, kein realer Provider ausgewählt
-Resolver: Species-Proof vorhanden; Passive-Reference-Space fachlich eingegrenzt, Adapter-Key und Resolver bleiben bis zur erneuten offiziellen Korrektur-Artefaktreview offen
-Next Gate: unabhängiger Review der lokalen Namens-/Rank-/Gate-Korrektur; erneuter Push und Probe-Lauf nur nach ausdrücklicher Nutzerfreigabe
+Resolver: Species- und Passive-Identity-Proofs vorhanden; Passive-Wirkungs-/Vererbungssemantik getrennt offen
+Next Gate: unabhängiger Review des lokalen Publikations-/Resolver-Diffs; jede Remote-Aktion nur nach ausdrücklicher Nutzerfreigabe
 ```
 
 Phase 1, Live-Infrastruktur, reale Provider und Deployment bleiben bis zu einer separaten Freigabe ausdrücklich gesperrt.
