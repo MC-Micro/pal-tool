@@ -174,7 +174,7 @@ Mindestens testen:
 
 **Exit-Kriterium Phase 0:** Auth, Persistenz, Provider und Resolver sind jeweils mit kleinen realen Proofs-of-Concept technisch tragfähig oder die Architektur wurde bewusst angepasst.
 
-### 3.5 Lokales Ergebnis vom 14. September 2026
+### 3.5 Lokales Ergebnis vom 14. September und Review-Fix vom 15. September 2026
 
 Der isolierte Spike liegt unter `apps/breeder-ai/`. Lokal bewiesen sind:
 
@@ -185,7 +185,9 @@ Der isolierte Spike liegt unter `apps/breeder-ai/`. Lokal bewiesen sind:
 - kanonischer Species-Crosswalk mit Dataset-Bindung, DE/EN, Varianten, Ambiguität und sicheren Fuzzy-Kandidaten;
 - Provider-Interfaces, strikte strukturierte Output-Grenze, Timeout-/Fehlervertrag und Test-Doubles.
 
-Noch nicht live bewiesen sind OTP/Access-Policy, echter JWKS-Abruf und Rotation, zwei reale Geräte, E-Mail-Wechsel, Static-Assets-/API-Topologie, Remote D1 sowie reale Reasoning-/Speech-/Research-Provider. Deshalb ist der lokale technische Proof erfolgreich, das externe Phase-0-Gate aber bewusst nicht geschlossen. Es wurden keine Cloud-Ressourcen, Secrets oder Deployments verändert. Der Review-Stop gilt.
+Der in 3.4 geforderte Passive-Resolver-Proof ist **nicht erfüllt**. Der Root-Datensatz `data-passives.js` ist ein redaktioneller Produkt-Overlay der historischen Passives PWA und seine Nummern sind keine dauerhaften Domain-IDs. Pal Data Core führt die Passive-Tabelle derzeit nur als `inventory_only`; ein freigegebenes kanonisches Passive-Domain-Artefakt samt belastbarem DE-/EN-Crosswalk fehlt. Deshalb wurde weder eine `passive_id` erfunden noch der PWA-Overlay als autoritative oder vermeintlich belastbare Resolver-Wahrheit umgedeutet. Dass der Providervertrag Passive-Mentions syntaktisch zulässt, ist kein Resolver-Proof.
+
+Noch nicht live bewiesen sind außerdem OTP/Access-Policy, echter JWKS-Abruf und Rotation, zwei reale Geräte, E-Mail-Wechsel, Static-Assets-/API-Topologie, Remote D1 sowie reale Reasoning-/Speech-/Research-Provider. Deshalb ist der lokale technische Proof für Auth, Persistenz, Species und Provider erfolgreich; das vollständige Phase-0-Gate einschließlich Passive-Resolver und externer Proofs bleibt bewusst offen. Es wurden keine Cloud-Ressourcen, Secrets oder Deployments verändert. Der Review-Stop gilt.
 
 Der vollständige Abschluss- und Übergabebericht liegt in `docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`.
 
