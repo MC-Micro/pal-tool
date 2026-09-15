@@ -360,6 +360,40 @@ export function validatePublishedPassiveReference(value) {
   return artifact;
 }
 
+export function validatePublishedPassiveReferenceAgainstApproval(
+  artifactValue,
+  approvalValue,
+) {
+  const artifact = validatePublishedPassiveReference(artifactValue);
+  const approval = validatePassivePublicationApproval(approvalValue);
+  requireReviewMatch(
+    artifact.adapterKeyNamespace,
+    approval.adapterKeyNamespace,
+    "Published adapter-key namespace",
+  );
+  requireReviewMatch(
+    artifact.dataset.referenceSpaceSha256,
+    approval.sourceReview.referenceSpaceSha256,
+    "Published reference-space hash",
+  );
+  requireReviewMatch(
+    artifact.dataset.provenance,
+    {
+      steamBuildId: approval.sourceReview.steamBuildId,
+      technicalCandidateSha256: approval.sourceReview.technicalCandidateSha256,
+      sourceReviewSchemaVersion: approval.sourceReview.schemaVersion,
+      ...approval.provenance,
+    },
+    "Published provenance",
+  );
+  requireReviewMatch(
+    artifact.entries.length,
+    approval.expectedCounts.displayableEntities,
+    "Published entry count",
+  );
+  return artifact;
+}
+
 async function runCli() {
   const [, , reviewPath, approvalPath, outputPath] = process.argv;
   if (!reviewPath || !approvalPath || !outputPath) {

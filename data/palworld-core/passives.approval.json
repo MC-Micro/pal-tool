@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "adapterKeyNamespace": "palworld.passive.source_row",
+  "sourceReview": {
+    "schemaVersion": 2,
+    "steamBuildId": "25247047",
+    "technicalCandidateSha256": "06ae40a0aafd4aa6da69841f526ac291eb82d5c91f70b118d0bdafda26540b5b",
+    "referenceSpaceSha256": "5050fc82e7b14dad5ebb06de6aa3f5fbafbd8d168aae525b4b4fa05214efeb4b"
+  },
+  "provenance": {
+    "repository": "MC-Micro/pal-tool",
+    "workflow": "Probe Pal Data Core",
+    "workflowRunId": "34975314764",
+    "commitSha": "e28b6148f47ec2179f63de8c104664be8f31df73",
+    "artifactName": "pal-data-core-candidate-25247047",
+    "artifactId": "10399160981",
+    "artifactSha256": "1bd93cb80144833315dc7d6d6232f31fc57bb00cb11e317081ea34ee2a7ae63c"
+  },
+  "expectedCounts": {
+    "technicalSourceRows": 3810,
+    "coalescedTechnicalEntities": 1905,
+    "displayableEntities": 115,
+    "nonDisplayableEntities": 1790,
+    "technicalSourceConflicts": 0,
+    "relevantLocalizationConflicts": 0,
+    "displayableMissingNameReference": 0,
+    "displayableMissingNameEn": 0,
+    "displayableMissingNameDe": 0,
+    "ambiguousNamesEn": 0,
+    "ambiguousNamesDe": 1,
+    "overlayRecords": 102,
+    "overlayMapped": 102,
+    "overlayAmbiguous": 0,
+    "overlayMissing": 0,
+    "displayableEntitiesOutsideOverlay": 13
+  }
+}
