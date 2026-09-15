@@ -1,7 +1,7 @@
 # Breeder AI PWA – Implementation Roadmap & Handoff
 
 **Stand:** 15. September 2026  
-**Status:** Phase-0-Spike auf Review-Branch umgesetzt; Review-Stop vor Phase 1, Live-Infrastruktur oder Deployment
+**Status:** Phase-0-Spike durch PR #10 auf `main` gemergt; lokaler Passive-Candidate-Folgeblock am Review-Stop vor Phase 1, Live-Infrastruktur oder Breeder-AI-Deployment
 
 ## 0. Zweck dieses Dokuments
 
@@ -185,7 +185,7 @@ Der isolierte Spike liegt unter `apps/breeder-ai/`. Lokal bewiesen sind:
 - kanonischer Species-Crosswalk mit Dataset-Bindung, DE/EN, Varianten, Ambiguität und sicheren Fuzzy-Kandidaten;
 - Provider-Interfaces, strikte strukturierte Output-Grenze, Timeout-/Fehlervertrag und Test-Doubles.
 
-Der in 3.4 geforderte Passive-Resolver-Proof ist **nicht erfüllt**. Der Root-Datensatz `data-passives.js` ist ein redaktioneller Produkt-Overlay der historischen Passives PWA und seine Nummern sind keine dauerhaften Domain-IDs. Pal Data Core führt die Passive-Tabelle derzeit nur als `inventory_only`; ein freigegebenes kanonisches Passive-Domain-Artefakt samt belastbarem DE-/EN-Crosswalk fehlt. Deshalb wurde weder eine `passive_id` erfunden noch der PWA-Overlay als autoritative oder vermeintlich belastbare Resolver-Wahrheit umgedeutet. Dass der Providervertrag Passive-Mentions syntaktisch zulässt, ist kein Resolver-Proof.
+Der in 3.4 geforderte Passive-Resolver-Proof ist **nicht erfüllt**. Der Root-Datensatz `data-passives.js` ist ein redaktioneller Produkt-Overlay der historischen Passives PWA und seine Nummern sind keine dauerhaften Domain-IDs. Der lokale Folgeblock hat inzwischen eine getrennte typisierte Passive-Candidate-/Review-Pipeline für Main/Common und offizielle EN-/DE-Namen implementiert; ein neuer offizieller Current-Build-Lauf und die fachliche Artefaktreview fehlen aber noch. Deshalb wurde weiterhin weder eine `passive_id` erfunden noch der PWA-Overlay als autoritative Resolver-Wahrheit umgedeutet. Dass der Providervertrag Passive-Mentions syntaktisch zulässt, ist kein Resolver-Proof.
 
 Noch nicht live bewiesen sind außerdem OTP/Access-Policy, echter JWKS-Abruf und Rotation, zwei reale Geräte, E-Mail-Wechsel, Static-Assets-/API-Topologie, Remote D1 sowie reale Reasoning-/Speech-/Research-Provider. Deshalb ist der lokale technische Proof für Auth, Persistenz, Species und Provider erfolgreich; das vollständige Phase-0-Gate einschließlich Passive-Resolver und externer Proofs bleibt bewusst offen. Es wurden keine Cloud-Ressourcen, Secrets oder Deployments verändert. Der Review-Stop gilt.
 
@@ -662,16 +662,18 @@ Vor einem produktiven Friends-&-Family-Rollout mindestens:
 
 ## 16. Nächster sicherer Arbeitsblock nach dem Phase-0-Review
 
-Der Phase-0-Spike liegt auf `codex/breeder-ai-phase0-spikes`, die Review-Fixes sind enthalten und die Push-CI ist grün. Das bedeutet **nicht**, dass Phase 0 als Gesamt-Gate abgeschlossen oder Phase 1 freigegeben ist.
+Der Phase-0-Spike aus `codex/breeder-ai-phase0-spikes` wurde am 15. September 2026 durch PR #10 als Merge-Commit `b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3` auf `main` übernommen. Die zugehörigen Push-Gates `Validate Palworld data` und `Breeder AI Phase 0 CI` waren grün. PR #10 führte kein Breeder-AI-/Cloudflare-Deployment durch. Der Merge auf `main` löste getrennt davon den bereits bestehenden GitHub-Pages-Workflow aus; dessen Run `34943406733` war erfolgreich. Das bedeutet **nicht**, dass Phase 0 als Gesamt-Gate abgeschlossen oder Phase 1 freigegeben ist.
+
+Der Passive-Folgeblock liegt lokal auf `breeder/passive-resolver-discovery`. Er ergänzt die Candidate-/Review-Pipeline, wurde im Rahmen dieses Blocks aber weder gepusht noch remote ausgeführt.
 
 Der nächste sichere Ablauf ist:
 
-1. aktuellen `main...HEAD`-Diff und Branch-Inhalt auf unbeabsichtigte Dateien, Review-Artefakte, Secrets und Scope-Ausweitungen prüfen;
-2. nach ausdrücklicher Nutzerfreigabe einen Draft-PR gegen `main` erstellen;
-3. GitHub-CI und tatsächlichen PR-Diff erneut prüfen;
-4. offene Phase-0-Gates im PR klar sichtbar lassen, insbesondere Passive-Resolver/Crosswalk und die noch nicht live bewiesenen externen Auth-/D1-/Provider-Punkte;
-5. nach grünem CI und finalem Review eine separate ausdrückliche Merge-Freigabe einholen;
-6. nach einem tatsächlichen Merge den gemergten `main`-SHA verifizieren und den nächsten offenen Phase-0-Gate-Auftrag separat festlegen.
+1. lokalen `main...HEAD`-Diff, Candidate-Schema, Reviewlogik und Tests unabhängig prüfen;
+2. nur nach ausdrücklicher Nutzerfreigabe den bestehenden `breeder/**`-Branch pushen, damit der offizielle `Probe Pal Data Core` exakt diesen Implementierungsstand ausführt;
+3. das normalisierte Passive-Candidate-/Review-Artefakt auswerten und `sourceRow` entweder bestätigen oder als ungeeignet dokumentieren;
+4. nur bei positiver Evidenz den datasetgebundenen Adapter-Key, den kanonischen Crosswalk und den `PassiveResolver` implementieren;
+5. offene externe Auth-/D1-/Provider-Gates weiterhin ausdrücklich sichtbar lassen;
+6. PR, Merge und jede Deploymententscheidung jeweils nur nach separater ausdrücklicher Freigabe durchführen.
 
 ### Stopppunkt
 
@@ -731,18 +733,18 @@ Ein Breeding-API-Handoff muss nicht allein deshalb geändert werden, weil privat
 
 ## 20. Aktueller Phase-0-Review-Status
 
-Aktueller Stand auf `codex/breeder-ai-phase0-spikes`:
+Aktueller Stand nach Merge von PR #10 und im lokalen Passive-Folgeblock:
 
 ```text
 Breeder AI PWA
-Status: Phase-0-Spike implementiert; Review-Fixes enthalten; Branch gepusht; Push-CI grün
+Status: Phase-0-Spike auf main gemergt; Passive-Candidate-/Review-Pipeline lokal implementiert; Current-Build-Review offen
 Runtime: nur 503-Shell und technische Phase-0-Proofs, keine produktive Runtime
-Deployment: keines
+Deployment: kein Breeder-AI-/Cloudflare-Deployment; bestehender GitHub-Pages-Workflow lief nach main-Merge erfolgreich
 D1: nur lokale Workerd-/Miniflare-Migration, keine Cloud-Datenbank
 Access/Auth: lokale JWT-/Identity-Grenze bewiesen, Live-OTP/Policy/JWKS-Rotation offen
 Provider: Interfaces und Doubles, kein realer Provider ausgewählt
-Resolver: Species-Proof vorhanden; Passive-Resolver/Candidate-Crosswalk bleibt offenes Phase-0-Gate
-Next Gate: Draft-PR und GitHub-CI/PR-Review nur nach ausdrücklicher Nutzerfreigabe
+Resolver: Species-Proof vorhanden; Passive-Adapter-Key, Crosswalk und Resolver bleiben bis zur neuen offiziellen Artefaktreview offen
+Next Gate: unabhängiger lokaler Review; Push und offizieller Probe-Lauf nur nach ausdrücklicher Nutzerfreigabe
 ```
 
 Phase 1, Live-Infrastruktur, reale Provider und Deployment bleiben bis zu einer separaten Freigabe ausdrücklich gesperrt.

@@ -235,3 +235,16 @@ Ausdrücklich **nicht** automatisch umsetzen:
 `docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md` enthält noch Post-Review-Branch-/Draft-PR-Formulierungen, obwohl PR #10 inzwischen gemergt ist. Beim nächsten technischen Branch soll dieser Status minimal auf den tatsächlich gemergten `main`-SHA aktualisiert werden.
 
 Außerdem ist präzise zu formulieren: PR #10 hat **kein Breeder-AI-/Cloudflare-Deployment** ausgelöst. Der Merge auf `main` hat jedoch das bereits bestehende automatische GitHub-Pages-Build/Deployment des öffentlichen Repositories ausgelöst. Diese beiden Deployment-Begriffe dürfen künftig nicht vermischt werden.
+
+## Lokaler Implementierungsstand nach der Discovery
+
+Auf `breeder/passive-resolver-discovery` ist die in den Schritten 1 bis 3 beschriebene Candidate-/Review-Pipeline lokal implementiert:
+
+- `passives` umfasst Main und Main_Common mit dem Profil `passive-technical-v1`;
+- EN/DE `DT_SkillNameText_Common` sind eigene katalogisierte Lokalisierungsquellen;
+- der neue Befehl `passive-candidate` bewahrt die feldbegrenzte technische Evidenz und erzeugt einen Domain-spezifischen Candidate-Hash;
+- `review-passive-candidate.mjs` coalesced gleiche `sourceRow`-Werte, ignoriert Ordinals bei der Inhaltsidentität, blockiert echte Konflikte und weist fehlende beziehungsweise mehrdeutige Namen aus;
+- der historische Overlay wird ausschließlich bei übereinstimmenden exakten EN-/DE-Treffern gemappt;
+- der offizielle Workflow ist auf byteidentischen Doppelbuild, Artefakt-Upload und nachgelagerten Konflikt-Gate vorbereitet.
+
+Dieser lokale Implementierungsstand ist noch **kein abgeschlossener Current-Build-Proof**. Run `34960294929` lief vor der typisierten Passive-Extraktion und kann daher weder endgültige Row-Identity-Eignung noch Crosswalk-Zahlen belegen. Weil für diesen Auftrag Push und Cloud-Ausführung untersagt sind, wurde kein neuer Workflow ausgelöst. Bis ein neuer offizieller Run auf genau diesem Code ausgewertet ist, bleiben Adapter-Key, kanonischer Crosswalk und `PassiveResolver` bewusst unimplementiert.

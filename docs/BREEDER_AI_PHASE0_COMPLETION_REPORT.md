@@ -6,6 +6,8 @@
 
 **Nicht erfolgt:** Push, Pull Request, Merge, Deployment, produktive Cloud-Ressource, Secret-Änderung, Remote-D1-Erstellung, Access-Policy-Änderung oder Änderung der öffentlichen Breeding API beziehungsweise ihres MCP.
 
+**Nachtrag Passive-Folgeblock:** PR #10 wurde nach diesem ursprünglichen lokalen Bericht als `b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3` auf `main` gemergt. Der aktuelle lokale Folgeblock auf `breeder/passive-resolver-discovery` ist separat in `docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md` dokumentiert. Er ändert nicht die historischen Aussagen darüber, welche Aktionen während des ursprünglichen Spike-Auftrags ausgeführt wurden.
+
 ---
 
 ## 1. Zweck und Dokumentrang
@@ -393,14 +395,16 @@ Ein fremder Dataset-Fingerprint verlangt eine explizite Migration. Ein unbekannt
 
 Für Passiven wurde kein vermeintlich stabiler Key erfunden. Der Providervertrag darf Passive-Mentions enthalten, aber das beweist nur das strukturierte Mention-Format und **keine** Resolverfähigkeit.
 
-Auch ein belastbarer nichtpersistenter Passive-Mention/Candidate-Proof konnte aus der aktuell eingecheckten Repository-Wahrheit nicht seriös abgeleitet werden:
+Im ursprünglichen Spike konnte ein belastbarer nichtpersistenter Passive-Mention/Candidate-Proof aus der damals eingecheckten Repository-Wahrheit nicht seriös abgeleitet werden:
 
 - `data-passives.js` gehört zur historischen Passives PWA und ist ein redaktioneller Produkt-/Darstellungs-Overlay;
 - sein Feld `nr` ist keine dauerhafte Domain-Identität und darf nicht zu `passive_id` umetikettiert werden;
-- Pal Data Core führt `DT_PassiveSkill_Main` derzeit als `inventory_only`;
+- Pal Data Core führte `DT_PassiveSkill_Main` zu diesem Zeitpunkt als `inventory_only`;
 - ein freigegebenes kanonisches Passive-Domain-Artefakt mit belastbarem Key-, DE-/EN-Lokalisierungs- und Provenienzvertrag ist noch nicht vorhanden.
 
 Die Phase-0-Anforderung „Passiven“ aus Roadmap 3.4 bleibt daher ausdrücklich offen. Es gibt weder autoritative Passive-Auflösung noch Passive-Persistenz noch einen als erfüllt geltenden Candidate-Resolver-Proof. Der Contract wurde nicht gelockert.
+
+Der lokale Folgeblock implementiert inzwischen die fehlende typisierte Candidate-/Review-Pipeline, aber noch keinen Resolver. Ein neuer offizieller Probe-Lauf auf dem Implementierungsstand und dessen Artefaktreview bleiben Voraussetzung für die Bestätigung des Adapter-Keys und des Crosswalks.
 
 ---
 
@@ -613,7 +617,7 @@ Die Workerd-/Miniflare-Testwahl folgt dem offiziellen Cloudflare-Testweg:
 | Tenant | User-/Play-Space-Negativtests | AuthContext aus Testfixtures | komplette Live-Request-Kette |
 | D1 | reale lokale D1-Migration, Batch, Race, Rollback | lokales Miniflare-Storage | Remote-D1, Backup, Restore |
 | Species-Resolver | reale kanonische Repository-Daten, persistierte Dataset-Bindung, Migrationserkennung | Fuzzy-Threshold als Spike-Detail | künftige Patch-/Dataset-Migration |
-| Passive-Resolver | kein erfüllter Proof | Provider-Mention-Schema ohne Resolversemantik | kanonisches Domain-Artefakt, Candidate-Crosswalk und dauerhafte Identität |
+| Passive-Resolver | typisierte Candidate-/Reviewlogik lokal getestet, kein erfüllter Resolver-Proof | Provider-Mention-Schema ohne Resolversemantik | neuer offizieller Candidate, Crosswalk-Review, dauerhafte datasetgebundene Identität |
 | Provider | Schemas, Timeouts, Fehlergrenzen | Reasoning-/Speech-Doubles | Anbieter, Modelle, Limits, Kosten, Retention |
 | Worker | 503-only Bundle und Dry Run | keine Produkt-API | Hosting-/Routingtopologie |
 
