@@ -1,7 +1,7 @@
 # Breeder AI – Passive Resolver Discovery Handoff
 
 **Stand:** 15. September 2026
-**Status:** offizieller Dedicated-Server-Discovery-Proof abgeschlossen; Implementierung des kanonischen Passive-Crosswalks noch offen
+**Status:** offizieller typisierter Candidate-Proof auf `ac8fe06` ausgewertet; evidenzbasierte Namens-/Rank-/Gate-Korrektur lokal, erneuter offizieller Lauf noch offen
 
 ## Zweck
 
@@ -247,4 +247,71 @@ Auf `breeder/passive-resolver-discovery` ist die in den Schritten 1 bis 3 beschr
 - der historische Overlay wird ausschließlich bei übereinstimmenden exakten EN-/DE-Treffern gemappt;
 - der offizielle Workflow ist auf byteidentischen Doppelbuild, Artefakt-Upload und nachgelagerten Konflikt-Gate vorbereitet.
 
-Dieser lokale Implementierungsstand ist noch **kein abgeschlossener Current-Build-Proof**. Run `34960294929` lief vor der typisierten Passive-Extraktion und kann daher weder endgültige Row-Identity-Eignung noch Crosswalk-Zahlen belegen. Weil für diesen Auftrag Push und Cloud-Ausführung untersagt sind, wurde kein neuer Workflow ausgelöst. Bis ein neuer offizieller Run auf genau diesem Code ausgewertet ist, bleiben Adapter-Key, kanonischer Crosswalk und `PassiveResolver` bewusst unimplementiert.
+Dieser Absatz beschreibt den damaligen Review-Stop vor dem ersten typisierten Candidate-Lauf. Der danach ausdrücklich freigegebene Push und Run `34970361170` liefern die nachfolgende neuere Evidenz.
+
+## Offizieller typisierter Candidate-Run und Korrekturevidenz
+
+Der offizielle Workflow lief nach dem freigegebenen Push exakt auf:
+
+```text
+branch: breeder/passive-resolver-discovery
+commit: ac8fe06a0483b31fdc24122e82230b91f860a85d
+workflow run: 34970361170
+result: success
+Dedicated Server build: 25247047
+artifact: pal-data-core-candidate-25247047
+artifact id: 10397252031
+artifact digest: sha256:ddfd31c24c4cbe764f573848fe0c5dee64d7ea32f5515f7d213ddacbf558aba0
+```
+
+Candidate-Doppelbuild, Passive-Review, Breeding-Regression und Artefakt-Upload waren technisch erfolgreich. Die unabhängige Artefaktreview widerlegte jedoch zwei Modellierungsannahmen des ersten Reviewcodes; das ist neue Game-Truth-Evidenz und kein Toolfehler.
+
+### Belegte Namensreferenzregel
+
+Das Artefakt enthält 3810 Source Rows aus Main/Main_Common, konfliktfrei coalesced zu 1905 technischen Entities. Jede `sourceRow` kommt genau einmal pro Quelle vor; Case-Kollisionen existieren nicht. Bei allen 1905 Entities ist `OverrideNameTextId = None`.
+
+Die 115 `EPalPassiveCategory::SortDisplayable`-Entities besitzen trotzdem vollständig belegte Namen: Für 115/115 existiert `PASSIVE_<sourceRow>` sowohl in EN als auch DE. Beispiele:
+
+- `Rare` → `PASSIVE_Rare` → `Lucky` / `Außergewöhnlich`;
+- `MoveSpeed_up_3` → `PASSIVE_MoveSpeed_up_3` → `Swift` / `Blitzschnell`;
+- `CraftSpeed_up3` → `PASSIVE_CraftSpeed_up3` → `Remarkable Craftsmanship` / `Goldenes Händchen`;
+- `Legend` → `PASSIVE_Legend` → `Legend` / `Legendär`.
+
+Die korrigierte Regel lautet: Ein realer expliziter `OverrideNameTextId` hat Vorrang. Nur wenn er leer oder `None` ist, wird `PASSIVE_<sourceRow>` geprüft. Der abgeleitete Key gilt ausschließlich dann als beobachtete Referenz, wenn er in offizieller Lokalisierung tatsächlich vorhanden ist; andernfalls bleibt die Entity unresolved.
+
+### Belegte Resolver-Domänengrenze
+
+Der breite Technical Candidate bewahrt weiterhin alle 1905 Entities:
+
+- 115 `SortDisplayable`;
+- 1790 `SortNotDisplayable`.
+
+Der user-facing Resolver-/Reference-Space wird dagegen auf die 115 displaybaren, offiziell benannten Entities begrenzt. `SortDisplayable` belegt nur user-visible Resolver-Relevanz. Es ist keine Aussage über Vererbbarkeit, Züchtbarkeit, Stackability oder Effect-Semantik.
+
+Der historische Overlay mappt nach der belegten Namensregel 102/102 exakt bilingual, ohne fehlende oder mehrdeutige Paarzuordnung. 13 weitere aktuelle displaybare Entities liegen außerhalb des Overlays; der Overlay bleibt daher ein redaktioneller historischer Ausschnitt und keine Whitelist der aktuellen Game Truth.
+
+### Belegte Namensambiguität
+
+Unter den 115 displaybaren Entities sind die englischen Namen eindeutig. Im Deutschen besteht eine echte Ambiguität:
+
+```text
+ElementBoost_Normal_2_PAL → Celestial Emperor → Erleuchteter
+WorldTree_Sanity           → Hermit Sage       → Erleuchteter
+```
+
+Diese Ambiguität bleibt erhalten. Der bilinguale Overlay-Crosswalk ist dennoch eindeutig, weil EN und DE gemeinsam genau eine übereinstimmende `sourceRow` liefern können.
+
+### Rank-Typkorrektur und Gate
+
+Das offizielle Inventory belegt `Rank` als `IntProperty`. Der erste Candidate las ihn fälschlich als String und erzeugte für alle Entities einen leeren Wert. Candidate-Schema 2 liest und validiert `Rank` numerisch, ohne fachliche Rank-Semantik zu erfinden.
+
+Das korrigierte Review-Gate verlangt:
+
+- keine technischen Main/Common-Konflikte;
+- keine für displaybare Namensreferenzen relevanten Lokalisierungskonflikte;
+- belegte Referenz sowie EN und DE für jede displaybare Entity;
+- vollständigen historischen Overlay-Crosswalk ohne fehlende oder widersprüchliche Paarzuordnung.
+
+Zusätzliche aktuelle displaybare Entities und echte Einzelsprachen-Ambiguitäten blockieren nicht, bleiben aber sichtbar. Der Resolver-Reference-Space-Hash umfasst nur `sourceRow`, belegte Namensreferenz, EN und DE der displaybaren Entities. Der breite `technicalCandidateSha256` bleibt unverändert das Audit-/Artefakt-Fingerprint-Konzept.
+
+Die Korrektur wird lokal getestet, aber in diesem Block weder gepusht noch remote ausgeführt. Adapter-Key, kanonische Veröffentlichung und `PassiveResolver` bleiben bis zur erneuten offiziellen Current-Build-Bestätigung bewusst offen.

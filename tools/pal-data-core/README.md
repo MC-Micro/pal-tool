@@ -83,13 +83,14 @@ Der Adapter schreibt nur einen Reviewbericht und verändert keine kanonischen Da
 
 - coalesced gleiche `sourceRow`-Identitäten aus Main/Common und blockiert bei abweichendem Inhalt;
 - behandelt `sourceOrdinal` ausschließlich als Quellprovenienz;
-- folgt nur einem expliziten `OverrideNameTextId` und erfindet keinen Fallback-Namenschlüssel;
-- weist fehlende EN-/DE-Lokalisierungen und mehrdeutige offizielle Anzeigenamen separat aus;
+- bevorzugt einen expliziten `OverrideNameTextId`; bei leerem/`None`-Override akzeptiert er die im Build `25247047` belegte Konvention `PASSIVE_<sourceRow>` nur dann, wenn dieser Key in mindestens einer offiziellen Lokalisierungstabelle tatsächlich existiert;
+- begrenzt den user-facing Reference Space exakt auf `EPalPassiveCategory::SortDisplayable`, ohne daraus Vererbbarkeit, Züchtbarkeit oder Effect-Semantik abzuleiten;
+- weist fehlende EN-/DE-Lokalisierungen sowie englische und deutsche Anzeigenamen-Ambiguitäten separat aus;
 - mappt den historischen 102-Einträge-Overlay nur bei übereinstimmenden exakten EN- und DE-Treffern;
 - verwendet weder Overlay-Nummer, Arrayposition, Rank, Displayname noch Fuzzy-Ähnlichkeit als technische Identität;
-- bindet den Bericht sowohl an den bytegenauen Passive-Candidate-SHA-256 als auch an einen kanonischen Reference-Space-SHA-256 ohne Package-/Ordinal-Provenienz und verändert dadurch den Species-/Breeding-Snapshot-Hash nicht.
+- bindet den Bericht sowohl an den bytegenauen Passive-Candidate-SHA-256 als auch an einen kanonischen Reference-Space-SHA-256 nur über displaybare `sourceRow`, belegte Namensreferenz und EN-/DE-Namen; Package-/Ordinal-Provenienz sowie Rank-, Lottery- und Category-Balancewerte sind nicht Teil dieses Resolver-Fingerprints.
 
-Der offizielle Probe-Workflow erzeugt Candidate und Summary zweimal und vergleicht beide bytegenau. Konflikte werden erst nach Upload des normalisierten Review-Artefakts als fehlgeschlagenes Gate markiert, damit der Widerspruch prüfbar bleibt. Eine kanonische Passive-Datei oder ein Breeder-AI-`PassiveResolver` entsteht aus diesem Candidate nicht automatisch; beides erfordert die explizite Review eines aktuellen offiziellen Build-Artefakts.
+Candidate-Schema 2 modelliert den inventarbelegten `IntProperty`-Rohwert `Rank` als Integer; es interpretiert seine Spielsemantik nicht. Der offizielle Probe-Workflow erzeugt Candidate und Summary zweimal und vergleicht beide bytegenau. Das Gate verlangt konfliktfreie relevante Quellen, vollständige EN-/DE-Namen aller displaybaren Entities und einen vollständig eindeutigen historischen Overlay-Crosswalk. Echte Einzelsprachen-Ambiguitäten und neue offizielle displaybare Entities außerhalb des Overlays bleiben erlaubt und sichtbar. Konflikte werden erst nach Upload des normalisierten Review-Artefakts als fehlgeschlagenes Gate markiert, damit der Widerspruch prüfbar bleibt. Eine kanonische Passive-Datei oder ein Breeder-AI-`PassiveResolver` entsteht aus diesem Candidate nicht automatisch; beides erfordert erneut die explizite Review eines aktuellen offiziellen Build-Artefakts.
 
 ## Spätere Module
 

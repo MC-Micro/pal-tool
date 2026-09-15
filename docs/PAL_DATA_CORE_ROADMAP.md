@@ -129,11 +129,18 @@ Offen:
 
 **Status:** `candidate_pipeline` für Identity/Lokalisierungs-Crosswalk; Wirkungsdomäne weiterhin `inventory_only`.
 
-Offiziell bestätigter Discovery-Stand (Build `25247047`, Run `34960294929`):
+Offiziell bestätigter Candidate-Stand (Build `25247047`, Run `34970361170`, Commit `ac8fe06`):
 
 - `DT_PassiveSkill_Main`: 1905 Zeilen.
 - `DT_PassiveSkill_Main_Common`: vorhanden und parsebar;
 - `DT_SkillNameText_Common` für EN/DE: vorhanden und parsebar.
+- 3810 technische Source Rows aus Main/Common, konfliktfrei zu 1905 Entities coalesced;
+- 115 `SortDisplayable`, 1790 `SortNotDisplayable`;
+- `OverrideNameTextId = None` für alle 1905 Entities;
+- offizielle Default-Namenskonvention `PASSIVE_<sourceRow>` für 115/115 displaybare Entities in EN und DE;
+- historischer Overlay nach korrigierter Regel 102/102 exakt bilingual zuordenbar, 13 aktuelle displaybare Entities zusätzlich;
+- keine EN-Ambiguität, eine echte DE-Ambiguität: `Erleuchteter` für `ElementBoost_Normal_2_PAL` und `WorldTree_Sanity`;
+- Inventory-Typ für `Rank`: `IntProperty`.
 
 Lokal implementiert:
 
@@ -141,11 +148,14 @@ Lokal implementiert:
 - deterministischer Doppelbuild im offiziellen Probe-Workflow;
 - fail-closed Main/Common- und Lokalisierungskonfliktbericht;
 - exakter bilingualer Cross-Check des historischen 102-Einträge-Overlays ohne Fuzzy- oder Nummernidentität;
-- eigener technischer Candidate- und kanonischer Reference-Space-Fingerprint, getrennt von Species/Breeding.
+- Candidate-Schema 2 mit numerischem Rank-Rohwert;
+- expliziter Override vor belegter `PASSIVE_<sourceRow>`-Konvention, ohne erfundenen Fallback;
+- user-facing Gate und Resolver-Reference-Space nur für `SortDisplayable`;
+- eigener technischer Candidate- und enger Resolver-Reference-Space-Fingerprint, getrennt von Species/Breeding.
 
 Offen:
 
-- neuer offizieller Probe-Lauf auf dem Implementierungsstand und Auswertung seines normalisierten Artefakts;
+- neuer offizieller Probe-Lauf auf dem korrigierten Candidate-Schema 2 und Auswertung seines normalisierten Artefakts;
 - Bestätigung oder Widerlegung von `sourceRow` als namespacetem, datasetgebundenem Phase-0-Adapter-Key;
 - kanonische Candidate-/Crosswalk-Veröffentlichung und erst danach Breeder-AI-`PassiveResolver`;
 - EffectTypes/-Values;

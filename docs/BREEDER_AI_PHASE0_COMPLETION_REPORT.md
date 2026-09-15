@@ -6,7 +6,7 @@
 
 **Nicht erfolgt:** Push, Pull Request, Merge, Deployment, produktive Cloud-Ressource, Secret-Änderung, Remote-D1-Erstellung, Access-Policy-Änderung oder Änderung der öffentlichen Breeding API beziehungsweise ihres MCP.
 
-**Nachtrag Passive-Folgeblock:** PR #10 wurde nach diesem ursprünglichen lokalen Bericht als `b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3` auf `main` gemergt. Der aktuelle lokale Folgeblock auf `breeder/passive-resolver-discovery` ist separat in `docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md` dokumentiert. Er ändert nicht die historischen Aussagen darüber, welche Aktionen während des ursprünglichen Spike-Auftrags ausgeführt wurden.
+**Nachtrag Passive-Folgeblock:** PR #10 wurde nach diesem ursprünglichen lokalen Bericht als `b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3` auf `main` gemergt. Der Folgeblock auf `breeder/passive-resolver-discovery` ist separat in `docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md` dokumentiert. Run `34970361170` auf `ac8fe06` hat inzwischen 115 displaybare Current-Build-Passiven und die offizielle Default-Namenskonvention belegt, zugleich aber die ursprüngliche Override-only- und String-Rank-Annahme widerlegt. Die darauf basierende Schema-2-/Namens-/Gate-/Fingerprint-Korrektur ist lokal vollständig validiert, noch nicht erneut offiziell ausgeführt und ändert nicht die historischen Aussagen darüber, welche Aktionen während des ursprünglichen Spike-Auftrags ausgeführt wurden.
 
 ---
 
