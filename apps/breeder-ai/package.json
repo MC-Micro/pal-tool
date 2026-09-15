@@ -1,0 +1,35 @@
+{
+  "name": "@pal-tool/breeder-ai",
+  "version": "0.0.0-phase0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "build:worker": "wrangler deploy --dry-run --outdir dist",
+    "scan:secrets": "tsx scripts/scan-secrets.ts",
+    "ci": "pnpm lint && pnpm typecheck && pnpm test && pnpm build:worker && pnpm scan:secrets"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.1.9",
+    "@cloudflare/workers-types": "5.20260914.1",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.1.1",
+    "@vitest/coverage-v8": "4.1.10",
+    "eslint": "10.7.0",
+    "tsx": "4.23.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.63.0",
+    "vitest": "4.1.10",
+    "wrangler": "4.131.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.19.0"
+}
