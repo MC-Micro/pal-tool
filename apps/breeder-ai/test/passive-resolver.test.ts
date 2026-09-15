@@ -129,6 +129,16 @@ describe("passive resolver", () => {
     expect(german.match.passive.adapterKey.value).toBe("Rare");
   });
 
+  it("resolves canonically equivalent composed and decomposed German names identically", () => {
+    const resolver = new PassiveResolver(artifact());
+    const composed = resolver.resolve("Außergewöhnlich");
+    const decomposed = resolver.resolve("Außergewöhnlich".normalize("NFD"));
+    expect(decomposed).toEqual(composed);
+    expect(decomposed.status).toBe("resolved");
+    if (decomposed.status !== "resolved") return;
+    expect(decomposed.match.passive.adapterKey.value).toBe("Rare");
+  });
+
   it("preserves the real German Erleuchteter ambiguity deterministically", () => {
     const result = new PassiveResolver(artifact()).resolve("Erleuchteter");
     expect(result.status).toBe("ambiguous");

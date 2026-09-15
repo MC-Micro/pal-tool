@@ -277,6 +277,7 @@ function deduplicateCandidates(candidates: PassiveCandidate[]): PassiveCandidate
 
 function normalizeMention(value: string): string {
   return value
+    .normalize("NFC")
     .replaceAll("Ä", "Ae")
     .replaceAll("Ö", "Oe")
     .replaceAll("Ü", "Ue")
@@ -286,7 +287,7 @@ function normalizeMention(value: string): string {
     .replaceAll("ß", "ss")
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
-    .toLocaleLowerCase("en-US")
+    .toLowerCase()
     .replace(/[^a-z0-9]+/g, "")
     .trim();
 }
