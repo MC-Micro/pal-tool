@@ -1,7 +1,7 @@
 # Breeder AI PWA – Implementation Roadmap & Handoff
 
-**Stand:** 14. September 2026  
-**Status:** Phase-0-Spike lokal umgesetzt; Review-Stop vor Phase 1, Live-Infrastruktur oder Deployment
+**Stand:** 15. September 2026  
+**Status:** Phase-0-Spike auf Review-Branch umgesetzt; Review-Stop vor Phase 1, Live-Infrastruktur oder Deployment
 
 ## 0. Zweck dieses Dokuments
 
@@ -660,30 +660,29 @@ Vor einem produktiven Friends-&-Family-Rollout mindestens:
 
 ---
 
-## 16. Vorgeschlagene erste Codex-/Work-Aufgabe
+## 16. Nächster sicherer Arbeitsblock nach dem Phase-0-Review
 
-Noch **nicht** sofort die komplette PWA bauen.
+Der Phase-0-Spike liegt auf `codex/breeder-ai-phase0-spikes`, die Review-Fixes sind enthalten und die Push-CI ist grün. Das bedeutet **nicht**, dass Phase 0 als Gesamt-Gate abgeschlossen oder Phase 1 freigegeben ist.
 
-Die erste technische Aufgabe soll ausschließlich Phase 0 + einen minimalen Phase-1-Skeleton umfassen.
+Der nächste sichere Ablauf ist:
 
-Empfohlener Auftrag:
-
-1. alle relevanten Architekturdocs lesen;
-2. Live-Audit des aktuellen Branches und der vorhandenen Worker-/PWA-Struktur;
-3. Auth-/Identity-Spike entwerfen und lokal/testweise implementieren;
-4. D1-Migrationsentwurf für `users`, `auth_identities`, `play_spaces`, minimalen Inventory-State und Mutation/Revision erstellen;
-5. Cross-Tenant-Testkonzept schreiben;
-6. Provider Interfaces nur als Adapter/Mocks vorbereiten;
-7. keine echte Speech-/LLM-Providerbindung ohne erneute aktuelle Providerprüfung;
-8. keine Social-Runtime;
-9. keine Änderungen am öffentlichen read-only Breeder-Vertrag;
-10. nach Spike Ergebnis dokumentieren, bevor Phase 1 erweitert wird.
+1. aktuellen `main...HEAD`-Diff und Branch-Inhalt auf unbeabsichtigte Dateien, Review-Artefakte, Secrets und Scope-Ausweitungen prüfen;
+2. nach ausdrücklicher Nutzerfreigabe einen Draft-PR gegen `main` erstellen;
+3. GitHub-CI und tatsächlichen PR-Diff erneut prüfen;
+4. offene Phase-0-Gates im PR klar sichtbar lassen, insbesondere Passive-Resolver/Crosswalk und die noch nicht live bewiesenen externen Auth-/D1-/Provider-Punkte;
+5. nach grünem CI und finalem Review eine separate ausdrückliche Merge-Freigabe einholen;
+6. nach einem tatsächlichen Merge den gemergten `main`-SHA verifizieren und den nächsten offenen Phase-0-Gate-Auftrag separat festlegen.
 
 ### Stopppunkt
 
-Nach dem Auth-/D1-/Provider-Spike zuerst Review.
+Bis zu einer neuen ausdrücklichen Freigabe:
 
-Nicht automatisch in die komplette Produktimplementierung durchmarschieren.
+- kein Start von Phase 1;
+- kein Production-Deployment;
+- keine Cloudflare-Access-/OTP-Änderung;
+- keine Remote-D1-Erstellung oder -Migration;
+- keine Secrets oder realen Reasoning-/Speech-/Research-Provider verbinden;
+- keine Änderung des öffentlichen read-only Breeder-Vertrags.
 
 ---
 
@@ -730,19 +729,20 @@ Ein Breeding-API-Handoff muss nicht allein deshalb geändert werden, weil privat
 
 ---
 
-## 20. Aktueller Startstatus nach diesem Konzept-PR
+## 20. Aktueller Phase-0-Review-Status
 
-Nach Merge dieses Konzept-PRs soll der Status lauten:
+Aktueller Stand auf `codex/breeder-ai-phase0-spikes`:
 
 ```text
 Breeder AI PWA
-Status: lokaler Phase-0-Spike implementiert; Review-Stop
-Runtime: nur lokaler 503-Shell und technische Proofs
+Status: Phase-0-Spike implementiert; Review-Fixes enthalten; Branch gepusht; Push-CI grün
+Runtime: nur 503-Shell und technische Phase-0-Proofs, keine produktive Runtime
 Deployment: keines
 D1: nur lokale Workerd-/Miniflare-Migration, keine Cloud-Datenbank
-Access/Auth: lokale JWT-/Identity-Grenze bewiesen, Live-OTP/Policy offen
+Access/Auth: lokale JWT-/Identity-Grenze bewiesen, Live-OTP/Policy/JWKS-Rotation offen
 Provider: Interfaces und Doubles, kein realer Provider ausgewählt
-Next Gate: Phase-0 review and explicit authorization
+Resolver: Species-Proof vorhanden; Passive-Resolver/Candidate-Crosswalk bleibt offenes Phase-0-Gate
+Next Gate: Draft-PR und GitHub-CI/PR-Review nur nach ausdrücklicher Nutzerfreigabe
 ```
 
-Die nächste sinnvolle Produktdiskussion kann offene Werte weiter schärfen, ohne dass dafür der Kernfahrplan neu erfunden werden muss.
+Phase 1, Live-Infrastruktur, reale Provider und Deployment bleiben bis zu einer separaten Freigabe ausdrücklich gesperrt.
