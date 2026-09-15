@@ -93,6 +93,12 @@ function stable(value, omittedKeys = new Set()) {
   return value;
 }
 
+export function passiveReferenceSpaceSha256(referenceSpace) {
+  return createHash("sha256")
+    .update(JSON.stringify(stable(referenceSpace)))
+    .digest("hex");
+}
+
 function rowContent(row) {
   return stable(row, new Set(["sourceRow", "sourceOrdinal"]));
 }
@@ -368,7 +374,7 @@ export function buildPassiveReview(candidateValue, overlay, candidateSha256) {
     missingNameEn.length === 0 &&
     missingNameDe.length === 0;
   const referenceSpaceSha256 = referenceSpaceReady
-    ? createHash("sha256").update(JSON.stringify(stable(referenceSpace))).digest("hex")
+    ? passiveReferenceSpaceSha256(referenceSpace)
     : null;
   const gateFailures = [];
   if (technical.conflicts.length > 0) gateFailures.push("technical-source-conflicts");

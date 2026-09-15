@@ -64,6 +64,7 @@ jobs:
         run: |
           node --check tools/pal-data-core/scripts/review-breeding-candidate.mjs
           node --check tools/pal-data-core/scripts/review-passive-candidate.mjs
+          node --check tools/pal-data-core/scripts/publish-passive-reference.mjs
 
       - name: Test passive candidate review
-        run: node --test tools/pal-data-core/tests/review-passive-candidate.test.mjs
+        run: node --test tools/pal-data-core/tests/*.test.mjs
