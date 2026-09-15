@@ -21,12 +21,6 @@ function requireString(value, label, { allowEmpty = false } = {}) {
   }
 }
 
-function requireFiniteNumber(value, label) {
-  if (typeof value !== "number" || !Number.isFinite(value)) {
-    throw new TypeError(`${label} must be a finite number.`);
-  }
-}
-
 function validateTables(tables, label, validateRow) {
   if (!Array.isArray(tables) || tables.length === 0) {
     throw new TypeError(`${label} must contain at least one source table.`);
@@ -52,8 +46,12 @@ function validateTechnicalRow(row, label) {
   if (!Number.isInteger(row.sourceOrdinal) || row.sourceOrdinal < 0) {
     throw new TypeError(`${label}.sourceOrdinal must be a non-negative integer.`);
   }
-  requireString(row.rank, `${label}.rank`, { allowEmpty: true });
-  requireFiniteNumber(row.lotteryWeight, `${label}.lotteryWeight`);
+  if (!Number.isInteger(row.rank)) {
+    throw new TypeError(`${label}.rank must be an integer.`);
+  }
+  if (!Number.isInteger(row.lotteryWeight)) {
+    throw new TypeError(`${label}.lotteryWeight must be an integer.`);
+  }
   requireString(row.category, `${label}.category`, { allowEmpty: true });
   requireString(row.overrideNameTextId, `${label}.overrideNameTextId`, { allowEmpty: true });
   if (!Array.isArray(row.presentFields) || row.presentFields.some((field) => typeof field !== "string" || field.length === 0)) {
@@ -72,7 +70,7 @@ function validateTextRow(row, label) {
 
 export function validatePassiveCandidate(candidate) {
   if (!isRecord(candidate)) throw new TypeError("Passive candidate must be an object.");
-  if (candidate.schemaVersion !== 1) {
+  if (candidate.schemaVersion !== 2) {
     throw new TypeError(`Unsupported passive candidate schema ${String(candidate.schemaVersion)}.`);
   }
   requireString(candidate.steamBuildId, "steamBuildId");
@@ -181,6 +179,43 @@ function usableNameReference(value) {
   return trimmed.length > 0 && trimmed.toLowerCase() !== "none" ? trimmed : null;
 }
 
+function enumValue(value) {
+  const text = String(value ?? "");
+  return text.includes("::") ? text.slice(text.lastIndexOf("::") + 2) : text;
+}
+
+function isDisplayable(entity) {
+  return enumValue(entity.raw.category) === "SortDisplayable";
+}
+
+function localizationKeyExists(localized, key) {
+  return localized.rows.has(key) || localized.conflicts.some((conflict) => conflict.sourceRow === key);
+}
+
+function resolveNameReference(entity, localizedEn, localizedDe) {
+  const explicit = usableNameReference(entity.raw.overrideNameTextId);
+  if (explicit !== null) {
+    return {
+      source: "explicit_override",
+      field: "overrideNameTextId",
+      value: explicit,
+    };
+  }
+
+  const observedDefault = `PASSIVE_${entity.sourceRow}`;
+  if (
+    localizationKeyExists(localizedEn, observedDefault) ||
+    localizationKeyExists(localizedDe, observedDefault)
+  ) {
+    return {
+      source: "observed_default_row_convention",
+      field: "sourceRow",
+      value: observedDefault,
+    };
+  }
+  return null;
+}
+
 function indexByDisplayName(entities, field) {
   const index = new Map();
   for (const entity of entities) {
@@ -227,17 +262,21 @@ function reviewOverlay(overlay, namesEn, namesDe) {
     const enMatches = namesEn.get(passive.en) ?? [];
     const deMatches = namesDe.get(passive.de) ?? [];
     const trace = { recordNumber: passive.nr ?? null, nameEn: passive.en, nameDe: passive.de };
-    if (
-      enMatches.length === 1 &&
-      deMatches.length === 1 &&
-      enMatches[0] === deMatches[0]
-    ) {
-      mapped.push({ ...trace, sourceRow: enMatches[0] });
+    const deMatchSet = new Set(deMatches);
+    const agreeingMatches = enMatches.filter((sourceRow) => deMatchSet.has(sourceRow));
+    if (agreeingMatches.length === 1) {
+      mapped.push({ ...trace, sourceRow: agreeingMatches[0] });
       continue;
     }
     const candidates = [...new Set([...enMatches, ...deMatches])].sort(compareOrdinal);
-    if (enMatches.length > 1 || deMatches.length > 1 || (enMatches.length === 1 && deMatches.length === 1)) {
-      ambiguous.push({ ...trace, enMatches, deMatches, candidateSourceRows: candidates });
+    if (agreeingMatches.length > 1 || (enMatches.length > 0 && deMatches.length > 0)) {
+      ambiguous.push({
+        ...trace,
+        enMatches,
+        deMatches,
+        agreeingMatches,
+        candidateSourceRows: candidates,
+      });
     } else {
       missing.push({
         ...trace,
@@ -269,57 +308,83 @@ export function buildPassiveReview(candidateValue, overlay, candidateSha256) {
   const localizedEn = coalesceText(candidate.passiveNamesEn, "en");
   const localizedDe = coalesceText(candidate.passiveNamesDe, "de");
   const entities = technical.entities.map((entity) => {
-    const nameReference = usableNameReference(entity.raw.overrideNameTextId);
+    const nameReference = resolveNameReference(entity, localizedEn, localizedDe);
     return {
       ...entity,
-      nameReference: nameReference === null
-        ? null
-        : { field: "overrideNameTextId", value: nameReference },
-      nameEn: nameReference === null ? null : localizedEn.rows.get(nameReference) ?? null,
-      nameDe: nameReference === null ? null : localizedDe.rows.get(nameReference) ?? null,
+      nameReference,
+      nameEn: nameReference === null ? null : localizedEn.rows.get(nameReference.value) ?? null,
+      nameDe: nameReference === null ? null : localizedDe.rows.get(nameReference.value) ?? null,
     };
   });
 
-  const namesEn = indexByDisplayName(entities, "nameEn");
-  const namesDe = indexByDisplayName(entities, "nameDe");
-  const missingNameReference = entities
+  const displayableEntities = entities.filter(isDisplayable);
+  const nonDisplayableEntities = entities.filter((entity) => !isDisplayable(entity));
+  const namesEn = indexByDisplayName(displayableEntities, "nameEn");
+  const namesDe = indexByDisplayName(displayableEntities, "nameDe");
+  const missingNameReference = displayableEntities
     .filter(({ nameReference }) => nameReference === null)
     .map(({ sourceRow }) => sourceRow);
-  const missingNameEn = entities
+  const missingNameEn = displayableEntities
     .filter(({ nameReference, nameEn }) => nameReference !== null && nameEn === null)
     .map(({ sourceRow, nameReference }) => ({ sourceRow, nameReference: nameReference.value }));
-  const missingNameDe = entities
+  const missingNameDe = displayableEntities
     .filter(({ nameReference, nameDe }) => nameReference !== null && nameDe === null)
     .map(({ sourceRow, nameReference }) => ({ sourceRow, nameReference: nameReference.value }));
-  const nameAmbiguities = [
-    ...ambiguousNames(namesEn, "en"),
-    ...ambiguousNames(namesDe, "de"),
-  ];
-  const sourceConflicts = [
-    ...technical.conflicts,
+  const nameAmbiguitiesEn = ambiguousNames(namesEn, "en");
+  const nameAmbiguitiesDe = ambiguousNames(namesDe, "de");
+  const allLocalizationConflicts = [
     ...localizedEn.conflicts,
     ...localizedDe.conflicts,
   ];
+  const relevantNameKeys = new Set(
+    displayableEntities
+      .map(({ nameReference }) => nameReference?.value)
+      .filter((value) => value !== undefined),
+  );
+  const relevantLocalizationConflicts = allLocalizationConflicts.filter(({ sourceRow }) =>
+    relevantNameKeys.has(sourceRow),
+  );
+  const sourceConflicts = [
+    ...technical.conflicts,
+    ...relevantLocalizationConflicts,
+  ];
   const overlayReview = reviewOverlay(overlay, namesEn, namesDe);
+  const mappedSourceRows = new Set(overlayReview.mapped.map(({ sourceRow }) => sourceRow));
+  const displayableEntitiesOutsideOverlay = displayableEntities
+    .filter(({ sourceRow }) => !mappedSourceRows.has(sourceRow))
+    .map(({ sourceRow, nameEn, nameDe }) => ({ sourceRow, nameEn, nameDe }));
   const referenceSpace = {
-    schemaVersion: 1,
-    entities: entities.map(({ sourceRow, raw, nameReference, nameEn, nameDe }) => ({
+    schemaVersion: 2,
+    entities: displayableEntities.map(({ sourceRow, nameReference, nameEn, nameDe }) => ({
       sourceRow,
-      raw,
       nameReference,
       nameEn,
       nameDe,
     })),
   };
-  const referenceSpaceSha256 = sourceConflicts.length === 0
+  const referenceSpaceReady =
+    sourceConflicts.length === 0 &&
+    missingNameReference.length === 0 &&
+    missingNameEn.length === 0 &&
+    missingNameDe.length === 0;
+  const referenceSpaceSha256 = referenceSpaceReady
     ? createHash("sha256").update(JSON.stringify(stable(referenceSpace))).digest("hex")
     : null;
+  const gateFailures = [];
+  if (technical.conflicts.length > 0) gateFailures.push("technical-source-conflicts");
+  if (relevantLocalizationConflicts.length > 0) gateFailures.push("relevant-localization-conflicts");
+  if (missingNameReference.length > 0) gateFailures.push("displayable-name-reference-missing");
+  if (missingNameEn.length > 0) gateFailures.push("displayable-en-name-missing");
+  if (missingNameDe.length > 0) gateFailures.push("displayable-de-name-missing");
+  if (overlayReview.missing.length > 0) gateFailures.push("overlay-mapping-missing");
+  if (overlayReview.ambiguous.length > 0) gateFailures.push("overlay-mapping-ambiguous");
+  if (overlayReview.mapped.length !== overlayReview.count) gateFailures.push("overlay-not-fully-mapped");
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     steamBuildId: candidate.steamBuildId,
     passiveDataset: {
-      schemaVersion: 1,
+      schemaVersion: 2,
       steamBuildId: candidate.steamBuildId,
       technicalCandidateSha256: candidateSha256,
       referenceSpaceSha256,
@@ -327,32 +392,46 @@ export function buildPassiveReview(candidateValue, overlay, candidateSha256) {
     identityAssessment: {
       candidateNamespace: "palworld.passive.source_row",
       candidateValueField: "sourceRow",
-      status: sourceConflicts.length === 0
+      status: gateFailures.length === 0
         ? "supported-within-candidate-awaiting-review"
-        : "blocked-by-source-conflict",
+        : "blocked-by-review-gate",
       note: "The review reports candidate evidence only. Publication and persisted-key use require explicit review of a current official build artifact.",
     },
     counts: {
       technicalSourceRows: candidate.passiveTables.reduce((sum, table) => sum + table.rowCount, 0),
       coalescedTechnicalEntities: entities.length,
+      displayableEntities: displayableEntities.length,
+      nonDisplayableEntities: nonDisplayableEntities.length,
       sourceConflicts: sourceConflicts.length,
-      missingNameReference: missingNameReference.length,
-      missingNameEn: missingNameEn.length,
-      missingNameDe: missingNameDe.length,
-      ambiguousOfficialNames: nameAmbiguities.length,
+      technicalSourceConflicts: technical.conflicts.length,
+      relevantLocalizationConflicts: relevantLocalizationConflicts.length,
+      allLocalizationConflicts: allLocalizationConflicts.length,
+      displayableMissingNameReference: missingNameReference.length,
+      displayableMissingNameEn: missingNameEn.length,
+      displayableMissingNameDe: missingNameDe.length,
+      ambiguousNamesEn: nameAmbiguitiesEn.length,
+      ambiguousNamesDe: nameAmbiguitiesDe.length,
       overlayRecords: overlayReview.count,
       overlayMapped: overlayReview.mapped.length,
       overlayAmbiguous: overlayReview.ambiguous.length,
       overlayMissing: overlayReview.missing.length,
+      displayableEntitiesOutsideOverlay: displayableEntitiesOutsideOverlay.length,
     },
     entities,
+    resolverReferenceSpace: referenceSpace,
     sourceConflicts,
-    missingNameReference,
-    missingNameEn,
-    missingNameDe,
-    nameAmbiguities,
+    technicalSourceConflicts: technical.conflicts,
+    relevantLocalizationConflicts,
+    allLocalizationConflicts,
+    displayableMissingNameReference: missingNameReference,
+    displayableMissingNameEn: missingNameEn,
+    displayableMissingNameDe: missingNameDe,
+    nameAmbiguitiesEn,
+    nameAmbiguitiesDe,
     overlay: overlayReview,
-    ok: sourceConflicts.length === 0,
+    displayableEntitiesOutsideOverlay,
+    gateFailures,
+    ok: gateFailures.length === 0,
   };
 }
 

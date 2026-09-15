@@ -11,7 +11,7 @@ internal sealed class PassiveCandidateBuilder(PakWorkspace workspace, TableCatal
         var namesDe = ReadTextTables(catalog.Require("passive-names-de"));
 
         return new PassiveTechnicalCandidate(
-            1,
+            2,
             buildId,
             passiveTables,
             namesEn,
@@ -72,8 +72,8 @@ internal sealed class PassiveCandidateBuilder(PakWorkspace workspace, TableCatal
         return new PassiveTechnicalRow(
             sourceRow,
             sourceOrdinal,
-            reader.String("", "Rank"),
-            reader.Number(0, "LotteryWeight"),
+            reader.Int(0, "Rank"),
+            reader.Int(0, "LotteryWeight"),
             reader.String("", "Category"),
             reader.String("", "OverrideNameTextId", "OverrideNameTextID"),
             reader.PresentPropertyNames(

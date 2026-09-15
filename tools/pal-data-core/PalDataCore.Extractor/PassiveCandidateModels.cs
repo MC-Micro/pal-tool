@@ -3,8 +3,8 @@ namespace PalDataCore.Extractor;
 public sealed record PassiveTechnicalRow(
     string SourceRow,
     int SourceOrdinal,
-    string Rank,
-    double LotteryWeight,
+    int Rank,
+    int LotteryWeight,
     string Category,
     string OverrideNameTextId,
     IReadOnlyList<string> PresentFields);
