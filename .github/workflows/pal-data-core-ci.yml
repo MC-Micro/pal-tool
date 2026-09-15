@@ -61,4 +61,9 @@ jobs:
           --catalog tools/pal-data-core/catalog.v1.json
 
       - name: Check review script syntax
-        run: node --check tools/pal-data-core/scripts/review-breeding-candidate.mjs
+        run: |
+          node --check tools/pal-data-core/scripts/review-breeding-candidate.mjs
+          node --check tools/pal-data-core/scripts/review-passive-candidate.mjs
+
+      - name: Test passive candidate review
+        run: node --test tools/pal-data-core/tests/review-passive-candidate.test.mjs

@@ -3,6 +3,8 @@ node_modules/
 dist/
 coverage/
 .wrangler/
+tools/pal-data-core/PalDataCore.Extractor/bin/
+tools/pal-data-core/PalDataCore.Extractor/obj/
 
 # Local environment and Wrangler development secrets
 .env

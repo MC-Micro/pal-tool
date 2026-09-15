@@ -1,6 +1,6 @@
 # Pal Data Core – Dynamic Roadmap
 
-**Stand:** 30. August 2026  
+**Stand:** 15. September 2026
 **Ziel:** Breeder zuerst produktionsreif abschließen; weitere Core-Domänen danach modular ausbauen, ohne die aktuelle PAK-Acquisition oder den Technical Snapshot neu zu erfinden.
 
 ## Statuslegende
@@ -8,6 +8,7 @@
 - `done` – fachlich revalidiert, getestet und für den aktuellen Build freigegeben.
 - `extracted_unmodeled` – technische Rohdaten werden bereits im aktuellen Snapshot erfasst, aber noch nicht als kanonische Fachdomäne veröffentlicht.
 - `inventory_only` – Tabelle/Felder werden strukturell inventarisiert; Semantik ist noch nicht freigegeben.
+- `candidate_pipeline` – typisierte, deterministische Candidate-/Reviewlogik ist implementiert; Current-Build-Artefakt und fachliche Freigabe fehlen noch.
 - `planned` – klarer nächster Arbeitsblock.
 - `blocked` – benötigt zusätzliche Evidenz, Clientdaten oder eine separate Sicherheits-/Produktentscheidung.
 
@@ -126,20 +127,33 @@ Offen:
 
 ## P6 – Passiven
 
-**Status:** `inventory_only` / Tabelle aktuell direkt lesbar.
+**Status:** `candidate_pipeline` für Identity/Lokalisierungs-Crosswalk; Wirkungsdomäne weiterhin `inventory_only`.
 
-Aktueller Build:
+Offiziell bestätigter Discovery-Stand (Build `25247047`, Run `34960294929`):
 
 - `DT_PassiveSkill_Main`: 1905 Zeilen.
+- `DT_PassiveSkill_Main_Common`: vorhanden und parsebar;
+- `DT_SkillNameText_Common` für EN/DE: vorhanden und parsebar.
+
+Lokal implementiert:
+
+- getrennte typisierte Passive-Candidate-Extraktion für Main/Common und EN/DE-Namen;
+- deterministischer Doppelbuild im offiziellen Probe-Workflow;
+- fail-closed Main/Common- und Lokalisierungskonfliktbericht;
+- exakter bilingualer Cross-Check des historischen 102-Einträge-Overlays ohne Fuzzy- oder Nummernidentität;
+- eigener technischer Candidate- und kanonischer Reference-Space-Fingerprint, getrennt von Species/Breeding.
 
 Offen:
 
+- neuer offizieller Probe-Lauf auf dem Implementierungsstand und Auswertung seines normalisierten Artefakts;
+- Bestätigung oder Widerlegung von `sourceRow` als namespacetem, datasetgebundenem Phase-0-Adapter-Key;
+- kanonische Candidate-/Crosswalk-Veröffentlichung und erst danach Breeder-AI-`PassiveResolver`;
 - EffectTypes/-Values;
 - Targets;
 - Invoke-Kontexte;
 - Stackability;
 - World-Tree-/Mutation-/Partner-Sonderfälle;
-- Lokalisierung;
+- fachliche Freigabe der bereits technisch aufgenommenen Lokalisierungszuordnung;
 - Wirkung auf Pal, Spieler, Reiten, Basis und Partnerfähigkeit strikt trennen.
 
 ## P7 – Partnerfähigkeiten

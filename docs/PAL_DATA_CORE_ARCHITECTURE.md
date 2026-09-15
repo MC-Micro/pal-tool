@@ -1,6 +1,6 @@
 # Pal Data Core – Zielarchitektur
 
-**Stand:** 30. August 2026  
+**Stand:** 15. September 2026
 **Status:** implementierte Architekturgrundlage auf `breeder/core-refresh-1.0.3`; kanonische Veröffentlichung bleibt review- und release-gated
 
 ## Zweck
@@ -133,11 +133,17 @@ Mindestens folgende Versionen bleiben getrennt:
 
 Eine neue Spielversion erzwingt nicht automatisch eine neue Core-, Regel- oder API-Schemaversion.
 
+### Domain-spezifische Candidate-Fingerprints
+
+Technische Candidates dürfen getrennte Hash-Grenzen besitzen, wenn ihre Fachdomänen unabhängig versioniert und persistiert werden. Der Passive-Identity-Candidate erhält deshalb einen bytegenauen technischen SHA-256. Zusätzlich bildet ein deterministischer Reference-Space-SHA-256 die coalesced `sourceRow`-Entitäten, technischen Referenzfelder und aufgenommenen EN-/DE-Namen ab, lässt aber Package-Pfade und `sourceOrdinal` als reine Provenienz außen vor. Passive-Änderungen dürfen den bereits verwendeten Species-/Breeding-Fingerprint nicht künstlich verändern; reine Quellreihenfolge darf ihrerseits nicht als Änderung des Passive-Referenzraums erscheinen.
+
+Ein später persistierter Passive-Verweis muss an diese Passive-Dataset-Referenz gebunden sein und bei einem fremden Dataset explizit einen Migrationsfall ergeben. Der Candidate-Hash allein veröffentlicht jedoch noch keinen Adapter-Key: Der namespacete `sourceRow`-Ansatz bleibt bis zur erfolgreichen Current-Build-Artefaktreview ein Kandidat. Unbekannte Keys oder nicht eindeutige Namenszuordnungen bleiben fail-closed.
+
 ## Patch- und Release-Gates
 
 Ein neuer Build darf nicht automatisch als kanonisch freigegeben werden.
 
-Der teure Build-Gate erzeugt ein zeitlich begrenztes GitHub-Actions-Artefakt ausschließlich aus normalisiertem Snapshot, deterministischer Zusammenfassung und Feld-/Tabelleninventur. PAKs, Mappings und Raw DataTables sind ausdrücklich ausgeschlossen. Ein separater schneller CI-Job kompiliert den Extractor warnings-as-errors und validiert den versionierten Katalog ohne Serverdownload.
+Der teure Build-Gate erzeugt ein zeitlich begrenztes GitHub-Actions-Artefakt ausschließlich aus normalisiertem Snapshot, feldbegrenzten Domain-Candidates, deterministischen Zusammenfassungen, Reviewberichten und Feld-/Tabelleninventur. PAKs, Mappings und vollständige Raw DataTables sind ausdrücklich ausgeschlossen. Ein separater schneller CI-Job kompiliert den Extractor warnings-as-errors, validiert den versionierten Katalog und testet die read-only Reviewlogik ohne Serverdownload.
 
 Der Refresh soll mindestens prüfen:
 
@@ -186,4 +192,5 @@ Der anonyme öffentliche MCP-Zugang darf dabei niemals Zugriff auf den privaten 
 3. Pal- und Breeding-Domain deterministisch aus dem Candidate ableiten;
 4. Breeding-Matrix, Pflichtregressionen und unabhängige Cross-Checks ausführen;
 5. kanonischen Patchstatus erst nach erfolgreicher fachlicher Prüfung auf `current` setzen;
-6. anschließend Work und Stats, danach Partner/Passives/Movement/Items/Tech als getrennte Profile erweitern.
+6. den implementierten Passive-Identity-Candidate gegen einen neuen offiziellen Build ausführen und reviewen;
+7. erst bei positiver Evidenz Passive-Adapter-Key/Crosswalk veröffentlichen, anschließend Work, Stats, Partner, Movement, Items und Tech als getrennte Profile erweitern.

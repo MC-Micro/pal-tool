@@ -20,6 +20,15 @@ internal sealed class ValueReader(FStructFallback row)
     public static string PropertyType(FPropertyTag property) =>
         property.TagData?.Type ?? "Unknown";
 
+    public IReadOnlyList<string> PresentPropertyNames(params string[] names)
+    {
+        var requested = names.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return _properties.Keys
+            .Where(requested.Contains)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+    }
+
     public string String(string fallback, params string[] names)
     {
         var property = Find(names);

@@ -113,3 +113,19 @@ Bestehende `pal_values.json` und `special_combinations.json` bleiben als determi
 Die 258 aktuellen `DT_PalCombiUnique`-Zeilen werden vor einer Domain-Aufteilung vollständig bewahrt und sind für Build `24575149` vollständig klassifiziert. Same-Species-, Gender-, Cross-Species- und technische Kombinationen dürfen beim Import nicht verloren gehen.
 
 Der letzte deterministische Tabellen-Fallback wird aus dem offiziellen `sourceOrdinal` des Technical Snapshot abgeleitet. Das bestehende Breeder-Kompatibilitätsfeld `internal_index` spiegelt diesen Wert; es ist weder Paldecknummer noch ein unabhängig erfundener Zuchtindex.
+
+## Passive-Identity-Candidate
+
+Ein neuerer Discovery-Lauf vom 15. September 2026 bestätigte auf dem offiziellen Dedicated-Server-Build `25247047` zusätzlich `DT_PassiveSkill_Main_Common` sowie die EN-/DE-Tabellen `DT_SkillNameText_Common`. Run `34960294929` und Artefakt `pal-data-core-candidate-25247047` belegen die Discovery- und Feldinventur; sie enthalten noch keinen typisierten Passive-Row-Candidate.
+
+Die lokale Candidate-Pipeline liest nun `DT_PassiveSkill_Main` und `_Common` gemeinsam, bewahrt `sourceRow`, Package-Pfad, `sourceOrdinal` als reine Provenienz, `Rank`, `LotteryWeight`, `Category` und `OverrideNameTextId` sowie die offiziellen EN-/DE-Lokalisierungszeilen. Ein bytegenauer Candidate-Hash belegt das technische Artefakt; ein zweiter kanonischer Reference-Space-Hash schließt Package-/Ordinal-Provenienz aus und bildet den später verwendbaren Passive-Referenzraum ab. Der bestehende Species-/Breeding-Snapshot und dessen Fingerprint bleiben unverändert.
+
+Noch nicht kanonisch veröffentlicht sind:
+
+- ein endgültiger Passive-Adapter-Key;
+- ein akzeptierter Current-Build-Crosswalk;
+- der historische 102-Einträge-Overlay-Crosswalk;
+- ein Breeder-AI-`PassiveResolver`;
+- Passive-Wirkungssemantik.
+
+Diese Punkte bleiben bis zur Auswertung eines neuen offiziellen Probe-Artefakts offen. Insbesondere ist `data-passives.js.nr` keine Domain-ID.
