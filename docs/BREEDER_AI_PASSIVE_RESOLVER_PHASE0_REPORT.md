@@ -24,7 +24,8 @@ Im aktuellen Auftrag neu erstellt:
 
 1. `e95f856 feat(data-core): add passive identity candidate gate`
 2. `2d44fa1 docs(breeder-ai): record passive candidate review stop`
-3. Bericht-Commit: der nach `2d44fa1` folgende lokale Commit, der ausschließlich diese Datei aufnimmt
+3. `f4e60e0 docs(breeder-ai): add passive gate handoff report`
+4. abschließender `git diff --check`-Korrekturcommit; er enthält diese Ledger-Ergänzung und ist als aktueller HEAD aus `git log main..HEAD` abzulesen
 
 Bereits auf dem vorbereiteten Branch vorhanden und ebenfalls Teil von `main..HEAD`:
 

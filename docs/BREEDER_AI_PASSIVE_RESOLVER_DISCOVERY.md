@@ -1,6 +1,6 @@
 # Breeder AI – Passive Resolver Discovery Handoff
 
-**Stand:** 15. September 2026  
+**Stand:** 15. September 2026
 **Status:** offizieller Dedicated-Server-Discovery-Proof abgeschlossen; Implementierung des kanonischen Passive-Crosswalks noch offen
 
 ## Zweck
