@@ -5,11 +5,13 @@ on:
     branches:
       - main
       - "codex/**"
+      - "breeder/**"
       - "feature/**"
     paths:
       - "AGENTS.md"
       - "apps/breeder-ai/**"
       - "data/palworld-breeding/**"
+      - "data/palworld-core/**"
       - "docs/BREEDER_AI_*.md"
       - ".github/workflows/breeder-ai-ci.yml"
   pull_request:
@@ -19,6 +21,7 @@ on:
       - "AGENTS.md"
       - "apps/breeder-ai/**"
       - "data/palworld-breeding/**"
+      - "data/palworld-core/**"
       - "docs/BREEDER_AI_*.md"
       - ".github/workflows/breeder-ai-ci.yml"
 

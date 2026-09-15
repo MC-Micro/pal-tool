@@ -9,12 +9,16 @@ on:
       - "release/**"
     paths:
       - "tools/pal-data-core/**"
+      - "data/palworld-core/**"
+      - "data-passives.js"
       - ".github/workflows/pal-data-core-ci.yml"
   pull_request:
     branches:
       - main
     paths:
       - "tools/pal-data-core/**"
+      - "data/palworld-core/**"
+      - "data-passives.js"
       - ".github/workflows/pal-data-core-ci.yml"
 
 permissions:
