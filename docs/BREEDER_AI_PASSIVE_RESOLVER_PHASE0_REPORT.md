@@ -8,7 +8,7 @@
 
 **Review-Basis:** Branch-HEAD `e28b6148f47ec2179f63de8c104664be8f31df73`
 
-**Status:** Technischer Passive-Identity-/Resolver-Block lokal abgeschlossen; Review-Stop; kein Phase-1-Start
+**Status:** Technischer Passive-Identity-/Resolver-Block einschließlich der zwei begrenzten unabhängigen Review-Fixes lokal abgeschlossen; erneuter Review-Stop; kein Phase-1-Start
 
 ## 1. Ergebnis
 
@@ -27,6 +27,8 @@ Ergebnis in Kurzform:
 - die 1790 nicht-displaybaren technischen Entities bleiben außerhalb des Resolver-Reference-Space;
 - `data-passives.js` bleibt ein getrennter historischer 102er Produkt-Overlay und keine Identitätsquelle;
 - es wurde keine numerische `passive_id`, PWA-Nummer, Arrayposition, Rank-, Ordinal- oder Generator-ID eingeführt.
+- die schnellen Data-Core- und Breeder-AI-CI-Workflows reagieren jetzt vollständig auf kanonische Passive-Daten; der aktuelle `breeder/**`-Branch ist als Push-Quelle abgedeckt;
+- Unicode-kanonisch äquivalente deutsche Eingaben werden vor Transliteration und Match nach NFC vereinheitlicht.
 
 Es trat kein Klasse-C-Konflikt auf. Die bestehenden Sicherheits-, Persistenz-, Tenant-, Repository- und Data-Core-Invarianten mussten nicht gelockert werden.
 
@@ -132,7 +134,7 @@ Nicht autoritativ:
 - nicht-displaybare technische Entities werden nicht indexiert;
 - eine echte Namensmehrdeutigkeit bleibt `ambiguous`.
 
-Die Normalisierung behandelt Groß-/Kleinschreibung, Whitespace, Satzzeichen und deutsche Umlaute reproduzierbar. Die Kandidatensortierung verwendet einen ordinalen Vergleich und keine implizite Locale-Sortierung.
+Die Normalisierung vereinheitlicht Eingaben zuerst nach NFC, transliteriert danach explizit `ä/ö/ü/ß`, entfernt anschließend verbleibende kombinierende Zeichen und normalisiert Groß-/Kleinschreibung ohne Locale-Heuristik. Damit ergeben vorkomponierte und kanonisch äquivalente NFD-Eingaben denselben Resolverwert. Die Kandidatensortierung verwendet einen ordinalen Vergleich und keine implizite Locale-Sortierung.
 
 Die belegte Ambiguität bleibt exakt:
 
@@ -206,6 +208,7 @@ Breeder AI:
 - anderer Steam-Build bei identischem Reference Space ohne Scheinemigration;
 - Ablehnung unsortierter, duplizierter, case-kollidierender oder malformed Artefakte;
 - Konsistenz von Steam-Build und Artifact-Name an der Runtime-Schema-Grenze.
+- identische autoritative Auflösung von `Außergewöhnlich` in NFC- und NFD-Darstellung.
 
 ## 9. Vollständige Validierung
 
@@ -218,6 +221,7 @@ Alle Abschlussprüfungen liefen am 15. September 2026 lokal erfolgreich.
 | Data-Core-Katalog | PASS, Schema 1, 16 Tabellen, 8 Discoveries |
 | Syntax der drei Review-/Publisher-Skripte | PASS |
 | Data-Core-Node-Tests | PASS, 29/29 |
+| Workflow-Trigger-Semantik | PASS, `breeder/**`, Canonical-Path in Push/PR und Overlay-Regression abgedeckt |
 | offizielles lokales `breeding-review.json` | PASS, `ok: true`, 299 Species, 136/136 Specials |
 | Breeding API Frozen Install | PASS |
 | Breeding API Generate | PASS, 299 Pals, 44850 Paare |
@@ -232,7 +236,7 @@ Alle Abschlussprüfungen liefen am 15. September 2026 lokal erfolgreich.
 | Breeder AI Frozen Install | PASS |
 | Breeder AI Lint | PASS |
 | Breeder AI Typecheck | PASS |
-| Breeder AI vollständige Tests | PASS, 57/57 in 8 Dateien |
+| Breeder AI vollständige Tests | PASS, 58/58 in 8 Dateien |
 | Breeder AI Worker-Dry-Run | PASS, 503-only Spike-Bundle, kein Deployment |
 | Breeder AI Secret-Scan | PASS |
 | Root `node scripts/validate-data.mjs` | PASS, 115er Canonical Reference Space und 102er PWA-Overlay |
@@ -243,6 +247,7 @@ Der erste Wrangler-Aufruf innerhalb der Dateisandbox konnte außerhalb des Works
 ## 10. Exakt geänderte Dateien dieses Abschlussblocks
 
 - `.github/workflows/pal-data-core-ci.yml`
+- `.github/workflows/breeder-ai-ci.yml`
 - `README.md`
 - `apps/breeder-ai/README.md`
 - `apps/breeder-ai/src/domain/passive-reference.ts`
@@ -271,7 +276,10 @@ Der erste Wrangler-Aufruf innerhalb der Dateisandbox konnte außerhalb des Works
 - `ae07579 feat(data-core): gate passive reference publication`
 - `15b5273 feat(data-core): publish canonical passive references`
 - `c90e0fb feat(breeder-ai): add passive reference resolver`
-- ein abschließender fokussierter Dokumentationscommit aktualisiert Roadmap, technische Wahrheitsquellen und diesen Bericht.
+- `48c99a2 docs(breeder-ai): close passive resolver phase0 gate`
+- `5da315c fix(ci): cover passive reference changes`
+- `77b2b9b fix(breeder-ai): normalize passive mentions canonically`
+- ein abschließender Dokumentationscommit hält diese Review-Fixes und die neuen Nachweise fest.
 
 Es erfolgte kein Push.
 
@@ -282,11 +290,11 @@ Branch: breeder/passive-resolver-discovery
 Upstream: origin/breeder/passive-resolver-discovery
 Upstream-Stand: e28b6148f47ec2179f63de8c104664be8f31df73
 main = origin/main: b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3
-Lokaler Branch: 4 Commits vor seinem Upstream
+Lokaler Branch: 7 Commits vor seinem Upstream
 Working Tree: clean
 ```
 
-Der vollständige Branch-Diff gegen `main` ist zusätzlich lokal und ausgeschlossen unter `LOCAL_ARTIFACTS/diffs/passive-reference-resolver-phase0-main-head.diff` gespeichert. Maßgeblich für den jeweils aktuellen Commitstand bleiben `git status` und `git log main..HEAD`.
+Der vollständige Branch-Diff gegen `main` ist zusätzlich lokal und ausgeschlossen unter `LOCAL_ARTIFACTS/diffs/passive-reference-resolver-phase0-main-head.diff` gespeichert. Der begrenzte Nachreview-Diff gegen den vorherigen Review-Stand `48c99a2` liegt unter `LOCAL_ARTIFACTS/diffs/passive-reference-resolver-review-fix-48c99a2-head.diff`. Maßgeblich für den jeweils aktuellen Commitstand bleiben `git status` und `git log main..HEAD`.
 
 ## 12. Verbleibende offene Phase-0-Gates
 
@@ -325,3 +333,16 @@ Der Auftrag endet an diesem Review-Stop. Der nächste sichere Schritt ist eine u
 - Abgrenzung des Identity-Reference-Space von noch offener Passive-Wirkungssemantik.
 
 Push, PR, Merge, Deployment, Cloud-/Secret-Änderungen oder Phase 1 benötigen jeweils eine neue ausdrückliche Freigabe.
+
+## 15. Begrenzte Fixes aus dem unabhängigen Review
+
+Der unabhängige Review akzeptierte die grundsätzliche Architektur und meldete zwei lokale Push-Blocker:
+
+1. unvollständige Workflow-Trigger;
+2. unterschiedliche Normalformen für kanonisch äquivalente Unicode-Eingaben.
+
+Die Workflowkorrektur ergänzt `data/palworld-core/**` in beiden Ereignisarten beider schnellen CI-Workflows. Data-Core-CI berücksichtigt zusätzlich `data-passives.js`, weil der Publication-Regressionstest diesen Overlay tatsächlich liest. Breeder-AI-CI akzeptiert nun `breeder/**` als Push-Branch. Es wurde kein Deployment-Workflow verändert und keine Voll-Probe an reine Repository-Datenänderungen gekoppelt.
+
+Die Resolverkorrektur führt NFC vor der vorhandenen deutschen Transliteration aus und ersetzt die localegebundene Kleinschreibung durch deterministisches `toLowerCase()`. Exact-/Fuzzy-Grenzen, Aliasmenge und Ambiguitätsverhalten bleiben unverändert. Ein neuer NFD-Regressionstest beweist für `Außergewöhnlich` dieselbe autoritative `Rare`-Auflösung wie für die vorkomponierte Form.
+
+Die nicht blockierenden Review-Hinweise zu ZIP-Digest-Prüfung und Runtime-Neuberechnung des Reference-Space-Hashes wurden bewusst nicht in einen Downloader-, Workspace- oder Worker-Crypto-Umbau ausgeweitet.
