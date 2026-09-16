@@ -101,7 +101,8 @@ Repository-wide:
 For `services/breeding-api/` specifically:
 
 - `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are GitHub Actions secrets used only for deployment.
-- `BREEDING_READ_TOKEN` is no longer a runtime binding. Until the obsolete deployed secret is removed after a separately authorized deploy and live-MCP smoke test, deployments must preserve existing Worker variables with `--keep-vars`; repository code must never read, replace, clear or synthesize the secret.
+- `BREEDING_READ_TOKEN` is no longer a runtime binding and has been removed from the deployed Worker. Repository code and deployment workflows must never read, recreate, replace, clear or synthesize it.
+- The production deploy currently retains `--keep-vars` conservatively to avoid unreviewed changes to dashboard-managed Worker variables; it is not a `BREEDING_READ_TOKEN` dependency. Remove it only after a read-only remote binding audit proves that no preserved variables are required.
 - Every external path other than exact `/mcp` must produce a neutral HTTP 404 response.
 - Do not expose a public index, directory listing, login form, or interactive authentication flow from the public Breeding API service.
 - The deliberate anonymous `/mcp` endpoint may expose only the documented non-secret read-only breeding tools.

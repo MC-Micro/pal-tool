@@ -21,10 +21,10 @@ Diese Datei soll eine neue technische Chat- oder Codex-Sitzung ohne Zugriff auf 
 | Repository | `MC-Micro/pal-tool` |
 | Standardbranch | `main` |
 | Provenienz des Repository-Refactors | Der Cleanup vom 16.09.2026 begann bei HEAD `e666a95d07ee7090b813d1306bd4b70b4dcd5cd6` |
-| Refactor-Commit | In dieser Übergabe ist bewusst kein Cleanup-Commit-SHA dokumentiert |
+| Gemergter Legacy-/Surface-Cleanup | PR #13, `main`-Commit `ae4eed7cb07ad48ec948c0808562e8f2cdca39f6` (Squash-Merge am 17.09.2026) |
 | Hinweis zu Branch und Commit | Vor technischer Weiterarbeit den aktuellen `main`-Commit, den aktiven Branch und offene Pull Requests dynamisch über GitHub bestimmen |
 | Worker | `palworld-breeding-api` |
-| Zuletzt dokumentierter erfolgreicher ChatGPT-Zugriff | 13.07.2026 über die verbundene App `Breeder`; historischer Integrationstest, keine dauerhafte Erreichbarkeitsgarantie |
+| Zuletzt dokumentierter Live-MCP-Smoke | 17.09.2026 nach produktivem Cleanup-Deploy und erneut nach Entfernung des obsoleten Worker-Secrets; beide erfolgreich |
 | Verbundener ChatGPT-App-/Pluginname | `Breeder` |
 | Öffentlicher MCP | anonymer Streamable-HTTP-Endpunkt `/mcp` |
 | Externe HTTP-Oberfläche | ausschließlich anonymer `/mcp`; alle anderen Pfade neutral 404 |
@@ -51,11 +51,11 @@ Der Repository-Refactor begann bei Start-HEAD `e666a95d07ee7090b813d1306bd4b70b4
 - der Worker exponiert extern nur noch exaktes `/mcp`; alle anderen Pfade liefern neutral 404;
 - `routeApiRequest(...)` bleibt die gemeinsame interne Resolverlogik für die exakt fünf MCP-Tools;
 - die frühere Path-Auth-Schicht und ihr Runtime-Env-Binding sind entfernt;
-- der Repository-Refactor selbst ändert weder Cloudflare-Deployment und -Secrets noch die GitHub-Pages-Konfiguration.
+- der gemergte Repository-Refactor wurde am 17.09.2026 operativ abgeschlossen; GitHub Pages ist deaktiviert, der Worker wurde aus dem gemergten `main` deployed, der Live-MCP geprüft und das obsolete Worker-Secret entfernt.
 
 Für den Refactor dokumentierte Validierung: kanonischer Validator PASS; Legacy-PWA-Validator PASS; unveränderte Blobs aller neun verschobenen PWA-Dateien bestätigt; Generierung ohne Artifact-Diff; Lint PASS; TypeScript PASS; 61/61 Breeding-Tests PASS; Pal-Data-Core-Tests 28/28 PASS; strukturelle und Release-Validierung PASS; Determinismus PASS; Secretscan PASS. Die Frozen-Installation und der Wrangler-Dry-Run konnten in der eingeschränkten Sandbox nicht vollständig reproduziert werden: Registryzugriff war gesperrt und der native Esbuild-Unterprozess durfte den Worktreepfad nicht lesen. Der Worker-Dry-Run muss deshalb in einer normalen CI-/Entwicklungsumgebung erneut ausgeführt werden.
 
-Ein späterer Deploy, der Live-MCP-Smoke und die anschließende Entfernung des obsoleten Read-Token-Secrets bleiben getrennt freigabepflichtige operative Schritte. Vor einem Deploy ist die vollständige CI einschließlich Worker-Build auszuführen. Eine GitHub-Pages-Deaktivierung oder erneute Legacy-PWA-Veröffentlichung ist eine separate Entscheidung.
+Operativer Abschluss am 17.09.2026: PR #13 wurde als `ae4eed7cb07ad48ec948c0808562e8f2cdca39f6` nach `main` gemergt; die vollständigen PR- und Post-Merge-CIs waren grün. GitHub Pages für die frühere Root-PWA wurde deaktiviert. Der manuelle Deploy-Run `35158803340` führte die komplette Release-Kette und den Cloudflare-Worker-Deploy erfolgreich aus. Der Live-MCP-Smoke bestätigte exakt fünf Tools, `breeding_status = valid` und neutrale 404s außerhalb von `/mcp`. `BREEDING_READ_TOKEN` wurde danach im Einmal-Run `35159347130` nach vorheriger Existenzprüfung gelöscht und anschließend als abwesend bestätigt; ein zweiter Live-Smoke blieb grün. Der temporäre Ops-Branch wurde danach gelöscht. `--keep-vars` bleibt im regulären Produktionsdeploy konservativ erhalten, bis ein separater read-only Remote-Binding-Audit belegt, dass keine dashboardverwalteten Variablen bewahrt werden müssen.
 
 ## Was das Repository enthält
 
@@ -75,7 +75,7 @@ Die historische PWA liegt eingefroren unter `apps/passives-pwa/` und bleibt unab
 - deutsche und englische Namen und Effekte
 - eigener kleiner App-Validator unter `apps/passives-pwa/scripts/validate.mjs`
 
-Die PWA ist **legacy / frozen / paused**. Ihr 102er Overlay wird nicht fachlich aktualisiert. Der kanonische 115er Passive-Referenzraum und seine Approval bleiben getrennt repositoryweit validiert. Die physische Verschiebung der PWA ändert die GitHub-Pages-Konfiguration nicht; jede Reaktivierung muss insbesondere den alten Cache-Namespace `palworld-passives-pwa-v1.0.0-meta1` und installierte Clients migrieren.
+Die PWA ist **legacy / frozen / paused**. Ihr 102er Overlay wird nicht fachlich aktualisiert. Der kanonische 115er Passive-Referenzraum und seine Approval bleiben getrennt repositoryweit validiert. GitHub Pages für die frühere Root-PWA ist seit dem 17.09.2026 deaktiviert; jede Reaktivierung muss insbesondere den alten Cache-Namespace `palworld-passives-pwa-v1.0.0-meta1` und installierte Clients migrieren.
 
 ### 2. Kanonische Zuchtreferenz
 
@@ -174,7 +174,7 @@ pnpm run scan:secrets
 
 `Breeding API CI` prüft committed Generated-Artefakte, Lint, TypeScript, MCP-/Surface-Tests, Worker-Dry-Run, strukturelle und Release-Validierung, Determinismus und Secretscan. Die eingefrorene Legacy-PWA ist davon entkoppelt und besitzt eine kleine eigene, pfadgescopte Validierung.
 
-Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production` geschützt und verwendet `wrangler deploy --keep-vars`. Der Repository-Refactor selbst führt kein Deployment aus. Ein historischer, nun ungenutzter Read-Token darf erst nach einem später separat freigegebenen Deploy plus Live-MCP-Smoke extern entfernt werden.
+Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production` geschützt und verwendet `wrangler deploy --keep-vars`. Der Legacy-Surface-Cleanup wurde am 17.09.2026 produktiv aus `main` deployed und live geprüft; `BREEDING_READ_TOKEN` ist aus dem Worker entfernt und darf nicht wieder eingeführt werden. `--keep-vars` bleibt ausschließlich als konservativer Schutz nicht abschließend inventarisierter dashboardverwalteter Worker-Variablen bestehen und ist keine Token-Abhängigkeit.
 
 ## Patchregel
 
