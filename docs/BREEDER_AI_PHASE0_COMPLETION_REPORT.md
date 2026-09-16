@@ -2,9 +2,11 @@
 
 **Berichtsstand:** 15. September 2026
 
-**Ergebnis:** Der lokale Phase-0-Auftrag einschließlich des begrenzten Review-Fix wurde auf `codex/breeder-ai-phase0-spikes` bis zum vorgesehenen Review-Stop ausgeführt. Die lokalen Auth-/Identity-, D1-/Concurrency-, Species-Resolver- und Provider-Proofs sind grün. Der Passive-Resolver-Proof und die externen Phase-0-Gates sind ausdrücklich noch offen.
+**Ergebnis:** Der ursprüngliche lokale Phase-0-Auftrag einschließlich des begrenzten Review-Fix wurde auf `codex/breeder-ai-phase0-spikes` bis zum vorgesehenen Review-Stop ausgeführt. Im nachfolgenden lokalen Branch `breeder/passive-resolver-discovery` wurde zusätzlich der Passive-Identity-/Resolver-Proof anhand des offiziell bestätigten Schema-2-Artefakts abgeschlossen. Die externen Phase-0-Gates bleiben ausdrücklich offen.
 
 **Nicht erfolgt:** Push, Pull Request, Merge, Deployment, produktive Cloud-Ressource, Secret-Änderung, Remote-D1-Erstellung, Access-Policy-Änderung oder Änderung der öffentlichen Breeding API beziehungsweise ihres MCP.
+
+**Nachtrag Passive-Folgeblock:** PR #10 wurde nach diesem ursprünglichen lokalen Bericht als `b3e4daabeb4a6bbc3f132393d0898b0b3e45cea3` auf `main` gemergt. Der Folgeblock auf `breeder/passive-resolver-discovery` ist separat und detailliert in `docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md` dokumentiert. Das vollständige offizielle Schema-2-Artefakt aus Run `34975314764` auf `e28b6148f47ec2179f63de8c104664be8f31df73` bestätigte den 115er Reference Space. Darauf basieren die lokale kanonische Publikation, der namespacete `sourceRow`-Adapter-Key und der datasetgebundene `PassiveResolver`. Dieser Nachtrag ändert nicht die historischen Aussagen darüber, welche Aktionen während des ursprünglichen Spike-Auftrags ausgeführt wurden.
 
 ---
 
@@ -134,7 +136,7 @@ Die unabhängigen Review-Funde wurden ohne Architekturaufweitung bearbeitet:
 | --- | --- | --- |
 | Species-State nicht an den Referenzraum gebunden | `ADD_BULK_COPIES` und jeder gespeicherte Bulk-Eintrag tragen nun Adapter-Key **und** Dataset-Fingerprint; fremde eingehende oder bereits gespeicherte Dataset-Stände ergeben `SpeciesMigrationRequiredError` | positiver Persistenz-/Retry-Test sowie getrennte Tests für fremde Action- und gespeicherte Referenz |
 | nur partielle Runtime-Validierung | strikte Zod-Schemas für Envelope und discriminated Action Union laufen vor Payload-Hash, Receipt-Lookup und jeder Mutation | unbekannter Action-Typ, fehlendes Pflichtfeld und falscher Datentyp werden ohne Revision, Receipt oder Mutation Log abgelehnt |
-| Passive-Anforderung unklar erfüllt dargestellt | Repository-Wahrheit wurde geprüft; kein Passive-Resolver und keine `passive_id` wurden erfunden; Roadmap und Bericht markieren den Proof ausdrücklich offen | PWA-Overlay besitzt keine dauerhafte Domain-ID; Pal Data Core ist für Passiven noch `inventory_only` |
+| Passive-Anforderung im ursprünglichen Review unklar erfüllt dargestellt | Damalige Repository-Wahrheit wurde geprüft; vor neuer offizieller Evidenz wurden weder Passive-Resolver noch `passive_id` erfunden und der Proof blieb ausdrücklich offen | Historische Begründung; der spätere offiziell belegte Identity-/Resolver-Abschluss ist in Abschnitt 6.4 und im Folgebericht dokumentiert |
 | Auth-Vertrauensgrenze zu leicht umgehbar dargestellt | frei aufrufbare Branding-Funktion entfernt; Branding erfolgt zentral erst nach erfolgreichem `AuthVerifier`; Application-Token-Typ und Rebind-Optionen werden runtime-validiert | Signatur-/Claimtests einschließlich `type = app`, Negativtest für `type = org`, ungültige Verifier-Claims und Rebind-Optionen |
 | kleinere Robustheitslücken | kanonisches JSON nutzt explizite Code-Unit-Ordnung; Note-Maps sind prototype-frei; Manifest-Fingerprint wird nach kanonischer Source-Rolle ausgewählt | eigene Determinismus-, `__proto__`-Roundtrip- und Manifest-Fail-closed-Tests |
 
@@ -389,18 +391,20 @@ Nicht als dauerhafte Species-ID verwendet:
 
 Ein fremder Dataset-Fingerprint verlangt eine explizite Migration. Ein unbekannter Key wird nicht per Stringähnlichkeit migriert.
 
-### 6.4 Bewusste Passive-Grenze
+### 6.4 Passive-Identity- und Resolver-Grenze
 
-Für Passiven wurde kein vermeintlich stabiler Key erfunden. Der Providervertrag darf Passive-Mentions enthalten, aber das beweist nur das strukturierte Mention-Format und **keine** Resolverfähigkeit.
+Im ursprünglichen Spike wurde bewusst kein vermeintlich stabiler Passive-Key erfunden. Der Providervertrag durfte Passive-Mentions enthalten, bewies aber nur das strukturierte Mention-Format und keine Resolverfähigkeit.
 
-Auch ein belastbarer nichtpersistenter Passive-Mention/Candidate-Proof konnte aus der aktuell eingecheckten Repository-Wahrheit nicht seriös abgeleitet werden:
+Im ursprünglichen Spike konnte ein belastbarer nichtpersistenter Passive-Mention/Candidate-Proof aus der damals eingecheckten Repository-Wahrheit nicht seriös abgeleitet werden:
 
 - `data-passives.js` gehört zur historischen Passives PWA und ist ein redaktioneller Produkt-/Darstellungs-Overlay;
 - sein Feld `nr` ist keine dauerhafte Domain-Identität und darf nicht zu `passive_id` umetikettiert werden;
-- Pal Data Core führt `DT_PassiveSkill_Main` derzeit als `inventory_only`;
+- Pal Data Core führte `DT_PassiveSkill_Main` zu diesem Zeitpunkt als `inventory_only`;
 - ein freigegebenes kanonisches Passive-Domain-Artefakt mit belastbarem Key-, DE-/EN-Lokalisierungs- und Provenienzvertrag ist noch nicht vorhanden.
 
-Die Phase-0-Anforderung „Passiven“ aus Roadmap 3.4 bleibt daher ausdrücklich offen. Es gibt weder autoritative Passive-Auflösung noch Passive-Persistenz noch einen als erfüllt geltenden Candidate-Resolver-Proof. Der Contract wurde nicht gelockert.
+Diese damalige Grenze wurde nicht gelockert, sondern durch neue offizielle Evidenz erfüllt: Run `34975314764` bestätigte Candidate-Schema 2, 115 vollständig lokalisierte `SortDisplayable`-Entities, einen eindeutigen 102er Overlay-Crosswalk plus 13 weitere offizielle Entities und genau eine deutsche Ambiguität. Die kanonische Publikation verwendet `{ namespace: "palworld.passive.source_row", value: sourceRow }` und bindet persistierte Referenzen an den Reference-Space-SHA-256. Andere Reference-Space-Hashes ergeben `migration_required`; Namen oder Fuzzy-Kandidaten werden nie automatisch migriert.
+
+Damit ist die Identity-/Resolver-Anforderung aus Roadmap 3.4 lokal erfüllt. Nicht bewiesen und nicht behauptet sind Passive-Wirkungs-, Vererbungs-, Züchtbarkeits- oder Balance-Semantik. Der historische PWA-Overlay und sein Feld `nr` bleiben ausdrücklich außerhalb der Domain-Identität.
 
 ---
 
@@ -613,7 +617,7 @@ Die Workerd-/Miniflare-Testwahl folgt dem offiziellen Cloudflare-Testweg:
 | Tenant | User-/Play-Space-Negativtests | AuthContext aus Testfixtures | komplette Live-Request-Kette |
 | D1 | reale lokale D1-Migration, Batch, Race, Rollback | lokales Miniflare-Storage | Remote-D1, Backup, Restore |
 | Species-Resolver | reale kanonische Repository-Daten, persistierte Dataset-Bindung, Migrationserkennung | Fuzzy-Threshold als Spike-Detail | künftige Patch-/Dataset-Migration |
-| Passive-Resolver | kein erfüllter Proof | Provider-Mention-Schema ohne Resolversemantik | kanonisches Domain-Artefakt, Candidate-Crosswalk und dauerhafte Identität |
+| Passive-Resolver | offizieller 115er Reference Space, kanonische Publikation, datasetgebundener Key, Exact-/Ambiguous-/Fuzzy-Candidate-Verhalten | Fuzzy-Threshold als Spike-Detail | künftige Reference-Space-Migration; Wirkungs-/Vererbungsdomäne separat |
 | Provider | Schemas, Timeouts, Fehlergrenzen | Reasoning-/Speech-Doubles | Anbieter, Modelle, Limits, Kosten, Retention |
 | Worker | 503-only Bundle und Dry Run | keine Produkt-API | Hosting-/Routingtopologie |
 
@@ -663,7 +667,7 @@ Es trat kein Klasse-C-Konflikt auf. Keine bestehende Sicherheits-, Identity-, Te
 8. **Miniflare-Abhängigkeit:** Das aktuelle offizielle Vitest-Plugin bringt transitiv einen Alpha-Stand von Miniflare mit; Lockfile und CI müssen Updates kontrolliert prüfen.
 9. **Provider:** Ohne reale Anbieterprüfung gibt es keine belastbare Aussage zu Qualität, Limits, Kosten oder Datenschutz.
 10. **Canonical Freshness:** Der Resolver ist exakt an das Manifest gebunden; ein neuer Palworld-Patch verlangt den vorgeschriebenen Recheck.
-11. **Passive-Domain:** Der Roadmap-Resolver-Proof ist mangels freigegebenem kanonischem Passive-Domain-Artefakt noch nicht erfüllt; der PWA-Overlay darf diese Lücke nicht verdecken.
+11. **Passive-Domain:** Der Identity-/Resolver-Proof ist erfüllt; Wirkungs-, Vererbungs- und Züchtbarkeitssemantik bleibt offen. Der PWA-Overlay darf diese getrennte Lücke nicht verdecken.
 
 ---
 
@@ -676,7 +680,7 @@ Es trat kein Klasse-C-Konflikt auf. Keine bestehende Sicherheits-, Identity-, Te
 - Remote-D1-Migrations-, Backup-, Restore- und Rollbackweg;
 - endgültige Inventory-Aggregate;
 - feinere Revisionsgrenzen nur bei belegtem Bedarf;
-- belastbarer nichtpersistenter Passive-Candidate-Proof und danach eine Passive-Domain mit belegten stabilen IDs;
+- fachliche Passive-Wirkungs-/Vererbungsdomäne auf Basis des belegten, datasetgebundenen Identity-Reference-Space;
 - reale Provideradapter;
 - Coverage-Schwellen;
 - vollständige API-/UI-/PWA-Struktur;
@@ -751,9 +755,10 @@ Die bestehende Architektur ist für den nächsten kontrollierten Schritt tragfä
 - die Tenant-Grenze ist in Schema, Abfragen und Tests sichtbar;
 - die Commit-/Retry-Invarianten sind mit echter lokaler D1-Technik darstellbar;
 - die kanonische Species-Identität benötigt keine neue erfundene Domain-ID;
+- die kanonische Passive-Identität benötigt ebenfalls keine numerische oder overlaybasierte Domain-ID;
 - Provider lassen sich hinter engen, nichtautoritativen Verträgen halten.
 
-Es besteht kein technischer Grund, die Kernarchitektur vor dem nächsten Proof grundsätzlich zu ersetzen. Das bedeutet nicht, dass Phase 1 bereits freigegeben ist: Der Passive-Resolver-Proof, die externen Auth-/D1-/Providerannahmen und die finale Betriebstopologie bleiben Gates.
+Es besteht kein technischer Grund, die Kernarchitektur vor dem nächsten Proof grundsätzlich zu ersetzen. Das bedeutet nicht, dass Phase 1 bereits freigegeben ist: Die externen Auth-/D1-/Providerannahmen und die finale Betriebstopologie bleiben Gates.
 
 ---
 
@@ -763,7 +768,7 @@ Phase 1 erst nach einem expliziten Review dieses Spikes und nach einer neuen Fre
 
 Empfohlene Reihenfolge:
 
-1. belastbaren Passive-Domain-/Candidate-Input und dessen Crosswalk-Grenze entscheiden;
+1. den abgeschlossenen Passive-Identity-/Resolver-Diff unabhängig reviewen und Wirkungssemantik getrennt lassen;
 2. nichtproduktiven Live-Auth-Proof exakt eingrenzen und freigeben;
 3. echte Access-JWT-/JWKS-Kette inklusive Rotation und Fail-closed-Verhalten prüfen;
 4. reale Multi-Device- und Rebind-Fälle prüfen;

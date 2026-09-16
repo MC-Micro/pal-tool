@@ -129,6 +129,8 @@ Der Resolver validiert und normalisiert gegen kanonische Daten:
 
 Fuzzy Matching darf Kandidaten liefern, aber bei echter Mehrdeutigkeit keine destruktive oder irreversible Mutation auslösen.
 
+Für Passiven ist der Phase-0-Identity-Reference-Space inzwischen konkretisiert: `{ namespace: "palworld.passive.source_row", value: sourceRow }`, gebunden an Schema 1 und den kanonischen Reference-Space-SHA-256. Der veröffentlichte Raum umfasst ausschließlich 115 offiziell belegte `SortDisplayable`-Entities. Exakte Einzelsprachen-Ambiguitäten bleiben Ambiguitäten, Fuzzy-Treffer bleiben Kandidaten und ein fremder Reference-Space-Hash verlangt eine explizite Migration. Steam-Build und technischer Candidate-Hash sind Provenienz, nicht zusätzliche persistierte Identität. Wirkungs-, Vererbungs- und Züchtbarkeitssemantik ist damit nicht festgelegt.
+
 ### 3.4 Breeder und Data Core
 
 Sie bleiben die fachliche Wahrheit für bekannte strukturierte Palworld-Daten und Zuchtbeziehungen.
@@ -368,7 +370,7 @@ feedback_id
 signal_id
 ```
 
-Dazu kommen kanonische Palworld-Domain-IDs wie `species_id`, `passive_id` usw.
+Dazu kommen kanonische Palworld-Domain-Referenzen. Für Species und Passiven sind dies derzeit namespacete Adapter-Keys plus Dataset-/Reference-Space-Bindung; daraus darf keine nackte numerische `species_id` oder `passive_id` abgeleitet werden.
 
 ### 7.1 Domain-ID vs. konkrete Instanz
 

@@ -39,6 +39,7 @@ internal static class Program
                 "probe" => RunProbe(options),
                 "inventory" => RunInventory(options),
                 "snapshot" => RunSnapshot(options),
+                "passive-candidate" => RunPassiveCandidate(options),
                 _ => throw new ArgumentException($"Unknown command '{args[0]}'."),
             };
         }
@@ -177,6 +178,41 @@ internal static class Program
         return 0;
     }
 
+    private static int RunPassiveCandidate(IReadOnlyDictionary<string, string> options)
+    {
+        var pakDirectory = Required(options, "pak-dir");
+        var output = Required(options, "output");
+        var summaryOutput = Required(options, "summary");
+        var buildId = Required(options, "build-id");
+        var catalog = TableCatalog.Load(Required(options, "catalog"));
+        var mappings = options.GetValueOrDefault("mappings");
+
+        using var workspace = new PakWorkspace(pakDirectory, mappings);
+        var candidate = new PassiveCandidateBuilder(workspace, catalog).Build(buildId);
+        var json = JsonSerializer.Serialize(candidate, CompactJsonOptions);
+        var bytes = Encoding.UTF8.GetBytes(json);
+        var hash = Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
+
+        var fullOutput = Path.GetFullPath(output);
+        Directory.CreateDirectory(Path.GetDirectoryName(fullOutput)!);
+        File.WriteAllBytes(fullOutput, bytes);
+
+        var summary = new PassiveCandidateSummary(
+            candidate.SchemaVersion,
+            candidate.SteamBuildId,
+            candidate.PassiveTables.Count,
+            candidate.PassiveTables.Sum(table => table.RowCount),
+            candidate.PassiveNamesEn.Sum(table => table.RowCount),
+            candidate.PassiveNamesDe.Sum(table => table.RowCount),
+            hash);
+        WriteJson(summaryOutput, summary, PrettyJsonOptions);
+
+        Console.WriteLine($"Passive technical candidate build={buildId} sha256={hash}");
+        Console.WriteLine($"Passive source tables={summary.PassiveTableCount} rows={summary.PassiveRows}");
+        Console.WriteLine($"Passive names EN={summary.PassiveNameRowsEn} DE={summary.PassiveNameRowsDe}");
+        return 0;
+    }
+
     private static void WriteJson<T>(string output, T value, JsonSerializerOptions options)
     {
         var fullOutput = Path.GetFullPath(output);
@@ -211,5 +247,6 @@ internal static class Program
         probe --pak-dir PATH --catalog FILE --output FILE --build-id ID [--mappings FILE]
         inventory --pak-dir PATH --catalog FILE --output FILE --build-id ID [--mappings FILE]
         snapshot --pak-dir PATH --catalog FILE --output FILE --summary FILE --build-id ID [--mappings FILE]
+        passive-candidate --pak-dir PATH --catalog FILE --output FILE --summary FILE --build-id ID [--mappings FILE]
         """);
 }

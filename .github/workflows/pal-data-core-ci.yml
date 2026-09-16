@@ -9,12 +9,16 @@ on:
       - "release/**"
     paths:
       - "tools/pal-data-core/**"
+      - "data/palworld-core/**"
+      - "data-passives.js"
       - ".github/workflows/pal-data-core-ci.yml"
   pull_request:
     branches:
       - main
     paths:
       - "tools/pal-data-core/**"
+      - "data/palworld-core/**"
+      - "data-passives.js"
       - ".github/workflows/pal-data-core-ci.yml"
 
 permissions:
@@ -61,4 +65,10 @@ jobs:
           --catalog tools/pal-data-core/catalog.v1.json
 
       - name: Check review script syntax
-        run: node --check tools/pal-data-core/scripts/review-breeding-candidate.mjs
+        run: |
+          node --check tools/pal-data-core/scripts/review-breeding-candidate.mjs
+          node --check tools/pal-data-core/scripts/review-passive-candidate.mjs
+          node --check tools/pal-data-core/scripts/publish-passive-reference.mjs
+
+      - name: Test passive candidate review
+        run: node --test tools/pal-data-core/tests/*.test.mjs

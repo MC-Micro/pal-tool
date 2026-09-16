@@ -15,7 +15,7 @@ Das Repository ist historisch aus der Palworld Passives PWA entstanden, hat sich
 
 Die bestehende Breeding Runtime verwendet weiterhin ausschließlich vorab erzeugte Repository-Artefakte und ruft bei einem normalen Request weder GitHub noch externe Zuchtrechner auf.
 
-Für Breeder AI existiert nun ausschließlich ein lokaler Phase-0-Proof mit Auth-/Identity-, D1-/Concurrency-, Resolver- und Providergrenzen. Er stellt keine produktive Runtime oder API bereit; es wurden keine Cloud-Datenbank, Access-Policy, MCP-Funktion oder Deploymentfolge angelegt. Details und offene Live-Proofs stehen in [`apps/breeder-ai/README.md`](apps/breeder-ai/README.md).
+Für Breeder AI existiert nun ausschließlich ein lokaler Phase-0-Proof mit Auth-/Identity-, D1-/Concurrency-, Species-/Passive-Resolver- und Providergrenzen. Der Passive-Proof verwendet den kanonisch veröffentlichten 115er Current-Build-Reference-Space; Wirkungs- und Vererbungssemantik bleiben davon getrennt offen. Der Spike stellt keine produktive Runtime oder API bereit; es wurden keine Cloud-Datenbank, Access-Policy, MCP-Funktion oder Deploymentfolge angelegt. Details und offene Live-Proofs stehen in [`apps/breeder-ai/README.md`](apps/breeder-ai/README.md).
 
 ## Repository-Grenzen
 
@@ -50,6 +50,7 @@ UI-spezifische Bewertungen, Erklärungen, Prioritäten oder redaktionelle Tags d
 - **Aktuelle Breeder-AI-Entscheidungswahrheit:** [`docs/BREEDER_AI_CURRENT_BLUEPRINT.md`](docs/BREEDER_AI_CURRENT_BLUEPRINT.md)
 - **Breeder-AI-Implementierungsfahrplan/Handoff:** [`docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`](docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md)
 - **Breeder-AI-Phase-0-Abschlussbericht:** [`docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`](docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md)
+- **Passive-Reference-/Resolver-Abschlussbericht:** [`docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md`](docs/BREEDER_AI_PASSIVE_RESOLVER_PHASE0_REPORT.md)
 - **Breeder-AI-Capability-Index:** [`docs/BREEDER_AI_CAPABILITY_INDEX.md`](docs/BREEDER_AI_CAPABILITY_INDEX.md)
 - Multi-User-/Sprach-/PWA-Detailarchitektur: [`docs/BREEDER_AI_PWA_ARCHITECTURE.md`](docs/BREEDER_AI_PWA_ARCHITECTURE.md)
 - Fachliche Planner-Zielarchitektur: [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)

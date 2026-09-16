@@ -1,6 +1,6 @@
 # Pal Data Core – Dynamic Roadmap
 
-**Stand:** 30. August 2026  
+**Stand:** 15. September 2026
 **Ziel:** Breeder zuerst produktionsreif abschließen; weitere Core-Domänen danach modular ausbauen, ohne die aktuelle PAK-Acquisition oder den Technical Snapshot neu zu erfinden.
 
 ## Statuslegende
@@ -8,6 +8,7 @@
 - `done` – fachlich revalidiert, getestet und für den aktuellen Build freigegeben.
 - `extracted_unmodeled` – technische Rohdaten werden bereits im aktuellen Snapshot erfasst, aber noch nicht als kanonische Fachdomäne veröffentlicht.
 - `inventory_only` – Tabelle/Felder werden strukturell inventarisiert; Semantik ist noch nicht freigegeben.
+- `candidate_pipeline` – typisierte, deterministische Candidate-/Reviewlogik ist implementiert; Current-Build-Artefakt und fachliche Freigabe fehlen noch.
 - `planned` – klarer nächster Arbeitsblock.
 - `blocked` – benötigt zusätzliche Evidenz, Clientdaten oder eine separate Sicherheits-/Produktentscheidung.
 
@@ -126,11 +127,34 @@ Offen:
 
 ## P6 – Passiven
 
-**Status:** `inventory_only` / Tabelle aktuell direkt lesbar.
+**Status:** Identity-/Lokalisierungs-Reference-Space kanonisch veröffentlicht; Wirkungsdomäne weiterhin `inventory_only`.
 
-Aktueller Build:
+Offiziell bestätigter Schema-2-Stand (Build `25247047`, Run `34975314764`, Commit `e28b6148f47ec2179f63de8c104664be8f31df73`, Artifact ID `10399160981`):
 
 - `DT_PassiveSkill_Main`: 1905 Zeilen.
+- `DT_PassiveSkill_Main_Common`: vorhanden und parsebar;
+- `DT_SkillNameText_Common` für EN/DE: vorhanden und parsebar.
+- 3810 technische Source Rows aus Main/Common, konfliktfrei zu 1905 Entities coalesced;
+- 115 `SortDisplayable`, 1790 `SortNotDisplayable`;
+- `OverrideNameTextId = None` für alle 1905 Entities;
+- offizielle Default-Namenskonvention `PASSIVE_<sourceRow>` für 115/115 displaybare Entities in EN und DE;
+- historischer Overlay nach korrigierter Regel 102/102 exakt bilingual zuordenbar, 13 aktuelle displaybare Entities zusätzlich;
+- keine EN-Ambiguität, eine echte DE-Ambiguität: `Erleuchteter` für `ElementBoost_Normal_2_PAL` und `WorldTree_Sanity`;
+- Inventory-Typ für `Rank`: `IntProperty`.
+
+Lokal implementiert:
+
+- getrennte typisierte Passive-Candidate-Extraktion für Main/Common und EN/DE-Namen;
+- deterministischer Doppelbuild im offiziellen Probe-Workflow;
+- fail-closed Main/Common- und Lokalisierungskonfliktbericht;
+- exakter bilingualer Cross-Check des historischen 102-Einträge-Overlays ohne Fuzzy- oder Nummernidentität;
+- Candidate-Schema 2 mit numerischem Rank-Rohwert;
+- expliziter Override vor belegter `PASSIVE_<sourceRow>`-Konvention, ohne erfundenen Fallback;
+- user-facing Gate und Resolver-Reference-Space nur für `SortDisplayable`;
+- eigener technischer Candidate- und enger Resolver-Reference-Space-Fingerprint, getrennt von Species/Breeding.
+- explizit freigegebene, fail-closed kanonische 115er Publikation unter `data/palworld-core/passives.json`;
+- namespaceter Adapter-Key `palworld.passive.source_row` mit `sourceRow` als Wert;
+- datasetgebundene Persistenzreferenz und Breeder-AI-Resolver mit Exact-/Ambiguous-/Candidate-Verhalten.
 
 Offen:
 
@@ -139,7 +163,7 @@ Offen:
 - Invoke-Kontexte;
 - Stackability;
 - World-Tree-/Mutation-/Partner-Sonderfälle;
-- Lokalisierung;
+- fachliche Klassifikation der Wirkungs-/Vererbungssemantik; die Identity-/Lokalisierungszuordnung ist veröffentlicht.
 - Wirkung auf Pal, Spieler, Reiten, Basis und Partnerfähigkeit strikt trennen.
 
 ## P7 – Partnerfähigkeiten

@@ -1,0 +1,1173 @@
+{
+  "schemaVersion": 1,
+  "domain": "palworld.passive.reference_space",
+  "adapterKeyNamespace": "palworld.passive.source_row",
+  "dataset": {
+    "schemaVersion": 1,
+    "referenceSpaceSha256": "5050fc82e7b14dad5ebb06de6aa3f5fbafbd8d168aae525b4b4fa05214efeb4b",
+    "provenance": {
+      "steamBuildId": "25247047",
+      "technicalCandidateSha256": "06ae40a0aafd4aa6da69841f526ac291eb82d5c91f70b118d0bdafda26540b5b",
+      "sourceReviewSchemaVersion": 2,
+      "repository": "MC-Micro/pal-tool",
+      "workflow": "Probe Pal Data Core",
+      "workflowRunId": "34975314764",
+      "commitSha": "e28b6148f47ec2179f63de8c104664be8f31df73",
+      "artifactName": "pal-data-core-candidate-25247047",
+      "artifactId": "10399160981",
+      "artifactSha256": "1bd93cb80144833315dc7d6d6232f31fc57bb00cb11e317081ea34ee2a7ae63c"
+    }
+  },
+  "entries": [
+    {
+      "sourceRow": "Alien",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Alien"
+      },
+      "nameEn": "Otherworldly Cells",
+      "nameDe": "Unerforschte Zellen"
+    },
+    {
+      "sourceRow": "AutoHPRegeneRate_Passive",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_AutoHPRegeneRate_Passive"
+      },
+      "nameEn": "Healing Coach",
+      "nameDe": "Heilcoach"
+    },
+    {
+      "sourceRow": "CoolTimeReduction_Down_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CoolTimeReduction_Down_1"
+      },
+      "nameEn": "Easygoing",
+      "nameDe": "Gelassenheit"
+    },
+    {
+      "sourceRow": "CoolTimeReduction_Up_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CoolTimeReduction_Up_1"
+      },
+      "nameEn": "Serenity",
+      "nameDe": "Konzentration"
+    },
+    {
+      "sourceRow": "CoolTimeReduction_Up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CoolTimeReduction_Up_2"
+      },
+      "nameEn": "Impatient",
+      "nameDe": "Ungeduld"
+    },
+    {
+      "sourceRow": "CraftSpeed_down1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CraftSpeed_down1"
+      },
+      "nameEn": "Clumsy",
+      "nameDe": "Ungeschickt"
+    },
+    {
+      "sourceRow": "CraftSpeed_down2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CraftSpeed_down2"
+      },
+      "nameEn": "Slacker",
+      "nameDe": "Faulpelz"
+    },
+    {
+      "sourceRow": "CraftSpeed_up1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CraftSpeed_up1"
+      },
+      "nameEn": "Serious",
+      "nameDe": "Fleißig"
+    },
+    {
+      "sourceRow": "CraftSpeed_up2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CraftSpeed_up2"
+      },
+      "nameEn": "Artisan",
+      "nameDe": "Handwerksmeister"
+    },
+    {
+      "sourceRow": "CraftSpeed_up3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_CraftSpeed_up3"
+      },
+      "nameEn": "Remarkable Craftsmanship",
+      "nameDe": "Goldenes Händchen"
+    },
+    {
+      "sourceRow": "Deffence_down1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Deffence_down1"
+      },
+      "nameEn": "Downtrodden",
+      "nameDe": "Unbelastbar"
+    },
+    {
+      "sourceRow": "Deffence_down2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Deffence_down2"
+      },
+      "nameEn": "Brittle",
+      "nameDe": "Fragil"
+    },
+    {
+      "sourceRow": "Deffence_up1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Deffence_up1"
+      },
+      "nameEn": "Hard Skin",
+      "nameDe": "Hart im Nehmen"
+    },
+    {
+      "sourceRow": "Deffence_up2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Deffence_up2"
+      },
+      "nameEn": "Burly Body",
+      "nameDe": "Stämmiger Wuchs"
+    },
+    {
+      "sourceRow": "Deffence_up2_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Deffence_up2_2"
+      },
+      "nameEn": "Heavyweight",
+      "nameDe": "Schwergewicht"
+    },
+    {
+      "sourceRow": "Deffence_up3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Deffence_up3"
+      },
+      "nameEn": "Diamond Body",
+      "nameDe": "Diamantkörper"
+    },
+    {
+      "sourceRow": "ElementBoost_Aqua_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Aqua_1_PAL"
+      },
+      "nameEn": "Hydromaniac",
+      "nameDe": "Wasserratte"
+    },
+    {
+      "sourceRow": "ElementBoost_Aqua_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Aqua_2_PAL"
+      },
+      "nameEn": "Lord of the Sea",
+      "nameDe": "Gebieter der Meere"
+    },
+    {
+      "sourceRow": "ElementBoost_Dark_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Dark_1_PAL"
+      },
+      "nameEn": "Veil of Darkness",
+      "nameDe": "Grufti"
+    },
+    {
+      "sourceRow": "ElementBoost_Dark_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Dark_2_PAL"
+      },
+      "nameEn": "Lord of the Underworld",
+      "nameDe": "Gebieter der Unterwelt"
+    },
+    {
+      "sourceRow": "ElementBoost_Dragon_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Dragon_1_PAL"
+      },
+      "nameEn": "Blood of the Dragon",
+      "nameDe": "Drachengeborener"
+    },
+    {
+      "sourceRow": "ElementBoost_Dragon_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Dragon_2_PAL"
+      },
+      "nameEn": "Divine Dragon",
+      "nameDe": "Drachengott"
+    },
+    {
+      "sourceRow": "ElementBoost_Earth_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Earth_1_PAL"
+      },
+      "nameEn": "Power of Gaia",
+      "nameDe": "Macht von Gaia"
+    },
+    {
+      "sourceRow": "ElementBoost_Earth_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Earth_2_PAL"
+      },
+      "nameEn": "Earth Emperor",
+      "nameDe": "Zar des Erdreichs"
+    },
+    {
+      "sourceRow": "ElementBoost_Fire_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Fire_1_PAL"
+      },
+      "nameEn": "Pyromaniac",
+      "nameDe": "Pyromane"
+    },
+    {
+      "sourceRow": "ElementBoost_Fire_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Fire_2_PAL"
+      },
+      "nameEn": "Flame Emperor",
+      "nameDe": "Flammenkaiser"
+    },
+    {
+      "sourceRow": "ElementBoost_Ice_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Ice_1_PAL"
+      },
+      "nameEn": "Coldblooded",
+      "nameDe": "Kaltblütig"
+    },
+    {
+      "sourceRow": "ElementBoost_Ice_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Ice_2_PAL"
+      },
+      "nameEn": "Ice Emperor",
+      "nameDe": "Imperator des Eises"
+    },
+    {
+      "sourceRow": "ElementBoost_Leaf_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Leaf_1_PAL"
+      },
+      "nameEn": "Fragrant Foliage",
+      "nameDe": "Grüner Daumen"
+    },
+    {
+      "sourceRow": "ElementBoost_Leaf_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Leaf_2_PAL"
+      },
+      "nameEn": "Spirit Emperor",
+      "nameDe": "Feenkönig"
+    },
+    {
+      "sourceRow": "ElementBoost_Normal_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Normal_1_PAL"
+      },
+      "nameEn": "Spirit of Zen",
+      "nameDe": "Neutralisator"
+    },
+    {
+      "sourceRow": "ElementBoost_Normal_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Normal_2_PAL"
+      },
+      "nameEn": "Celestial Emperor",
+      "nameDe": "Erleuchteter"
+    },
+    {
+      "sourceRow": "ElementBoost_Thunder_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Thunder_1_PAL"
+      },
+      "nameEn": "Capacitor",
+      "nameDe": "Dynamo"
+    },
+    {
+      "sourceRow": "ElementBoost_Thunder_2_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementBoost_Thunder_2_PAL"
+      },
+      "nameEn": "Lord of Lightning",
+      "nameDe": "Meister des Donners"
+    },
+    {
+      "sourceRow": "ElementResist_Aqua_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Aqua_1_PAL"
+      },
+      "nameEn": "Waterproof",
+      "nameDe": "Imprägniert"
+    },
+    {
+      "sourceRow": "ElementResist_Dark_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Dark_1_PAL"
+      },
+      "nameEn": "Cheery",
+      "nameDe": "Frohnatur"
+    },
+    {
+      "sourceRow": "ElementResist_Dragon_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Dragon_1_PAL"
+      },
+      "nameEn": "Dragonkiller",
+      "nameDe": "Drachentöter"
+    },
+    {
+      "sourceRow": "ElementResist_Earth_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Earth_1_PAL"
+      },
+      "nameEn": "Earthquake Resistant",
+      "nameDe": "Erdbebensicher"
+    },
+    {
+      "sourceRow": "ElementResist_Fire_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Fire_1_PAL"
+      },
+      "nameEn": "Suntan Lover",
+      "nameDe": "Cooler Typ"
+    },
+    {
+      "sourceRow": "ElementResist_Ice_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Ice_1_PAL"
+      },
+      "nameEn": "Heated Body",
+      "nameDe": "Hitzkopf"
+    },
+    {
+      "sourceRow": "ElementResist_Leaf_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Leaf_1_PAL"
+      },
+      "nameEn": "Botanical Barrier",
+      "nameDe": "Herbizid"
+    },
+    {
+      "sourceRow": "ElementResist_Normal_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Normal_1_PAL"
+      },
+      "nameEn": "Abnormal",
+      "nameDe": "Neutralitätspakt"
+    },
+    {
+      "sourceRow": "ElementResist_Thunder_1_PAL",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ElementResist_Thunder_1_PAL"
+      },
+      "nameEn": "Insulated Body",
+      "nameDe": "Blitzableiter"
+    },
+    {
+      "sourceRow": "EternalFlame",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_EternalFlame"
+      },
+      "nameEn": "Eternal Flame",
+      "nameDe": "Ewige Lohe"
+    },
+    {
+      "sourceRow": "Invader",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Invader"
+      },
+      "nameEn": "Invader",
+      "nameDe": "Eindringling"
+    },
+    {
+      "sourceRow": "Legend",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Legend"
+      },
+      "nameEn": "Legend",
+      "nameDe": "Legendär"
+    },
+    {
+      "sourceRow": "MiniNushi",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MiniNushi"
+      },
+      "nameEn": "Whopper",
+      "nameDe": "Prachtfang"
+    },
+    {
+      "sourceRow": "MoveSpeed_up_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MoveSpeed_up_1"
+      },
+      "nameEn": "Nimble",
+      "nameDe": "Flink"
+    },
+    {
+      "sourceRow": "MoveSpeed_up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MoveSpeed_up_2"
+      },
+      "nameEn": "Runner",
+      "nameDe": "Guter Läufer"
+    },
+    {
+      "sourceRow": "MoveSpeed_up_3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MoveSpeed_up_3"
+      },
+      "nameEn": "Swift",
+      "nameDe": "Blitzschnell"
+    },
+    {
+      "sourceRow": "MutationPal_Babysitter",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MutationPal_Babysitter"
+      },
+      "nameEn": "Babysitter",
+      "nameDe": "Babysitter"
+    },
+    {
+      "sourceRow": "MutationPal_ExplosionResist",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MutationPal_ExplosionResist"
+      },
+      "nameEn": "Heavily Armored",
+      "nameDe": "Bollwerk"
+    },
+    {
+      "sourceRow": "MutationPal_Immortal",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MutationPal_Immortal"
+      },
+      "nameEn": "Immortality",
+      "nameDe": "Unsterblich"
+    },
+    {
+      "sourceRow": "MutationPal_Mutant",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_MutationPal_Mutant"
+      },
+      "nameEn": "Idiosyncratic",
+      "nameDe": "Anomalie"
+    },
+    {
+      "sourceRow": "NightOwl",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_NightOwl"
+      },
+      "nameEn": "Night Owl",
+      "nameDe": "Nachteule"
+    },
+    {
+      "sourceRow": "Nocturnal",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Nocturnal"
+      },
+      "nameEn": "Insomnia",
+      "nameDe": "Insomnie"
+    },
+    {
+      "sourceRow": "NonKilling",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_NonKilling"
+      },
+      "nameEn": "Mercy Hit",
+      "nameDe": "Rücksichtsvoll"
+    },
+    {
+      "sourceRow": "Noukin",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Noukin"
+      },
+      "nameEn": "Musclehead",
+      "nameDe": "Mehr Kraft als Verstand"
+    },
+    {
+      "sourceRow": "Nushi",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Nushi"
+      },
+      "nameEn": "Lunker",
+      "nameDe": "Teichfürst"
+    },
+    {
+      "sourceRow": "PAL_ALLAttack_down1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_ALLAttack_down1"
+      },
+      "nameEn": "Coward",
+      "nameDe": "Angsthase"
+    },
+    {
+      "sourceRow": "PAL_ALLAttack_down2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_ALLAttack_down2"
+      },
+      "nameEn": "Pacifist",
+      "nameDe": "Duckmäuser"
+    },
+    {
+      "sourceRow": "PAL_ALLAttack_up1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_ALLAttack_up1"
+      },
+      "nameEn": "Brave",
+      "nameDe": "Mutig"
+    },
+    {
+      "sourceRow": "PAL_ALLAttack_up2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_ALLAttack_up2"
+      },
+      "nameEn": "Ferocious",
+      "nameDe": "Wild"
+    },
+    {
+      "sourceRow": "PAL_ALLAttack_up3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_ALLAttack_up3"
+      },
+      "nameEn": "Demon God",
+      "nameDe": "Schattenherrscher"
+    },
+    {
+      "sourceRow": "PAL_CorporateSlave",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_CorporateSlave"
+      },
+      "nameEn": "Work Slave",
+      "nameDe": "Arbeitsvieh"
+    },
+    {
+      "sourceRow": "PAL_FullStomach_Down_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_FullStomach_Down_1"
+      },
+      "nameEn": "Dainty Eater",
+      "nameDe": "Genügsam"
+    },
+    {
+      "sourceRow": "PAL_FullStomach_Down_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_FullStomach_Down_2"
+      },
+      "nameEn": "Diet Lover",
+      "nameDe": "Fastenprofi"
+    },
+    {
+      "sourceRow": "PAL_FullStomach_Down_3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_FullStomach_Down_3"
+      },
+      "nameEn": "Mastery of Fasting",
+      "nameDe": "Asket"
+    },
+    {
+      "sourceRow": "PAL_FullStomach_Up_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_FullStomach_Up_1"
+      },
+      "nameEn": "Glutton",
+      "nameDe": "Verfressen"
+    },
+    {
+      "sourceRow": "PAL_FullStomach_Up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_FullStomach_Up_2"
+      },
+      "nameEn": "Bottomless Stomach",
+      "nameDe": "Endlosmagen"
+    },
+    {
+      "sourceRow": "PAL_Sanity_Down_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_Sanity_Down_1"
+      },
+      "nameEn": "Positive Thinker",
+      "nameDe": "Positive Gedanken"
+    },
+    {
+      "sourceRow": "PAL_Sanity_Down_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_Sanity_Down_2"
+      },
+      "nameEn": "Workaholic",
+      "nameDe": "Workaholic"
+    },
+    {
+      "sourceRow": "PAL_Sanity_Down_3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_Sanity_Down_3"
+      },
+      "nameEn": "Heart of the Immovable King",
+      "nameDe": "Unerschütterlich"
+    },
+    {
+      "sourceRow": "PAL_Sanity_Up_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_Sanity_Up_1"
+      },
+      "nameEn": "Unstable",
+      "nameDe": "Geistig labil"
+    },
+    {
+      "sourceRow": "PAL_Sanity_Up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_Sanity_Up_2"
+      },
+      "nameEn": "Destructive",
+      "nameDe": "Selbstzerstörerisch"
+    },
+    {
+      "sourceRow": "PAL_conceited",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_conceited"
+      },
+      "nameEn": "Conceited",
+      "nameDe": "Eingebildet"
+    },
+    {
+      "sourceRow": "PAL_masochist",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_masochist"
+      },
+      "nameEn": "Masochist",
+      "nameDe": "Masochist"
+    },
+    {
+      "sourceRow": "PAL_oraora",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_oraora"
+      },
+      "nameEn": "Aggressive",
+      "nameDe": "Großkotz"
+    },
+    {
+      "sourceRow": "PAL_rude",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_rude"
+      },
+      "nameEn": "Hooligan",
+      "nameDe": "Grobian"
+    },
+    {
+      "sourceRow": "PAL_sadist",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PAL_sadist"
+      },
+      "nameEn": "Sadist",
+      "nameDe": "Sadist"
+    },
+    {
+      "sourceRow": "PlayerSP_DecreaseRate_Passive",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_PlayerSP_DecreaseRate_Passive"
+      },
+      "nameEn": "Wellness Watcher",
+      "nameDe": "Ausdauerprofi"
+    },
+    {
+      "sourceRow": "Rare",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Rare"
+      },
+      "nameEn": "Lucky",
+      "nameDe": "Außergewöhnlich"
+    },
+    {
+      "sourceRow": "ReloadSpeedUp_Passive",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_ReloadSpeedUp_Passive"
+      },
+      "nameEn": "Reload Master",
+      "nameDe": "Nachlademeister"
+    },
+    {
+      "sourceRow": "RideJumpCount_Increase1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_RideJumpCount_Increase1"
+      },
+      "nameEn": "Lightfooted",
+      "nameDe": "Federleicht"
+    },
+    {
+      "sourceRow": "RideJumpCount_Increase2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_RideJumpCount_Increase2"
+      },
+      "nameEn": "Sky Strider",
+      "nameDe": "Himmelsläufer"
+    },
+    {
+      "sourceRow": "SalePrice_Down_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SalePrice_Down_1"
+      },
+      "nameEn": "Shabby",
+      "nameDe": "Räudig"
+    },
+    {
+      "sourceRow": "SalePrice_Up_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SalePrice_Up_1"
+      },
+      "nameEn": "Noble",
+      "nameDe": "Kostbar"
+    },
+    {
+      "sourceRow": "SalePrice_Up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SalePrice_Up_2"
+      },
+      "nameEn": "Fine Furs",
+      "nameDe": "Edles Fell"
+    },
+    {
+      "sourceRow": "Salvation",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Salvation"
+      },
+      "nameEn": "Savior",
+      "nameDe": "Erlöser"
+    },
+    {
+      "sourceRow": "SelfDeathAddItemDrop_up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SelfDeathAddItemDrop_up_2"
+      },
+      "nameEn": "Service-Minded",
+      "nameDe": "Spendabel"
+    },
+    {
+      "sourceRow": "SelfDeathAddItemDrop_up_3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SelfDeathAddItemDrop_up_3"
+      },
+      "nameEn": "Lavish Hospitality",
+      "nameDe": "Selbstlos"
+    },
+    {
+      "sourceRow": "Stamina_Down_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Stamina_Down_1"
+      },
+      "nameEn": "Sickly",
+      "nameDe": "Stubenhocker"
+    },
+    {
+      "sourceRow": "Stamina_Up_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Stamina_Up_1"
+      },
+      "nameEn": "Infinite Stamina",
+      "nameDe": "Unermüdlich"
+    },
+    {
+      "sourceRow": "Stamina_Up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Stamina_Up_2"
+      },
+      "nameEn": "Fit as a Fiddle",
+      "nameDe": "Fit wie ein Turnschuh"
+    },
+    {
+      "sourceRow": "Stamina_Up_3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Stamina_Up_3"
+      },
+      "nameEn": "Eternal Engine",
+      "nameDe": "Endloser Antrieb"
+    },
+    {
+      "sourceRow": "SwimSpeed_up_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SwimSpeed_up_1"
+      },
+      "nameEn": "Sleek Stroke",
+      "nameDe": "Stromlinienform"
+    },
+    {
+      "sourceRow": "SwimSpeed_up_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SwimSpeed_up_2"
+      },
+      "nameEn": "Ace Swimmer",
+      "nameDe": "Guter Schwimmer"
+    },
+    {
+      "sourceRow": "SwimSpeed_up_3",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_SwimSpeed_up_3"
+      },
+      "nameEn": "King of the Waves",
+      "nameDe": "Wellenkönig"
+    },
+    {
+      "sourceRow": "Test_PalEgg_HatchingSpeed_Up",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Test_PalEgg_HatchingSpeed_Up"
+      },
+      "nameEn": "Philanthropist",
+      "nameDe": "Philanthrop"
+    },
+    {
+      "sourceRow": "TrainerATK_UP_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_TrainerATK_UP_1"
+      },
+      "nameEn": "Vanguard",
+      "nameDe": "Angriffsstratege"
+    },
+    {
+      "sourceRow": "TrainerDEF_UP_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_TrainerDEF_UP_1"
+      },
+      "nameEn": "Stronghold Strategist",
+      "nameDe": "Festungskommandant"
+    },
+    {
+      "sourceRow": "TrainerLogging_up1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_TrainerLogging_up1"
+      },
+      "nameEn": "Logging Foreman",
+      "nameDe": "Forstmeister"
+    },
+    {
+      "sourceRow": "TrainerMining_up1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_TrainerMining_up1"
+      },
+      "nameEn": "Mine Foreman",
+      "nameDe": "Oberbergmann"
+    },
+    {
+      "sourceRow": "TrainerWorkSpeed_UP_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_TrainerWorkSpeed_UP_1"
+      },
+      "nameEn": "Motivational Leader",
+      "nameDe": "Motivationscoach"
+    },
+    {
+      "sourceRow": "Vampire",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Vampire"
+      },
+      "nameEn": "Vampiric",
+      "nameDe": "Vampir"
+    },
+    {
+      "sourceRow": "Witch",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_Witch"
+      },
+      "nameEn": "Siren of the Void",
+      "nameDe": "Hexe"
+    },
+    {
+      "sourceRow": "WorkSuitabilityAddRank_MonsterFarm_1",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorkSuitabilityAddRank_MonsterFarm_1"
+      },
+      "nameEn": "Farmhand",
+      "nameDe": "Stallbursche"
+    },
+    {
+      "sourceRow": "WorkSuitabilityAddRank_MonsterFarm_2",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorkSuitabilityAddRank_MonsterFarm_2"
+      },
+      "nameEn": "Ranch Master",
+      "nameDe": "Stallmeister"
+    },
+    {
+      "sourceRow": "WorldTree_ATK",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorldTree_ATK"
+      },
+      "nameEn": "Twin-Edged Holy Blade",
+      "nameDe": "Weiheklinge"
+    },
+    {
+      "sourceRow": "WorldTree_ATK_DEF",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorldTree_ATK_DEF"
+      },
+      "nameEn": "God of Destruction",
+      "nameDe": "Avatar der Zerstörung"
+    },
+    {
+      "sourceRow": "WorldTree_CraftSpeed",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorldTree_CraftSpeed"
+      },
+      "nameEn": "Demon’s Hand",
+      "nameDe": "Teufelshände"
+    },
+    {
+      "sourceRow": "WorldTree_DEF",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorldTree_DEF"
+      },
+      "nameEn": "Sanctified Meat Shield",
+      "nameDe": "Sakralleib"
+    },
+    {
+      "sourceRow": "WorldTree_FullStomach",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorldTree_FullStomach"
+      },
+      "nameEn": "World Tree's Bounty",
+      "nameDe": "Weltenkeim"
+    },
+    {
+      "sourceRow": "WorldTree_MoveSpeed",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorldTree_MoveSpeed"
+      },
+      "nameEn": "Dimensional Leap",
+      "nameDe": "Dimensionsriss"
+    },
+    {
+      "sourceRow": "WorldTree_Sanity",
+      "nameReference": {
+        "source": "observed_default_row_convention",
+        "field": "sourceRow",
+        "value": "PASSIVE_WorldTree_Sanity"
+      },
+      "nameEn": "Hermit Sage",
+      "nameDe": "Erleuchteter"
+    }
+  ]
+}

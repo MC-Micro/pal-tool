@@ -9,6 +9,7 @@ on:
       - ".github/workflows/probe-pal-data-core.yml"
       - "data/palworld-breeding/pal_values.json"
       - "data/palworld-breeding/special_combinations.json"
+      - "data-passives.js"
       - "tools/pal-data-core/**"
 
 permissions:
@@ -121,6 +122,52 @@ jobs:
           echo "----- Released breeding review -----"
           cat "$RUNNER_TEMP/pal-data-core-candidate/breeding-review.json"
 
+      - name: Build deterministic passive candidate twice
+        shell: bash
+        run: |
+          project="tools/pal-data-core/PalDataCore.Extractor/PalDataCore.Extractor.csproj"
+          pak_dir="$RUNNER_TEMP/palworld-server/Pal/Content/Paks"
+          build_id="${{ steps.build.outputs.id }}"
+          catalog="tools/pal-data-core/catalog.v1.json"
+
+          dotnet run --project "$project" --configuration Release --no-build -- \
+            passive-candidate \
+            --pak-dir "$pak_dir" \
+            --catalog "$catalog" \
+            --output "$RUNNER_TEMP/pal-data-core-candidate/passive-candidate-a.json" \
+            --summary "$RUNNER_TEMP/pal-data-core-candidate/passive-summary-a.json" \
+            --build-id "$build_id"
+
+          dotnet run --project "$project" --configuration Release --no-build -- \
+            passive-candidate \
+            --pak-dir "$pak_dir" \
+            --catalog "$catalog" \
+            --output "$RUNNER_TEMP/passive-candidate-b.json" \
+            --summary "$RUNNER_TEMP/passive-summary-b.json" \
+            --build-id "$build_id"
+
+          cmp "$RUNNER_TEMP/pal-data-core-candidate/passive-candidate-a.json" "$RUNNER_TEMP/passive-candidate-b.json"
+          cmp "$RUNNER_TEMP/pal-data-core-candidate/passive-summary-a.json" "$RUNNER_TEMP/passive-summary-b.json"
+
+          echo "----- Passive technical candidate summary -----"
+          cat "$RUNNER_TEMP/pal-data-core-candidate/passive-summary-a.json"
+
+      - name: Review passive identity and historical overlay crosswalk
+        id: passive_review
+        shell: bash
+        run: |
+          set +e
+          node tools/pal-data-core/scripts/review-passive-candidate.mjs \
+            "$RUNNER_TEMP/pal-data-core-candidate/passive-candidate-a.json" \
+            "data-passives.js" \
+            "$RUNNER_TEMP/pal-data-core-candidate/passive-review.json"
+          review_exit="$?"
+          set -e
+
+          echo "----- Passive identity and overlay review -----"
+          cat "$RUNNER_TEMP/pal-data-core-candidate/passive-review.json"
+          echo "exit_code=$review_exit" >> "$GITHUB_OUTPUT"
+
       - name: Build deterministic field and table inventory twice
         shell: bash
         run: |
@@ -154,8 +201,15 @@ jobs:
           retention-days: 14
           compression-level: 9
 
+      - name: Enforce passive review conflict gate
+        if: ${{ steps.passive_review.outputs.exit_code != '0' }}
+        shell: bash
+        run: |
+          echo "Passive candidate review found a blocking source conflict. Inspect the uploaded normalized artifact."
+          exit 2
+
 # The expensive full-server gate runs for Data Core changes on breeder branches and
 # explicit workflow_dispatch. Pull requests use the separate compile/catalog CI gate.
 # No PAKs, mappings, raw DataTables, or original game assets are committed or uploaded;
-# the artifact contains only deterministic normalized candidate JSON for review.
+# the artifact contains only deterministic, field-limited normalized candidate JSON for review.
 # Canonical publication remains a later review-gated workflow.

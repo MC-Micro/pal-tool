@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 
+import { validatePublishedPassiveReferenceAgainstApproval } from '../tools/pal-data-core/scripts/publish-passive-reference.mjs';
+
 const root = path.resolve(process.cwd());
 const requiredFiles = [
   'index.html',
@@ -17,6 +19,18 @@ const requiredFiles = [
 
 const errors = [];
 const fail = message => errors.push(message);
+
+try {
+  const passiveReference = JSON.parse(
+    fs.readFileSync(path.join(root, 'data/palworld-core/passives.json'), 'utf8')
+  );
+  const passiveApproval = JSON.parse(
+    fs.readFileSync(path.join(root, 'data/palworld-core/passives.approval.json'), 'utf8')
+  );
+  validatePublishedPassiveReferenceAgainstApproval(passiveReference, passiveApproval);
+} catch (error) {
+  fail(`Kanonischer Passive-Referenzraum ist ungültig: ${error.message}`);
+}
 
 for (const file of requiredFiles) {
   if (!fs.existsSync(path.join(root, file))) fail(`Pflichtdatei fehlt: ${file}`);
@@ -110,4 +124,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log('Validierung erfolgreich: 102 Passives, Datenstruktur, PWA-Dateien und Cache-Verweise sind konsistent.');
+console.log('Validierung erfolgreich: kanonischer 115er Passive-Referenzraum sowie 102er PWA-Overlay, Datenstruktur, PWA-Dateien und Cache-Verweise sind konsistent.');

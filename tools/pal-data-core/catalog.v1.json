@@ -110,9 +110,26 @@
     {
       "name": "passives",
       "domain": "passive-skill",
-      "extractor": "inventory-only",
+      "extractor": "passive-technical-v1",
       "required": false,
-      "packagePaths": ["Pal/Content/Pal/DataTable/PassiveSkill/DT_PassiveSkill_Main"]
+      "packagePaths": [
+        "Pal/Content/Pal/DataTable/PassiveSkill/DT_PassiveSkill_Main",
+        "Pal/Content/Pal/DataTable/PassiveSkill/DT_PassiveSkill_Main_Common"
+      ]
+    },
+    {
+      "name": "passive-names-en",
+      "domain": "localization",
+      "extractor": "localized-text-v1",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/en/Pal/DataTable/Text/DT_SkillNameText_Common"]
+    },
+    {
+      "name": "passive-names-de",
+      "domain": "localization",
+      "extractor": "localized-text-v1",
+      "required": false,
+      "packagePaths": ["Pal/Content/L10N/de/Pal/DataTable/Text/DT_SkillNameText_Common"]
     }
   ],
   "discoveries": [
@@ -120,6 +137,9 @@
     { "name": "technology", "token": "Technology" },
     { "name": "recipe", "token": "Recipe" },
     { "name": "breeding-item-effect", "token": "BreedingItemEffect" },
-    { "name": "pal-game-setting", "token": "PalGameSetting" }
+    { "name": "pal-game-setting", "token": "PalGameSetting" },
+    { "name": "passive-skill-tables", "token": "DT_PassiveSkill" },
+    { "name": "skill-name-localization", "token": "SkillNameText" },
+    { "name": "skill-description-localization", "token": "SkillDescText" }
   ]
 }
