@@ -10,7 +10,6 @@ on:
     paths:
       - "tools/pal-data-core/**"
       - "data/palworld-core/**"
-      - "data-passives.js"
       - "scripts/workspace-artifacts.mjs"
       - "scripts/workspace-artifacts.test.mjs"
       - "workspace-artifacts.json"
@@ -22,7 +21,6 @@ on:
     paths:
       - "tools/pal-data-core/**"
       - "data/palworld-core/**"
-      - "data-passives.js"
       - "scripts/workspace-artifacts.mjs"
       - "scripts/workspace-artifacts.test.mjs"
       - "workspace-artifacts.json"

@@ -37,11 +37,11 @@ Der bestehende öffentliche Breeder unter `services/breeding-api/` bleibt davon 
 - stateless bezogen auf privaten Userstate;
 - bestehender öffentlicher MCP bleibt read-only;
 - keine D1-, Inventory-, Projekt-, Auth- oder LLM-Schreiblogik in `services/breeding-api/`;
-- dessen Token-/404-/MCP-Regeln gelten nur für diesen öffentlichen Service und nicht automatisch für die private Breeder-AI-Runtime.
+- dessen MCP-/404-Regeln gelten nur für diesen öffentlichen Service und nicht automatisch für die private Breeder-AI-Runtime.
 
 Breeder AI erhält für seine private Anwendung eine eigene Runtime-/Worker-/Binding-/Deployment-Konfiguration. Sie übernimmt nicht implizit Worker-, Secret-, Routing- oder Deployment-Konfiguration aus `services/breeding-api/`. Gemeinsame Infrastruktur darf später bewusst geteilt werden, aber nur über explizite Konfiguration und ohne Vermischung der beiden Runtime-Grenzen. Die konkrete Cloudflare-Topologie bleibt Gegenstand von Phase 0.
 
-Die historische Palworld Passives PWA bleibt als eigenständiges öffentliches Side-Tool erhalten. Sie liegt aktuell noch im Repository-Root. Eine spätere kontrollierte Migration in einen eigenen App-Bereich, voraussichtlich `apps/passives-pwa/`, erfolgt in einem separaten Refactor und ist kein Phase-0-Blocker. Ihre physische Migration ist ausdrücklich nicht Teil dieses Pre-Build-Patches.
+Die historische Palworld Passives PWA bleibt als eigenständiges, eingefrorenes Legacy-Side-Tool unter `apps/passives-pwa/` erhalten. Ihre kontrollierte physische Migration erfolgte getrennt von Phase 0; Reaktivierung, Hosting und Cache-/Service-Worker-Migration bleiben ausdrücklich kein Phase-0-Bestandteil.
 
 Langfristiges Datenmodell für Consumer-Apps:
 
@@ -182,6 +182,6 @@ Phase-0-Code darf auf diesen Verträgen aufbauen. Nicht erforderlich vor Phase 0
 - finales vollständiges D1-Schema;
 - vollständiger Data Core aller Palworld-Domains;
 - Speech, Social, Showcase, Mobility, Pal Modification oder IV-Improvement;
-- physische Migration der historischen Passives PWA.
+- Reaktivierung oder Deployment der historischen Passives PWA.
 
 Phase 0 bleibt ein Spike-/Proof-Abschnitt. Mocks dürfen Schnittstellen vorbereiten, ersetzen aber nicht die im Implementation Roadmap geforderten realen Proofs.

@@ -99,7 +99,7 @@ data/
   categories.js
 ```
 
-Die bestehende `data-passives.js` bleibt zunächst erhalten. Die spätere Migration erfolgt erst zusammen mit dem ersten neuen Datenmodul, damit Version 1.0.0 nicht unnötig umgebaut wird.
+Der historische 102er Overlay bleibt unverändert unter `apps/passives-pwa/data-passives.js` konserviert. Neue kanonische Datenmodule aktualisieren diese eingefrorene Legacy-App nicht automatisch.
 
 ## Qualitätsregeln
 

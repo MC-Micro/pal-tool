@@ -80,30 +80,6 @@ export function neutralNotFound(head = false): Response {
   return new Response(head ? null : '{"ok":false}', { status: 404, headers });
 }
 
-export function optionsResponse(): Response {
-  const headers = securityHeaders("no-store");
-  headers.delete("Content-Type");
-  return new Response(null, { status: 204, headers });
-}
-
-export async function apiErrorResponse(
-  error: ApiError,
-  request: Request,
-  head: boolean,
-): Promise<Response> {
-  return jsonResponse(
-    {
-      ok: false,
-      error: {
-        code: error.code,
-        message: error.message,
-        ...(error.details === undefined ? {} : { details: error.details }),
-      },
-    },
-    { status: error.status, cacheControl: "no-store", request, head },
-  );
-}
-
 export function requiredSingleParameter(url: URL, name: string): string {
   const values = url.searchParams.getAll(name);
   if (values.length !== 1 || values[0] === undefined || values[0].trim().length === 0) {

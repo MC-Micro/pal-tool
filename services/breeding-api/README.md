@@ -1,15 +1,12 @@
-# Palworld Breeding API
+# Palworld Breeding MCP Worker
 
-Read-only Cloudflare-Worker-API für schnelle, reproduzierbare Palworld-Zuchtberechnungen. Der Worker verwendet ausschließlich beim Build erzeugte Repository-Daten und ruft zur Laufzeit weder GitHub noch externe Zuchtrechner auf.
+Read-only Cloudflare Worker für schnelle, reproduzierbare Palworld-Zuchtberechnungen über MCP. Der Worker verwendet ausschließlich beim Build erzeugte Repository-Daten und ruft zur Laufzeit weder GitHub noch externe Zuchtrechner auf.
 
 ## Aktuelle Zugriffswege
 
-Der Worker stellt dieselbe kanonische Resolverlogik auf zwei Wegen bereit:
+Der Worker stellt genau einen öffentlichen Zugang bereit: den anonymen Streamable-HTTP-Endpunkt `/mcp`. Alle anderen externen Pfade, einschließlich historischer tokenisierter REST-Pfade, liefern neutral HTTP 404.
 
-1. **Öffentliches MCP:** anonymer Streamable-HTTP-Endpunkt `/mcp`.
-2. **Geschützte REST-API:** bestehender kompatibler Read-only-Zugang; konkreter Pfad wird absichtlich nicht dokumentiert.
-
-Der MCP-Endpunkt delegiert intern an die vorhandenen REST-Route-Handler. Es gibt keine zweite Zuchtimplementierung und keine abweichende Datenquelle.
+Der MCP-Endpunkt delegiert intern weiterhin direkt an `routeApiRequest(...)`. Diese internen Route-Handler sind gemeinsame Resolverlogik und keine zweite öffentlich erreichbare HTTP-Oberfläche. Es gibt keine zweite Zuchtimplementierung und keine abweichende Datenquelle.
 
 Das öffentliche MCP bietet genau diese fünf read-only Tools:
 
@@ -21,7 +18,7 @@ Das öffentliche MCP bietet genau diese fünf read-only Tools:
 
 Alle fünf Tools sind als read-only, nicht destruktiv und idempotent beschrieben. Das öffentliche MCP enthält keine Token-, Verwaltungs-, Schreib- oder Deploymentfunktionen.
 
-Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene App **Breeder** erfolgreich geprüft. Das ist ein historischer Integrationstest und keine dauerhafte Aussage über die aktuelle Erreichbarkeit. Die konkrete Worker-Basisadresse und der geschützte REST-Zugangsschlüssel werden absichtlich nicht in diesem öffentlichen Repository gespeichert.
+Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene App **Breeder** erfolgreich geprüft. Das ist ein historischer Integrationstest und keine dauerhafte Aussage über die aktuelle Erreichbarkeit. Die konkrete Worker-Basisadresse wird absichtlich nicht in diesem öffentlichen Repository gespeichert.
 
 `breeding_status` bleibt als leichtgewichtiger technischer Statusaufruf erhalten. Er liest nur die bereits deployten Referenzmetadaten und führt keine externe Patch-, Web- oder GitHub-Recherche aus. Er ist für Wartung, Diagnostik, Deploymentkontrolle und geplante Integritätsprüfungen gedacht, aber nicht als verpflichtende Routineabfrage vor jeder normalen Zuchtanfrage.
 
@@ -119,30 +116,11 @@ pnpm run scan:secrets
 
 Alle direkten Dependencies sind exakt auf die im Lockfile aufgelösten Versionen gepinnt. Drittanbieter-GitHub-Actions sind auf bestätigte vollständige Commit-SHAs festgeschrieben.
 
-## Geschützte REST-API
-
-Der geschützte REST-Zugang bleibt für bestehende technische Integrationen kompatibel. Basisadresse, konkreter geschützter Pfad und geheime Werte werden absichtlich nicht in diesem öffentlichen Repository ausgeschrieben.
-
-Fehlende oder ungültige Authentifizierung liefert eine neutrale HTTP-404-Antwort. Unterstützt werden `GET`, `HEAD` und notwendige `OPTIONS`; schreibende Methoden sind nicht vorgesehen.
-
-Antworten verwenden JSON, ETag, Cache-Control, `nosniff`, `noindex` und CORS für die nicht vertraulichen Read-only-Daten.
-
-Unterstützte Read-only-Funktionen:
-
-- kompakter Schema-, Hash-, Zähler-, Patch- und Validierungsstatus
-- deutsche, englische und interne Namensauflösung
-- direkte Paarung samt Regel, Kandidaten und Tie-Break
-- Elternorientierungen eines Ziel-Pals
-- zweite Eltern und Kinder eines Trägers
-- theoretisch kürzeste Artenrouten
-- vollständige maschinenlesbare Referenz
-- Validierung, beide Hasharten, Patchcheck und Impact-Zusammenfassung
-
 ## Öffentliches MCP
 
 Der MCP-Endpunkt liegt direkt unter `/mcp` und benötigt keine Authentifizierung. Er verwendet das offizielle `@modelcontextprotocol/sdk` im zustandslosen Streamable-HTTP-JSON-Modus.
 
-Zuordnung der Tools zu den bestehenden Route-Handlern:
+Zuordnung der Tools zu den internen Route-Handlern (keine externen REST-Pfade):
 
 | MCP-Tool | Interner Handler |
 |---|---|
@@ -156,7 +134,7 @@ Zuordnung der Tools zu den bestehenden Route-Handlern:
 
 ## Grenzen von Routen
 
-REST und MCP liefern bei einer Route ausdrücklich:
+Das MCP liefert bei einer Route ausdrücklich:
 
 ```json
 {
@@ -180,13 +158,13 @@ Eine Artenroute ist daher weder eine bestands-, passiv-, geschlechts- noch koste
 
 ## CI und Deployment
 
-`Breeding API CI` installiert mit `--frozen-lockfile`, validiert die bestehende Root-PWA, generiert beide Artefakte, prüft auf nicht committete Generated-Abweichungen, lintet, typprüft, testet, baut den Worker trocken, validiert strukturell und für Release, prüft Determinismus und scannt Secrets. Der Secretscan erfasst neben den unterstützten Textformaten ausdrücklich auch lokale Umgebungsdateien nach den Mustern `.env`, `.env.*`, `.dev.vars` und `.dev.vars.*`; passende Ignore-Regeln schützen diese Dateien zusätzlich vor versehentlichem Committen. Feature-Branches deployen nicht.
+`Breeding API CI` installiert mit `--frozen-lockfile`, generiert beide Artefakte, prüft auf nicht committete Generated-Abweichungen, lintet, typprüft, testet, baut den Worker trocken, validiert strukturell und für Release, prüft Determinismus und scannt Secrets. Die eingefrorene Legacy-PWA besitzt eine getrennte kleine Validierung und ist keine Abhängigkeit dieser CI. Der Secretscan erfasst neben den unterstützten Textformaten ausdrücklich auch lokale Umgebungsdateien nach den Mustern `.env`, `.env.*`, `.dev.vars` und `.dev.vars.*`; passende Ignore-Regeln schützen diese Dateien zusätzlich vor versehentlichem Committen. Feature-Branches deployen nicht.
 
-Der PR-Head des öffentlichen MCP-Ausbaus wurde am 13.07.2026 erfolgreich durch `Breeding API CI` und die Root-PWA-Validierung geprüft.
+Der PR-Head des öffentlichen MCP-Ausbaus wurde am 13.07.2026 erfolgreich durch `Breeding API CI` geprüft.
 
 Temporäre schreibende Migrations-, Probe- und Generated-Refresh-Workflows des Feature-Branches sind entfernt. Kanonische Daten und generierte Artefakte werden reviewbar gemeinsam committed; CI besitzt nur Leserechte.
 
-`Deploy Breeding API` ist manuell, nur auf `main`, verwendet das GitHub-Environment `production`, wiederholt die gesamte Freigabekette und deployt erst danach mit `pnpm exec wrangler deploy --keep-vars`. Dadurch bleibt das vorhandene Worker-Secret erhalten.
+`Deploy Breeding API` ist manuell, nur auf `main`, verwendet das GitHub-Environment `production`, wiederholt die gesamte Freigabekette und deployt erst danach mit `pnpm exec wrangler deploy --keep-vars`. Der historische, nun ungenutzte Read-Token darf erst nach einem separat freigegebenen Deployment und erfolgreichem Live-MCP-Smoke aus Cloudflare entfernt werden; dieser Repository-Cleanup führt das nicht aus.
 
 ## Grenzen, private Projektdaten und Rollback
 

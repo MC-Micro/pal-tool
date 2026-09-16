@@ -1,10 +1,16 @@
-name: Validate Palworld data
+name: Validate legacy Passives PWA
 
 on:
   push:
-    branches: [main, 'release/**', 'feature/**']
+    branches: [main, 'release/**', 'feature/**', 'refactor/**']
+    paths:
+      - 'apps/passives-pwa/**'
+      - '.github/workflows/validate-passives-pwa.yml'
   pull_request:
     branches: [main]
+    paths:
+      - 'apps/passives-pwa/**'
+      - '.github/workflows/validate-passives-pwa.yml'
 
 permissions:
   contents: read
@@ -21,5 +27,5 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Validate canonical passive reference
-        run: node scripts/validate-data.mjs
+      - name: Validate frozen legacy app
+        run: node apps/passives-pwa/scripts/validate.mjs

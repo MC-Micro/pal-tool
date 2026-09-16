@@ -9,7 +9,6 @@ on:
       - ".github/workflows/probe-pal-data-core.yml"
       - "data/palworld-breeding/pal_values.json"
       - "data/palworld-breeding/special_combinations.json"
-      - "data-passives.js"
       - "tools/pal-data-core/**"
 
 permissions:
@@ -159,7 +158,7 @@ jobs:
           set +e
           node tools/pal-data-core/scripts/review-passive-candidate.mjs \
             "$RUNNER_TEMP/pal-data-core-candidate/passive-candidate-a.json" \
-            "data-passives.js" \
+            "apps/passives-pwa/data-passives.js" \
             "$RUNNER_TEMP/pal-data-core-candidate/passive-review.json"
           review_exit="$?"
           set -e

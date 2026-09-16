@@ -42,10 +42,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Validate existing PWA
-        working-directory: ${{ github.workspace }}
-        run: node scripts/validate-data.mjs
-
       - name: Verify Cloudflare deployment credentials
         shell: bash
         env:

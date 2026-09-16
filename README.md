@@ -10,7 +10,7 @@ Das Repository ist historisch aus der Palworld Passives PWA entstanden, hat sich
 2. kanonische **Breeding-Regel- und Datenebene** unter `data/palworld-breeding/`;
 3. daraus erzeugte read-only **Breeding API mit Cloudflare Worker und öffentlichem MCP** unter `services/breeding-api/`;
 4. **Breeder AI PWA** mit einem isolierten lokalen Phase-0-Spike unter `apps/breeder-ai/` als Vorstufe der privaten Friends-&-Family-Anwendung;
-5. bestehende installierbare **Palworld Passives PWA** derzeit noch im Repository-Root, langfristig als eigenständige Consumer-App auf gemeinsamen kanonischen Daten;
+5. eingefrorene historische **Palworld Passives PWA** unter `apps/passives-pwa/` als pausierte Legacy-Consumer-App;
 6. **GitHub-natives Data-Core-Tooling** unter `tools/pal-data-core/`.
 
 Die bestehende Breeding Runtime verwendet weiterhin ausschließlich vorab erzeugte Repository-Artefakte und ruft bei einem normalen Request weder GitHub noch externe Zuchtrechner auf.
@@ -23,7 +23,7 @@ Für Breeder AI existiert nun ausschließlich ein lokaler Phase-0-Proof mit Auth
 - Der bestehende öffentliche Breeder unter `services/breeding-api/` bleibt read-only und stateless bezogen auf privaten Userstate.
 - Die neue Breeder-AI-Runtime wird als eigener App-/Package-Bereich isoliert. Vorgesehener Zielbereich ist `apps/breeder-ai/`; die genaue interne Aufteilung wird in Phase 0 festgelegt.
 - Persönlicher Multi-User-Runtime-State der Breeder AI: ausschließlich authentifizierte private Runtime-Persistenz; niemals Commit in dieses öffentliche Repository.
-- Die historische Passives PWA bleibt ein eigenständiges öffentliches Side-Tool. Ihre spätere kontrollierte physische Migration aus dem Root in einen eigenen App-Bereich erfolgt separat und ist kein Phase-0-Blocker.
+- Die historische Passives PWA ist vollständig unter `apps/passives-pwa/` konserviert und von moderner Data-Core-, Breeding- und Breeder-AI-Entwicklung entkoppelt. Eine Reaktivierung ist ein eigener, migrationspflichtiger Vorgang.
 - Ausdrücklich im Vault gespeicherte persönliche Projekte und Kontinuität: `MC-Micro/pal-vault`.
 - Server-/Hoststeuerung: `MC-Micro/pal-control`.
 
@@ -73,10 +73,9 @@ Aktueller physischer Stand:
 
 ```text
 .
-├── index.html, app.js, app.css
-├── data-passives.js, data-overrides.js
 ├── apps/
-│   └── breeder-ai/        # lokaler Phase-0-Spike, nicht deployt
+│   ├── breeder-ai/        # lokaler Phase-0-Spike, nicht deployt
+│   └── passives-pwa/      # historisch, frozen/paused, nicht fachlich aktuell
 ├── data/
 │   ├── palworld-core/
 │   └── palworld-breeding/
@@ -90,7 +89,7 @@ Aktueller physischer Stand:
 └── AGENTS.md
 ```
 
-Zielstruktur nach kontrollierter Migration der Consumer-Apps:
+Consumer-App-Struktur:
 
 ```text
 .
@@ -110,7 +109,7 @@ Zielstruktur nach kontrollierter Migration der Consumer-Apps:
 └── AGENTS.md
 ```
 
-Die physische Verschiebung der bestehenden Passives PWA ist nicht Teil des aktuellen Konzept-PRs. Service-Worker-Scope, Manifest, Hostingpfad und bestehende Installationen müssen in einem separaten Refactor geprüft werden.
+Die physische Verschiebung konserviert den historischen 102er Stand unverändert. GitHub Pages wird dadurch nicht automatisch deaktiviert oder neu konfiguriert. Vor einer erneuten Veröffentlichung – besonders auf derselben Origin – müssen Service-Worker-Scope, der alte Cache-Namespace `palworld-passives-pwa-v1.0.0-meta1`, Manifest, Hostingpfad und bestehende Installationen ausdrücklich migriert und getestet werden.
 
 # Pal Data Core
 
@@ -161,9 +160,9 @@ Geplante Domain-Module umfassen unter anderem:
 
 # Palworld Passives PWA
 
-Eine leichte, installierbare und offlinefähige Palworld-Passives-Datenbank für Breeding und Buildplanung.
+Eine historisch leichte, installierbare und offlinefähige Palworld-Passives-Datenbank für Breeding und Buildplanung. Der konservierte Stand liegt unter [`apps/passives-pwa/`](apps/passives-pwa/) und ist **legacy / frozen / paused**.
 
-Sie bleibt als eigenständiges Side-Tool erhalten, ist aber nicht mehr die strukturelle Hauptanwendung des Repositorys. Der aktuelle Root-Stand bleibt zunächst funktionsfähig; eine spätere Migration in einen eigenen App-Bereich erfolgt kontrolliert und rückwärtskompatibel.
+Sie bleibt als eigenständiges Legacy-Side-Tool erhalten, ist aber weder strukturelle Hauptanwendung noch aktuelle fachliche Passive-Referenz. Der historische 102er Overlay wird nicht still auf den kanonischen 115er Current-Build-Referenzraum aktualisiert.
 
 Langfristig soll die PWA kanonische Passive-Daten aus derselben Data-Core-/Domain-Pipeline beziehen wie andere Consumer. App-spezifische Rollenprioritäten, Erklärungen und redaktionelle Einordnungen können als getrennte Overlay-Schicht bestehen bleiben.
 
