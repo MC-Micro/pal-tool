@@ -109,7 +109,7 @@ Consumer-App-Struktur:
 └── AGENTS.md
 ```
 
-Die physische Verschiebung konserviert den historischen 102er Stand unverändert. GitHub Pages wird dadurch nicht automatisch deaktiviert oder neu konfiguriert. Vor einer erneuten Veröffentlichung – besonders auf derselben Origin – müssen Service-Worker-Scope, der alte Cache-Namespace `palworld-passives-pwa-v1.0.0-meta1`, Manifest, Hostingpfad und bestehende Installationen ausdrücklich migriert und getestet werden.
+Die physische Verschiebung konserviert den historischen 102er Stand unverändert. GitHub Pages für die frühere Root-PWA wurde am 17.09.2026 deaktiviert; die Legacy-App bleibt damit nur noch als eingefrorener Repository-Bestand erhalten. Vor einer erneuten Veröffentlichung – besonders auf derselben Origin – müssen Service-Worker-Scope, der alte Cache-Namespace `palworld-passives-pwa-v1.0.0-meta1`, Manifest, Hostingpfad und bestehende Installationen ausdrücklich migriert und getestet werden.
 
 # Pal Data Core
 

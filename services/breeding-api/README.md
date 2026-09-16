@@ -18,7 +18,7 @@ Das öffentliche MCP bietet genau diese fünf read-only Tools:
 
 Alle fünf Tools sind als read-only, nicht destruktiv und idempotent beschrieben. Das öffentliche MCP enthält keine Token-, Verwaltungs-, Schreib- oder Deploymentfunktionen.
 
-Der öffentliche MCP-Zugang wurde am 13.07.2026 aus ChatGPT über die verbundene App **Breeder** erfolgreich geprüft. Das ist ein historischer Integrationstest und keine dauerhafte Aussage über die aktuelle Erreichbarkeit. Die konkrete Worker-Basisadresse wird absichtlich nicht in diesem öffentlichen Repository gespeichert.
+Der öffentliche MCP-Zugang wurde am 17.09.2026 nach dem produktiven Legacy-Surface-Cleanup und erneut nach Entfernung des obsoleten Worker-Secrets live geprüft. In beiden Prüfungen waren der anonyme `/mcp`-Zugang, exakt fünf Tools und die erwartete neutrale 404-Oberfläche intakt. Der frühere Zugriff vom 13.07.2026 über die verbundene App **Breeder** bleibt ein historischer Integrationstest. Die konkrete Worker-Basisadresse wird absichtlich nicht in diesem öffentlichen Repository gespeichert.
 
 `breeding_status` bleibt als leichtgewichtiger technischer Statusaufruf erhalten. Er liest nur die bereits deployten Referenzmetadaten und führt keine externe Patch-, Web- oder GitHub-Recherche aus. Er ist für Wartung, Diagnostik, Deploymentkontrolle und geplante Integritätsprüfungen gedacht, aber nicht als verpflichtende Routineabfrage vor jeder normalen Zuchtanfrage.
 
@@ -164,7 +164,7 @@ Der PR-Head des öffentlichen MCP-Ausbaus wurde am 13.07.2026 erfolgreich durch 
 
 Temporäre schreibende Migrations-, Probe- und Generated-Refresh-Workflows des Feature-Branches sind entfernt. Kanonische Daten und generierte Artefakte werden reviewbar gemeinsam committed; CI besitzt nur Leserechte.
 
-`Deploy Breeding API` ist manuell, nur auf `main`, verwendet das GitHub-Environment `production`, wiederholt die gesamte Freigabekette und deployt erst danach mit `pnpm exec wrangler deploy --keep-vars`. Der historische, nun ungenutzte Read-Token darf erst nach einem separat freigegebenen Deployment und erfolgreichem Live-MCP-Smoke aus Cloudflare entfernt werden; dieser Repository-Cleanup führt das nicht aus.
+`Deploy Breeding API` ist manuell, nur auf `main`, verwendet das GitHub-Environment `production`, wiederholt die gesamte Freigabekette und deployt erst danach mit `pnpm exec wrangler deploy --keep-vars`. Der Legacy-Surface-Cleanup wurde am 17.09.2026 operativ abgeschlossen: Der gemergte `main`-Stand `ae4eed7cb07ad48ec948c0808562e8f2cdca39f6` wurde im erfolgreichen Run `35158803340` deployed, der öffentliche MCP anschließend live geprüft, `BREEDING_READ_TOKEN` danach entfernt und seine Abwesenheit im erfolgreichen Einmal-Run `35159347130` bestätigt; ein zweiter Live-Smoke blieb grün. `--keep-vars` bleibt konservativ zum Schutz nicht abschließend inventarisierter dashboardverwalteter Worker-Variablen bestehen und ist keine Abhängigkeit vom entfernten Token.
 
 ## Grenzen, private Projektdaten und Rollback
 
