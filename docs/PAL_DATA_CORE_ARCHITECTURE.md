@@ -77,6 +77,14 @@ Steam public build id
 
 Raw PAKs, Mappings und vollständige extrahierte Originalassets werden nicht committed.
 
+### Externe Review-Artefakte und lokale Reproduktion
+
+Die kleinen freigegebenen kanonischen Domain-Daten bleiben im Git und reichen für normale Consumer-/Resolver-Runtime aus. Große, technische und laufbezogene Probe-/Review-Artefakte bleiben dagegen außerhalb des Repositorys in GitHub Actions beziehungsweise lokal unter dem ignorierten `LOCAL_ARTIFACTS/`.
+
+Für explizit artifact-abhängige Entwicklungs- und Reviewaufgaben bildet `workspace-artifacts.json` den versionierten operationalen Pointer. `scripts/workspace-artifacts.mjs` prüft Workspace, exakten Run und Artifact, ZIP-Digest, vollständigen Dateisatz sowie profilierte Inhaltsprovenienz. Bestehende fachliche Approval-Wahrheit wird aus ihren kanonischen Repositorydateien referenziert und nicht als zweite Game-Truth-Kopie gepflegt. Ein neuerer Run, ein gleicher Steam-Build oder ein verfügbareres Artifact ersetzen niemals still eine freigegebene Provenienz. Details stehen in `docs/WORKSPACE_ARTIFACT_BOOTSTRAP.md`.
+
+Dieser Bootstrap reproduziert vorhandene Evidenz; er extrahiert keine Spieldaten neu, startet keinen Dedicated-Server-Probe und publiziert keine Domain-Daten.
+
 ### Erweiterung ohne Pipeline-Neubau
 
 `tools/pal-data-core/catalog.v1.json` trennt Tabellenkenntnis von Acquisition und PAK-Mount. Jeder Katalogeintrag nennt Domäne, Extraktionsprofil und exakte Package-Pfade. Neue Tabellen können zunächst mit `extractor: inventory-only` aufgenommen werden: Die Pipeline erfasst dann für alle Zeilen Feldnamen, Property-Typen, Vorkommen, Row-Counts und Quellen, ohne unbekannte Werte fachlich zu deuten.

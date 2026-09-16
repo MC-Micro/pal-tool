@@ -119,6 +119,7 @@ Before substantial technical work:
 2. For Breeder AI work, also read `docs/BREEDER_AI_PREBUILD_CONTRACTS.md`, `docs/BREEDER_AI_CURRENT_BLUEPRINT.md` and `docs/BREEDER_AI_IMPLEMENTATION_ROADMAP.md`.
 3. For breeding work, also read `data/palworld-breeding/README.md`, the four canonical files in the required order, `services/breeding-api/README.md`, and `services/breeding-api/HANDOFF_CHATGPT.md`.
 4. Verify the current technical baseline, active branch, `main` commit, open pull requests, validation state, deployment state and live reachability dynamically instead of treating historical handoff values as permanent facts.
+5. For work that explicitly depends on an external Actions/review artifact, run `node scripts/workspace-artifacts.mjs check <profile>` first and begin artifact-dependent work only at `ready`. Use only the named profile; never substitute `latest`, another run, or reconstructed data. Keep `LOCAL_ARTIFACTS/` local and uncommitted.
 
 For every material architecture, data, API, MCP, deployment, validation, or workflow change:
 
