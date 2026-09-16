@@ -56,6 +56,7 @@ UI-spezifische Bewertungen, Erklärungen, Prioritäten oder redaktionelle Tags d
 - Fachliche Planner-Zielarchitektur: [`docs/BREEDING_PLANNER_ARCHITECTURE.md`](docs/BREEDING_PLANNER_ARCHITECTURE.md)
 - Social-/Server-/Freigabe-Zukunftsarchitektur: [`docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md`](docs/BREEDER_AI_SOCIAL_ARCHITECTURE.md)
 - Data-Core-Zielarchitektur: [`docs/PAL_DATA_CORE_ARCHITECTURE.md`](docs/PAL_DATA_CORE_ARCHITECTURE.md)
+- Workspace-/Actions-Artifact-Preflight: [`docs/WORKSPACE_ARTIFACT_BOOTSTRAP.md`](docs/WORKSPACE_ARTIFACT_BOOTSTRAP.md)
 - Data-Core-Datenbereich: [`data/palworld-core/README.md`](data/palworld-core/README.md)
 - GitHub-native Pipeline: [`tools/pal-data-core/README.md`](tools/pal-data-core/README.md)
 - Zuchtregeln und Datenstand: [`data/palworld-breeding/README.md`](data/palworld-breeding/README.md)
@@ -130,6 +131,18 @@ Steam public build id
 ```
 
 Der frühere lokale Windows-/Laptop-Extraktionsweg wird nicht als Standardpipeline weiterentwickelt. Raw PAKs, Mappings und vollständige Originalassets werden nicht committed.
+
+## Externe Review-Artefakte im Workspace
+
+Ein Clone enthält die kleinen freigegebenen kanonischen Daten, aber nicht automatisch zeitlich begrenzte technische GitHub-Actions-Artefakte. Für Aufgaben, die solche Evidenz benötigen, stellt die versionierte Registry `workspace-artifacts.json` zusammen mit `scripts/workspace-artifacts.mjs` einen billigen, fail-closed Preflight bereit:
+
+```text
+node scripts/workspace-artifacts.mjs check <profil>
+node scripts/workspace-artifacts.mjs fetch <profil>
+node scripts/workspace-artifacts.mjs prepare <profil>
+```
+
+Der Mechanismus verwendet ausschließlich exakt gepinnte Runs und Artifact-IDs, prüft ZIP-Digest, Struktur und fachlich relevante Provenienz und legt alle externen Daten im ignorierten `LOCAL_ARTIFACTS/` ab. Er sucht kein „latest“ und startet weder Probe noch Serverdownload. Details, Statusmodell und manueller ZIP-Fallback stehen in [`docs/WORKSPACE_ARTIFACT_BOOTSTRAP.md`](docs/WORKSPACE_ARTIFACT_BOOTSTRAP.md).
 
 Der Technical Core filtert nicht bereits beim Einlesen auf die öffentliche spielbare Pal-Liste. Technische Existenz, Spielbarkeit, Fangbarkeit, Züchtbarkeit und Sonderformen bleiben getrennte Eigenschaften.
 

@@ -3,6 +3,7 @@ node_modules/
 dist/
 coverage/
 .wrangler/
+/LOCAL_ARTIFACTS/
 tools/pal-data-core/PalDataCore.Extractor/bin/
 tools/pal-data-core/PalDataCore.Extractor/obj/
 

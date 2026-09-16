@@ -11,6 +11,10 @@ on:
       - "tools/pal-data-core/**"
       - "data/palworld-core/**"
       - "data-passives.js"
+      - "scripts/workspace-artifacts.mjs"
+      - "scripts/workspace-artifacts.test.mjs"
+      - "workspace-artifacts.json"
+      - ".gitignore"
       - ".github/workflows/pal-data-core-ci.yml"
   pull_request:
     branches:
@@ -19,6 +23,10 @@ on:
       - "tools/pal-data-core/**"
       - "data/palworld-core/**"
       - "data-passives.js"
+      - "scripts/workspace-artifacts.mjs"
+      - "scripts/workspace-artifacts.test.mjs"
+      - "workspace-artifacts.json"
+      - ".gitignore"
       - ".github/workflows/pal-data-core-ci.yml"
 
 permissions:
@@ -69,6 +77,11 @@ jobs:
           node --check tools/pal-data-core/scripts/review-breeding-candidate.mjs
           node --check tools/pal-data-core/scripts/review-passive-candidate.mjs
           node --check tools/pal-data-core/scripts/publish-passive-reference.mjs
+          node --check scripts/workspace-artifacts.mjs
+          node --check scripts/workspace-artifacts.test.mjs
 
       - name: Test passive candidate review
         run: node --test tools/pal-data-core/tests/*.test.mjs
+
+      - name: Test workspace artifact bootstrap
+        run: node --test scripts/workspace-artifacts.test.mjs

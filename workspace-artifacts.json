@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "passive-reference-approved-schema2": {
+      "description": "Exact approved Schema-2 evidence used to publish the canonical passive reference space.",
+      "localDirectory": "passive-reference-approved-schema2",
+      "provenanceSources": [
+        {
+          "type": "json",
+          "path": "data/palworld-core/passives.approval.json",
+          "map": {
+            "repository": "/provenance/repository",
+            "workflow": "/provenance/workflow",
+            "workflowRunId": "/provenance/workflowRunId",
+            "repositoryHead": "/provenance/commitSha",
+            "artifactName": "/provenance/artifactName",
+            "artifactId": "/provenance/artifactId",
+            "artifactSha256": "/provenance/artifactSha256",
+            "steamBuildId": "/sourceReview/steamBuildId",
+            "sourceReviewSchemaVersion": "/sourceReview/schemaVersion",
+            "technicalCandidateSha256": "/sourceReview/technicalCandidateSha256",
+            "referenceSpaceSha256": "/sourceReview/referenceSpaceSha256"
+          }
+        }
+      ],
+      "expectedFiles": [
+        "breeding-review.json",
+        "core-inventory-a.json",
+        "core-snapshot-a.json",
+        "core-summary-a.json",
+        "passive-candidate-a.json",
+        "passive-review.json",
+        "passive-summary-a.json"
+      ],
+      "contentChecks": [
+        {
+          "type": "sha256",
+          "path": "passive-candidate-a.json",
+          "expected": { "provenanceField": "technicalCandidateSha256" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/schemaVersion",
+          "expected": { "provenanceField": "sourceReviewSchemaVersion" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/steamBuildId",
+          "expected": { "provenanceField": "steamBuildId" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/passiveDataset/technicalCandidateSha256",
+          "expected": { "provenanceField": "technicalCandidateSha256" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/passiveDataset/referenceSpaceSha256",
+          "expected": { "provenanceField": "referenceSpaceSha256" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/ok",
+          "expected": { "literal": true }
+        }
+      ]
+    },
+    "pal-data-core-resolver-head-evidence": {
+      "description": "Explicit later technical evidence from the successful probe on resolver HEAD; not a replacement for passive publication approval.",
+      "localDirectory": "pal-data-core-resolver-head-evidence",
+      "provenanceSources": [
+        {
+          "type": "json",
+          "path": "data/palworld-core/passives.approval.json",
+          "map": {
+            "repository": "/provenance/repository",
+            "workflow": "/provenance/workflow",
+            "artifactName": "/provenance/artifactName",
+            "steamBuildId": "/sourceReview/steamBuildId",
+            "sourceReviewSchemaVersion": "/sourceReview/schemaVersion",
+            "technicalCandidateSha256": "/sourceReview/technicalCandidateSha256",
+            "referenceSpaceSha256": "/sourceReview/referenceSpaceSha256"
+          }
+        },
+        {
+          "type": "inline",
+          "values": {
+            "workflowRunId": "34984667636",
+            "repositoryHead": "50f74cf5442685024afb3a43b1b7def9eb14b15a",
+            "artifactId": "10402842001",
+            "artifactSha256": "090f6591ebcc40727bcef05e966163d58aa0a0bbcb5860751df9ef17bcd2c635"
+          }
+        }
+      ],
+      "expectedFiles": [
+        "breeding-review.json",
+        "core-inventory-a.json",
+        "core-snapshot-a.json",
+        "core-summary-a.json",
+        "passive-candidate-a.json",
+        "passive-review.json",
+        "passive-summary-a.json"
+      ],
+      "contentChecks": [
+        {
+          "type": "sha256",
+          "path": "passive-candidate-a.json",
+          "expected": { "provenanceField": "technicalCandidateSha256" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/schemaVersion",
+          "expected": { "provenanceField": "sourceReviewSchemaVersion" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/steamBuildId",
+          "expected": { "provenanceField": "steamBuildId" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/passiveDataset/technicalCandidateSha256",
+          "expected": { "provenanceField": "technicalCandidateSha256" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/passiveDataset/referenceSpaceSha256",
+          "expected": { "provenanceField": "referenceSpaceSha256" }
+        },
+        {
+          "type": "json_equals",
+          "path": "passive-review.json",
+          "pointer": "/ok",
+          "expected": { "literal": true }
+        }
+      ]
+    }
+  }
+}
