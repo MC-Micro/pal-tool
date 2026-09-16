@@ -295,7 +295,7 @@ function reviewOverlay(overlay, namesEn, namesDe) {
     }
   }
   return {
-    source: "data-passives.js editorial overlay",
+    source: "apps/passives-pwa/data-passives.js editorial overlay",
     policy: "Only agreeing exact EN and DE matches map. nr, array position, rank, sourceOrdinal, and fuzzy similarity are never identity.",
     count: overlay.passives.length,
     mapped,

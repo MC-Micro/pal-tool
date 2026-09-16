@@ -139,7 +139,7 @@ Die aktuelle offizielle Evidenz macht die DataTable-Row-Identität (`SourceRow` 
 
 Bis dahin gilt weiterhin:
 
-- `data-passives.js.nr` ist keine Domain-ID;
+- `apps/passives-pwa/data-passives.js.nr` ist keine Domain-ID;
 - Arrayposition, `sourceOrdinal`, Rang oder lokalisierter Name sind keine dauerhafte Passive-ID;
 - lokalisierte Namen sind Aliasse/Anzeige- und Resolverdaten, nicht Identität;
 - kein Fuzzy-Treffer darf eine Identitätsmigration erzeugen;

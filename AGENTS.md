@@ -7,8 +7,8 @@ These instructions apply to the entire repository. Component-specific rules belo
 - Treat `MC-Micro/pal-tool` as the public technical home for Pal Data Core, canonical Palworld domains, shared engines and the applications/services built on them.
 - Keep the public Breeding API implementation isolated under `services/breeding-api/`.
 - Keep the planned private Breeder AI runtime isolated in its own app/package area. The target root is `apps/breeder-ai/`; Phase 0 may refine its internal layout.
-- Keep the existing Palworld Passives PWA operational as an independent public side app. Its current root placement is historical; a later controlled migration may move it to `apps/passives-pwa/`.
-- Do not move or rewrite the Passives PWA merely to support Breeder AI or the Breeding API. Its service-worker scope, manifest, hosting path and installed clients require an explicit migration review.
+- Keep the frozen historical Palworld Passives PWA isolated under `apps/passives-pwa/` as an independent legacy side app.
+- Do not rewrite or reactivate the Passives PWA merely to support Breeder AI or the Breeding API. Any renewed hosting requires an explicit service-worker scope, manifest, cache, hosting-path and installed-client migration review.
 - Prefer shared canonical Data Core/domain artifacts over duplicated hand-maintained game truth. Product/editorial overlays remain separate from canonical game facts.
 - Treat generated API indexes and consumer indexes as derived build artifacts, never as canonical Palworld identity.
 - `MC-Micro/pal-vault` and `MC-Micro/pal-control` are separate repositories and must not become required build/runtime dependencies of this repository.
@@ -77,8 +77,8 @@ These rules apply to the existing public Breeding API and its public MCP. They d
 - Keep `source_data_hash` and `generated_artifact_hash` semantically distinct and non-self-referential.
 - Forward and reverse breeding indexes must remain consistent.
 - Release validation must fail when canonical data, generated data, or unresolved conflicts disagree.
-- Preserve both supported access modes: the anonymous read-only MCP endpoint at `/mcp` and the token-protected REST API at `/<BREEDING_READ_TOKEN>/v1/...`.
-- MCP tools must delegate to the existing REST route handlers and must not introduce a second breeding implementation.
+- Expose only the anonymous read-only MCP endpoint at `/mcp`; historical tokenized REST paths are no longer a supported external surface and must remain neutral 404s.
+- MCP tools must delegate to the existing internal `routeApiRequest(...)` handlers and must not introduce a second breeding implementation or external REST surface.
 - Keep `breeding_status` as the lightweight technical status tool for maintenance, diagnostics, deployment checks, and scheduled integrity monitoring. Do not require it before every normal breeding request.
 
 ## Breeder AI requirements
@@ -101,9 +101,8 @@ Repository-wide:
 For `services/breeding-api/` specifically:
 
 - `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are GitHub Actions secrets used only for deployment.
-- `BREEDING_READ_TOKEN` is a Cloudflare Worker secret. Do not place it in GitHub workflow environment variables or Wrangler configuration.
-- Deployments must preserve the existing `BREEDING_READ_TOKEN` and must never replace, clear, or synthesize it.
-- Missing or invalid read tokens must produce a neutral HTTP 404 response.
+- `BREEDING_READ_TOKEN` is no longer a runtime binding. Until the obsolete deployed secret is removed after a separately authorized deploy and live-MCP smoke test, deployments must preserve existing Worker variables with `--keep-vars`; repository code must never read, replace, clear or synthesize the secret.
+- Every external path other than exact `/mcp` must produce a neutral HTTP 404 response.
 - Do not expose a public index, directory listing, login form, or interactive authentication flow from the public Breeding API service.
 - The deliberate anonymous `/mcp` endpoint may expose only the documented non-secret read-only breeding tools.
 

@@ -3,7 +3,7 @@
 **Stand:** 15. September 2026
 **Status:** lokaler technischer Proof; keine produktive Runtime, keine Cloud-Ressource und kein Deployment
 
-Dieser Bereich ist die isolierte Phase-0-Probe für die geplante private Breeder-AI-Anwendung. Er verändert weder die öffentliche read-only Breeding API unter `services/breeding-api/` noch die historische Passives PWA im Repository-Root.
+Dieser Bereich ist die isolierte Phase-0-Probe für die geplante private Breeder-AI-Anwendung. Er verändert weder den öffentlichen read-only Breeding-MCP unter `services/breeding-api/` noch die eingefrorene historische Passives PWA unter `apps/passives-pwa/`.
 
 Der vollständige chatübergreifende technische Handoff steht in [`docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md`](../../docs/BREEDER_AI_PHASE0_COMPLETION_REPORT.md).
 
@@ -119,7 +119,7 @@ dataset   = schema version + reference-space SHA-256
 
 Der technische Candidate-Hash, Steam-Build und die Workflow-/Artefaktangaben bleiben nachvollziehbare Provenienz. Die primäre persistierte Dataset-Identität ist dagegen der engere Reference-Space-Hash über `sourceRow`, belegte Namensreferenz und offizielle EN-/DE-Namen. Ein anderer Steam-Build mit identischem Reference-Space verlangt deshalb keine Migration; ein anderer Reference-Space-Hash immer. Es gibt keine automatische Name-, Positions- oder Fuzzy-Migration.
 
-Exakte namespacete Keys und exakte veröffentlichte `sourceRow`-Werte werden autoritativ aufgelöst. Exakte EN-/DE-Anzeigenamen werden nur bei Eindeutigkeit aufgelöst; Unicode-kanonisch äquivalente Eingaben werden vor der deutschen Transliteration nach NFC vereinheitlicht. `Erleuchteter` bleibt absichtlich mehrdeutig zwischen `ElementBoost_Normal_2_PAL` und `WorldTree_Sanity`. Fuzzy-Treffer sind ausschließlich Kandidaten. Die 1790 `SortNotDisplayable`-Entities des technischen Candidates sind keine Resolver-Keys. `data-passives.js` bleibt ein separater 102er PWA-Overlay; insbesondere wird sein Feld `nr` nicht als Domain-ID verwendet.
+Exakte namespacete Keys und exakte veröffentlichte `sourceRow`-Werte werden autoritativ aufgelöst. Exakte EN-/DE-Anzeigenamen werden nur bei Eindeutigkeit aufgelöst; Unicode-kanonisch äquivalente Eingaben werden vor der deutschen Transliteration nach NFC vereinheitlicht. `Erleuchteter` bleibt absichtlich mehrdeutig zwischen `ElementBoost_Normal_2_PAL` und `WorldTree_Sanity`. Fuzzy-Treffer sind ausschließlich Kandidaten. Die 1790 `SortNotDisplayable`-Entities des technischen Candidates sind keine Resolver-Keys. `apps/passives-pwa/data-passives.js` bleibt ein separater historischer 102er PWA-Overlay; insbesondere wird sein Feld `nr` nicht als Domain-ID verwendet.
 
 ## Entscheidungen
 

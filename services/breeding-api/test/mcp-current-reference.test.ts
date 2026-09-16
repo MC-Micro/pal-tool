@@ -24,7 +24,6 @@ async function mcpTool(name: string, arguments_: Record<string, unknown>): Promi
         params: { name, arguments: arguments_ },
       }),
     }),
-    {},
   );
 
   expect(response.status).toBe(200);

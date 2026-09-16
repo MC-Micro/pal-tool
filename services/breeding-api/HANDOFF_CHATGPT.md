@@ -20,14 +20,14 @@ Diese Datei soll eine neue technische Chat- oder Codex-Sitzung ohne Zugriff auf 
 |---|---|
 | Repository | `MC-Micro/pal-tool` |
 | Standardbranch | `main` |
-| Gemergte Grundlage | PR #3 Breeding API, PR #4 öffentlicher read-only MCP, PR #5 technische Dokumentations- und Übergaberegeln |
-| Baseline-Commit dieses Dokumentationsstands | `6bb3b0222560e201b0bc192442d5fa9eac00ed83` |
+| Provenienz des Repository-Refactors | Der Cleanup vom 16.09.2026 begann bei HEAD `e666a95d07ee7090b813d1306bd4b70b4dcd5cd6` |
+| Refactor-Commit | In dieser Übergabe ist bewusst kein Cleanup-Commit-SHA dokumentiert |
 | Hinweis zu Branch und Commit | Vor technischer Weiterarbeit den aktuellen `main`-Commit, den aktiven Branch und offene Pull Requests dynamisch über GitHub bestimmen |
 | Worker | `palworld-breeding-api` |
 | Zuletzt dokumentierter erfolgreicher ChatGPT-Zugriff | 13.07.2026 über die verbundene App `Breeder`; historischer Integrationstest, keine dauerhafte Erreichbarkeitsgarantie |
 | Verbundener ChatGPT-App-/Pluginname | `Breeder` |
 | Öffentlicher MCP | anonymer Streamable-HTTP-Endpunkt `/mcp` |
-| Geschützte REST-API | weiterhin kompatibel; konkreter Pfad und Basisadresse werden absichtlich nicht dokumentiert |
+| Externe HTTP-Oberfläche | ausschließlich anonymer `/mcp`; alle anderen Pfade neutral 404 |
 | Worker-Basisadresse | absichtlich nicht in diesem öffentlichen Repository gespeichert |
 | Kanonisches Schema | 5 |
 | API-/Artefaktschema | 2 |
@@ -42,6 +42,21 @@ Diese Datei soll eine neue technische Chat- oder Codex-Sitzung ohne Zugriff auf 
 
 Historische Statuswerte dokumentieren nur den zuletzt geprüften technischen Stand. Live-Erreichbarkeit, aktuelle Branches, aktuelle Commits, offene Pull Requests und ein möglicher neuerer Palworld-Patch müssen bei technischer Wartung oder Entwicklung erneut geprüft werden.
 
+## Legacy-/Surface-Refactor vom 16.09.2026
+
+Der Repository-Refactor begann bei Start-HEAD `e666a95d07ee7090b813d1306bd4b70b4dcd5cd6` und dokumentiert folgende dauerhafte Architektur:
+
+- die byte-identische historische Passives PWA liegt eingefroren unter `apps/passives-pwa/` und besitzt einen eigenen kleinen Validator;
+- kanonische 115er Approval-Validierung, Pal Data Core, Breeding CI und Breeding Deploy sind vom 102er Legacy-Overlay entkoppelt;
+- der Worker exponiert extern nur noch exaktes `/mcp`; alle anderen Pfade liefern neutral 404;
+- `routeApiRequest(...)` bleibt die gemeinsame interne Resolverlogik für die exakt fünf MCP-Tools;
+- die frühere Path-Auth-Schicht und ihr Runtime-Env-Binding sind entfernt;
+- der Repository-Refactor selbst ändert weder Cloudflare-Deployment und -Secrets noch die GitHub-Pages-Konfiguration.
+
+Für den Refactor dokumentierte Validierung: kanonischer Validator PASS; Legacy-PWA-Validator PASS; unveränderte Blobs aller neun verschobenen PWA-Dateien bestätigt; Generierung ohne Artifact-Diff; Lint PASS; TypeScript PASS; 61/61 Breeding-Tests PASS; Pal-Data-Core-Tests 28/28 PASS; strukturelle und Release-Validierung PASS; Determinismus PASS; Secretscan PASS. Die Frozen-Installation und der Wrangler-Dry-Run konnten in der eingeschränkten Sandbox nicht vollständig reproduziert werden: Registryzugriff war gesperrt und der native Esbuild-Unterprozess durfte den Worktreepfad nicht lesen. Der Worker-Dry-Run muss deshalb in einer normalen CI-/Entwicklungsumgebung erneut ausgeführt werden.
+
+Ein späterer Deploy, der Live-MCP-Smoke und die anschließende Entfernung des obsoleten Read-Token-Secrets bleiben getrennt freigabepflichtige operative Schritte. Vor einem Deploy ist die vollständige CI einschließlich Worker-Build auszuführen. Eine GitHub-Pages-Deaktivierung oder erneute Legacy-PWA-Veröffentlichung ist eine separate Entscheidung.
+
 ## Was das Repository enthält
 
 ### 0. Pal Data Core
@@ -52,15 +67,15 @@ Historische Statuswerte dokumentieren nur den zuletzt geprüften technischen Sta
 
 ### 1. Palworld Passives PWA
 
-Die PWA liegt im Repository-Root und bleibt unabhängig vom Worker:
+Die historische PWA liegt eingefroren unter `apps/passives-pwa/` und bleibt unabhängig vom Worker:
 
 - Vanilla HTML, CSS und JavaScript
 - installierbar und offlinefähig
 - 102 Passives
 - deutsche und englische Namen und Effekte
-- eigener Root-Validator unter `scripts/validate-data.mjs`
+- eigener kleiner App-Validator unter `apps/passives-pwa/scripts/validate.mjs`
 
-Die PWA darf nicht nur zur Unterstützung der Breeding API auf ein Framework oder gemeinsame Runtime-Abhängigkeiten umgebaut werden.
+Die PWA ist **legacy / frozen / paused**. Ihr 102er Overlay wird nicht fachlich aktualisiert. Der kanonische 115er Passive-Referenzraum und seine Approval bleiben getrennt repositoryweit validiert. Die physische Verschiebung der PWA ändert die GitHub-Pages-Konfiguration nicht; jede Reaktivierung muss insbesondere den alten Cache-Namespace `palworld-passives-pwa-v1.0.0-meta1` und installierte Clients migrieren.
 
 ### 2. Kanonische Zuchtreferenz
 
@@ -80,16 +95,13 @@ Direkte Palworld-1.0-Eiertests vom 13.07.2026:
 - `Lunaris MALE + Grintale FEMALE → Penking`
 - `Sibelyx + Lamball → Surfent`
 
-### 3. Cloudflare Worker, REST und MCP
+### 3. Cloudflare Worker und MCP
 
 `services/breeding-api/` erzeugt eine deterministische read-only API aus den kanonischen Daten. Runtime-Aufrufe an GitHub oder Drittanbieterrechner existieren nicht.
 
-Es gibt zwei Zugriffsmodi auf dieselbe Resolverlogik:
+Extern gibt es nur den öffentlichen, anonymen MCP-Endpunkt `/mcp`. Historische tokenisierte REST-Pfade und alle anderen Pfade liefern neutral 404.
 
-- öffentlicher, anonymer MCP-Endpunkt `/mcp`
-- geschützter REST-Zugang auf dieselbe Resolverlogik; konkreter Pfad wird absichtlich nicht dokumentiert
-
-Das MCP ruft intern die bestehenden REST-Route-Handler auf. Es enthält keine doppelte Zuchtlogik.
+Das MCP ruft intern weiterhin `routeApiRequest(...)` auf. Die Route-Handler bleiben gemeinsame Resolverlogik, sind aber keine externe REST-Oberfläche. Es enthält keine doppelte Zuchtlogik.
 
 ## Öffentliche MCP-Tools
 
@@ -118,23 +130,6 @@ Für normale ChatGPT-Zuchtanfragen soll die verbundene App **Breeder** direkt mi
 - ausdrücklicher Aktualitätsprüfung
 
 GitHub und kanonische Dateien werden herangezogen, wenn der Status ungültig, veraltet, widersprüchlich oder unzureichend ist, wenn Breeder fehlschlägt oder wenn Dateien geändert werden müssen.
-
-## Geschützte REST-API
-
-Der geschützte REST-Zugang bleibt für bestehende technische Integrationen kompatibel. Basisadresse, konkreter geschützter Pfad und geheime Werte werden absichtlich nicht in diesem öffentlichen Repository ausgeschrieben.
-
-Unterstützte Read-only-Funktionen:
-
-- Status
-- Pal-Namensauflösung
-- Paarberechnung
-- Elternsuche
-- Kindersuche
-- Artenroute
-- vollständige Referenz
-- Validierung
-
-Fehlende oder ungültige Authentifizierung liefert neutral HTTP 404. Schreibmethoden sind nicht unterstützt. Geheime Werte dürfen weder in GitHub-Dateien noch in Chatprotokolle, Screenshots, Committexte oder öffentliche URLs übernommen werden.
 
 ## Wichtige Routenfolgen von Schema 5
 
@@ -177,9 +172,9 @@ pnpm run check:deterministic
 pnpm run scan:secrets
 ```
 
-Der PR-Head des öffentlichen MCP-Ausbaus bestand am 13.07.2026 sowohl `Breeding API CI` als auch `Validate Palworld data`. Die CI prüft zusätzlich die Root-PWA, committed Generated-Artefakte, Lint, TypeScript, Tests, Worker-Dry-Run, strukturelle und Release-Validierung, Determinismus und Secretscan.
+`Breeding API CI` prüft committed Generated-Artefakte, Lint, TypeScript, MCP-/Surface-Tests, Worker-Dry-Run, strukturelle und Release-Validierung, Determinismus und Secretscan. Die eingefrorene Legacy-PWA ist davon entkoppelt und besitzt eine kleine eigene, pfadgescopte Validierung.
 
-Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production` geschützt und verwendet `wrangler deploy --keep-vars`, damit das bestehende Worker-Secret erhalten bleibt.
+Deployment bleibt manuell, `main`-only, durch das GitHub-Environment `production` geschützt und verwendet `wrangler deploy --keep-vars`. Der Repository-Refactor selbst führt kein Deployment aus. Ein historischer, nun ungenutzter Read-Token darf erst nach einem später separat freigegebenen Deploy plus Live-MCP-Smoke extern entfernt werden.
 
 ## Patchregel
 

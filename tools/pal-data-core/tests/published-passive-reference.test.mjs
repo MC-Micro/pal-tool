@@ -3,7 +3,6 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import test from "node:test";
 
-import { parsePassiveOverlay } from "../scripts/review-passive-candidate.mjs";
 import {
   validatePublishedPassiveReferenceAgainstApproval,
 } from "../scripts/publish-passive-reference.mjs";
@@ -17,9 +16,6 @@ const approval = JSON.parse(
     resolve(repositoryRoot, "data/palworld-core/passives.approval.json"),
     "utf8",
   ),
-);
-const overlay = parsePassiveOverlay(
-  readFileSync(resolve(repositoryRoot, "data-passives.js"), "utf8"),
 );
 
 test("validates the checked-in canonical reference against its explicit approval", () => {
@@ -49,19 +45,6 @@ test("contains unique case-safe source rows and no technical balance fields", ()
   }
 });
 
-test("keeps all 13 current entries outside the historical 102-entry overlay", () => {
-  const byEnglish = indexByName("nameEn");
-  const byGerman = indexByName("nameDe");
-  const mapped = overlay.passives.map(({ en, de }) => {
-    const german = new Set(byGerman.get(de) ?? []);
-    return (byEnglish.get(en) ?? []).filter((sourceRow) => german.has(sourceRow));
-  });
-  assert.equal(mapped.length, 102);
-  assert.ok(mapped.every((matches) => matches.length === 1));
-  assert.equal(new Set(mapped.flat()).size, 102);
-  assert.equal(artifact.entries.length - new Set(mapped.flat()).size, 13);
-});
-
 test("preserves the official German Erleuchteter ambiguity", () => {
   assert.deepEqual(
     artifact.entries
@@ -81,13 +64,3 @@ test("preserves the official German Erleuchteter ambiguity", () => {
     ],
   );
 });
-
-function indexByName(field) {
-  const index = new Map();
-  for (const entry of artifact.entries) {
-    const rows = index.get(entry[field]) ?? [];
-    rows.push(entry.sourceRow);
-    index.set(entry[field], rows);
-  }
-  return index;
-}
